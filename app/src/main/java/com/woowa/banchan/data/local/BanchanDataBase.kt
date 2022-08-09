@@ -22,7 +22,7 @@ abstract class BanchanDataBase : RoomDatabase() {
 
     companion object {
         private var instance: BanchanDataBase? = null
-        val databaseName: String = "banchan-database"
+        const val databaseName: String = "banchan-database"
 
         fun getInstance(context: Context): BanchanDataBase {
 
