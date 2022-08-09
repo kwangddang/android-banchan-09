@@ -5,6 +5,18 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
+    <!--Primary-->
+    <color name="main">#F9BA70</color>
+    <color name="accent">#F46700</color>
+    <color name="disabled">#FCDCB7</color>
+    <color name="primary_surface">#FBF5E0</color>
+
+    <!--GreyScale-->
+    <color name="black">#000000</color>
+    <color name="black_30">#4D000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="line">#DDDDDD</color>
+    <color name="greyscale_default">#828282</color>
+    <color name="greyscale_surface">#DDDDDD</color>
 </resources>
