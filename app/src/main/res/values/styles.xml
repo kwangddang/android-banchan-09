@@ -1,75 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Button">
+    <style name="button">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="Percent_14">
+    <style name="percent_14">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/accent</item>
     </style>
 
-    <style name="Percent_18">
+    <style name="percent_18">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/accent</item>
     </style>
 
-    <style name="Label">
+    <style name="label">
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="AppbarTitle">
+    <style name="appbarTitle">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Spinner">
+    <style name="spinner">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="Header">
+    <style name="header">
         <item name="android:textSize">32sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="Tab" parent="TextAppearance.Design.Tab">
+    <style name="tab" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Bold_14">
+    <style name="bold_14">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Normal_14">
+    <style name="normal_14">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="Normal_grey_14">
+    <style name="normal_grey_14">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/greyscale_default</item>
     </style>
 
-    <style name="Normal_18">
+    <style name="normal_18">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="Normal_grey_18">
+    <style name="normal_grey_18">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/greyscale_default</item>
     </style>
 
-    <style name="Caption">
+    <style name="caption">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="caption_grey">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/greyscale_default</item>
     </style>
