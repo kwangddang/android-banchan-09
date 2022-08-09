@@ -38,6 +38,10 @@ android {
 
 dependencies {
 
+    //Room
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
     //Hilt
     implementation "com.google.dagger:hilt-android:${hilt_version}"
     kapt "com.google.dagger:hilt-android-compiler:${hilt_version}"
