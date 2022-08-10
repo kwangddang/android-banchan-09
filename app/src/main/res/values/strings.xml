@@ -9,4 +9,5 @@
     <string name="fragment_main">main</string>
     <string name="fragment_soup">soup</string>
     <string name="fragment_side">side</string>
+    <string name="badge">기획전</string>
 </resources>
