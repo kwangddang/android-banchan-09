@@ -1,7 +1,7 @@
-package com.woowa.banchan.domain.usecase.food.`interface`
+package com.woowa.banchan.domain.usecase.food.inter
 
 import com.woowa.banchan.data.remote.dto.BestFood
 
-interface GetBestFoods {
+interface GetBestFoodsUseCase {
     suspend operator fun invoke(): Result<BestFood>
 }
