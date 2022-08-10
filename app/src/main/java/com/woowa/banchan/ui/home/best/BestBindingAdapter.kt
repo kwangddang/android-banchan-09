@@ -1,8 +1,11 @@
 package com.woowa.banchan.ui.home.best
 
 import android.graphics.Paint
+import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
 
 @BindingAdapter("nPricePercent", "sPricePercent")
 fun TextView.setPercent(nPrice: String?, sPrice: String) {
@@ -12,7 +15,7 @@ fun TextView.setPercent(nPrice: String?, sPrice: String) {
     else {
         val originPrice = nPrice.replace("원", "").replace(",", "").toLong()
         val salePrice = sPrice.replace("원", "").replace(",", "").toLong()
-        val percent = ((originPrice - salePrice) / originPrice) * 100
+        val percent = (((originPrice - salePrice) * 100) / originPrice)
         text = "$percent%"
     }
 }
@@ -24,4 +27,11 @@ fun TextView.setOriginPrice(nPrice: String?, sPrice: String) {
         text = ""
     else
         text = sPrice
+}
+
+@BindingAdapter("image")
+fun ImageView.setImage(url: String) {
+    Glide.with(context)
+        .load(url)
+        .into(this)
 }

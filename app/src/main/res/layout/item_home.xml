@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="food"
             type="com.woowa.banchan.data.remote.dto.FoodItem" />
@@ -21,7 +22,7 @@
             android:layout_height="168dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/main" />
+            app:image="@{food.image}"/>
 
         <ImageView
             android:id="@+id/iv_cart"
@@ -79,10 +80,10 @@
             android:layout_height="wrap_content"
             android:paddingStart="4dp"
             android:text="@{food.sPrice}"
-            app:layout_constraintStart_toEndOf="@id/tv_percent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_percent"
             app:layout_constraintBottom_toBottomOf="@id/tv_percent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_percent"
+            app:layout_constraintTop_toTopOf="@id/tv_percent"
             tools:text="12,640원" />
 
         <TextView
@@ -91,8 +92,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_percent"
             app:nPrice="@{food.nPrice}"
             app:sPrice="@{food.sPrice}"
