@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Base application theme. -->
+
     <style name="Theme.Banchan" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/main</item>
@@ -16,6 +17,9 @@
 
     <!--Splash Screen-->
     <style name="LaunchTheme" parent="@android:style/Theme.Light.NoTitleBar">
-        <item name="android:windowBackground">@drawable/background_splash_screen</item>
+
+        <item name="android:windowSplashScreenBackground">@android:color/transparent</item>
+        <item name="android:windowSplashscreenContent">@drawable/ic_user</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_user</item>
     </style>
 </resources>
