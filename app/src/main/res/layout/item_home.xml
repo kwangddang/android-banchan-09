@@ -67,6 +67,7 @@
             style="@style/percent_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingEnd="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_content"
             app:nPricePercent="@{food.nPrice}"
@@ -78,12 +79,10 @@
             style="@style/normal_14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingStart="4dp"
             android:text="@{food.sPrice}"
-            app:layout_constraintBottom_toBottomOf="@id/tv_percent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_percent"
-            app:layout_constraintTop_toTopOf="@id/tv_percent"
+            app:layout_constraintTop_toBottomOf="@id/tv_content"
             tools:text="12,640원" />
 
         <TextView

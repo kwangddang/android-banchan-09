@@ -2,6 +2,7 @@ package com.woowa.banchan.ui.home.best
 
 import android.graphics.Paint
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -11,6 +12,7 @@ import com.bumptech.glide.Glide
 fun TextView.setPercent(nPrice: String?, sPrice: String) {
     if(nPrice == null) {
         text = ""
+        visibility = View.GONE
     }
     else {
         val originPrice = nPrice.replace("원", "").replace(",", "").toLong()
