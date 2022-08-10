@@ -6,10 +6,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.data.remote.dto.FoodItem
 import com.woowa.banchan.databinding.ItemHomeBinding
 
-class HomeItemAdapter(private val categoryFood: List<FoodItem>): RecyclerView.Adapter<BestItemViewHolder>() {
+class HomeItemAdapter(private val categoryFood: List<FoodItem>) :
+    RecyclerView.Adapter<BestItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BestItemViewHolder {
-        return BestItemViewHolder(ItemHomeBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+        return BestItemViewHolder(
+            ItemHomeBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: BestItemViewHolder, position: Int) {
@@ -19,7 +26,8 @@ class HomeItemAdapter(private val categoryFood: List<FoodItem>): RecyclerView.Ad
     override fun getItemCount(): Int = categoryFood.size
 }
 
-class BestItemViewHolder(private val binding: ItemHomeBinding) : RecyclerView.ViewHolder(binding.root) {
+class BestItemViewHolder(private val binding: ItemHomeBinding) :
+    RecyclerView.ViewHolder(binding.root) {
     fun bind(food: FoodItem) {
         binding.food = food
     }

@@ -5,7 +5,7 @@ import com.woowa.banchan.data.remote.dto.Food
 
 interface FoodDataSource {
 
-    suspend fun getBestFoods() : BestFood
+    suspend fun getBestFoods(): BestFood
 
-    suspend fun getFoods(type: String) : Food
+    suspend fun getFoods(type: String): Food
 }

@@ -5,4 +5,4 @@ import javax.inject.Inject
 
 class RecentRepositoryImpl @Inject constructor(
 
-) : RecentRepository {}
+) : RecentRepository

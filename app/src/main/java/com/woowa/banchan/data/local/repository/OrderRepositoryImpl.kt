@@ -5,4 +5,4 @@ import javax.inject.Inject
 
 class OrderRepositoryImpl @Inject constructor(
 
-) : OrderRepository {}
+) : OrderRepository

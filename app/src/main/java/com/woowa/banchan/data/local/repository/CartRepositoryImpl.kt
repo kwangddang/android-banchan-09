@@ -5,4 +5,4 @@ import javax.inject.Inject
 
 class CartRepositoryImpl @Inject constructor(
 
-) : CartRepository {}
+) : CartRepository
