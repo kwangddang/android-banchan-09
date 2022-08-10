@@ -1,6 +1,5 @@
 package com.woowa.banchan.domain.usecase.food
 
-import com.woowa.banchan.data.remote.dto.Food
 import com.woowa.banchan.domain.UiState
 import com.woowa.banchan.domain.repository.FoodRepository
 import com.woowa.banchan.domain.usecase.food.inter.GetFoodsUseCase
@@ -15,7 +14,7 @@ class GetFoodsUseCaseImpl @Inject constructor(
 ) : GetFoodsUseCase {
 
     override suspend operator fun invoke(type: String): Flow<UiState> =
-        withContext(Dispatchers.IO){
+        withContext(Dispatchers.IO) {
             return@withContext flow {
                 emit(UiState.Loading)
                 foodRepository.getFoods(type).onSuccess {

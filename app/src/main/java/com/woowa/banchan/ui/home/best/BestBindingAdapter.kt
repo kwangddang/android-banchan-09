@@ -1,7 +1,6 @@
 package com.woowa.banchan.ui.home.best
 
 import android.graphics.Paint
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -10,11 +9,10 @@ import com.bumptech.glide.Glide
 
 @BindingAdapter("nPricePercent", "sPricePercent")
 fun TextView.setPercent(nPrice: String?, sPrice: String) {
-    if(nPrice == null) {
+    if (nPrice == null) {
         text = ""
         visibility = View.GONE
-    }
-    else {
+    } else {
         val originPrice = nPrice.replace("원", "").replace(",", "").toLong()
         val salePrice = sPrice.replace("원", "").replace(",", "").toLong()
         val percent = (((originPrice - salePrice) * 100) / originPrice)
@@ -25,7 +23,7 @@ fun TextView.setPercent(nPrice: String?, sPrice: String) {
 @BindingAdapter("nPrice", "sPrice")
 fun TextView.setOriginPrice(nPrice: String?, sPrice: String) {
     paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-    if(nPrice == null)
+    if (nPrice == null)
         text = ""
     else
         text = sPrice

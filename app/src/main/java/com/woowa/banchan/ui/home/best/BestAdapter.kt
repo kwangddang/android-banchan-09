@@ -13,7 +13,7 @@ import com.woowa.banchan.databinding.ItemBestRecyclerviewBinding
 import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 import com.woowa.banchan.ui.home.HomeItemAdapter
 
-class BestAdapter : ListAdapter<BestFoodCategory,RecyclerView.ViewHolder>(diffUtil) {
+class BestAdapter : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -63,7 +63,7 @@ class BestAdapter : ListAdapter<BestFoodCategory,RecyclerView.ViewHolder>(diffUt
     fun submitHeaderList(list: List<BestFoodCategory>) {
         val newList = mutableListOf<BestFoodCategory?>()
         newList.add(null)
-        for(category in list) {
+        for (category in list) {
             newList.add(category)
             newList.add(category)
         }

@@ -1,7 +1,6 @@
 package com.woowa.banchan.ui.home.best
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.data.remote.dto.BestFood
-import com.woowa.banchan.data.remote.dto.BestFoodCategory
 import com.woowa.banchan.databinding.FragmentBestBinding
 import com.woowa.banchan.domain.UiState
 import com.woowa.banchan.utils.showToast
@@ -57,9 +55,9 @@ class BestFragment : Fragment() {
     private fun initObserve() {
         viewModel.bestUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { state ->
-                if(state is UiState.Success) {
+                if (state is UiState.Success) {
                     bestAdapter.submitHeaderList((state.data as BestFood).body)
-                } else if(state is UiState.Error) {
+                } else if (state is UiState.Error) {
                     showToast(state.message)
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
