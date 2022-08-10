@@ -13,4 +13,6 @@
 
     <!--Header Title-->
     <string name="best_title">한 번 주문하면\n두 번 반하는 반찬들</string>
+    <string name="fragment_cart">cart</string>
+    <string name="fragment_recent">recent</string>
 </resources>
