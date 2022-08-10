@@ -3,6 +3,7 @@ package com.woowa.banchan.ui.home.best
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.woowa.banchan.R
 import com.woowa.banchan.data.remote.dto.BestFood
 import com.woowa.banchan.data.remote.dto.BestFoodCategory
 import com.woowa.banchan.data.remote.dto.FoodItem
@@ -53,7 +54,7 @@ class BestAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 class HomeHeaderViewHolder(private val binding: ItemHomeHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind() {
-        binding.title = "한 번 주문하면\n두 번 반하는 반찬들"
+        binding.tvTitle.apply { text = this.context.getString(R.string.best_title) }
     }
 }
 
