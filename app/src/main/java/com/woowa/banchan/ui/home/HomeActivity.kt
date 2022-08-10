@@ -25,22 +25,23 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun initAdapter() {
-        binding.viewPager.adapter = object : FragmentStateAdapter(supportFragmentManager, lifecycle) {
-            override fun getItemCount(): Int = 4
+        binding.viewPager.adapter =
+            object : FragmentStateAdapter(supportFragmentManager, lifecycle) {
+                override fun getItemCount(): Int = 4
 
-            override fun createFragment(position: Int): Fragment =
-                when (position) {
-                    0 -> BestFragment()
-                    1 -> MainFragment()
-                    2 -> SoupFragment()
-                    3 -> SideFragment()
-                    else -> Fragment()
-                }
-        }
+                override fun createFragment(position: Int): Fragment =
+                    when (position) {
+                        0 -> BestFragment()
+                        1 -> MainFragment()
+                        2 -> SoupFragment()
+                        3 -> SideFragment()
+                        else -> Fragment()
+                    }
+            }
     }
 
     private fun initTabLayoutMediator() {
-        val tabList = listOf ("기획전", "든든한 메인요리", "뜨끈한 국물요리", "정갈한 밑반찬")
+        val tabList = listOf("기획전", "든든한 메인요리", "뜨끈한 국물요리", "정갈한 밑반찬")
 
         TabLayoutMediator(binding.layoutTab, binding.viewPager) { tab, position ->
             tab.text = tabList[position]

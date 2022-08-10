@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class GetFoodsUseCaseImpl @Inject constructor(
     private val foodRepository: FoodRepository
-): GetFoodsUseCase {
+) : GetFoodsUseCase {
     override suspend operator fun invoke(type: String): Result<Food> =
         runCatching {
             foodRepository.getFoods(type)

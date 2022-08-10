@@ -7,8 +7,8 @@ import retrofit2.http.Path
 
 interface BanchanService {
     @GET("best")
-    suspend fun getBestFoods() : BestFood
+    suspend fun getBestFoods(): BestFood
 
     @GET("{type}")
-    suspend fun getFoods(@Path("type") type: String) : Food
+    suspend fun getFoods(@Path("type") type: String): Food
 }

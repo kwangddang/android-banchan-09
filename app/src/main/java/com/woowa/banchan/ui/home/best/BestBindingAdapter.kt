@@ -6,8 +6,8 @@ import androidx.databinding.BindingAdapter
 
 @BindingAdapter("nPrice", "sPrice")
 fun TextView.setPercent(nPrice: String, sPrice: String) {
-    val originPrice = nPrice.replace("원","").replace(",","").toLong()
-    val salePrice = sPrice.replace("원","").replace(",","").toLong()
+    val originPrice = nPrice.replace("원", "").replace(",", "").toLong()
+    val salePrice = sPrice.replace("원", "").replace(",", "").toLong()
     val percent = ((originPrice - salePrice) / originPrice) * 100
     text = "$percent%"
 }
