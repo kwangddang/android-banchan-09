@@ -11,7 +11,6 @@
         android:id="@+id/layout_best"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:context=".ui.home.best.BestFragment" />
 </layout>
