@@ -6,10 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.data.remote.dto.BestFood
 import com.woowa.banchan.data.remote.dto.BestFoodCategory
 import com.woowa.banchan.data.remote.dto.FoodItem
-import com.woowa.banchan.databinding.BestRecyclerviewBinding
-import com.woowa.banchan.databinding.ItemBestBinding
-import com.woowa.banchan.databinding.ItemBestHeaderBinding
-import com.woowa.banchan.databinding.ItemHomeHeaderBinding
+import com.woowa.banchan.databinding.*
 
 class BestAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -19,7 +16,7 @@ class BestAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return when (viewType) {
             HOME_HEADER -> HomeHeaderViewHolder(ItemHomeHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             BEST_HEADER -> BestHeaderViewHolder(ItemBestHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-            else -> BestRecyclerViewViewHolder(BestRecyclerviewBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            else -> BestRecyclerViewViewHolder(ItemBestRecyclerviewBinding.inflate(LayoutInflater.from(parent.context), parent, false))
         }
     }
 
@@ -63,7 +60,7 @@ class BestHeaderViewHolder(private val binding: ItemBestHeaderBinding) : Recycle
     }
 }
 
-class BestRecyclerViewViewHolder(private val binding: BestRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root) {
+class BestRecyclerViewViewHolder(private val binding: ItemBestRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(categoryFood: List<FoodItem>) {
         binding.layoutBest.adapter = BestItemAdapter(categoryFood)
     }

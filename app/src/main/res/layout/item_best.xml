@@ -68,6 +68,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_content"
+            app:nPrice="@{food.nPrice}"
+            app:sPrice="@{food.sPrice}"
             tools:text="20%" />
 
         <TextView
@@ -89,10 +91,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingTop="8dp"
-            android:text="@{food.nPrice}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_percent"
+            app:originPrice="@{food.nPrice}"
             tools:text="15,800원" />
 
 
