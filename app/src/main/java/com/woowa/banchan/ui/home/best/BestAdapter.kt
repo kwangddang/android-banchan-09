@@ -44,13 +44,9 @@ class BestAdapter : ListAdapter<BestFoodCategory,RecyclerView.ViewHolder>(diffUt
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
             HOME_HEADER -> (holder as HomeHeaderViewHolder).bind()
-            BEST_HEADER -> (holder as BestHeaderViewHolder).bind(getItem(position / 2))
-            else -> (holder as BestRecyclerViewViewHolder).bind(getItem(position / 2 - 1).items)
+            BEST_HEADER -> (holder as BestHeaderViewHolder).bind(getItem(position))
+            else -> (holder as BestRecyclerViewViewHolder).bind(getItem(position).items)
         }
-    }
-
-    override fun getItemCount(): Int {
-        return currentList.size * 2 + 1
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -62,6 +58,16 @@ class BestAdapter : ListAdapter<BestFoodCategory,RecyclerView.ViewHolder>(diffUt
             else
                 BEST
         }
+    }
+
+    fun submitHeaderList(list: List<BestFoodCategory>) {
+        val newList = mutableListOf<BestFoodCategory?>()
+        newList.add(null)
+        for(category in list) {
+            newList.add(category)
+            newList.add(category)
+        }
+        submitList(newList)
     }
 
     companion object {

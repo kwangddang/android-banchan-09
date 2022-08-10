@@ -1,6 +1,7 @@
 package com.woowa.banchan.ui.home.best
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,7 +58,7 @@ class BestFragment : Fragment() {
         viewModel.bestUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { state ->
                 if(state is UiState.Success) {
-                    bestAdapter.submitList((state.data as BestFood).body)
+                    bestAdapter.submitHeaderList((state.data as BestFood).body)
                 } else if(state is UiState.Error) {
                     showToast(state.message)
                 }
