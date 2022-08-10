@@ -12,7 +12,9 @@ import com.woowa.banchan.ui.home.best.BestFragment
 import com.woowa.banchan.ui.home.main.MainFragment
 import com.woowa.banchan.ui.home.side.SideFragment
 import com.woowa.banchan.ui.home.soup.SoupFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
