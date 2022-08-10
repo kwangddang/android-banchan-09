@@ -47,7 +47,7 @@ object NetworkModule {
 
     private fun create(retrofitBuilder: Retrofit.Builder): BanchanService {
         return retrofitBuilder
-            .baseUrl("")
+            .baseUrl(BuildConfig.BASE_URL)
             .build()
             .create(BanchanService::class.java)
     }
