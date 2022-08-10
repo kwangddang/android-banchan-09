@@ -13,6 +13,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_best"
+        tools:listitem="@layout/item_home"
         tools:context=".ui.home.best.BestFragment" />
 </layout>

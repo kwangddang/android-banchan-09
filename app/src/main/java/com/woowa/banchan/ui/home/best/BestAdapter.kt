@@ -7,6 +7,7 @@ import com.woowa.banchan.data.remote.dto.BestFood
 import com.woowa.banchan.data.remote.dto.BestFoodCategory
 import com.woowa.banchan.data.remote.dto.FoodItem
 import com.woowa.banchan.databinding.*
+import com.woowa.banchan.ui.home.HomeItemAdapter
 
 class BestAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -22,7 +23,7 @@ class BestAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder.itemViewType) {
-            HOME_HEADER -> (holder as HomeHeaderViewHolder)
+            HOME_HEADER -> (holder as HomeHeaderViewHolder).bind()
             BEST_HEADER -> (holder as BestHeaderViewHolder).bind(bestFood.body[position / 2])
             else -> (holder as BestRecyclerViewViewHolder).bind(bestFood.body[position / 2 - 1].items)
         }
@@ -51,7 +52,9 @@ class BestAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 }
 
 class HomeHeaderViewHolder(private val binding: ItemHomeHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
-
+    fun bind() {
+        binding.title = "한 번 주문하면\n두 번 반하는 반찬들"
+    }
 }
 
 class BestHeaderViewHolder(private val binding: ItemBestHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -62,25 +65,6 @@ class BestHeaderViewHolder(private val binding: ItemBestHeaderBinding) : Recycle
 
 class BestRecyclerViewViewHolder(private val binding: ItemBestRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(categoryFood: List<FoodItem>) {
-        binding.layoutBest.adapter = BestItemAdapter(categoryFood)
-    }
-}
-
-class BestItemAdapter(private val categoryFood: List<FoodItem>): RecyclerView.Adapter<BestItemViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BestItemViewHolder {
-        return BestItemViewHolder(ItemBestBinding.inflate(LayoutInflater.from(parent.context),parent,false))
-    }
-
-    override fun onBindViewHolder(holder: BestItemViewHolder, position: Int) {
-        holder.bind(categoryFood[position])
-    }
-
-    override fun getItemCount(): Int = categoryFood.size
-}
-
-class BestItemViewHolder(private val binding: ItemBestBinding) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(food: FoodItem) {
-        binding.food = food
+        binding.layoutBest.adapter = HomeItemAdapter(categoryFood)
     }
 }
