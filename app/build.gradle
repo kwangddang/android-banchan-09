@@ -40,7 +40,7 @@ android {
 
     def base_url = properties.getProperty("BASE_URL")
 
-    defaultConfig{
+    defaultConfig {
         buildConfigField "String", 'BASE_URL', base_url
     }
 }
@@ -64,6 +64,7 @@ dependencies {
     //Hilt
     implementation "com.google.dagger:hilt-android:${hilt_version}"
     kapt "com.google.dagger:hilt-android-compiler:${hilt_version}"
+    implementation "androidx.hilt:hilt-navigation-fragment:1.0.0"
 
     implementation "androidx.core:core-ktx:$androidx_core"
     implementation "androidx.appcompat:appcompat:$androidx_accompat"
