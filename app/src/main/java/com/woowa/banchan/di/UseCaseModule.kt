@@ -22,7 +22,7 @@ abstract class UseCaseModule {
 
     @Singleton
     @Binds
-    abstract fun provideGetFoodsUseCase(
+    abstract fun provideGetBestFoodsUseCase(
         GetBestFoodsUseCaseImpl: GetBestFoodsUseCaseImpl
     ): GetBestFoodsUseCase
 }
