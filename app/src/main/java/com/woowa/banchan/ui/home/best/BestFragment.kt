@@ -13,6 +13,7 @@ import com.woowa.banchan.R
 import com.woowa.banchan.data.remote.dto.BestFood
 import com.woowa.banchan.databinding.FragmentBestBinding
 import com.woowa.banchan.domain.UiState
+import com.woowa.banchan.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -57,6 +58,8 @@ class BestFragment : Fragment() {
                 if(state is UiState.Success) {
                     bestAdapter.bestFood = state.data as BestFood
                     bestAdapter.notifyDataSetChanged()
+                } else if(state is UiState.Error) {
+                    showToast(state.message)
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
