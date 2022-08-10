@@ -7,9 +7,15 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
+import com.woowa.banchan.data.remote.dto.BestFood
 import com.woowa.banchan.databinding.FragmentBestBinding
+import com.woowa.banchan.domain.UiState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class BestFragment : Fragment() {
@@ -17,6 +23,10 @@ class BestFragment : Fragment() {
     private lateinit var binding: FragmentBestBinding
 
     private val viewModel: BestViewModel by viewModels()
+
+    private val bestAdapter: BestAdapter by lazy {
+        BestAdapter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +38,27 @@ class BestFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initAdapter()
+        initViews()
+        initObserve()
+    }
+
+    private fun initAdapter() {
+        binding.layoutBest.adapter = bestAdapter
+    }
+
+    private fun initViews() {
+        viewModel.getBestFoods()
+    }
+
+    private fun initObserve() {
+        viewModel.bestUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach { state ->
+                if(state is UiState.Success) {
+                    bestAdapter.bestFood = state.data as BestFood
+                    bestAdapter.notifyDataSetChanged()
+                }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
 }

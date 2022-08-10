@@ -17,7 +17,7 @@ data class FoodItem(
     @SerializedName("image")
     val image: String,
     @SerializedName("n_price")
-    val nPrice: String,
+    val nPrice: String?,
     @SerializedName("s_price")
     val sPrice: String,
     @SerializedName("title")

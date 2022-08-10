@@ -1,6 +1,5 @@
 package com.woowa.banchan.ui.home.best
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.woowa.banchan.domain.UiState
@@ -17,13 +16,13 @@ class BestViewModel @Inject constructor(
     private val getBestFoodsUseCase: GetBestFoodsUseCase
 ) : ViewModel() {
 
-    private var _best = MutableStateFlow<UiState>(UiState.Empty)
-    val best: StateFlow<UiState> get() = _best.asStateFlow()
+    private var _bestUiState = MutableStateFlow<UiState>(UiState.Empty)
+    val bestUiState: StateFlow<UiState> get() = _bestUiState.asStateFlow()
 
     fun getBestFoods() {
         viewModelScope.launch {
             getBestFoodsUseCase().collect { uiState ->
-                _best.emit(uiState)
+                _bestUiState.emit(uiState)
             }
         }
     }
