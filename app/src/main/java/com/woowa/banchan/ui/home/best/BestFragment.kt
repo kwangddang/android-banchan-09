@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.woowa.banchan.R
+import com.woowa.banchan.data.remote.dto.BestFood
+import com.woowa.banchan.data.remote.dto.BestFoodCategory
+import com.woowa.banchan.data.remote.dto.FoodItem
 import com.woowa.banchan.databinding.FragmentBestBinding
 
 class BestFragment : Fragment() {
@@ -22,7 +25,5 @@ class BestFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.layoutBest.adapter = BestAdapter()
-
     }
 }

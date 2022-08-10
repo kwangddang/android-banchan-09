@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="food"
+            type="com.woowa.banchan.data.remote.dto.FoodItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +21,7 @@
             android:layout_height="168dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:background="@color/main" />
+            android:background="@color/main" />
 
         <ImageView
             android:id="@+id/iv_cart"
@@ -41,6 +43,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:paddingTop="8dp"
+            android:text="@{food.title}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_thumbnail"
@@ -52,6 +55,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingVertical="8dp"
+            android:text="@{food.description}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title"
@@ -72,6 +76,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingStart="4dp"
+            android:text="@{food.sPrice}"
             app:layout_constraintStart_toEndOf="@id/tv_percent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_percent"
@@ -84,6 +89,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingTop="8dp"
+            android:text="@{food.nPrice}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_percent"
