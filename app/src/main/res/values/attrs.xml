@@ -3,10 +3,10 @@
 
     <declare-styleable name="CustomToolbar">
         <attr name="toolbarTitle" format="string" />
-        <attr name="onBackClick" format="string" />
-        <attr name="onCartClick" format="string" />
-        <attr name="onUserClick" format="string" />
-        <attr name="onRefreshClick" format="string" />
+        <attr name="onClickBackIcon" format="string" />
+        <attr name="onClickCartIcon" format="string" />
+        <attr name="onClickUserIcon" format="string" />
+        <attr name="onClickRefreshIcon" format="string" />
 
         <attr name="toolBarType">
             <flag name="main" value="0x00" />
