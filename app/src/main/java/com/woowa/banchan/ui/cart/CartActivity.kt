@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentContainerView
 import com.woowa.banchan.R
+import com.woowa.banchan.ui.cart.cart.CartFragment
 import com.woowa.banchan.ui.cart.recent.RecentFragment
 import com.woowa.banchan.ui.common.custom.CustomToolbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,6 +51,12 @@ class CartActivity : AppCompatActivity() {
                     }
                 ).apply { if (it == getString(R.string.fragment_recent)) addToBackStack(it) }
                 .commitAllowingStateLoss()
+            toolbar.setAppBarTitle(
+                when (it) {
+                    getString(R.string.fragment_cart) -> "Cart"
+                    else -> "Recently viewed products"
+                }
+            )
         }
     }
 
@@ -58,7 +65,7 @@ class CartActivity : AppCompatActivity() {
         val currentFragment = viewModel.fragmentTag.value
         currentFragment?.apply {
             if (this == getString(R.string.fragment_cart)) finish()
-            else supportFragmentManager.popBackStack()
+            else viewModel.setFragmentTag(getString(R.string.fragment_cart))
         }
     }
 }

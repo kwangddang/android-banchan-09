@@ -1,4 +1,4 @@
-package com.woowa.banchan.ui.cart
+package com.woowa.banchan.ui.cart.cart
 
 import android.os.Bundle
 import android.view.LayoutInflater
