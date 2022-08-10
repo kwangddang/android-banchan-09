@@ -10,8 +10,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/layout_best"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingHorizontal="16dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_home"
         tools:context=".ui.home.best.BestFragment" />
 </layout>

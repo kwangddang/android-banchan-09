@@ -9,4 +9,8 @@
     <string name="fragment_main">main</string>
     <string name="fragment_soup">soup</string>
     <string name="fragment_side">side</string>
+    <string name="badge">기획전</string>
+
+    <!--Header Title-->
+    <string name="best_title">한 번 주문하면\n두 번 반하는 반찬들</string>
 </resources>
