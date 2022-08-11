@@ -20,9 +20,9 @@ class MainViewModel @Inject constructor(
     private var _mainUiState = MutableStateFlow<UiState<Food>>(UiState.Empty)
     val mainUiState: StateFlow<UiState<Food>> get() = _mainUiState.asStateFlow()
 
-    fun getBestFoods(type: String = "main") {
+    fun getMainFoods() {
         viewModelScope.launch {
-            getFoodsUseCase(type).collect { uiState ->
+            getFoodsUseCase("main").collect { uiState ->
                 _mainUiState.emit(uiState)
             }
         }

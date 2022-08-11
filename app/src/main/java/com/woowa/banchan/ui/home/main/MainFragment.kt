@@ -1,7 +1,6 @@
 package com.woowa.banchan.ui.home.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,7 +64,7 @@ class MainFragment : Fragment() {
     }
 
     private fun initViews() {
-        viewModel.getBestFoods()
+        viewModel.getMainFoods()
     }
 
     private fun initObserve() {
