@@ -57,7 +57,7 @@ class BestFragment : Fragment() {
         viewModel.bestUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { state ->
                 if (state is UiState.Success) {
-                    bestAdapter.submitHeaderList((state.data as BestFood).body)
+                    bestAdapter.submitHeaderList((state.data).body)
                 } else if (state is UiState.Error) {
                     showToast(state.message)
                 }
