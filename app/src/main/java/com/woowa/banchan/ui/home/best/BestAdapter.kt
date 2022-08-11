@@ -11,7 +11,8 @@ import com.woowa.banchan.data.remote.dto.FoodItem
 import com.woowa.banchan.databinding.ItemBestHeaderBinding
 import com.woowa.banchan.databinding.ItemBestRecyclerviewBinding
 import com.woowa.banchan.databinding.ItemHomeHeaderBinding
-import com.woowa.banchan.ui.home.HomeItemAdapter
+import com.woowa.banchan.ui.home.adapter.HomeItemAdapter
+import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 
 class BestAdapter : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(diffUtil) {
 
@@ -43,7 +44,7 @@ class BestAdapter : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(diffU
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
-            HOME_HEADER -> (holder as HomeHeaderViewHolder).bind()
+            HOME_HEADER -> (holder as HomeHeaderViewHolder).bind("한 번 주문하면\n두 번 반하는 반찬들", true)
             BEST_HEADER -> (holder as BestHeaderViewHolder).bind(getItem(position))
             else -> (holder as BestRecyclerViewViewHolder).bind(getItem(position).items)
         }
@@ -84,13 +85,6 @@ class BestAdapter : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(diffU
                 return oldItem.categoryId == newItem.categoryId
             }
         }
-    }
-}
-
-class HomeHeaderViewHolder(private val binding: ItemHomeHeaderBinding) :
-    RecyclerView.ViewHolder(binding.root) {
-    fun bind() {
-        binding.tvTitle.apply { text = this.context.getString(R.string.best_title) }
     }
 }
 
