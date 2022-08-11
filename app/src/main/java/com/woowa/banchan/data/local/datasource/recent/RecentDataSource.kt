@@ -1,3 +1,8 @@
 package com.woowa.banchan.data.local.datasource.recent
 
-interface RecentDataSource
+import com.woowa.banchan.data.local.entity.RecentDto
+
+interface RecentDataSource {
+
+    suspend fun getRecentList(): Result<List<RecentDto>>
+}

@@ -1,9 +1,11 @@
 package com.woowa.banchan.di
 
 import com.woowa.banchan.data.local.repository.CartRepositoryImpl
+import com.woowa.banchan.data.local.repository.RecentRepositoryImpl
 import com.woowa.banchan.data.remote.repository.FoodRepositoryImpl
 import com.woowa.banchan.domain.repository.CartRepository
 import com.woowa.banchan.domain.repository.FoodRepository
+import com.woowa.banchan.domain.repository.RecentRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -25,4 +27,10 @@ abstract class RepositoryModule {
     abstract fun provideCartRepository(
         cartRepository: CartRepositoryImpl
     ): CartRepository
+
+    @Singleton
+    @Binds
+    abstract fun provideRecentRepository(
+        recentRepository: RecentRepositoryImpl
+    ): RecentRepository
 }
