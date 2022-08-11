@@ -1,6 +1,5 @@
 package com.woowa.banchan.ui.home
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -9,7 +8,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ActivityHomeBinding
-import com.woowa.banchan.ui.cart.CartActivity
 import com.woowa.banchan.ui.home.best.BestFragment
 import com.woowa.banchan.ui.home.main.MainFragment
 import com.woowa.banchan.ui.home.side.SideFragment
@@ -27,7 +25,6 @@ class HomeActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         initAdapter()
         initTabLayoutMediator()
-        startActivity(Intent(this, CartActivity::class.java))
     }
 
     private fun initAdapter() {

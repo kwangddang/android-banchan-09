@@ -76,11 +76,17 @@ class BestAdapter : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(diffU
         const val BEST = 3
 
         val diffUtil = object : DiffUtil.ItemCallback<BestFoodCategory>() {
-            override fun areItemsTheSame(oldItem: BestFoodCategory, newItem: BestFoodCategory): Boolean {
+            override fun areItemsTheSame(
+                oldItem: BestFoodCategory,
+                newItem: BestFoodCategory
+            ): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: BestFoodCategory, newItem: BestFoodCategory): Boolean {
+            override fun areContentsTheSame(
+                oldItem: BestFoodCategory,
+                newItem: BestFoodCategory
+            ): Boolean {
                 return oldItem.categoryId == newItem.categoryId
             }
         }

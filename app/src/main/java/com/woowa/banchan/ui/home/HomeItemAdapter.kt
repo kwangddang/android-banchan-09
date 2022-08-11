@@ -39,7 +39,8 @@ class HomeItemAdapter : ListAdapter<FoodItem, BestItemViewHolder>(diffUtil) {
     }
 }
 
-class BestItemViewHolder(private val binding: ItemHomeBinding) : RecyclerView.ViewHolder(binding.root) {
+class BestItemViewHolder(private val binding: ItemHomeBinding) :
+    RecyclerView.ViewHolder(binding.root) {
 
     fun bind(food: FoodItem) {
         binding.food = food
