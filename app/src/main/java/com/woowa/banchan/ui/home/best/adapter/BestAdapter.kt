@@ -6,16 +6,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.data.remote.dto.BestFoodCategory
-import com.woowa.banchan.data.remote.dto.FoodItem
 import com.woowa.banchan.databinding.ItemBestHeaderBinding
-import com.woowa.banchan.databinding.ItemBestRecyclerviewBinding
 import com.woowa.banchan.databinding.ItemHomeHeaderBinding
-import com.woowa.banchan.ui.home.adapter.HomeItemAdapter
+import com.woowa.banchan.databinding.ItemRecyclerviewBinding
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
-import com.woowa.banchan.utils.SUB_HEADER
 import com.woowa.banchan.utils.HOME_HEADER
 import com.woowa.banchan.utils.HOME_ITEM
+import com.woowa.banchan.utils.LINEAR_HORIZONTAL
+import com.woowa.banchan.utils.SUB_HEADER
 
 class BestAdapter : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(diffUtil) {
 
@@ -36,7 +35,7 @@ class BestAdapter : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(diffU
                 )
             )
             else -> HomeRecyclerViewViewHolder(
-                ItemBestRecyclerviewBinding.inflate(
+                ItemRecyclerviewBinding.inflate(
                     LayoutInflater.from(
                         parent.context
                     ), parent, false
@@ -49,7 +48,7 @@ class BestAdapter : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(diffU
         when (holder.itemViewType) {
             HOME_HEADER -> (holder as HomeHeaderViewHolder).bind("한 번 주문하면\n두 번 반하는 반찬들", true)
             SUB_HEADER -> (holder as BestHeaderViewHolder).bind(getItem(position))
-            else -> (holder as HomeRecyclerViewViewHolder).bind(getItem(position).items)
+            else -> (holder as HomeRecyclerViewViewHolder).bind(getItem(position).items, LINEAR_HORIZONTAL)
         }
     }
 

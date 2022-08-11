@@ -6,11 +6,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.data.remote.dto.Food
-import com.woowa.banchan.databinding.ItemBestRecyclerviewBinding
 import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 import com.woowa.banchan.databinding.ItemMainHeaderBinding
+import com.woowa.banchan.databinding.ItemRecyclerviewBinding
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
+import com.woowa.banchan.utils.GRID
 import com.woowa.banchan.utils.HOME_HEADER
 import com.woowa.banchan.utils.HOME_ITEM
 import com.woowa.banchan.utils.SUB_HEADER
@@ -34,7 +35,7 @@ class MainAdapter : ListAdapter<Food, RecyclerView.ViewHolder>(diffUtil) {
                 )
             )
             else -> HomeRecyclerViewViewHolder(
-                ItemBestRecyclerviewBinding.inflate(
+                ItemRecyclerviewBinding.inflate(
                     LayoutInflater.from(
                         parent.context
                     ), parent, false
@@ -45,9 +46,9 @@ class MainAdapter : ListAdapter<Food, RecyclerView.ViewHolder>(diffUtil) {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
-            HOME_HEADER -> (holder as HomeHeaderViewHolder).bind("한 번 주문하면\n두 번 반하는 반찬들", true)
+            HOME_HEADER -> (holder as HomeHeaderViewHolder).bind("모두가 좋아하는\n든든한 메인 요리", false)
             SUB_HEADER -> (holder as MainHeaderViewHolder)
-            else -> (holder as HomeRecyclerViewViewHolder).bind(getItem(position).body)
+            else -> (holder as HomeRecyclerViewViewHolder).bind(getItem(position).body, GRID)
         }
     }
 
@@ -57,6 +58,14 @@ class MainAdapter : ListAdapter<Food, RecyclerView.ViewHolder>(diffUtil) {
             1 -> SUB_HEADER
             else -> HOME_ITEM
         }
+    }
+
+    fun submitHeaderList(food: Food) {
+        val newList = mutableListOf<Food?>()
+        newList.add(null)
+        newList.add(null)
+        newList.add(food)
+        submitList(newList)
     }
 
     companion object {
