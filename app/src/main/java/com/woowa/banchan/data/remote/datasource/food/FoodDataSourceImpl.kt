@@ -8,6 +8,7 @@ import javax.inject.Inject
 class FoodDataSourceImpl @Inject constructor(
     private val banchanService: BanchanService
 ) : FoodDataSource {
+
     override suspend fun getBestFoods(): BestFood =
         banchanService.getBestFoods()
 
