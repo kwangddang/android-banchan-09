@@ -11,8 +11,9 @@ import com.woowa.banchan.utils.LINEAR_VERTICAL
 
 class HomeRecyclerViewViewHolder(private val binding: ItemRecyclerviewBinding) :
     RecyclerView.ViewHolder(binding.root) {
+
     fun bind(food: List<FoodItem>, managerType: Int) {
-        val adapter = HomeItemAdapter()
+        val adapter = HomeItemAdapter(managerType)
         binding.layoutBest.apply {
             layoutManager = when (managerType) {
                 LINEAR_HORIZONTAL -> LinearLayoutManager(this.context,LinearLayoutManager.HORIZONTAL, false)

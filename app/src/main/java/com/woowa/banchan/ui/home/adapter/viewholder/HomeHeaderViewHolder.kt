@@ -6,6 +6,7 @@ import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 
 class HomeHeaderViewHolder(private val binding: ItemHomeHeaderBinding) :
     RecyclerView.ViewHolder(binding.root) {
+
     fun bind(text: String, isBadge: Boolean) {
         binding.title = text
         if(isBadge) {
