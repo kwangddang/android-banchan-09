@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
-import com.woowa.banchan.data.remote.dto.BestFood
 import com.woowa.banchan.databinding.FragmentBestBinding
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.home.best.adapter.BestAdapter

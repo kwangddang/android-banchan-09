@@ -9,7 +9,7 @@ class HomeHeaderViewHolder(private val binding: ItemHomeHeaderBinding) :
 
     fun bind(text: String, isBadge: Boolean) {
         binding.title = text
-        if(isBadge) {
+        if (isBadge) {
             binding.tvBadge.visibility = View.VISIBLE
         } else {
             binding.tvBadge.visibility = View.GONE

@@ -26,14 +26,14 @@ class MainFragment : Fragment() {
 
     private lateinit var binding: FragmentMainBinding
 
-    private val viewModel : MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels()
 
     private val mainAdapter: MainAdapter by lazy {
         MainAdapter(checkedChangeListener)
     }
 
     private val checkedChangeListener: (RadioGroup, Int) -> Unit = { group, checkedId ->
-        when(checkedId) {
+        when (checkedId) {
             R.id.btn_grid -> {
                 mainAdapter.managerType = GRID
             }

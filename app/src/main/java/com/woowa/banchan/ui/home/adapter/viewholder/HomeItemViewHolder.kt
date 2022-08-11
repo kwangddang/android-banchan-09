@@ -9,9 +9,9 @@ import com.woowa.banchan.databinding.ItemMainBinding
 class HomeItemViewHolder(private val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(food: FoodItem) {
-        if(binding is ItemHomeBinding)
+        if (binding is ItemHomeBinding)
             binding.food = food
-        else if(binding is ItemMainBinding)
+        else if (binding is ItemMainBinding)
             binding.food = food
     }
 }

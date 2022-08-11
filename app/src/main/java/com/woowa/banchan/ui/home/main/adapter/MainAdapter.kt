@@ -88,7 +88,7 @@ class MainAdapter(private val checkedChangeListener: (RadioGroup, Int) -> Unit) 
 class MainHeaderViewHolder(private val binding: ItemMainHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(checkedChangeListener: (RadioGroup, Int) -> Unit) {
         binding.rgManager.setOnCheckedChangeListener { group, checkedId ->
-            checkedChangeListener(group,checkedId)
+            checkedChangeListener(group, checkedId)
         }
     }
 }
