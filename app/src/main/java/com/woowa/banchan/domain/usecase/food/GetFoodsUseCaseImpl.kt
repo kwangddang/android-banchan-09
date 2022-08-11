@@ -1,6 +1,6 @@
 package com.woowa.banchan.domain.usecase.food
 
-import com.woowa.banchan.domain.UiState
+import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.domain.repository.FoodRepository
 import com.woowa.banchan.domain.usecase.food.inter.GetFoodsUseCase
 import kotlinx.coroutines.Dispatchers

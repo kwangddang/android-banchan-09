@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.data.remote.dto.BestFood
 import com.woowa.banchan.databinding.FragmentBestBinding
-import com.woowa.banchan.domain.UiState
+import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn

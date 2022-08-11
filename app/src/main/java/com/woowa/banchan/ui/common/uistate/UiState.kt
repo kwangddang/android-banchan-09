@@ -1,4 +1,4 @@
-package com.woowa.banchan.domain
+package com.woowa.banchan.ui.common.uistate
 
 sealed class UiState {
 

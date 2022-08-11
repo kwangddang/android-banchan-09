@@ -2,7 +2,7 @@ package com.woowa.banchan.ui.home.best
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.woowa.banchan.domain.UiState
+import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.domain.usecase.food.inter.GetBestFoodsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

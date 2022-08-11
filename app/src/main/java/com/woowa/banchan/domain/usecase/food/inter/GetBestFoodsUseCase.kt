@@ -1,6 +1,6 @@
 package com.woowa.banchan.domain.usecase.food.inter
 
-import com.woowa.banchan.domain.UiState
+import com.woowa.banchan.ui.common.uistate.UiState
 import kotlinx.coroutines.flow.Flow
 
 interface GetBestFoodsUseCase {
