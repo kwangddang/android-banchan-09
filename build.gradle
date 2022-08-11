@@ -9,6 +9,7 @@ buildscript {
         room_version = "2.4.3"
         retrofit_version = "2.9.0"
         okhttp_version = "4.10.0"
+        glide_version = '4.13.2'
 
         junit = '4.13.2'
         androidx_junit = '1.1.3'

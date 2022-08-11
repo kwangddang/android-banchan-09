@@ -9,9 +9,14 @@ import javax.inject.Inject
 class FoodRepositoryImpl @Inject constructor(
     private val foodDataSource: FoodDataSource
 ) : FoodRepository {
-    override suspend fun getBestFoods(): BestFood =
-        foodDataSource.getBestFoods()
 
-    override suspend fun getFoods(type: String): Food =
-        foodDataSource.getFoods(type)
+    override suspend fun getBestFoods(): Result<BestFood> =
+        runCatching {
+            foodDataSource.getBestFoods()
+        }
+
+    override suspend fun getFoods(type: String): Result<Food> =
+        runCatching {
+            foodDataSource.getFoods(type)
+        }
 }
