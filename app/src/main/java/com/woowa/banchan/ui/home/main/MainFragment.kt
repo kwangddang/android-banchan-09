@@ -1,9 +1,11 @@
 package com.woowa.banchan.ui.home.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,6 +15,8 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMainBinding
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.home.main.adapter.MainAdapter
+import com.woowa.banchan.utils.GRID
+import com.woowa.banchan.utils.LINEAR_VERTICAL
 import com.woowa.banchan.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -26,7 +30,19 @@ class MainFragment : Fragment() {
     private val viewModel : MainViewModel by viewModels()
 
     private val mainAdapter: MainAdapter by lazy {
-        MainAdapter()
+        MainAdapter(checkedChangeListener)
+    }
+
+    private val checkedChangeListener: (RadioGroup, Int) -> Unit = { group, checkedId ->
+        when(checkedId) {
+            R.id.btn_grid -> {
+                mainAdapter.managerType = GRID
+            }
+            R.id.btn_linear -> {
+                mainAdapter.managerType = LINEAR_VERTICAL
+            }
+        }
+        mainAdapter.notifyItemChanged(2)
     }
 
     override fun onCreateView(

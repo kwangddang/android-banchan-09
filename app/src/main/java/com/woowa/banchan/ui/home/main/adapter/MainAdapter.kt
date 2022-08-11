@@ -2,6 +2,7 @@ package com.woowa.banchan.ui.home.main.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.RadioGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +17,9 @@ import com.woowa.banchan.utils.HOME_HEADER
 import com.woowa.banchan.utils.HOME_ITEM
 import com.woowa.banchan.utils.SUB_HEADER
 
-class MainAdapter : ListAdapter<Food, RecyclerView.ViewHolder>(diffUtil) {
+class MainAdapter(private val checkedChangeListener: (RadioGroup, Int) -> Unit) : ListAdapter<Food, RecyclerView.ViewHolder>(diffUtil) {
+
+    var managerType = GRID
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -47,8 +50,8 @@ class MainAdapter : ListAdapter<Food, RecyclerView.ViewHolder>(diffUtil) {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
             HOME_HEADER -> (holder as HomeHeaderViewHolder).bind("모두가 좋아하는\n든든한 메인 요리", false)
-            SUB_HEADER -> (holder as MainHeaderViewHolder)
-            else -> (holder as HomeRecyclerViewViewHolder).bind(getItem(position).body, GRID)
+            SUB_HEADER -> (holder as MainHeaderViewHolder).bind(checkedChangeListener)
+            else -> (holder as HomeRecyclerViewViewHolder).bind(getItem(position).body, managerType)
         }
     }
 
@@ -82,4 +85,10 @@ class MainAdapter : ListAdapter<Food, RecyclerView.ViewHolder>(diffUtil) {
     }
 }
 
-class MainHeaderViewHolder(private val binding: ItemMainHeaderBinding) : RecyclerView.ViewHolder(binding.root) {}
+class MainHeaderViewHolder(private val binding: ItemMainHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
+    fun bind(checkedChangeListener: (RadioGroup, Int) -> Unit) {
+        binding.rgManager.setOnCheckedChangeListener { group, checkedId ->
+            checkedChangeListener(group,checkedId)
+        }
+    }
+}
