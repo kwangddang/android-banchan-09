@@ -26,7 +26,7 @@ fun TextView.setOriginPrice(nPrice: String?, sPrice: String) {
     if (nPrice == null)
         text = ""
     else
-        text = sPrice
+        text = nPrice
 }
 
 @BindingAdapter("image")
