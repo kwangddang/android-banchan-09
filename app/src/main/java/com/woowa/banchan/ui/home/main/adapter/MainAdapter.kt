@@ -1,5 +1,6 @@
 package com.woowa.banchan.ui.home.main.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.RadioGroup
@@ -87,6 +88,7 @@ class MainAdapter(private val checkedChangeListener: (RadioGroup, Int) -> Unit) 
 
 class MainHeaderViewHolder(private val binding: ItemMainHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(checkedChangeListener: (RadioGroup, Int) -> Unit) {
+        binding.spinnerSort.adapter = SpinnerAdapter(binding.spinnerSort.context)
         binding.rgManager.setOnCheckedChangeListener { group, checkedId ->
             checkedChangeListener(group, checkedId)
         }
