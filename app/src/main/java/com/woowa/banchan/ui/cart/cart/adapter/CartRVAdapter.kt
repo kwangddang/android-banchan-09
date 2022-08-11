@@ -5,14 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.woowa.banchan.data.remote.dto.BestFoodCategory
-import com.woowa.banchan.data.remote.dto.FoodItem
 import com.woowa.banchan.databinding.*
+import com.woowa.banchan.domain.model.Cart
+import com.woowa.banchan.domain.model.Recent
+import com.woowa.banchan.domain.model.emptyCart
 import com.woowa.banchan.ui.cart.cart.adapter.viewholder.*
 
-class CartRVAdapter : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(diffUtil) {
+class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
 
-    private var recentPreviewList = listOf<FoodItem>()
+    private var recentPreviewList = listOf<Recent>()
+    private var totalPrice = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -44,7 +46,7 @@ class CartRVAdapter : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(dif
                     ), parent, false
                 )
             )
-            else -> RecentPreviewItemViewHolder(
+            else -> RecentPreviewViewHolder(
                 ItemRecentPreviewBinding.inflate(
                     LayoutInflater.from(
                         parent.context
@@ -58,8 +60,8 @@ class CartRVAdapter : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(dif
         when (holder.itemViewType) {
             CART_CHECK_HEADER -> (holder as CheckHeaderViewHolder).bind()
             CART_CONTENT -> (holder as CartContentViewHolder).bind(getItem(position))
-            CART_TOTAL_PRICE -> (holder as TotalPriceViewHolder).bind(getItem(position))
-            CART_FOOTER_BTN -> (holder as CartFooterBtnViewHolder).bind(getItem(position))
+            CART_TOTAL_PRICE -> (holder as TotalPriceViewHolder).bind(totalPrice)
+            CART_FOOTER_BTN -> (holder as CartFooterBtnViewHolder).bind(totalPrice)
             else -> (holder as RecentPreviewViewHolder).bind(recentPreviewList)
         }
     }
@@ -76,12 +78,20 @@ class CartRVAdapter : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(dif
         }
     }
 
-    fun setPreviewList(recentItems: List<FoodItem>) {
+    fun setPreviewList(recentItems: List<Recent>) {
         this.recentPreviewList = recentItems
     }
 
-    fun submitHeaderList(list: List<BestFoodCategory>) {
-        submitList(list)
+    fun submitCartList(list: List<Cart>) {
+        // 첫번째, 마지막, 마지막-1,마지막-2
+        val newList = mutableListOf<Cart?>()
+
+        newList.add(null)
+        if (list.isEmpty()) newList.add(emptyCart())
+        else list.forEach { newList.add(it) }
+        repeat(3) { newList.add(null) }
+
+        submitList(newList)
     }
 
     companion object {
@@ -91,20 +101,12 @@ class CartRVAdapter : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(dif
         const val CART_FOOTER_BTN = 3
         const val RECENT_PREVIEW = 4
 
-        val diffUtil = object : DiffUtil.ItemCallback<BestFoodCategory>() {
-            override fun areItemsTheSame(
-                oldItem: BestFoodCategory,
-                newItem: BestFoodCategory
-            ): Boolean {
-                return oldItem == newItem
-            }
+        val diffUtil = object : DiffUtil.ItemCallback<Cart>() {
+            override fun areItemsTheSame(oldItem: Cart, newItem: Cart): Boolean =
+                oldItem == newItem
 
-            override fun areContentsTheSame(
-                oldItem: BestFoodCategory,
-                newItem: BestFoodCategory
-            ): Boolean {
-                return oldItem.categoryId == newItem.categoryId
-            }
+            override fun areContentsTheSame(oldItem: Cart, newItem: Cart): Boolean =
+                oldItem.hash == newItem.hash
         }
     }
 }

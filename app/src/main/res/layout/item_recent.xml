@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="food"
-            type="com.woowa.banchan.data.remote.dto.FoodItem" />
+            name="recent"
+            type="com.woowa.banchan.domain.model.Recent" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,6 +21,7 @@
             android:layout_width="168dp"
             android:layout_height="168dp"
             android:background="@color/main"
+            app:image="@{recent.imageUrl}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +46,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:paddingTop="8dp"
-            android:text="@{food.title}"
+            android:text="@{recent.title}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_thumbnail"
@@ -56,9 +57,9 @@
             style="@style/normal_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{food.sPrice}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:price="@{recent.sPrice}"
             tools:text="12,640원" />
 
         <TextView
@@ -71,6 +72,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_s_price"
             app:layout_constraintTop_toTopOf="@id/tv_s_price"
+            app:originPrice="@{recent.nPrice}"
             tools:text="15,800원" />
 
         <TextView
@@ -81,6 +83,7 @@
             android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_s_price"
+            app:viewedDate="@{recent.time}"
             tools:text="1분 전" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

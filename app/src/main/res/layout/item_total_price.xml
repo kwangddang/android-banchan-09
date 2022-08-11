@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
-            name="beestFoodCategory"
-            type="com.woowa.banchan.data.remote.dto.BestFoodCategory" />
+            name="totalPrice"
+            type="Integer" />
+
+        <variable
+            name="shipping"
+            type="Integer" />
     </data>
 
     <LinearLayout
@@ -43,7 +48,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="18,640원" />
+                    android:text="18,640원"
+                    app:price="@{totalPrice}" />
             </LinearLayout>
 
             <LinearLayout
@@ -64,7 +70,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="2,500원" />
+                    android:text="2,500원"
+                    app:price="@{shipping}" />
             </LinearLayout>
 
             <com.google.android.material.divider.MaterialDivider
@@ -91,7 +98,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="21,140원" />
+                    android:text="21,140원"
+                    app:price="@{shipping+totalPrice}" />
             </LinearLayout>
         </LinearLayout>
 

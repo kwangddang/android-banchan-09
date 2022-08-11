@@ -4,6 +4,11 @@
 
     <data>
 
+        <variable
+            name="cart"
+            type="com.woowa.banchan.domain.model.Cart" />
+
+        <import type="android.view.View" />
     </data>
 
     <LinearLayout
@@ -13,9 +18,23 @@
 
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_empty_notice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:minHeight="100dp"
+            android:text="@string/empty_notice"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_cart_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp">
@@ -30,13 +49,14 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/ic_checked" />
+                    android:src="@drawable/ic_checked"
+                    android:visibility="@{cart.checkState ? View.VISIBLE : View.GONE}" />
 
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_unchecked"
-                    android:visibility="gone" />
+                    android:visibility="@{cart.checkState ? View.GONE : View.VISIBLE}" />
             </LinearLayout>
 
             <ImageView
@@ -45,6 +65,7 @@
                 android:layout_height="80dp"
                 android:layout_marginStart="16dp"
                 android:src="@drawable/ic_close"
+                app:image="@{cart.imageUrl}"
                 app:layout_constraintStart_toEndOf="@id/layout_check_btn"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="6,000원"
+                android:text="@{cart.title}"
                 app:layout_constraintStart_toEndOf="@id/iv_thumbnail"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -64,9 +85,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="6,000원"
                 app:layout_constraintStart_toEndOf="@id/iv_thumbnail"
-                app:layout_constraintTop_toBottomOf="@id/tv_title" />
+                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                app:price="@{cart.price}" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -91,7 +112,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="4dp"
                     android:gravity="center"
-                    android:text="1" />
+                    android:text="@{String.valueOf(cart.count)}" />
 
                 <ImageView
                     android:layout_width="26dp"
@@ -118,10 +139,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="6,000원"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_thumbnail" />
+                app:layout_constraintTop_toBottomOf="@id/iv_thumbnail"
+                app:price="@{cart.count*cart.price}" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </layout>

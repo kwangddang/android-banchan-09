@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.woowa.banchan.data.remote.dto.FoodItem
-import com.woowa.banchan.databinding.ItemRecentPreviewBinding
+import com.woowa.banchan.databinding.ItemRecentBinding
+import com.woowa.banchan.domain.model.Recent
 import com.woowa.banchan.ui.cart.cart.adapter.viewholder.RecentPreviewItemViewHolder
 
-class RecentPreviewRVAdapter : ListAdapter<FoodItem, RecentPreviewItemViewHolder>(diffUtil) {
+class RecentPreviewRVAdapter : ListAdapter<Recent, RecentPreviewItemViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentPreviewItemViewHolder {
         return RecentPreviewItemViewHolder(
-            ItemRecentPreviewBinding.inflate(
+            ItemRecentBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -27,13 +27,13 @@ class RecentPreviewRVAdapter : ListAdapter<FoodItem, RecentPreviewItemViewHolder
 
     companion object {
 
-        val diffUtil = object : DiffUtil.ItemCallback<FoodItem>() {
-            override fun areItemsTheSame(oldItem: FoodItem, newItem: FoodItem): Boolean {
+        val diffUtil = object : DiffUtil.ItemCallback<Recent>() {
+            override fun areItemsTheSame(oldItem: Recent, newItem: Recent): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: FoodItem, newItem: FoodItem): Boolean {
-                return oldItem.detailHash == newItem.detailHash
+            override fun areContentsTheSame(oldItem: Recent, newItem: Recent): Boolean {
+                return oldItem.hash == newItem.hash
             }
         }
     }
