@@ -1,5 +1,7 @@
 package com.woowa.banchan.di
 
+import com.woowa.banchan.domain.usecase.cart.GetCartListUseCaseImpl
+import com.woowa.banchan.domain.usecase.cart.inter.GetCartListUseCase
 import com.woowa.banchan.domain.usecase.food.GetBestFoodsUseCaseImpl
 import com.woowa.banchan.domain.usecase.food.GetFoodsUseCaseImpl
 import com.woowa.banchan.domain.usecase.food.inter.GetBestFoodsUseCase
@@ -25,4 +27,10 @@ abstract class UseCaseModule {
     abstract fun provideGetBestFoodsUseCase(
         GetBestFoodsUseCaseImpl: GetBestFoodsUseCaseImpl
     ): GetBestFoodsUseCase
+
+    @Singleton
+    @Binds
+    abstract fun provideGetCartListUseCase(
+        GetCartListUseCase: GetCartListUseCaseImpl
+    ): GetCartListUseCase
 }
