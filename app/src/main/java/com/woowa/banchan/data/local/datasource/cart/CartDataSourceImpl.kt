@@ -8,6 +8,6 @@ class CartDataSourceImpl @Inject constructor(
     private val cartDao: CartDao
 ) : CartDataSource {
 
-    override fun getCartList(): Result<List<CartDto>> =
+    override suspend fun getCartList(): Result<List<CartDto>> =
         runCatching { cartDao.getCartList() }
 }

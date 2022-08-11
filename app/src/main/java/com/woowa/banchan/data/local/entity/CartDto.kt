@@ -16,4 +16,11 @@ data class CartDto(
     @ColumnInfo(name = "image_url") val imageUrl: String,
 )
 
-fun CartDto.toCart(): Cart = Cart()
+fun CartDto.toCart(): Cart = Cart(
+    hash = hash,
+    checkState = checkState,
+    price = price,
+    count = count,
+    title = title,
+    imageUrl = imageUrl
+)

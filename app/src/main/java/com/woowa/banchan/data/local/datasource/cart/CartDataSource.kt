@@ -4,5 +4,5 @@ import com.woowa.banchan.data.local.entity.CartDto
 
 interface CartDataSource {
 
-    fun getCartList(): Result<List<CartDto>>
+    suspend fun getCartList(): Result<List<CartDto>>
 }
