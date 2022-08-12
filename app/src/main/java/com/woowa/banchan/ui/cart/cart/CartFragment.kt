@@ -1,7 +1,6 @@
 package com.woowa.banchan.ui.cart.cart
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +29,6 @@ class CartFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d("Tester", "onViewCreated: 호출")
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_cart, container, false)
         return binding.root
     }

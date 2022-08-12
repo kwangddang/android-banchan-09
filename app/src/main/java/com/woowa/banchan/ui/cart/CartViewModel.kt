@@ -31,8 +31,8 @@ class CartViewModel @Inject constructor(
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
-            launch { getCartListUseCase.invoke().collect { _cartUiState.emit(it) } }
-            launch { getRecentlyViewedFoodsUseCase.invoke().collect { _recentUiState.emit(it) } }
+            launch { getCartListUseCase().collect { _cartUiState.emit(it) } }
+            launch { getRecentlyViewedFoodsUseCase().collect { _recentUiState.emit(it) } }
         }
     }
 
