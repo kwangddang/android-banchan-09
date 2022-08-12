@@ -12,38 +12,15 @@
         android:layout_height="match_parent"
         tools:context=".ui.home.HomeActivity">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/layout_toolbar"
-            android:layout_width="0dp"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/main"
+        <com.woowa.banchan.ui.common.custom.CustomToolbar
+            android:id="@+id/tb_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/tv_title"
-                style="@style/appbarTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/toolbar_title" />
-
-            <ImageView
-                android:id="@+id/iv_user"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_gravity="end"
-                android:padding="16dp"
-                android:src="@drawable/ic_user" />
-
-            <ImageView
-                android:id="@+id/iv_cart"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_gravity="end"
-                android:padding="16dp"
-                android:src="@drawable/ic_cart" />
-        </com.google.android.material.appbar.MaterialToolbar>
+            app:layout_constraintTop_toTopOf="parent"
+            app:toolBarType="main"
+            app:toolbarTitle="@string/toolbar_title" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/layout_tab"
@@ -51,9 +28,9 @@
             android:layout_height="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_toolbar"
-            app:tabMode="scrollable"
+            app:layout_constraintTop_toBottomOf="@id/tb_main"
             app:tabGravity="fill"
+            app:tabMode="scrollable"
             app:tabTextAppearance="@style/tab" />
 
         <androidx.viewpager2.widget.ViewPager2

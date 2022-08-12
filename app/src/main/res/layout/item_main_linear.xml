@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="food"
+            type="com.woowa.banchan.data.remote.dto.FoodItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="16dp"
+        android:paddingEnd="8dp">
+
+        <ImageView
+            android:id="@+id/iv_thumbnail"
+            android:layout_width="168dp"
+            android:layout_height="168dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:image="@{food.image}"/>
+
+        <ImageView
+            android:id="@+id/iv_cart"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/cart_background"
+            android:elevation="8dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_cart"
+            app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
+            app:layout_constraintEnd_toEndOf="@id/iv_thumbnail" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/normal_14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_marginStart="16dp"
+            android:text="@{food.title}"
+            app:layout_constraintStart_toEndOf="@id/iv_thumbnail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_thumbnail"
+            app:layout_constraintBottom_toTopOf="@id/tv_content"
+            tools:text="오리 주물럭_반조리" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            style="@style/caption_grey"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{food.description}"
+            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintBottom_toTopOf="@id/tv_s_price"
+            tools:text="감칠맛 나는 매콤 양념" />
+
+        <TextView
+            android:id="@+id/tv_percent"
+            style="@style/percent_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="4dp"
+            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_content"
+            app:layout_constraintBottom_toTopOf="@id/tv_n_price"
+            app:nPricePercent="@{food.nPrice}"
+            app:sPricePercent="@{food.sPrice}"
+            tools:text="20%" />
+
+        <TextView
+            android:id="@+id/tv_s_price"
+            style="@style/normal_14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{food.sPrice}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_percent"
+            app:layout_constraintTop_toBottomOf="@id/tv_content"
+            app:layout_constraintBottom_toTopOf="@id/tv_n_price"
+            tools:text="12,640원" />
+
+        <TextView
+            android:id="@+id/tv_n_price"
+            style="@style/caption_grey"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
+            app:layout_constraintTop_toBottomOf="@id/tv_s_price"
+            app:nPrice="@{food.nPrice}"
+            app:sPrice="@{food.sPrice}"
+            tools:text="15,800원" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

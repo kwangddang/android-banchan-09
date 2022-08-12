@@ -1,4 +1,4 @@
-package com.woowa.banchan.ui.home.best
+package com.woowa.banchan.ui.home.best.adapter
 
 import android.graphics.Paint
 import android.view.View

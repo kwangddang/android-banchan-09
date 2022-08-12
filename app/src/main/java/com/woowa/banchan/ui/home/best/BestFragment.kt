@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentBestBinding
 import com.woowa.banchan.ui.common.uistate.UiState
+import com.woowa.banchan.ui.home.best.adapter.BestAdapter
 import com.woowa.banchan.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
