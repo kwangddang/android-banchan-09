@@ -7,7 +7,7 @@ import com.woowa.banchan.ui.common.uistate.UiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class GetRecentlyViewedFoodsUseCaseImpl @Inject constructor(
@@ -15,12 +15,10 @@ class GetRecentlyViewedFoodsUseCaseImpl @Inject constructor(
 ) : GetRecentlyViewedFoodsUseCase {
 
     override suspend operator fun invoke(): Flow<UiState<List<Recent>>> =
-        withContext(Dispatchers.IO) {
-            return@withContext flow {
-                emit(UiState.Loading)
-                recentRepository.getRecentList()
-                    .onSuccess { emit(UiState.Success(it)) }
-                    .onFailure { emit(UiState.Error(it.message)) }
-            }
-        }
+        flow {
+            emit(UiState.Loading)
+            recentRepository.getRecentList()
+                .onSuccess { emit(UiState.Success(it)) }
+                .onFailure { emit(UiState.Error(it.message)) }
+        }.flowOn(Dispatchers.IO)
 }
