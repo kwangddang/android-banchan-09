@@ -60,7 +60,7 @@ class MainFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        binding.layoutMain.adapter = mainAdapter
+        binding.rvMain.adapter = mainAdapter
     }
 
     private fun initViews() {

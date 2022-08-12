@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.woowa.banchan.data.remote.dto.FoodItem
 import com.woowa.banchan.databinding.ItemHomeBinding
-import com.woowa.banchan.databinding.ItemMainBinding
+import com.woowa.banchan.databinding.ItemMainLinearBinding
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeItemViewHolder
 import com.woowa.banchan.utils.LINEAR_VERTICAL
 
@@ -15,7 +15,7 @@ class HomeItemAdapter(private val managerType: Int) : ListAdapter<FoodItem, Home
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeItemViewHolder {
         return if (managerType == LINEAR_VERTICAL) {
             HomeItemViewHolder(
-                ItemMainBinding.inflate(
+                ItemMainLinearBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
