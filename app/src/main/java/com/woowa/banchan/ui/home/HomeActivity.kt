@@ -27,10 +27,11 @@ class HomeActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         initAdapter()
         initTabLayoutMediator()
+        initButtonSetting()
     }
 
     private fun initAdapter() {
-        binding.viewPager.adapter =
+        binding.vpHome.adapter =
             object : FragmentStateAdapter(supportFragmentManager, lifecycle) {
                 override fun getItemCount(): Int = 4
 
@@ -43,14 +44,19 @@ class HomeActivity : AppCompatActivity() {
                         else -> Fragment()
                     }
             }
-        startActivity(Intent(this, CartActivity::class.java))
     }
 
     private fun initTabLayoutMediator() {
         val tabList = listOf("기획전", "든든한 메인요리", "뜨끈한 국물요리", "정갈한 밑반찬")
 
-        TabLayoutMediator(binding.layoutTab, binding.viewPager) { tab, position ->
+        TabLayoutMediator(binding.layoutTab, binding.vpHome) { tab, position ->
             tab.text = tabList[position]
         }.attach()
+    }
+
+    private fun initButtonSetting() {
+        binding.tbHome.setOnClickCartIcon {
+            startActivity(Intent(this, CartActivity::class.java))
+        }
     }
 }
