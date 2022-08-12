@@ -34,7 +34,7 @@ data class FoodItemDto(
             image = image,
             nPrice = salePrice,
             sPrice = originPrice,
-            percent = if (nPrice == null) null else (((originPrice - salePrice!!) * 100) / originPrice).toInt(),
+            percent = if (nPrice == null) null else (((salePrice!! - originPrice) * 100) / salePrice),
             title = title
         )
     }

@@ -41,16 +41,13 @@ fun TextView.setViewedTime(date: Date) {
     text = DateUtil.getUpdateDate(date)
 }
 
-@BindingAdapter("nPricePercent", "sPricePercent")
-fun TextView.setPercent(nPrice: String?, sPrice: String) {
-    if (nPrice == null) {
+@BindingAdapter("percent")
+fun TextView.setPercent(nPrice: Int?) {
+    if (nPrice == null || nPrice == 0) {
         text = ""
         visibility = View.GONE
     } else {
-        val originPrice = nPrice.replace("원", "").replace(",", "").toLong()
-        val salePrice = sPrice.replace("원", "").replace(",", "").toLong()
-        val percent = (((originPrice - salePrice) * 100) / originPrice)
-        text = "$percent%"
+        text = "$nPrice%"
     }
 }
 
