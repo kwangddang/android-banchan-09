@@ -20,9 +20,9 @@
             android:id="@+id/iv_thumbnail"
             android:layout_width="168dp"
             android:layout_height="168dp"
+            app:image="@{food.image}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:image="@{food.image}"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/iv_cart"
@@ -41,14 +41,14 @@
             style="@style/normal_14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:layout_marginStart="16dp"
             android:text="@{food.title}"
-            app:layout_constraintStart_toEndOf="@id/iv_thumbnail"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/iv_thumbnail"
             app:layout_constraintBottom_toTopOf="@id/tv_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_thumbnail"
+            app:layout_constraintTop_toTopOf="@id/iv_thumbnail"
             tools:text="오리 주물럭_반조리" />
 
         <TextView
@@ -57,10 +57,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@{food.description}"
-            app:layout_constraintStart_toStartOf="@id/tv_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title"
             app:layout_constraintBottom_toTopOf="@id/tv_s_price"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
             tools:text="감칠맛 나는 매콤 양념" />
 
         <TextView
@@ -69,9 +69,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingEnd="4dp"
+            app:layout_constraintBottom_toTopOf="@id/tv_n_price"
             app:layout_constraintStart_toStartOf="@id/tv_title"
             app:layout_constraintTop_toBottomOf="@id/tv_content"
-            app:layout_constraintBottom_toTopOf="@id/tv_n_price"
             app:nPricePercent="@{food.nPrice}"
             app:sPricePercent="@{food.sPrice}"
             tools:text="20%" />
@@ -82,10 +82,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@{food.sPrice}"
+            app:layout_constraintBottom_toTopOf="@id/tv_n_price"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_percent"
             app:layout_constraintTop_toBottomOf="@id/tv_content"
-            app:layout_constraintBottom_toTopOf="@id/tv_n_price"
             tools:text="12,640원" />
 
         <TextView
@@ -93,9 +93,9 @@
             style="@style/caption_grey"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/tv_title"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_title"
             app:layout_constraintTop_toBottomOf="@id/tv_s_price"
             app:nPrice="@{food.nPrice}"
             app:sPrice="@{food.sPrice}"

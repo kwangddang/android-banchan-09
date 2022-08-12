@@ -1,6 +1,5 @@
 package com.woowa.banchan.ui.home
 
-import com.woowa.banchan.ui.home.adapter.HomeVPAdapter
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +8,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ActivityHomeBinding
 import com.woowa.banchan.ui.cart.CartActivity
+import com.woowa.banchan.ui.home.adapter.HomeVPAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

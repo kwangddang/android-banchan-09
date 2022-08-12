@@ -16,8 +16,16 @@ class HomeRecyclerViewViewHolder(private val binding: ItemRecyclerviewBinding) :
         val adapter = HomeRVAdapter(managerType)
         binding.layoutBest.apply {
             layoutManager = when (managerType) {
-                LINEAR_HORIZONTAL -> LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
-                LINEAR_VERTICAL -> LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
+                LINEAR_HORIZONTAL -> LinearLayoutManager(
+                    this.context,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+                LINEAR_VERTICAL -> LinearLayoutManager(
+                    this.context,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
                 else -> GridLayoutManager(this.context, 2)
             }
         }

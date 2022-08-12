@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="beestFoodCategory"
             type="com.woowa.banchan.data.remote.dto.BestFoodCategory" />
@@ -17,8 +18,8 @@
             style="@style/label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="24dp"
             android:paddingHorizontal="16dp"
+            android:paddingTop="24dp"
             android:text="@{beestFoodCategory.name}"
             tools:text="풍성한 고기반찬" />
 
