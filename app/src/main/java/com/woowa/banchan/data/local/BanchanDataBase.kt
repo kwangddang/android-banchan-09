@@ -13,7 +13,6 @@ import com.woowa.banchan.data.local.entity.CartDto
 import com.woowa.banchan.data.local.entity.OrderDto
 import com.woowa.banchan.data.local.entity.OrderItemDto
 import com.woowa.banchan.data.local.entity.RecentDto
-import com.woowa.banchan.utils.DBConverter
 
 @Database(
     entities = [CartDto::class, OrderDto::class, OrderItemDto::class, RecentDto::class],

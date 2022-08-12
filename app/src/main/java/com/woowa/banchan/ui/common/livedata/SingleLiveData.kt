@@ -1,4 +1,4 @@
-package com.woowa.banchan.utils.livedata
+package com.woowa.banchan.ui.common.livedata
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData

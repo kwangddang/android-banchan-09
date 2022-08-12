@@ -1,4 +1,4 @@
-package com.woowa.banchan.utils.livedata
+package com.woowa.banchan.ui.common.livedata
 
 open class SingleLiveEvent<out T>(private val content: T) {
 

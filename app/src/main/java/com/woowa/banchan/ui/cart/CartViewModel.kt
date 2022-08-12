@@ -7,7 +7,7 @@ import com.woowa.banchan.domain.model.Recent
 import com.woowa.banchan.domain.usecase.cart.inter.GetCartListUseCase
 import com.woowa.banchan.domain.usecase.recent.inter.GetRecentlyViewedFoodsUseCase
 import com.woowa.banchan.ui.common.uistate.UiState
-import com.woowa.banchan.utils.livedata.SingleLiveData
+import com.woowa.banchan.ui.common.livedata.SingleLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
