@@ -1,10 +1,9 @@
 package com.woowa.banchan.domain.usecase.food
 
 import com.woowa.banchan.data.remote.dto.BestFood
-import com.woowa.banchan.data.remote.dto.FoodItem
-import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.domain.repository.FoodRepository
 import com.woowa.banchan.domain.usecase.food.inter.GetBestFoodsUseCase
+import com.woowa.banchan.ui.common.uistate.UiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
