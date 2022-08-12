@@ -45,7 +45,7 @@ class BestFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        binding.layoutBest.adapter = bestAdapter
+        binding.rvBest.adapter = bestAdapter
     }
 
     private fun initViews() {

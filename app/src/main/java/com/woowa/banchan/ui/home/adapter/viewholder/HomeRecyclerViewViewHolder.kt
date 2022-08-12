@@ -14,7 +14,7 @@ class HomeRecyclerViewViewHolder(private val binding: ItemRecyclerviewBinding) :
 
     fun bind(food: List<FoodItem>, managerType: Int) {
         val adapter = HomeRVAdapter(managerType)
-        binding.layoutBest.apply {
+        binding.rvBest.apply {
             layoutManager = when (managerType) {
                 LINEAR_HORIZONTAL -> LinearLayoutManager(
                     this.context,
@@ -30,6 +30,6 @@ class HomeRecyclerViewViewHolder(private val binding: ItemRecyclerviewBinding) :
             }
         }
         adapter.submitList(food)
-        binding.layoutBest.adapter = adapter
+        binding.rvBest.adapter = adapter
     }
 }

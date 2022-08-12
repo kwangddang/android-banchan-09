@@ -98,6 +98,5 @@
             app:sPrice="@{food.sPrice}"
             tools:text="15,800원" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -25,7 +25,7 @@ class SpinnerAdapter(context: Context) : BaseAdapter() {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         if (convertView == null) {
             val view = inflater.inflate(R.layout.spinner_title, parent, false)
-            view.findViewById<TextView>(R.id.text_spinner_title).text = list[position]
+            view.findViewById<TextView>(R.id.tv_spinner).text = list[position]
             return view
         }
         return convertView
@@ -34,7 +34,7 @@ class SpinnerAdapter(context: Context) : BaseAdapter() {
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
         if (convertView == null) {
             val view = inflater.inflate(R.layout.spinner_content, parent, false)
-            view.findViewById<CheckedTextView>(R.id.cb_spinner).text = list[position]
+            view.findViewById<CheckedTextView>(R.id.ct_spinner).text = list[position]
             return view
         }
         return convertView
