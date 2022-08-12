@@ -1,8 +1,17 @@
 package com.woowa.banchan.data.local.repository
 
+import com.woowa.banchan.data.local.datasource.recent.RecentDataSource
+import com.woowa.banchan.data.local.entity.toRecent
+import com.woowa.banchan.domain.model.Recent
 import com.woowa.banchan.domain.repository.RecentRepository
 import javax.inject.Inject
 
 class RecentRepositoryImpl @Inject constructor(
+    private val recentDataSource: RecentDataSource
+) : RecentRepository {
 
-) : RecentRepository
+    override suspend fun getRecentList(): Result<List<Recent>> {
+        val list = recentDataSource.getRecentList().getOrThrow()
+        return runCatching { list.map { it.toRecent() } }
+    }
+}

@@ -30,8 +30,10 @@ fun TextView.setOriginPrice(nPrice: String?, sPrice: String) {
 }
 
 @BindingAdapter("image")
-fun ImageView.setImage(url: String) {
-    Glide.with(context)
-        .load(url)
-        .into(this)
+fun ImageView.setImage(url: String?) {
+    url?.let {
+        Glide.with(context)
+            .load(url)
+            .into(this)
+    }
 }
