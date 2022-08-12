@@ -9,6 +9,7 @@ import com.woowa.banchan.data.remote.dto.BestFoodCategoryDto
 import com.woowa.banchan.databinding.ItemBestHeaderBinding
 import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
+import com.woowa.banchan.domain.model.BestFoodCategory
 import com.woowa.banchan.ui.home.HOME_HEADER
 import com.woowa.banchan.ui.home.HOME_ITEM
 import com.woowa.banchan.ui.home.LINEAR_HORIZONTAL
@@ -17,7 +18,7 @@ import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
 import com.woowa.banchan.ui.home.best.adapter.viewholder.BestHeaderViewHolder
 
-class BestRVAdapter : ListAdapter<BestFoodCategoryDto, RecyclerView.ViewHolder>(diffUtil) {
+class BestRVAdapter : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -67,8 +68,8 @@ class BestRVAdapter : ListAdapter<BestFoodCategoryDto, RecyclerView.ViewHolder>(
         }
     }
 
-    fun submitHeaderList(list: List<BestFoodCategoryDto>) {
-        val newList = mutableListOf<BestFoodCategoryDto?>()
+    fun submitHeaderList(list: List<BestFoodCategory>) {
+        val newList = mutableListOf<BestFoodCategory?>()
         newList.add(null)
         for (category in list) {
             newList.add(category)
@@ -79,17 +80,17 @@ class BestRVAdapter : ListAdapter<BestFoodCategoryDto, RecyclerView.ViewHolder>(
 
     companion object {
 
-        val diffUtil = object : DiffUtil.ItemCallback<BestFoodCategoryDto>() {
+        val diffUtil = object : DiffUtil.ItemCallback<BestFoodCategory>() {
             override fun areItemsTheSame(
-                oldItem: BestFoodCategoryDto,
-                newItem: BestFoodCategoryDto
+                oldItem: BestFoodCategory,
+                newItem: BestFoodCategory
             ): Boolean {
                 return oldItem == newItem
             }
 
             override fun areContentsTheSame(
-                oldItem: BestFoodCategoryDto,
-                newItem: BestFoodCategoryDto
+                oldItem: BestFoodCategory,
+                newItem: BestFoodCategory
             ): Boolean {
                 return oldItem.categoryId == newItem.categoryId
             }

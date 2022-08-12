@@ -3,6 +3,8 @@ package com.woowa.banchan.data.remote.repository
 import com.woowa.banchan.data.remote.datasource.food.FoodDataSource
 import com.woowa.banchan.data.remote.dto.BestFoodDto
 import com.woowa.banchan.data.remote.dto.FoodDto
+import com.woowa.banchan.domain.model.BestFoodCategory
+import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.domain.repository.FoodRepository
 import javax.inject.Inject
 
@@ -10,13 +12,13 @@ class FoodRepositoryImpl @Inject constructor(
     private val foodDataSource: FoodDataSource
 ) : FoodRepository {
 
-    override suspend fun getBestFoods(): Result<BestFoodDto> =
+    override suspend fun getBestFoods(): Result<List<BestFoodCategory>> =
         runCatching {
-            foodDataSource.getBestFoods()
+            foodDataSource.getBestFoods().toBestFoodCategoryList()
         }
 
-    override suspend fun getFoods(type: String): Result<FoodDto> =
+    override suspend fun getFoods(type: String): Result<List<FoodItem>> =
         runCatching {
-            foodDataSource.getFoods(type)
+            foodDataSource.getFoods(type).toFoodList()
         }
 }

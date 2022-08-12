@@ -55,10 +55,14 @@ fun TextView.setPercent(nPrice: String?, sPrice: String) {
 }
 
 @BindingAdapter("nPrice", "sPrice")
-fun TextView.setOriginPrice(nPrice: String?, sPrice: String) {
-    paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-    if (nPrice == null)
-        text = ""
-    else
-        text = nPrice
+fun TextView.setOriginPrice(nPrice: Int?, sPrice: Int?) {
+    if (nPrice == null) {
+        text = if(sPrice != null)
+            MoneyUtil.getMoneyFormatString(sPrice)
+        else
+            ""
+    } else if (sPrice == null) {
+        paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+        text = MoneyUtil.getMoneyFormatString(nPrice)
+    }
 }

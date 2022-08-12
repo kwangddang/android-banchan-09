@@ -10,6 +10,7 @@ import com.woowa.banchan.data.remote.dto.FoodDto
 import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 import com.woowa.banchan.databinding.ItemMainHeaderBinding
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
+import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.ui.home.GRID
 import com.woowa.banchan.ui.home.HOME_HEADER
 import com.woowa.banchan.ui.home.HOME_ITEM
@@ -19,7 +20,7 @@ import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
 import com.woowa.banchan.ui.home.main.adapter.viewholder.MainHeaderViewHolder
 
 class MainRVAdapter(private val checkedChangeListener: (RadioGroup, Int) -> Unit) :
-    ListAdapter<FoodDto, RecyclerView.ViewHolder>(diffUtil) {
+    ListAdapter<List<FoodItem>, RecyclerView.ViewHolder>(diffUtil) {
 
     var managerType = GRID
 
@@ -53,7 +54,7 @@ class MainRVAdapter(private val checkedChangeListener: (RadioGroup, Int) -> Unit
         when (holder.itemViewType) {
             HOME_HEADER -> (holder as HomeHeaderViewHolder).bind("모두가 좋아하는\n든든한 메인 요리", false)
             SUB_HEADER -> (holder as MainHeaderViewHolder).bind(checkedChangeListener)
-            else -> (holder as HomeRecyclerViewViewHolder).bind(getItem(position).body, managerType)
+            else -> (holder as HomeRecyclerViewViewHolder).bind(getItem(position), managerType)
         }
     }
 
@@ -65,8 +66,8 @@ class MainRVAdapter(private val checkedChangeListener: (RadioGroup, Int) -> Unit
         }
     }
 
-    fun submitHeaderList(food: FoodDto) {
-        val newList = mutableListOf<FoodDto?>()
+    fun submitHeaderList(food: List<FoodItem>) {
+        val newList = mutableListOf<List<FoodItem>?>()
         newList.add(null)
         newList.add(null)
         newList.add(food)
@@ -75,13 +76,13 @@ class MainRVAdapter(private val checkedChangeListener: (RadioGroup, Int) -> Unit
 
     companion object {
 
-        val diffUtil = object : DiffUtil.ItemCallback<FoodDto>() {
-            override fun areItemsTheSame(oldItem: FoodDto, newItem: FoodDto): Boolean {
+        val diffUtil = object : DiffUtil.ItemCallback<List<FoodItem>>() {
+            override fun areItemsTheSame(oldItem: List<FoodItem>, newItem: List<FoodItem>): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: FoodDto, newItem: FoodDto): Boolean {
-                return oldItem.body == newItem.body
+            override fun areContentsTheSame(oldItem: List<FoodItem>, newItem: List<FoodItem>): Boolean {
+                return oldItem == newItem
             }
         }
     }
