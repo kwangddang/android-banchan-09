@@ -9,13 +9,13 @@ import com.woowa.banchan.data.remote.dto.BestFoodCategory
 import com.woowa.banchan.databinding.ItemBestHeaderBinding
 import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
+import com.woowa.banchan.ui.home.HOME_HEADER
+import com.woowa.banchan.ui.home.HOME_ITEM
+import com.woowa.banchan.ui.home.LINEAR_HORIZONTAL
+import com.woowa.banchan.ui.home.SUB_HEADER
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
 import com.woowa.banchan.ui.home.best.adapter.viewholder.BestHeaderViewHolder
-import com.woowa.banchan.utils.HOME_HEADER
-import com.woowa.banchan.utils.HOME_ITEM
-import com.woowa.banchan.utils.LINEAR_HORIZONTAL
-import com.woowa.banchan.utils.SUB_HEADER
 
 class BestRVAdapter : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(diffUtil) {
 

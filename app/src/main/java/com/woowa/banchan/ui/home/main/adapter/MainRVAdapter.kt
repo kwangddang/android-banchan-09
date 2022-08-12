@@ -10,13 +10,13 @@ import com.woowa.banchan.data.remote.dto.Food
 import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 import com.woowa.banchan.databinding.ItemMainHeaderBinding
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
+import com.woowa.banchan.ui.home.GRID
+import com.woowa.banchan.ui.home.HOME_HEADER
+import com.woowa.banchan.ui.home.HOME_ITEM
+import com.woowa.banchan.ui.home.SUB_HEADER
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
 import com.woowa.banchan.ui.home.main.adapter.viewholder.MainHeaderViewHolder
-import com.woowa.banchan.utils.GRID
-import com.woowa.banchan.utils.HOME_HEADER
-import com.woowa.banchan.utils.HOME_ITEM
-import com.woowa.banchan.utils.SUB_HEADER
 
 class MainRVAdapter(private val checkedChangeListener: (RadioGroup, Int) -> Unit) :
     ListAdapter<Food, RecyclerView.ViewHolder>(diffUtil) {

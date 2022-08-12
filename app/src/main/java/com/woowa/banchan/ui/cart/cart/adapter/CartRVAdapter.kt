@@ -9,8 +9,8 @@ import com.woowa.banchan.databinding.*
 import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.domain.model.Recent
 import com.woowa.banchan.domain.model.emptyCart
+import com.woowa.banchan.ui.cart.*
 import com.woowa.banchan.ui.cart.cart.adapter.viewholder.*
-import com.woowa.banchan.utils.*
 
 class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
 

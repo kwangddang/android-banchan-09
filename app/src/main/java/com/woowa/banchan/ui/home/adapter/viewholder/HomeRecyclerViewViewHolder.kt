@@ -5,9 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.data.remote.dto.FoodItem
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
+import com.woowa.banchan.ui.home.LINEAR_HORIZONTAL
+import com.woowa.banchan.ui.home.LINEAR_VERTICAL
 import com.woowa.banchan.ui.home.adapter.HomeRVAdapter
-import com.woowa.banchan.utils.LINEAR_HORIZONTAL
-import com.woowa.banchan.utils.LINEAR_VERTICAL
 
 class HomeRecyclerViewViewHolder(private val binding: ItemRecyclerviewBinding) :
     RecyclerView.ViewHolder(binding.root) {

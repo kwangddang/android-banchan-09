@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import com.woowa.banchan.data.remote.dto.FoodItem
 import com.woowa.banchan.databinding.ItemHomeBinding
 import com.woowa.banchan.databinding.ItemMainLinearBinding
+import com.woowa.banchan.ui.home.LINEAR_VERTICAL
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeItemViewHolder
-import com.woowa.banchan.utils.LINEAR_VERTICAL
 
 class HomeRVAdapter(private val managerType: Int) :
     ListAdapter<FoodItem, HomeItemViewHolder>(diffUtil) {
