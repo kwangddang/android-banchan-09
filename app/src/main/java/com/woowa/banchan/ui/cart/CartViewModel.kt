@@ -1,12 +1,12 @@
 package com.woowa.banchan.ui.cart
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.domain.model.Recent
 import com.woowa.banchan.domain.usecase.cart.inter.GetCartListUseCase
 import com.woowa.banchan.domain.usecase.recent.inter.GetRecentlyViewedFoodsUseCase
 import com.woowa.banchan.ui.common.uistate.UiState
+import com.woowa.banchan.utils.livedata.SingleLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +21,7 @@ class CartViewModel @Inject constructor(
     private val getRecentlyViewedFoodsUseCase: GetRecentlyViewedFoodsUseCase
 ) : ViewModel() {
 
-    val fragmentTag = MutableLiveData<String>()
+    val fragmentTag = SingleLiveData("cart")
 
     private val _cartUiState = MutableStateFlow<UiState<List<Cart>>>(UiState.Empty)
     val cartUiState: StateFlow<UiState<List<Cart>>> get() = _cartUiState
@@ -37,6 +37,6 @@ class CartViewModel @Inject constructor(
     }
 
     fun setFragmentTag(tag: String) {
-        fragmentTag.value = tag
+        fragmentTag.setValue(tag)
     }
 }
