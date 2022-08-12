@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMainBinding
 import com.woowa.banchan.ui.common.uistate.UiState
-import com.woowa.banchan.ui.home.main.adapter.MainAdapter
+import com.woowa.banchan.ui.home.main.adapter.MainRVAdapter
 import com.woowa.banchan.utils.GRID
 import com.woowa.banchan.utils.LINEAR_VERTICAL
 import com.woowa.banchan.utils.showToast
@@ -28,8 +28,8 @@ class MainFragment : Fragment() {
 
     private val viewModel: MainViewModel by viewModels()
 
-    private val mainAdapter: MainAdapter by lazy {
-        MainAdapter(checkedChangeListener)
+    private val mainAdapter: MainRVAdapter by lazy {
+        MainRVAdapter(checkedChangeListener)
     }
 
     private val checkedChangeListener: (RadioGroup, Int) -> Unit = { group, checkedId ->
