@@ -6,7 +6,7 @@ import android.widget.RadioGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.woowa.banchan.data.remote.dto.Food
+import com.woowa.banchan.data.remote.dto.FoodDto
 import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 import com.woowa.banchan.databinding.ItemMainHeaderBinding
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
@@ -19,7 +19,7 @@ import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
 import com.woowa.banchan.ui.home.main.adapter.viewholder.MainHeaderViewHolder
 
 class MainRVAdapter(private val checkedChangeListener: (RadioGroup, Int) -> Unit) :
-    ListAdapter<Food, RecyclerView.ViewHolder>(diffUtil) {
+    ListAdapter<FoodDto, RecyclerView.ViewHolder>(diffUtil) {
 
     var managerType = GRID
 
@@ -65,8 +65,8 @@ class MainRVAdapter(private val checkedChangeListener: (RadioGroup, Int) -> Unit
         }
     }
 
-    fun submitHeaderList(food: Food) {
-        val newList = mutableListOf<Food?>()
+    fun submitHeaderList(food: FoodDto) {
+        val newList = mutableListOf<FoodDto?>()
         newList.add(null)
         newList.add(null)
         newList.add(food)
@@ -75,12 +75,12 @@ class MainRVAdapter(private val checkedChangeListener: (RadioGroup, Int) -> Unit
 
     companion object {
 
-        val diffUtil = object : DiffUtil.ItemCallback<Food>() {
-            override fun areItemsTheSame(oldItem: Food, newItem: Food): Boolean {
+        val diffUtil = object : DiffUtil.ItemCallback<FoodDto>() {
+            override fun areItemsTheSame(oldItem: FoodDto, newItem: FoodDto): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: Food, newItem: Food): Boolean {
+            override fun areContentsTheSame(oldItem: FoodDto, newItem: FoodDto): Boolean {
                 return oldItem.body == newItem.body
             }
         }

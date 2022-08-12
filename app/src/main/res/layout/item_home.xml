@@ -7,7 +7,7 @@
 
         <variable
             name="food"
-            type="com.woowa.banchan.data.remote.dto.FoodItem" />
+            type="com.woowa.banchan.data.remote.dto.FoodItemDto" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

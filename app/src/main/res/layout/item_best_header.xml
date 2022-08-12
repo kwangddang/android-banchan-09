@@ -6,7 +6,7 @@
 
         <variable
             name="beestFoodCategory"
-            type="com.woowa.banchan.data.remote.dto.BestFoodCategory" />
+            type="com.woowa.banchan.data.remote.dto.BestFoodCategoryDto" />
     </data>
 
     <TextView

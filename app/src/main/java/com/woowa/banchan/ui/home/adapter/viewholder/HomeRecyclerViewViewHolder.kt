@@ -3,7 +3,7 @@ package com.woowa.banchan.ui.home.adapter.viewholder
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.woowa.banchan.data.remote.dto.FoodItem
+import com.woowa.banchan.data.remote.dto.FoodItemDto
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
 import com.woowa.banchan.ui.home.LINEAR_HORIZONTAL
 import com.woowa.banchan.ui.home.LINEAR_VERTICAL
@@ -12,7 +12,7 @@ import com.woowa.banchan.ui.home.adapter.HomeRVAdapter
 class HomeRecyclerViewViewHolder(private val binding: ItemRecyclerviewBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(food: List<FoodItem>, managerType: Int) {
+    fun bind(food: List<FoodItemDto>, managerType: Int) {
         val adapter = HomeRVAdapter(managerType)
         binding.rvBest.apply {
             layoutManager = when (managerType) {

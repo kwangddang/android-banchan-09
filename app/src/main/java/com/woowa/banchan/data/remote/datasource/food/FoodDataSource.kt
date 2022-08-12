@@ -1,11 +1,11 @@
 package com.woowa.banchan.data.remote.datasource.food
 
-import com.woowa.banchan.data.remote.dto.BestFood
-import com.woowa.banchan.data.remote.dto.Food
+import com.woowa.banchan.data.remote.dto.BestFoodDto
+import com.woowa.banchan.data.remote.dto.FoodDto
 
 interface FoodDataSource {
 
-    suspend fun getBestFoods(): BestFood
+    suspend fun getBestFoods(): BestFoodDto
 
-    suspend fun getFoods(type: String): Food
+    suspend fun getFoods(type: String): FoodDto
 }

@@ -2,7 +2,7 @@ package com.woowa.banchan.ui.home.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.woowa.banchan.data.remote.dto.Food
+import com.woowa.banchan.data.remote.dto.FoodDto
 import com.woowa.banchan.domain.usecase.food.inter.GetFoodsUseCase
 import com.woowa.banchan.ui.common.uistate.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,8 +17,8 @@ class MainViewModel @Inject constructor(
     private val getFoodsUseCase: GetFoodsUseCase
 ) : ViewModel() {
 
-    private var _mainUiState = MutableStateFlow<UiState<Food>>(UiState.Empty)
-    val mainUiState: StateFlow<UiState<Food>> get() = _mainUiState.asStateFlow()
+    private var _mainUiState = MutableStateFlow<UiState<FoodDto>>(UiState.Empty)
+    val mainUiState: StateFlow<UiState<FoodDto>> get() = _mainUiState.asStateFlow()
 
     fun getMainFoods() {
         viewModelScope.launch {

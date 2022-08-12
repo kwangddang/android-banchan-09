@@ -4,14 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.woowa.banchan.data.remote.dto.FoodItem
+import com.woowa.banchan.data.remote.dto.FoodItemDto
 import com.woowa.banchan.databinding.ItemHomeBinding
 import com.woowa.banchan.databinding.ItemMainLinearBinding
 import com.woowa.banchan.ui.home.LINEAR_VERTICAL
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeItemViewHolder
 
 class HomeRVAdapter(private val managerType: Int) :
-    ListAdapter<FoodItem, HomeItemViewHolder>(diffUtil) {
+    ListAdapter<FoodItemDto, HomeItemViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeItemViewHolder {
         return if (managerType == LINEAR_VERTICAL) {
@@ -39,12 +39,12 @@ class HomeRVAdapter(private val managerType: Int) :
 
     companion object {
 
-        val diffUtil = object : DiffUtil.ItemCallback<FoodItem>() {
-            override fun areItemsTheSame(oldItem: FoodItem, newItem: FoodItem): Boolean {
+        val diffUtil = object : DiffUtil.ItemCallback<FoodItemDto>() {
+            override fun areItemsTheSame(oldItem: FoodItemDto, newItem: FoodItemDto): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: FoodItem, newItem: FoodItem): Boolean {
+            override fun areContentsTheSame(oldItem: FoodItemDto, newItem: FoodItemDto): Boolean {
                 return oldItem.detailHash == newItem.detailHash
             }
         }

@@ -1,11 +1,11 @@
 package com.woowa.banchan.domain.repository
 
-import com.woowa.banchan.data.remote.dto.BestFood
-import com.woowa.banchan.data.remote.dto.Food
+import com.woowa.banchan.data.remote.dto.BestFoodDto
+import com.woowa.banchan.data.remote.dto.FoodDto
 
 interface FoodRepository {
 
-    suspend fun getBestFoods(): Result<BestFood>
+    suspend fun getBestFoods(): Result<BestFoodDto>
 
-    suspend fun getFoods(type: String): Result<Food>
+    suspend fun getFoods(type: String): Result<FoodDto>
 }

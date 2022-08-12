@@ -1,6 +1,6 @@
 package com.woowa.banchan.domain.usecase.food
 
-import com.woowa.banchan.data.remote.dto.BestFood
+import com.woowa.banchan.data.remote.dto.BestFoodDto
 import com.woowa.banchan.domain.repository.FoodRepository
 import com.woowa.banchan.domain.usecase.food.inter.GetBestFoodsUseCase
 import com.woowa.banchan.ui.common.uistate.UiState
@@ -12,7 +12,7 @@ class GetBestFoodsUseCaseImpl @Inject constructor(
     private val foodRepository: FoodRepository
 ) : GetBestFoodsUseCase {
 
-    override suspend operator fun invoke(): Flow<UiState<BestFood>> =
+    override suspend operator fun invoke(): Flow<UiState<BestFoodDto>> =
         flow {
             emit(UiState.Loading)
             foodRepository.getBestFoods().onSuccess {
