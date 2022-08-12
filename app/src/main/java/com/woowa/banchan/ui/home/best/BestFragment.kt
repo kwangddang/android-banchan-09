@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentBestBinding
 import com.woowa.banchan.ui.common.uistate.UiState
-import com.woowa.banchan.ui.home.best.adapter.BestAdapter
+import com.woowa.banchan.ui.home.best.adapter.BestRVAdapter
 import com.woowa.banchan.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -25,8 +25,8 @@ class BestFragment : Fragment() {
 
     private val viewModel: BestViewModel by viewModels()
 
-    private val bestAdapter: BestAdapter by lazy {
-        BestAdapter()
+    private val bestAdapter: BestRVAdapter by lazy {
+        BestRVAdapter()
     }
 
     override fun onCreateView(
@@ -45,7 +45,7 @@ class BestFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        binding.layoutBest.adapter = bestAdapter
+        binding.rvBest.adapter = bestAdapter
     }
 
     private fun initViews() {

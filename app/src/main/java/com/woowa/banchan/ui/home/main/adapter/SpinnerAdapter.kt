@@ -9,9 +9,10 @@ import android.widget.CheckedTextView
 import android.widget.TextView
 import com.woowa.banchan.R
 
-class SpinnerAdapter(context: Context) : BaseAdapter(){
+class SpinnerAdapter(context: Context) : BaseAdapter() {
 
-    private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    private val inflater: LayoutInflater =
+        context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     private val list = listOf("기본 정렬순", "금액 높은순", "금액 낮은순", "할인율순")
 
@@ -22,18 +23,18 @@ class SpinnerAdapter(context: Context) : BaseAdapter(){
     override fun getItemId(position: Int): Long = position.toLong()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        if(convertView == null) {
+        if (convertView == null) {
             val view = inflater.inflate(R.layout.spinner_title, parent, false)
-            view.findViewById<TextView>(R.id.text_spinner_title).text = list[position]
+            view.findViewById<TextView>(R.id.tv_spinner).text = list[position]
             return view
         }
         return convertView
     }
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        if(convertView == null) {
+        if (convertView == null) {
             val view = inflater.inflate(R.layout.spinner_content, parent, false)
-            view.findViewById<CheckedTextView>(R.id.cb_spinner).text = list[position]
+            view.findViewById<CheckedTextView>(R.id.ct_spinner).text = list[position]
             return view
         }
         return convertView

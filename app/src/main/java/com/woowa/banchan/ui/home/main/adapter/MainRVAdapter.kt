@@ -1,6 +1,5 @@
 package com.woowa.banchan.ui.home.main.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.RadioGroup
@@ -11,14 +10,16 @@ import com.woowa.banchan.data.remote.dto.Food
 import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 import com.woowa.banchan.databinding.ItemMainHeaderBinding
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
+import com.woowa.banchan.ui.home.GRID
+import com.woowa.banchan.ui.home.HOME_HEADER
+import com.woowa.banchan.ui.home.HOME_ITEM
+import com.woowa.banchan.ui.home.SUB_HEADER
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
-import com.woowa.banchan.utils.GRID
-import com.woowa.banchan.utils.HOME_HEADER
-import com.woowa.banchan.utils.HOME_ITEM
-import com.woowa.banchan.utils.SUB_HEADER
+import com.woowa.banchan.ui.home.main.adapter.viewholder.MainHeaderViewHolder
 
-class MainAdapter(private val checkedChangeListener: (RadioGroup, Int) -> Unit) : ListAdapter<Food, RecyclerView.ViewHolder>(diffUtil) {
+class MainRVAdapter(private val checkedChangeListener: (RadioGroup, Int) -> Unit) :
+    ListAdapter<Food, RecyclerView.ViewHolder>(diffUtil) {
 
     var managerType = GRID
 
@@ -82,15 +83,6 @@ class MainAdapter(private val checkedChangeListener: (RadioGroup, Int) -> Unit) 
             override fun areContentsTheSame(oldItem: Food, newItem: Food): Boolean {
                 return oldItem.body == newItem.body
             }
-        }
-    }
-}
-
-class MainHeaderViewHolder(private val binding: ItemMainHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(checkedChangeListener: (RadioGroup, Int) -> Unit) {
-        binding.spinnerSort.adapter = SpinnerAdapter(binding.spinnerSort.context)
-        binding.rgManager.setOnCheckedChangeListener { group, checkedId ->
-            checkedChangeListener(group, checkedId)
         }
     }
 }

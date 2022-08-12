@@ -9,14 +9,15 @@ import com.woowa.banchan.data.remote.dto.BestFoodCategory
 import com.woowa.banchan.databinding.ItemBestHeaderBinding
 import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
+import com.woowa.banchan.ui.home.HOME_HEADER
+import com.woowa.banchan.ui.home.HOME_ITEM
+import com.woowa.banchan.ui.home.LINEAR_HORIZONTAL
+import com.woowa.banchan.ui.home.SUB_HEADER
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
-import com.woowa.banchan.utils.HOME_HEADER
-import com.woowa.banchan.utils.HOME_ITEM
-import com.woowa.banchan.utils.LINEAR_HORIZONTAL
-import com.woowa.banchan.utils.SUB_HEADER
+import com.woowa.banchan.ui.home.best.adapter.viewholder.BestHeaderViewHolder
 
-class BestAdapter : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(diffUtil) {
+class BestRVAdapter : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -48,7 +49,10 @@ class BestAdapter : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(diffU
         when (holder.itemViewType) {
             HOME_HEADER -> (holder as HomeHeaderViewHolder).bind("한 번 주문하면\n두 번 반하는 반찬들", true)
             SUB_HEADER -> (holder as BestHeaderViewHolder).bind(getItem(position))
-            else -> (holder as HomeRecyclerViewViewHolder).bind(getItem(position).items, LINEAR_HORIZONTAL)
+            else -> (holder as HomeRecyclerViewViewHolder).bind(
+                getItem(position).items,
+                LINEAR_HORIZONTAL
+            )
         }
     }
 
@@ -90,12 +94,5 @@ class BestAdapter : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(diffU
                 return oldItem.categoryId == newItem.categoryId
             }
         }
-    }
-}
-
-class BestHeaderViewHolder(private val binding: ItemBestHeaderBinding) :
-    RecyclerView.ViewHolder(binding.root) {
-    fun bind(foodCategory: BestFoodCategory) {
-        binding.beestFoodCategory = foodCategory
     }
 }

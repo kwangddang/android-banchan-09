@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cb_spinner"
+    android:id="@+id/ct_spinner"
     style="@style/normal_14"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -10,6 +10,3 @@
     android:gravity="center"
     android:padding="16dp"
     tools:text="기본 정렬순" />
-
-
-

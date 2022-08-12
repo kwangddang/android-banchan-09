@@ -1,4 +1,4 @@
-package com.woowa.banchan.utils
+package com.woowa.banchan.data.local
 
 import androidx.room.TypeConverter
 import java.util.*

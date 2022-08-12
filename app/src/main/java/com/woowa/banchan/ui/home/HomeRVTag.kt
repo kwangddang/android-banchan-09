@@ -1,5 +1,6 @@
-package com.woowa.banchan.utils
+package com.woowa.banchan.ui.home
 
+// Home Activity Adapter Tag
 const val HOME_HEADER = 1
 const val SUB_HEADER = 2
 const val HOME_ITEM = 3

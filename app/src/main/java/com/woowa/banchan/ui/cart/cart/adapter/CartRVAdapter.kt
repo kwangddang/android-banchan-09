@@ -9,6 +9,7 @@ import com.woowa.banchan.databinding.*
 import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.domain.model.Recent
 import com.woowa.banchan.domain.model.emptyCart
+import com.woowa.banchan.ui.cart.*
 import com.woowa.banchan.ui.cart.cart.adapter.viewholder.*
 
 class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
@@ -95,12 +96,6 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
     }
 
     companion object {
-        const val CART_CHECK_HEADER = 0
-        const val CART_CONTENT = 1
-        const val CART_TOTAL_PRICE = 2
-        const val CART_FOOTER_BTN = 3
-        const val RECENT_PREVIEW = 4
-
         val diffUtil = object : DiffUtil.ItemCallback<Cart>() {
             override fun areItemsTheSame(oldItem: Cart, newItem: Cart): Boolean =
                 oldItem == newItem

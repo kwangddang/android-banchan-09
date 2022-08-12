@@ -20,9 +20,9 @@
             android:id="@+id/iv_thumbnail"
             android:layout_width="168dp"
             android:layout_height="168dp"
+            app:image="@{food.image}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:image="@{food.image}"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/iv_cart"
@@ -97,7 +97,6 @@
             app:nPrice="@{food.nPrice}"
             app:sPrice="@{food.sPrice}"
             tools:text="15,800원" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

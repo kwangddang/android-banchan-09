@@ -1,15 +1,14 @@
 package com.woowa.banchan.ui.cart
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.domain.model.Recent
 import com.woowa.banchan.domain.usecase.cart.inter.GetCartListUseCase
 import com.woowa.banchan.domain.usecase.recent.inter.GetRecentlyViewedFoodsUseCase
 import com.woowa.banchan.ui.common.uistate.UiState
-import com.woowa.banchan.utils.livedata.SingleLiveData
+import com.woowa.banchan.ui.common.livedata.SingleLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -30,7 +29,7 @@ class CartViewModel @Inject constructor(
     val recentUiState: StateFlow<UiState<List<Recent>>> get() = _recentUiState
 
     init {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch {
             launch { getCartListUseCase().collect { _cartUiState.emit(it) } }
             launch { getRecentlyViewedFoodsUseCase().collect { _recentUiState.emit(it) } }
         }
