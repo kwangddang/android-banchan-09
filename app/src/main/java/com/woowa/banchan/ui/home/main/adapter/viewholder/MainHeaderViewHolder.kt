@@ -12,11 +12,12 @@ class MainHeaderViewHolder(private val binding: ItemMainHeaderBinding) :
     fun bind(checkedChangeListener: (RadioGroup, Int) -> Unit, spinnerCallback: (Int) -> Unit) {
         val spinnerAdapter = SpinnerAdapter(binding.spinnerSort.context)
         binding.spinnerSort.adapter = spinnerAdapter
-        binding.spinnerSort.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+        binding.spinnerSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 spinnerAdapter.selectedPosition = position
                 spinnerCallback(position)
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }

@@ -1,7 +1,5 @@
 package com.woowa.banchan.domain.repository
 
-import com.woowa.banchan.data.remote.dto.BestFoodDto
-import com.woowa.banchan.data.remote.dto.FoodDto
 import com.woowa.banchan.domain.model.BestFoodCategory
 import com.woowa.banchan.domain.model.FoodItem
 

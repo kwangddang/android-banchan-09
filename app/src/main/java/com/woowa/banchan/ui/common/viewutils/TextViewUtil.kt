@@ -54,7 +54,7 @@ fun TextView.setPercent(nPrice: Int?) {
 @BindingAdapter("nPrice", "sPrice")
 fun TextView.setOriginPrice(nPrice: Int?, sPrice: Int?) {
     if (nPrice == null) {
-        text = if(sPrice != null)
+        text = if (sPrice != null)
             MoneyUtil.getMoneyFormatString(sPrice)
         else
             ""

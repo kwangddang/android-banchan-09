@@ -2,7 +2,6 @@ package com.woowa.banchan.ui.home.best
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.woowa.banchan.data.remote.dto.BestFoodDto
 import com.woowa.banchan.domain.model.BestFoodCategory
 import com.woowa.banchan.domain.usecase.food.inter.GetBestFoodsUseCase
 import com.woowa.banchan.ui.common.uistate.UiState

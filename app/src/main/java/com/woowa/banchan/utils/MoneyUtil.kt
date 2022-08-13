@@ -19,5 +19,5 @@ object MoneyUtil {
         getPriceFormatString(price) + '원'
 
     fun getIntegerMoney(money: String): Int =
-        money.replace(",","").replace("원","").toInt()
+        money.replace(",", "").replace("원", "").toInt()
 }

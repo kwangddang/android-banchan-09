@@ -1,6 +1,5 @@
 package com.woowa.banchan.domain.usecase.food
 
-import com.woowa.banchan.data.remote.dto.FoodDto
 import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.domain.repository.FoodRepository
 import com.woowa.banchan.domain.usecase.food.inter.GetFoodsUseCase

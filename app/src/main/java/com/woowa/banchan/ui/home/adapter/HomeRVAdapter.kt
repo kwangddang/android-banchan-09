@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.woowa.banchan.data.remote.dto.FoodItemDto
 import com.woowa.banchan.databinding.ItemHomeBinding
 import com.woowa.banchan.databinding.ItemMainLinearBinding
 import com.woowa.banchan.domain.model.FoodItem

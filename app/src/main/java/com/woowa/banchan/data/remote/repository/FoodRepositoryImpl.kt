@@ -1,8 +1,6 @@
 package com.woowa.banchan.data.remote.repository
 
 import com.woowa.banchan.data.remote.datasource.food.FoodDataSource
-import com.woowa.banchan.data.remote.dto.BestFoodDto
-import com.woowa.banchan.data.remote.dto.FoodDto
 import com.woowa.banchan.domain.model.BestFoodCategory
 import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.domain.repository.FoodRepository

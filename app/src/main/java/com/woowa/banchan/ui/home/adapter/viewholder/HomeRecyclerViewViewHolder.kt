@@ -3,7 +3,6 @@ package com.woowa.banchan.ui.home.adapter.viewholder
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.woowa.banchan.data.remote.dto.FoodItemDto
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
 import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.ui.home.LINEAR_HORIZONTAL

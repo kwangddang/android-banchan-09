@@ -33,14 +33,14 @@ class SpinnerAdapter(context: Context) : BaseAdapter() {
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = convertView ?: inflater.inflate(R.layout.spinner_content, parent, false)
-        setCheckedTextView(view,position)
+        setCheckedTextView(view, position)
         return view
     }
 
     private fun setCheckedTextView(view: View, position: Int) {
         val checkedTextView = view.findViewById<CheckedTextView>(R.id.ct_spinner)
         checkedTextView.text = getItem(position)
-        if(position == selectedPosition) {
+        if (position == selectedPosition) {
             checkedTextView.typeface = Typeface.DEFAULT_BOLD
         } else {
             checkedTextView.typeface = Typeface.DEFAULT

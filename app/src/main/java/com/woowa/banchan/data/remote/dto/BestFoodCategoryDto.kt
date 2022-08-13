@@ -11,7 +11,7 @@ data class BestFoodCategoryDto(
     val items: List<FoodItemDto>,
     @SerializedName("name")
     val name: String
-){
+) {
     fun toBestFoodCategory() =
         BestFoodCategory(
             categoryId = categoryId,
