@@ -10,6 +10,8 @@ import com.woowa.banchan.ui.cart.cart.adapter.viewholder.RecentItemViewHolder
 
 class RecentRVAdapter : ListAdapter<Recent, RecentItemViewHolder>(diffUtil) {
 
+    private var listener: RecentlyViewedCallBackListener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentItemViewHolder {
         return RecentItemViewHolder(
             ItemRecentBinding.inflate(
@@ -28,6 +30,14 @@ class RecentRVAdapter : ListAdapter<Recent, RecentItemViewHolder>(diffUtil) {
         submitList(recentItems)
     }
 
+    private fun onClickCartButton(recent: Recent) {
+        listener?.onClickCartButton(recent)
+    }
+
+    fun setRecentlyViewedCallBackListener(listener: RecentlyViewedCallBackListener) {
+        this.listener = listener
+    }
+
     companion object {
 
         val diffUtil = object : DiffUtil.ItemCallback<Recent>() {
@@ -39,5 +49,10 @@ class RecentRVAdapter : ListAdapter<Recent, RecentItemViewHolder>(diffUtil) {
                 return oldItem.hash == newItem.hash
             }
         }
+    }
+
+    interface RecentlyViewedCallBackListener {
+
+        fun onClickCartButton(recent: Recent)
     }
 }

@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.R
+import com.woowa.banchan.domain.model.Recent
 import com.woowa.banchan.ui.cart.CartViewModel
 import com.woowa.banchan.ui.cart.recent.adapter.RecentRVAdapter
 import com.woowa.banchan.ui.common.uistate.UiState
@@ -34,7 +35,15 @@ class RecentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
+        initListener()
         initObserve()
+    }
+
+    private fun initListener() {
+        val listener = object : RecentRVAdapter.RecentlyViewedCallBackListener {
+            override fun onClickCartButton(recent: Recent) {}
+        }
+        adapter.setRecentlyViewedCallBackListener(listener)
     }
 
     private fun initObserve() {
