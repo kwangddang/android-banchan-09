@@ -16,6 +16,7 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
 
     private var recentPreviewList = listOf<Recent>()
     private var totalPrice = 0
+    private var listener: CartButtonCallBackListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -25,14 +26,21 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
                         parent.context
                     ), parent, false
                 )
-            )
+            ).apply {
+                onClickRemoveSelection = this@CartRVAdapter::onClickRemoveSelection
+                onClickReleaseSelection = this@CartRVAdapter::onClickReleaseSelection
+            }
             CART_CONTENT -> CartContentViewHolder(
                 ItemCartBinding.inflate(
                     LayoutInflater.from(
                         parent.context
                     ), parent, false
                 )
-            )
+            ).apply {
+                onClickCartRemove = this@CartRVAdapter::onClickCartRemove
+                onClickCartCheckState = this@CartRVAdapter::onClickCartCheckState
+                onClickCartUpdateCount = this@CartRVAdapter::onClickCartUpdateCount
+            }
             CART_TOTAL_PRICE -> TotalPriceViewHolder(
                 ItemTotalPriceBinding.inflate(
                     LayoutInflater.from(
@@ -46,14 +54,18 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
                         parent.context
                     ), parent, false
                 )
-            )
+            ).apply {
+                onClickOrderButton = this@CartRVAdapter::onClickOrderButton
+            }
             else -> RecentPreviewViewHolder(
                 ItemRecentPreviewBinding.inflate(
                     LayoutInflater.from(
                         parent.context
                     ), parent, false
                 )
-            )
+            ).apply {
+                onClickAllRecentlyViewed = this@CartRVAdapter::onClickAllRecentlyViewed
+            }
         }
     }
 
@@ -95,6 +107,38 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
         submitList(newList)
     }
 
+    fun setCartButtonCallBackListener(listener: CartButtonCallBackListener) {
+        this.listener = listener
+    }
+
+    private fun onClickRemoveSelection() {
+        listener?.onClickRemoveSelection()
+    }
+
+    private fun onClickReleaseSelection() {
+        listener?.onClickReleaseSelection()
+    }
+
+    private fun onClickCartCheckState(cart: Cart) {
+        listener?.onClickCartCheckState(cart)
+    }
+
+    private fun onClickCartUpdateCount(cart: Cart, count: Int) {
+        listener?.onClickCartUpdateCount(cart, count)
+    }
+
+    private fun onClickCartRemove(cart: Cart) {
+        listener?.onClickCartRemove(cart)
+    }
+
+    private fun onClickOrderButton() {
+        listener?.onClickOrderButton()
+    }
+
+    private fun onClickAllRecentlyViewed() {
+        listener?.onClickAllRecentlyViewed()
+    }
+
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<Cart>() {
             override fun areItemsTheSame(oldItem: Cart, newItem: Cart): Boolean =
@@ -103,5 +147,16 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
             override fun areContentsTheSame(oldItem: Cart, newItem: Cart): Boolean =
                 oldItem.hash == newItem.hash
         }
+    }
+
+    interface CartButtonCallBackListener {
+
+        fun onClickRemoveSelection()
+        fun onClickReleaseSelection()
+        fun onClickCartCheckState(cart: Cart)
+        fun onClickCartUpdateCount(cart: Cart, count: Int)
+        fun onClickCartRemove(cart: Cart)
+        fun onClickOrderButton()
+        fun onClickAllRecentlyViewed()
     }
 }
