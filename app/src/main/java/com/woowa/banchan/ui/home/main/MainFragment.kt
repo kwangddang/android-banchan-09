@@ -41,6 +41,7 @@ class MainFragment : Fragment() {
                 mainAdapter.managerType = LINEAR_VERTICAL
             }
         }
+        mainAdapter.homeRVAdapter.managerType = mainAdapter.managerType
         mainAdapter.notifyItemChanged(2)
     }
 

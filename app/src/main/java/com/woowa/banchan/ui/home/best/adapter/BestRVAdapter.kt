@@ -14,6 +14,7 @@ import com.woowa.banchan.ui.home.HOME_HEADER
 import com.woowa.banchan.ui.home.HOME_ITEM
 import com.woowa.banchan.ui.home.LINEAR_HORIZONTAL
 import com.woowa.banchan.ui.home.SUB_HEADER
+import com.woowa.banchan.ui.home.adapter.HomeRVAdapter
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
 import com.woowa.banchan.ui.home.best.adapter.viewholder.BestHeaderViewHolder
@@ -51,6 +52,7 @@ class BestRVAdapter : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(dif
             HOME_HEADER -> (holder as HomeHeaderViewHolder).bind("한 번 주문하면\n두 번 반하는 반찬들", true)
             SUB_HEADER -> (holder as BestHeaderViewHolder).bind(getItem(position))
             else -> (holder as HomeRecyclerViewViewHolder).bind(
+                HomeRVAdapter().apply { managerType = LINEAR_HORIZONTAL },
                 getItem(position).items,
                 LINEAR_HORIZONTAL
             )
