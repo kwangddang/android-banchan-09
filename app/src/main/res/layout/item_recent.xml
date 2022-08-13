@@ -8,6 +8,12 @@
         <variable
             name="recent"
             type="com.woowa.banchan.domain.model.Recent" />
+
+        <variable
+            name="isPreview"
+            type="Boolean" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,10 +37,12 @@
             android:layout_height="32dp"
             android:layout_margin="8dp"
             android:background="@drawable/cart_background"
+            android:clickable="true"
             android:elevation="8dp"
+            android:focusable="true"
             android:padding="8dp"
             android:src="@drawable/ic_cart"
-            android:visibility="visible"
+            android:visibility="@{isPreview ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
             app:layout_constraintEnd_toEndOf="@id/iv_thumbnail" />
 
