@@ -4,10 +4,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemRecentBinding
 import com.woowa.banchan.domain.model.Recent
 
-class RecentPreviewItemViewHolder(private val binding: ItemRecentBinding) :
+class RecentItemViewHolder(private val binding: ItemRecentBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(recent: Recent) {
-        /*binding.food = food*/
+    fun bind(recent: Recent, isPreview: Boolean = true) {
+        binding.isPreview = isPreview
+        binding.recent = recent
     }
 }
