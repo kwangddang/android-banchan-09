@@ -5,7 +5,12 @@ import com.woowa.banchan.databinding.ItemCartCheckHeaderBinding
 
 class CheckHeaderViewHolder(private val binding: ItemCartCheckHeaderBinding) :
     RecyclerView.ViewHolder(binding.root) {
+
+    var onClickRemoveSelection: () -> Unit = {}
+    var onClickReleaseSelection: () -> Unit = {}
+
     fun bind() {
-        /*binding.tvTitle.apply { text = this.context.getString(R.string.best_title) }*/
+        binding.layoutUncheckBtn.setOnClickListener { onClickRemoveSelection() }
+        binding.tvReleaseChecked.setOnClickListener { onClickReleaseSelection() }
     }
 }

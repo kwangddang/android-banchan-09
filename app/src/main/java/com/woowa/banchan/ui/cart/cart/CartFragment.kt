@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.flowWithLifecycle
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentCartBinding
+import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.ui.cart.CartViewModel
 import com.woowa.banchan.ui.cart.cart.adapter.CartRVAdapter
 import com.woowa.banchan.ui.common.uistate.UiState
@@ -38,6 +39,28 @@ class CartFragment : Fragment() {
 
         initAdapter()
         initObserve()
+        initListener()
+    }
+
+    private fun initListener() {
+        val listener = object : CartRVAdapter.CartButtonCallBackListener {
+            override fun onClickRemoveSelection() {}
+
+            override fun onClickReleaseSelection() {}
+
+            override fun onClickCartCheckState(cart: Cart) {}
+
+            override fun onClickCartUpdateCount(cart: Cart, count: Int) {}
+
+            override fun onClickCartRemove(cart: Cart) {}
+
+            override fun onClickOrderButton() {}
+
+            override fun onClickAllRecentlyViewed() {
+                viewModel.setFragmentTag(getString(R.string.fragment_recent))
+            }
+        }
+        cartRVAdapter.setCartButtonCallBackListener(listener)
     }
 
     private fun initObserve() {

@@ -27,7 +27,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_total_recent"
+                android:id="@+id/tv_all_recent"
                 style="@style/spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
