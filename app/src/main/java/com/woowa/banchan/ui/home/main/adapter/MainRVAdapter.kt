@@ -20,7 +20,10 @@ import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
 import com.woowa.banchan.ui.home.main.adapter.viewholder.MainHeaderViewHolder
 
-class MainRVAdapter(private val checkedChangeListener: (RadioGroup, Int) -> Unit) :
+class MainRVAdapter(
+    private val checkedChangeListener: (RadioGroup, Int) -> Unit,
+    private val spinnerCallback: (Int) -> Unit
+) :
     ListAdapter<List<FoodItem>, RecyclerView.ViewHolder>(diffUtil) {
 
     var managerType = GRID
@@ -55,7 +58,7 @@ class MainRVAdapter(private val checkedChangeListener: (RadioGroup, Int) -> Unit
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
             HOME_HEADER -> (holder as HomeHeaderViewHolder).bind("모두가 좋아하는\n든든한 메인 요리", false)
-            SUB_HEADER -> (holder as MainHeaderViewHolder).bind(checkedChangeListener)
+            SUB_HEADER -> (holder as MainHeaderViewHolder).bind(checkedChangeListener, spinnerCallback)
             else -> (holder as HomeRecyclerViewViewHolder).bind(homeRVAdapter, getItem(position), managerType)
         }
     }

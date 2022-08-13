@@ -1,6 +1,7 @@
 package com.woowa.banchan.ui.home.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +30,11 @@ class MainFragment : Fragment() {
     private val viewModel: MainViewModel by viewModels()
 
     private val mainAdapter: MainRVAdapter by lazy {
-        MainRVAdapter(checkedChangeListener)
+        MainRVAdapter(checkedChangeListener, spinnerCallback)
+    }
+
+    private val spinnerCallback: (Int) -> Unit = { position ->
+        viewModel.sortList(position)
     }
 
     private val checkedChangeListener: (RadioGroup, Int) -> Unit = { group, checkedId ->

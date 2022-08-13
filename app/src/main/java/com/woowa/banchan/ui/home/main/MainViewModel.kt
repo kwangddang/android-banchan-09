@@ -26,6 +26,7 @@ class MainViewModel @Inject constructor(
     fun getMainFoods() {
         viewModelScope.launch {
             getFoodsUseCase("main").collect { uiState ->
+                if(uiState is UiState.Success) defaultMainFood = uiState.data
                 _mainUiState.emit(uiState)
             }
         }
