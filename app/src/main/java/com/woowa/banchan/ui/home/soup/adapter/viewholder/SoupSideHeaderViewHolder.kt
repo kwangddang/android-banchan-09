@@ -2,7 +2,6 @@ package com.woowa.banchan.ui.home.soup.adapter.viewholder
 
 import android.view.View
 import android.widget.AdapterView
-import android.widget.RadioGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemSoupSideHeaderBinding
 import com.woowa.banchan.ui.home.main.adapter.SpinnerAdapter

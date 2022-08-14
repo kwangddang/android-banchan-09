@@ -9,17 +9,19 @@ import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
 import com.woowa.banchan.databinding.ItemSoupSideHeaderBinding
 import com.woowa.banchan.domain.model.FoodItem
-import com.woowa.banchan.ui.home.*
+import com.woowa.banchan.ui.home.GRID
+import com.woowa.banchan.ui.home.HOME_HEADER
+import com.woowa.banchan.ui.home.HOME_ITEM
+import com.woowa.banchan.ui.home.SUB_HEADER
 import com.woowa.banchan.ui.home.adapter.HomeRVAdapter
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
-import com.woowa.banchan.ui.home.main.adapter.viewholder.MainHeaderViewHolder
 import com.woowa.banchan.ui.home.soup.adapter.viewholder.SoupSideHeaderViewHolder
 
 class SoupRVAdapter(private val spinnerCallback: (Int) -> Unit) : ListAdapter<List<FoodItem>, RecyclerView.ViewHolder>(diffUtil) {
 
-    var managerType = LINEAR_VERTICAL
-    val homeRVAdapter: HomeRVAdapter = HomeRVAdapter().apply { managerType = LINEAR_VERTICAL }
+    var managerType = GRID
+    private val homeRVAdapter: HomeRVAdapter = HomeRVAdapter().apply { managerType = GRID }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -61,6 +63,14 @@ class SoupRVAdapter(private val spinnerCallback: (Int) -> Unit) : ListAdapter<Li
             1 -> SUB_HEADER
             else -> HOME_ITEM
         }
+    }
+
+    fun submitHeaderList(food: List<FoodItem>) {
+        val newList = mutableListOf<List<FoodItem>?>()
+        newList.add(null)
+        newList.add(null)
+        newList.add(food)
+        submitList(newList)
     }
 
     companion object {
