@@ -2,6 +2,7 @@ package com.woowa.banchan.data.remote.datasource.food
 
 import com.woowa.banchan.data.remote.dto.BestFood
 import com.woowa.banchan.data.remote.dto.Food
+import com.woowa.banchan.data.remote.dto.FoodDetailDto
 import com.woowa.banchan.data.remote.service.BanchanService
 import javax.inject.Inject
 
@@ -14,4 +15,8 @@ class FoodDataSourceImpl @Inject constructor(
 
     override suspend fun getFoods(type: String): Food =
         banchanService.getFoods(type)
+
+    override suspend fun getDetailFood(hash: String): FoodDetailDto =
+        banchanService.getDetailFood(hash)
+
 }

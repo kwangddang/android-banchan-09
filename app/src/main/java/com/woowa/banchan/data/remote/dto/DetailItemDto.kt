@@ -3,7 +3,7 @@ package com.woowa.banchan.data.remote.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class DetailItem(
+data class DetailItemDto(
     @SerializedName("delivery_fee")
     val deliveryFee: String,
     @SerializedName("delivery_info")

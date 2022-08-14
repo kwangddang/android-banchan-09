@@ -3,8 +3,10 @@ package com.woowa.banchan.di
 import com.woowa.banchan.domain.usecase.cart.GetCartListUseCaseImpl
 import com.woowa.banchan.domain.usecase.cart.inter.GetCartListUseCase
 import com.woowa.banchan.domain.usecase.food.GetBestFoodsUseCaseImpl
+import com.woowa.banchan.domain.usecase.food.GetDetailFoodUseCaseImpl
 import com.woowa.banchan.domain.usecase.food.GetFoodsUseCaseImpl
 import com.woowa.banchan.domain.usecase.food.inter.GetBestFoodsUseCase
+import com.woowa.banchan.domain.usecase.food.inter.GetDetailFoodUseCase
 import com.woowa.banchan.domain.usecase.food.inter.GetFoodsUseCase
 import com.woowa.banchan.domain.usecase.recent.GetRecentlyViewedFoodsUseCaseImpl
 import com.woowa.banchan.domain.usecase.recent.inter.GetRecentlyViewedFoodsUseCase
@@ -41,4 +43,10 @@ abstract class UseCaseModule {
     abstract fun provideGetRecentlyViewedFoodsUseCase(
         GetRecentlyViewedFoodsUseCase: GetRecentlyViewedFoodsUseCaseImpl
     ): GetRecentlyViewedFoodsUseCase
+
+    @Singleton
+    @Binds
+    abstract fun provideGetDetailFoodUseCase(
+        getDetailFood: GetDetailFoodUseCaseImpl
+    ): GetDetailFoodUseCase
 }
