@@ -43,6 +43,19 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+                
+                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                    android:id="@+id/indicator_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/vp_detail"
+                    app:dotsSize="10dp"
+                    app:dotsSpacing="8dp"
+                    app:dotsColor="@color/greyscale_default"
+                    app:selectedDotColor="@color/main"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
