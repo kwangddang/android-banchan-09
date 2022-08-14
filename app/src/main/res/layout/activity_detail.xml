@@ -4,7 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="detail"
+            type="com.woowa.banchan.domain.model.DetailItem" />
 
+        <variable
+            name="title"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -72,6 +78,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingVertical="8dp"
+                        android:text="@{title}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="오리 주물럭_반조리" />
@@ -81,6 +88,8 @@
                         style="@style/normal_grey_18"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@{detail.productDescription}"
+                        android:paddingBottom="8dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_title"
                         tools:text="감칠맛 나는 매콤한 양념" />
@@ -90,10 +99,11 @@
                         style="@style/percent_18"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:textStyle="bold"
+                        android:paddingEnd="8dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_content"
+                        app:percent="@{detail.percent}"
                         tools:text="10%" />
 
                     <TextView
@@ -101,9 +111,10 @@
                         style="@style/bold_18"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingHorizontal="8dp"
+                        android:paddingEnd="8dp"
+                        app:price="@{detail.sPrice}"
                         app:layout_constraintStart_toEndOf="@id/tv_percent"
-                        app:layout_constraintTop_toTopOf="@id/tv_percent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_content"
                         tools:text="12,640원" />
 
                     <TextView
@@ -111,6 +122,7 @@
                         style="@style/normal_grey_14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        app:originPrice="@{detail.nPrice}"
                         app:layout_constraintBottom_toBottomOf="@id/tv_s_price"
                         app:layout_constraintStart_toEndOf="@id/tv_s_price"
                         tools:text="15,800원" />
@@ -123,7 +135,7 @@
                         android:background="@color/line"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_percent" />
+                        app:layout_constraintTop_toBottomOf="@id/tv_s_price" />
 
                     <TextView
                         android:id="@+id/tv_point_label"
@@ -139,6 +151,7 @@
                         android:id="@+id/tv_point"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:text="@{detail.point}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tv_point_label"
                         app:layout_constraintTop_toTopOf="@id/tv_point_label"
@@ -158,6 +171,7 @@
                         android:id="@+id/tv_delivery_info"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:text="@{detail.deliveryInfo}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tv_delivery_info_label"
                         app:layout_constraintTop_toTopOf="@id/tv_delivery_info_label"
@@ -177,6 +191,7 @@
                         android:id="@+id/tv_delivery_fee"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:text="@{detail.deliveryFee}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tv_delivery_fee_label"
                         app:layout_constraintTop_toTopOf="@id/tv_delivery_fee_label"

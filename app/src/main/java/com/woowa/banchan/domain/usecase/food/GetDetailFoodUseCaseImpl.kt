@@ -1,5 +1,6 @@
 package com.woowa.banchan.domain.usecase.food
 
+import android.util.Log
 import com.woowa.banchan.domain.model.DetailItem
 import com.woowa.banchan.domain.repository.FoodRepository
 import com.woowa.banchan.domain.usecase.food.inter.GetDetailFoodUseCase

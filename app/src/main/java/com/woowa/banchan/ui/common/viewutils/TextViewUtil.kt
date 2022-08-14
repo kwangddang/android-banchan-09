@@ -15,9 +15,13 @@ fun TextView.setPrice(price: Int) {
 }
 
 @BindingAdapter("originPrice")
-fun TextView.setOriginPrice(price: Int) {
+fun TextView.setOriginPrice(price: Int?) {
     paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-    text = StringUtil.getMoneyFormatString(price)
+    if(price == null) {
+        visibility = View.GONE
+    } else {
+        text = StringUtil.getMoneyFormatString(price)
+    }
 }
 
 @BindingAdapter("cartButtonPrice")
@@ -41,6 +45,25 @@ fun TextView.setViewedTime(date: Date) {
     text = DateUtil.getUpdateDate(date)
 }
 
+@BindingAdapter("percent")
+fun TextView.setPercent(nPrice: Int?) {
+    if (nPrice == null || nPrice == 0) {
+        text = ""
+        visibility = View.GONE
+    } else {
+        text = "$nPrice%"
+    }
+}
+
+@BindingAdapter("nPrice", "sPrice")
+fun TextView.setOriginPrice(nPrice: String?, sPrice: String) {
+    paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+    if (nPrice == null)
+        text = ""
+    else
+        text = nPrice
+}
+
 @BindingAdapter("nPricePercent", "sPricePercent")
 fun TextView.setPercent(nPrice: String?, sPrice: String) {
     if (nPrice == null) {
@@ -52,13 +75,4 @@ fun TextView.setPercent(nPrice: String?, sPrice: String) {
         val percent = (((originPrice - salePrice) * 100) / originPrice)
         text = "$percent%"
     }
-}
-
-@BindingAdapter("nPrice", "sPrice")
-fun TextView.setOriginPrice(nPrice: String?, sPrice: String) {
-    paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-    if (nPrice == null)
-        text = ""
-    else
-        text = nPrice
 }

@@ -13,6 +13,6 @@ interface BanchanService {
     @GET("{type}")
     suspend fun getFoods(@Path("type") type: String): Food
 
-    @GET("{hash}")
+    @GET("detail/{hash}")
     suspend fun getDetailFood(@Path("hash") hash: String): FoodDetailDto
 }

@@ -1,15 +1,19 @@
 package com.woowa.banchan.ui.detail
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ActivityDetailBinding
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.detail.adapter.DetailVPAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
@@ -23,6 +27,8 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
         initAdapter()
+        initViews()
+        initObserve()
     }
 
     private fun initAdapter() {
@@ -35,14 +41,18 @@ class DetailActivity : AppCompatActivity() {
         binding.indicatorDetail.attachTo(binding.vpDetail)
     }
 
+    private fun initViews() {
+        viewModel.getDetailFood("H72C3")
+    }
+
     private fun initObserve() {
-        viewModel.detailUiState.flowWithLifecycle(this.lifecycle)
+        viewModel.detailUiState.flowWithLifecycle(lifecycle)
             .onEach { state ->
                 if (state is UiState.Success) {
-
+                    binding.detail = state.data
                 } else if (state is UiState.Error) {
 
                 }
-            }
+            }.launchIn(lifecycleScope)
     }
 }
