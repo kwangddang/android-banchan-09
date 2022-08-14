@@ -1,6 +1,7 @@
 package com.woowa.banchan.ui.common.viewutils
 
 import android.graphics.Paint
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -21,6 +22,7 @@ fun TextView.setOriginPrice(price: Int?) {
         visibility = View.GONE
     } else {
         text = StringUtil.getMoneyFormatString(price)
+        visibility = View.VISIBLE
     }
 }
 
@@ -47,11 +49,13 @@ fun TextView.setViewedTime(date: Date) {
 
 @BindingAdapter("percent")
 fun TextView.setPercent(nPrice: Int?) {
+    Log.d("Test",nPrice.toString())
     if (nPrice == null || nPrice == 0) {
         text = ""
         visibility = View.GONE
     } else {
         text = "$nPrice%"
+        visibility = View.VISIBLE
     }
 }
 

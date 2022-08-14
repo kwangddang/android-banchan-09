@@ -1,5 +1,6 @@
 package com.woowa.banchan.ui.home.best
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentBestBinding
 import com.woowa.banchan.ui.common.uistate.UiState
+import com.woowa.banchan.ui.detail.DetailActivity
 import com.woowa.banchan.ui.home.best.adapter.BestRVAdapter
 import com.woowa.banchan.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +28,14 @@ class BestFragment : Fragment() {
     private val viewModel: BestViewModel by viewModels()
 
     private val bestAdapter: BestRVAdapter by lazy {
-        BestRVAdapter()
+        BestRVAdapter(itemClickListener)
+    }
+
+    private val itemClickListener: (String, String) -> Unit = { title, hash ->
+        val intent = Intent(context, DetailActivity::class.java)
+        intent.putExtra("title", title)
+        intent.putExtra("hash", hash)
+        startActivity(intent)
     }
 
     override fun onCreateView(

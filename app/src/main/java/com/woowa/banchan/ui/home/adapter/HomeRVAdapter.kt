@@ -10,7 +10,7 @@ import com.woowa.banchan.databinding.ItemMainLinearBinding
 import com.woowa.banchan.ui.home.LINEAR_VERTICAL
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeItemViewHolder
 
-class HomeRVAdapter(private val managerType: Int) :
+class HomeRVAdapter(private val managerType: Int, private val itemClickListener: (String,String) -> Unit) :
     ListAdapter<FoodItem, HomeItemViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeItemViewHolder {
@@ -34,7 +34,7 @@ class HomeRVAdapter(private val managerType: Int) :
     }
 
     override fun onBindViewHolder(holder: HomeItemViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), itemClickListener)
     }
 
     companion object {

@@ -1,6 +1,7 @@
 package com.woowa.banchan.data.remote.dto
 
 
+import android.util.Log
 import com.google.gson.annotations.SerializedName
 import com.woowa.banchan.domain.model.DetailItem
 import com.woowa.banchan.utils.MoneyUtil

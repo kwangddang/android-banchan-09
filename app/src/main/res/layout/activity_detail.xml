@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="detail"
             type="com.woowa.banchan.domain.model.DetailItem" />
@@ -49,19 +50,19 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-                
+
                 <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
                     android:id="@+id/indicator_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp"
                     android:layout_marginStart="16dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@id/vp_detail"
+                    android:layout_marginBottom="24dp"
+                    app:dotsColor="@color/greyscale_default"
                     app:dotsSize="10dp"
                     app:dotsSpacing="8dp"
-                    app:dotsColor="@color/greyscale_default"
-                    app:selectedDotColor="@color/main"/>
+                    app:layout_constraintBottom_toBottomOf="@id/vp_detail"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:selectedDotColor="@color/main" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
@@ -77,7 +78,8 @@
                         style="@style/header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="8dp"
+                        android:paddingTop="32dp"
+                        android:paddingBottom="8dp"
                         android:text="@{title}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -88,8 +90,8 @@
                         style="@style/normal_grey_18"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{detail.productDescription}"
                         android:paddingBottom="8dp"
+                        android:text="@{detail.productDescription}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_title"
                         tools:text="감칠맛 나는 매콤한 양념" />
@@ -99,8 +101,8 @@
                         style="@style/percent_18"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
                         android:paddingEnd="8dp"
+                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_content"
                         app:percent="@{detail.percent}"
@@ -112,9 +114,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingEnd="8dp"
-                        app:price="@{detail.sPrice}"
                         app:layout_constraintStart_toEndOf="@id/tv_percent"
                         app:layout_constraintTop_toBottomOf="@id/tv_content"
+                        app:price="@{detail.sPrice}"
                         tools:text="12,640원" />
 
                     <TextView
@@ -122,9 +124,9 @@
                         style="@style/normal_grey_14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:originPrice="@{detail.nPrice}"
                         app:layout_constraintBottom_toBottomOf="@id/tv_s_price"
                         app:layout_constraintStart_toEndOf="@id/tv_s_price"
+                        app:originPrice="@{detail.nPrice}"
                         tools:text="15,800원" />
 
                     <View
@@ -225,10 +227,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="24dp"
+                        android:text="1"
                         app:layout_constraintBottom_toBottomOf="@id/iv_plus"
                         app:layout_constraintEnd_toStartOf="@id/iv_plus"
-                        app:layout_constraintTop_toTopOf="@id/iv_plus"
-                        tools:text="1" />
+                        app:layout_constraintTop_toTopOf="@id/iv_plus" />
 
                     <ImageView
                         android:id="@+id/iv_minus"

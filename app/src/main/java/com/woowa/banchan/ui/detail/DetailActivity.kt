@@ -23,26 +23,30 @@ class DetailActivity : AppCompatActivity() {
 
     private val viewModel: DetailViewModel by viewModels()
 
+    private lateinit var title: String
+    private lateinit var hash: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
-        initAdapter()
+        getIntentValue()
         initViews()
+        initAdapter()
         initObserve()
     }
 
+    private fun getIntentValue() {
+        title = intent.getStringExtra("title")!!
+        hash = intent.getStringExtra("hash")!!
+    }
+
     private fun initAdapter() {
-        binding.vpDetail.adapter = DetailVPAdapter(
-            listOf(
-                "http://public.codesquad.kr/jk/storeapp/data/soup/28_ZIP_P_1003_T.jpg",
-                "http://public.codesquad.kr/jk/storeapp/data/soup/28_ZIP_P_1003_S.jpg"
-            )
-        )
-        binding.indicatorDetail.attachTo(binding.vpDetail)
+
     }
 
     private fun initViews() {
-        viewModel.getDetailFood("H72C3")
+        binding.title = title
+        viewModel.getDetailFood(hash)
     }
 
     private fun initObserve() {
@@ -50,6 +54,8 @@ class DetailActivity : AppCompatActivity() {
             .onEach { state ->
                 if (state is UiState.Success) {
                     binding.detail = state.data
+                    binding.vpDetail.adapter = DetailVPAdapter(state.data.thumbImages)
+                    binding.indicatorDetail.attachTo(binding.vpDetail)
                 } else if (state is UiState.Error) {
 
                 }
