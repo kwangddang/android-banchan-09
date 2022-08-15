@@ -7,9 +7,11 @@ import com.woowa.banchan.domain.model.Recent
 class RecentItemViewHolder(private val binding: ItemRecentBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    var onClickCartButton: (recent: Recent) -> Unit = {}
-
-    fun bind(recent: Recent, isPreview: Boolean = true) {
+    fun bind(
+        recent: Recent,
+        isPreview: Boolean = true,
+        onClickCartButton: (recent: Recent) -> Unit = {}
+    ) {
         binding.isPreview = isPreview
         binding.recent = recent
 
