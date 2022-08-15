@@ -1,7 +1,6 @@
 package com.woowa.banchan.data.remote.dto
 
 
-import android.util.Log
 import com.google.gson.annotations.SerializedName
 import com.woowa.banchan.domain.model.DetailItem
 import com.woowa.banchan.utils.MoneyUtil
@@ -16,7 +15,7 @@ data class FoodDetailDto(
         val priceList = data.prices
         val nPrice: Int?
         val sPrice: Int
-        if(priceList.size > 1) {
+        if (priceList.size > 1) {
             nPrice = MoneyUtil.getIntegerMoney(priceList[0])
             sPrice = MoneyUtil.getIntegerMoney(priceList[1])
         } else {

@@ -18,7 +18,7 @@ import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
 import com.woowa.banchan.ui.home.main.adapter.viewholder.MainHeaderViewHolder
 
-class MainRVAdapter(private val checkedChangeListener: (RadioGroup, Int) -> Unit, private val itemClickListener: (String,String) -> Unit) :
+class MainRVAdapter(private val checkedChangeListener: (RadioGroup, Int) -> Unit, private val itemClickListener: (String, String) -> Unit) :
     ListAdapter<Food, RecyclerView.ViewHolder>(diffUtil) {
 
     var managerType = GRID

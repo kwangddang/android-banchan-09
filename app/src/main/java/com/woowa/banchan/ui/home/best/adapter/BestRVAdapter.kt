@@ -17,7 +17,7 @@ import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
 import com.woowa.banchan.ui.home.best.adapter.viewholder.BestHeaderViewHolder
 
-class BestRVAdapter(private val itemClickListener: (String,String) -> Unit) : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(diffUtil) {
+class BestRVAdapter(private val itemClickListener: (String, String) -> Unit) : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {

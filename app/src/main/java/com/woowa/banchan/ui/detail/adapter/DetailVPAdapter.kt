@@ -3,13 +3,14 @@ package com.woowa.banchan.ui.detail.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.woowa.banchan.databinding.ItemDetailBinding
+import com.woowa.banchan.databinding.ItemVpDetailBinding
+import com.woowa.banchan.ui.detail.viewholder.DetailVPViewHolder
 
-class DetailVPAdapter(private val urlList: List<String>) : RecyclerView.Adapter<DetailViewHolder>() {
+class DetailVPAdapter(private val urlList: List<String>) : RecyclerView.Adapter<DetailVPViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailViewHolder {
-        return DetailViewHolder(
-            ItemDetailBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailVPViewHolder {
+        return DetailVPViewHolder(
+            ItemVpDetailBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -17,16 +18,10 @@ class DetailVPAdapter(private val urlList: List<String>) : RecyclerView.Adapter<
         )
     }
 
-    override fun onBindViewHolder(holder: DetailViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: DetailVPViewHolder, position: Int) {
         holder.bind(urlList[position])
     }
 
     override fun getItemCount() = urlList.size
 
-}
-
-class DetailViewHolder(private val binding: ItemDetailBinding) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(url: String) {
-        binding.url = url
-    }
 }

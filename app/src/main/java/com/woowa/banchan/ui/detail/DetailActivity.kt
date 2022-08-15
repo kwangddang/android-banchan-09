@@ -5,12 +5,12 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ActivityDetailBinding
 import com.woowa.banchan.ui.common.uistate.UiState
+import com.woowa.banchan.ui.detail.adapter.DetailRVAdapter
 import com.woowa.banchan.ui.detail.adapter.DetailVPAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -56,6 +56,10 @@ class DetailActivity : AppCompatActivity() {
                     binding.detail = state.data
                     binding.vpDetail.adapter = DetailVPAdapter(state.data.thumbImages)
                     binding.indicatorDetail.attachTo(binding.vpDetail)
+
+                    val detailRVAdapter = DetailRVAdapter(state.data.detailSection)
+                    binding.rvDetail.adapter = detailRVAdapter
+                    detailRVAdapter.notifyDataSetChanged()
                 } else if (state is UiState.Error) {
 
                 }

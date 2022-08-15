@@ -32,15 +32,15 @@
             android:id="@+id/nsv_detail"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ctb_toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_vp_container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="0dp">
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/vp_detail"
@@ -65,10 +65,10 @@
                     app:selectedDotColor="@color/main" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_scroll_container"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:paddingHorizontal="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/vp_detail">
@@ -299,14 +299,13 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_detail"
                         android:layout_width="0dp"
-                        android:layout_height="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="64dp"
+                        android:nestedScrollingEnabled="false"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/btn_order" />
-
+                        app:layout_constraintTop_toBottomOf="@id/btn_order"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

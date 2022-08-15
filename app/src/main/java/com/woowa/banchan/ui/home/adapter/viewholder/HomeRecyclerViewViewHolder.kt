@@ -12,7 +12,7 @@ import com.woowa.banchan.ui.home.adapter.HomeRVAdapter
 class HomeRecyclerViewViewHolder(private val binding: ItemRecyclerviewBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(food: List<FoodItem>, managerType: Int, itemClickListener: (String,String) -> Unit) {
+    fun bind(food: List<FoodItem>, managerType: Int, itemClickListener: (String, String) -> Unit) {
         val adapter = HomeRVAdapter(managerType, itemClickListener)
         binding.rvBest.apply {
             layoutManager = when (managerType) {
