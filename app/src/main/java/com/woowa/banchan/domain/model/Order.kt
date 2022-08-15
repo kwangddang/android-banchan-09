@@ -4,6 +4,7 @@ import java.util.*
 
 data class Order(
     val id: Long,
+    val deliveryState: Boolean,
     val time: Date,
     val count: Int,
     val price: Int,

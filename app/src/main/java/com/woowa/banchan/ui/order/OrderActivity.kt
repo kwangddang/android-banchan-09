@@ -1,13 +1,19 @@
 package com.woowa.banchan.ui.order
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.flowWithLifecycle
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ActivityOrderBinding
+import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.order.adapter.OrderRVAdapter
+import com.woowa.banchan.ui.order.detail.OrderDetailActivity
+import com.woowa.banchan.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class OrderActivity : AppCompatActivity() {
@@ -27,7 +33,11 @@ class OrderActivity : AppCompatActivity() {
     }
 
     private fun initAdapter() {
-        orderRVAdapter = OrderRVAdapter {}
+        orderRVAdapter = OrderRVAdapter {
+            val intent = Intent(this, OrderDetailActivity::class.java)
+            intent.putExtra("id", it.id)
+            startActivity(intent)
+        }
         binding.rvOrder.adapter = orderRVAdapter
     }
 
@@ -41,5 +51,14 @@ class OrderActivity : AppCompatActivity() {
         binding.ctbSubToolbar.setAppBarTitle("Order List")
     }
 
-    private fun initViewModel() {}
+    private fun initViewModel() {
+        viewModel.orderUiState.flowWithLifecycle(this.lifecycle)
+            .onEach {
+                when (it) {
+                    is UiState.Success -> orderRVAdapter.submitOrderList(it.data)
+                    is UiState.Error -> showToast(it.message)
+                    else -> {}
+                }
+            }
+    }
 }
