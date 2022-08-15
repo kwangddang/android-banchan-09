@@ -29,7 +29,11 @@ class MainFragment : Fragment() {
     private val viewModel: MainViewModel by viewModels()
 
     private val mainAdapter: MainRVAdapter by lazy {
-        MainRVAdapter(checkedChangeListener)
+        MainRVAdapter(checkedChangeListener, spinnerCallback)
+    }
+
+    private val spinnerCallback: (Int) -> Unit = { position ->
+        viewModel.sortList(position)
     }
 
     private val checkedChangeListener: (RadioGroup, Int) -> Unit = { group, checkedId ->
@@ -41,6 +45,7 @@ class MainFragment : Fragment() {
                 mainAdapter.managerType = LINEAR_VERTICAL
             }
         }
+        mainAdapter.homeRVAdapter.managerType = mainAdapter.managerType
         mainAdapter.notifyItemChanged(2)
     }
 

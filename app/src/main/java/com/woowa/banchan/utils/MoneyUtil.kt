@@ -4,7 +4,7 @@ import java.text.NumberFormat
 import java.util.*
 import kotlin.math.absoluteValue
 
-object StringUtil {
+object MoneyUtil {
 
     private val format: NumberFormat = NumberFormat.getCurrencyInstance()
         .apply {
@@ -17,4 +17,7 @@ object StringUtil {
 
     fun getMoneyFormatString(price: Int): String =
         getPriceFormatString(price) + '원'
+
+    fun getIntegerMoney(money: String): Int =
+        money.replace(",", "").replace("원", "").toInt()
 }
