@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemOrderDetailBinding
 import com.woowa.banchan.databinding.ItemOrderDetailHeaderBinding
 import com.woowa.banchan.databinding.ItemTotalPriceBinding
+import com.woowa.banchan.domain.model.Order
 import com.woowa.banchan.domain.model.OrderItem
 import com.woowa.banchan.ui.cart.cart.adapter.viewholder.TotalPriceViewHolder
 import com.woowa.banchan.ui.order.detail.ORDER_CONTENT
@@ -16,7 +17,9 @@ import com.woowa.banchan.ui.order.detail.ORDER_TOTAL_PRICE
 import com.woowa.banchan.ui.order.detail.adapter.viewholder.OrderDetailHeaderViewHolder
 import com.woowa.banchan.ui.order.detail.adapter.viewholder.OrderDetailViewHolder
 
-class OrderDetailRVAdapter : ListAdapter<OrderItem, RecyclerView.ViewHolder>(diffUtil) {
+class OrderDetailRVAdapter(
+    private val orderData: Order
+) : ListAdapter<OrderItem, RecyclerView.ViewHolder>(diffUtil) {
 
     private var totalPrice = 0
 
@@ -48,8 +51,12 @@ class OrderDetailRVAdapter : ListAdapter<OrderItem, RecyclerView.ViewHolder>(dif
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
-            ORDER_HEADER -> (holder as OrderDetailHeaderViewHolder).bind()
-            ORDER_CONTENT -> (holder as OrderDetailViewHolder).bind()
+            ORDER_HEADER -> (holder as OrderDetailHeaderViewHolder).bind(
+                orderData.count,
+                orderData.deliveryState,
+                orderData.time
+            )
+            ORDER_CONTENT -> (holder as OrderDetailViewHolder).bind(getItem(position))
             else -> (holder as TotalPriceViewHolder).bind(totalPrice)
         }
     }
@@ -67,8 +74,13 @@ class OrderDetailRVAdapter : ListAdapter<OrderItem, RecyclerView.ViewHolder>(dif
     fun submitOrderItemList(list: List<OrderItem>) {
         val newList = mutableListOf<OrderItem?>()
 
+        totalPrice = 0
+
         newList.add(null)
-        list.forEach { newList.add(it) }
+        list.forEach {
+            totalPrice += (it.price * it.count)
+            newList.add(it)
+        }
         newList.add(null)
 
         submitList(newList)
