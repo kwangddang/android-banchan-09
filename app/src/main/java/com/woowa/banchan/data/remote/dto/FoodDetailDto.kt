@@ -4,7 +4,6 @@ package com.woowa.banchan.data.remote.dto
 import com.google.gson.annotations.SerializedName
 import com.woowa.banchan.domain.model.DetailItem
 import com.woowa.banchan.utils.MoneyUtil
-import com.woowa.banchan.domain.model.FoodDetail
 
 data class FoodDetailDto(
     @SerializedName("data")

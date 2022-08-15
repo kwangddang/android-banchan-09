@@ -18,10 +18,11 @@ import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
 import com.woowa.banchan.ui.home.soup.adapter.viewholder.SoupSideHeaderViewHolder
 
-class SoupRVAdapter(private val spinnerCallback: (Int) -> Unit) : ListAdapter<List<FoodItem>, RecyclerView.ViewHolder>(diffUtil) {
+class SoupRVAdapter(private val spinnerCallback: (Int) -> Unit, private val itemClickListener: (String, String) -> Unit) :
+    ListAdapter<List<FoodItem>, RecyclerView.ViewHolder>(diffUtil) {
 
     var managerType = GRID
-    private val homeRVAdapter: HomeRVAdapter = HomeRVAdapter().apply { managerType = GRID }
+    private val homeRVAdapter: HomeRVAdapter = HomeRVAdapter(itemClickListener).apply { managerType = GRID }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {

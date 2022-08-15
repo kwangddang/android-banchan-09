@@ -1,8 +1,8 @@
 package com.woowa.banchan.domain.repository
 
 import com.woowa.banchan.domain.model.BestFoodCategory
-import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.domain.model.DetailItem
+import com.woowa.banchan.domain.model.FoodItem
 
 interface FoodRepository {
 

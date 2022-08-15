@@ -13,8 +13,6 @@ class HomeRecyclerViewViewHolder(private val binding: ItemRecyclerviewBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(homeRVAdapter: HomeRVAdapter, food: List<FoodItem>, managerType: Int) {
-    fun bind(food: List<FoodItem>, managerType: Int, itemClickListener: (String, String) -> Unit) {
-        val adapter = HomeRVAdapter(managerType, itemClickListener)
         binding.rvBest.apply {
             layoutManager = when (managerType) {
                 LINEAR_HORIZONTAL -> LinearLayoutManager(

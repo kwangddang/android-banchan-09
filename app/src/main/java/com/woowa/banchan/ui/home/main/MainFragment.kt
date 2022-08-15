@@ -31,8 +31,7 @@ class MainFragment : Fragment() {
     private val viewModel: MainViewModel by viewModels()
 
     private val mainAdapter: MainRVAdapter by lazy {
-        MainRVAdapter(checkedChangeListener, itemClickListener)
-        MainRVAdapter(checkedChangeListener, spinnerCallback)
+        MainRVAdapter(checkedChangeListener, spinnerCallback, itemClickListener)
     }
 
     private val spinnerCallback: (Int) -> Unit = { position ->
