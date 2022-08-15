@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="order"
+            type="com.woowa.banchan.domain.model.Order" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_order_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/background_order_item"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/iv_thumbnail"
+            android:layout_width="80dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_user"
+            app:image="@{order.imageUrl}"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tv_order_title"
+            style="@style/normal_14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="새콤달콤 오징어무침 외 1개"
+            app:layout_constraintBottom_toTopOf="@id/tv_total_price"
+            app:layout_constraintEnd_toStartOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@id/iv_thumbnail"
+            app:layout_constraintTop_toTopOf="@id/iv_thumbnail" />
+
+        <TextView
+            android:id="@+id/tv_total_price"
+            style="@style/normal_14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_order_title"
+            app:layout_constraintTop_toTopOf="@id/iv_thumbnail"
+            tools:text="12,640원" />
+
+        <TextView
+            android:id="@+id/tv_ready_to_delivery"
+            style="@style/normal_14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="배송완료"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_order_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_total_price" />
+
+        <TextView
+            android:id="@+id/tv_delivered"
+            style="@style/normal_14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="배송 준비중"
+            android:textColor="@color/accent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_order_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_total_price" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
