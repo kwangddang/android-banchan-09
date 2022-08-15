@@ -2,6 +2,7 @@ package com.woowa.banchan.data.remote.dto
 
 
 import com.google.gson.annotations.SerializedName
+import com.woowa.banchan.domain.model.DetailItem
 
 data class DetailItemDto(
     @SerializedName("delivery_fee")
@@ -20,4 +21,16 @@ data class DetailItemDto(
     val thumbImages: List<String>,
     @SerializedName("top_image")
     val topImage: String
-)
+) {
+    fun toDetailItem() =
+        DetailItem(
+            deliveryFee = deliveryFee,
+            deliveryInfo = deliveryInfo,
+            detailSection = detailSection,
+            point = point,
+            prices = prices,
+            productDescription = productDescription,
+            thumbImages = thumbImages,
+            topImage = topImage
+        )
+}

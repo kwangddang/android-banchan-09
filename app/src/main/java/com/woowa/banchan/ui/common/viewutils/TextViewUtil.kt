@@ -58,23 +58,14 @@ fun TextView.setPercent(nPrice: Int?) {
 }
 
 @BindingAdapter("nPrice", "sPrice")
-fun TextView.setOriginPrice(nPrice: String?, sPrice: String) {
-    paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-    if (nPrice == null)
-        text = ""
-    else
-        text = nPrice
-}
-
-@BindingAdapter("nPricePercent", "sPricePercent")
-fun TextView.setPercent(nPrice: String?, sPrice: String) {
+fun TextView.setOriginPrice(nPrice: Int?, sPrice: Int?) {
     if (nPrice == null) {
-        text = ""
-        visibility = View.GONE
-    } else {
-        val originPrice = nPrice.replace("원", "").replace(",", "").toLong()
-        val salePrice = sPrice.replace("원", "").replace(",", "").toLong()
-        val percent = (((originPrice - salePrice) * 100) / originPrice)
-        text = "$percent%"
+        text = if (sPrice != null)
+            MoneyUtil.getMoneyFormatString(sPrice)
+        else
+            ""
+    } else if (sPrice == null) {
+        paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+        text = MoneyUtil.getMoneyFormatString(nPrice)
     }
 }

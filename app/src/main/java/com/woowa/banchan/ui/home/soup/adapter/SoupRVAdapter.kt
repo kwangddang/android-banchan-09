@@ -1,14 +1,13 @@
-package com.woowa.banchan.ui.home.main.adapter
+package com.woowa.banchan.ui.home.soup.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.RadioGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemHomeHeaderBinding
-import com.woowa.banchan.databinding.ItemMainHeaderBinding
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
+import com.woowa.banchan.databinding.ItemSoupSideHeaderBinding
 import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.ui.home.GRID
 import com.woowa.banchan.ui.home.HOME_HEADER
@@ -17,18 +16,12 @@ import com.woowa.banchan.ui.home.SUB_HEADER
 import com.woowa.banchan.ui.home.adapter.HomeRVAdapter
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
-import com.woowa.banchan.ui.home.main.adapter.viewholder.MainHeaderViewHolder
+import com.woowa.banchan.ui.home.soup.adapter.viewholder.SoupSideHeaderViewHolder
 
-class MainRVAdapter(
-    private val checkedChangeListener: (RadioGroup, Int) -> Unit,
-    private val spinnerCallback: (Int) -> Unit
-) :
-    ListAdapter<List<FoodItem>, RecyclerView.ViewHolder>(diffUtil) {
-class MainRVAdapter(private val checkedChangeListener: (RadioGroup, Int) -> Unit, private val itemClickListener: (String, String) -> Unit) :
-    ListAdapter<Food, RecyclerView.ViewHolder>(diffUtil) {
+class SoupRVAdapter(private val spinnerCallback: (Int) -> Unit) : ListAdapter<List<FoodItem>, RecyclerView.ViewHolder>(diffUtil) {
 
     var managerType = GRID
-    val homeRVAdapter: HomeRVAdapter = HomeRVAdapter().apply { managerType = GRID }
+    private val homeRVAdapter: HomeRVAdapter = HomeRVAdapter().apply { managerType = GRID }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -39,8 +32,8 @@ class MainRVAdapter(private val checkedChangeListener: (RadioGroup, Int) -> Unit
                     ), parent, false
                 )
             )
-            SUB_HEADER -> MainHeaderViewHolder(
-                ItemMainHeaderBinding.inflate(
+            SUB_HEADER -> SoupSideHeaderViewHolder(
+                ItemSoupSideHeaderBinding.inflate(
                     LayoutInflater.from(
                         parent.context
                     ), parent, false
@@ -58,11 +51,9 @@ class MainRVAdapter(private val checkedChangeListener: (RadioGroup, Int) -> Unit
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
-            HOME_HEADER -> (holder as HomeHeaderViewHolder).bind("모두가 좋아하는\n든든한 메인 요리", false)
-            SUB_HEADER -> (holder as MainHeaderViewHolder).bind(checkedChangeListener, spinnerCallback)
+            HOME_HEADER -> (holder as HomeHeaderViewHolder).bind("정성이 담긴\n뜨끈뜨끈 국물 요리", false)
+            SUB_HEADER -> (holder as SoupSideHeaderViewHolder).bind(getItem(2).size, spinnerCallback)
             else -> (holder as HomeRecyclerViewViewHolder).bind(homeRVAdapter, getItem(position), managerType)
-            SUB_HEADER -> (holder as MainHeaderViewHolder).bind(checkedChangeListener)
-            else -> (holder as HomeRecyclerViewViewHolder).bind(getItem(position).body, managerType, itemClickListener)
         }
     }
 
@@ -86,7 +77,7 @@ class MainRVAdapter(private val checkedChangeListener: (RadioGroup, Int) -> Unit
 
         val diffUtil = object : DiffUtil.ItemCallback<List<FoodItem>>() {
             override fun areItemsTheSame(oldItem: List<FoodItem>, newItem: List<FoodItem>): Boolean {
-                return oldItem == newItem
+                return oldItem.hashCode() == newItem.hashCode()
             }
 
             override fun areContentsTheSame(oldItem: List<FoodItem>, newItem: List<FoodItem>): Boolean {

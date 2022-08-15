@@ -7,7 +7,7 @@
 
         <variable
             name="food"
-            type="com.woowa.banchan.data.remote.dto.FoodItem" />
+            type="com.woowa.banchan.domain.model.FoodItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -71,8 +71,7 @@
             android:paddingEnd="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_content"
-            app:nPricePercent="@{food.nPrice}"
-            app:sPricePercent="@{food.sPrice}"
+            app:percent="@{food.percent}"
             tools:text="20%" />
 
         <TextView
@@ -80,10 +79,11 @@
             style="@style/normal_14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{food.sPrice}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_percent"
             app:layout_constraintTop_toBottomOf="@id/tv_content"
+            app:nPrice="@{null}"
+            app:sPrice="@{food.sPrice}"
             tools:text="12,640원" />
 
         <TextView
@@ -96,7 +96,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_percent"
             app:nPrice="@{food.nPrice}"
-            app:sPrice="@{food.sPrice}"
+            app:sPrice="@{null}"
             tools:text="15,800원" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
