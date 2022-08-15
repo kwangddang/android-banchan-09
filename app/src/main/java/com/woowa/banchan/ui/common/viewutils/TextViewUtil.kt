@@ -63,3 +63,10 @@ fun TextView.setOriginPrice(nPrice: Int?, sPrice: Int?) {
         text = MoneyUtil.getMoneyFormatString(nPrice)
     }
 }
+
+@BindingAdapter("thumbnailTitle", "itemCount")
+fun TextView.setOrderSummaryText(thumbnailTitle: String, itemCount: Int) {
+    text = if (itemCount > 1) {
+        thumbnailTitle + " 외 ${itemCount - 1}개"
+    } else thumbnailTitle
+}

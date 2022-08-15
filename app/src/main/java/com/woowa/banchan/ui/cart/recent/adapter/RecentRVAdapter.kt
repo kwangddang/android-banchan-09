@@ -23,7 +23,7 @@ class RecentRVAdapter : ListAdapter<Recent, RecentItemViewHolder>(diffUtil) {
     }
 
     override fun onBindViewHolder(holder: RecentItemViewHolder, position: Int) {
-        holder.bind(getItem(position), isPreview = false)
+        holder.bind(getItem(position), isPreview = false) { this.onClickCartButton(it) }
     }
 
     fun setPreviewList(recentItems: List<Recent>) {

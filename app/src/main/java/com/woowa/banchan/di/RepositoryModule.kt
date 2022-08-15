@@ -1,10 +1,12 @@
 package com.woowa.banchan.di
 
 import com.woowa.banchan.data.local.repository.CartRepositoryImpl
+import com.woowa.banchan.data.local.repository.OrderRepositoryImpl
 import com.woowa.banchan.data.local.repository.RecentRepositoryImpl
 import com.woowa.banchan.data.remote.repository.FoodRepositoryImpl
 import com.woowa.banchan.domain.repository.CartRepository
 import com.woowa.banchan.domain.repository.FoodRepository
+import com.woowa.banchan.domain.repository.OrderRepository
 import com.woowa.banchan.domain.repository.RecentRepository
 import dagger.Binds
 import dagger.Module
@@ -33,4 +35,10 @@ abstract class RepositoryModule {
     abstract fun provideRecentRepository(
         recentRepository: RecentRepositoryImpl
     ): RecentRepository
+
+    @Singleton
+    @Binds
+    abstract fun provideOrderRepository(
+        orderRepository: OrderRepositoryImpl
+    ): OrderRepository
 }
