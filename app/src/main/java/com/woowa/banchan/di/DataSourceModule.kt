@@ -2,6 +2,8 @@ package com.woowa.banchan.di
 
 import com.woowa.banchan.data.local.datasource.cart.CartDataSource
 import com.woowa.banchan.data.local.datasource.cart.CartDataSourceImpl
+import com.woowa.banchan.data.local.datasource.order.OrderDataSource
+import com.woowa.banchan.data.local.datasource.order.OrderDataSourceImpl
 import com.woowa.banchan.data.local.datasource.recent.RecentDataSource
 import com.woowa.banchan.data.local.datasource.recent.RecentDataSourceImpl
 import com.woowa.banchan.data.remote.datasource.food.FoodDataSource
@@ -33,4 +35,10 @@ abstract class DataSourceModule {
     abstract fun provideRecentDatasource(
         recentDataSource: RecentDataSourceImpl
     ): RecentDataSource
+
+    @Singleton
+    @Binds
+    abstract fun provideOrderDataSource(
+        orderDataSource: OrderDataSourceImpl
+    ): OrderDataSource
 }

@@ -3,6 +3,7 @@ package com.woowa.banchan.di
 import android.content.Context
 import com.woowa.banchan.data.local.BanchanDataBase
 import com.woowa.banchan.data.local.dao.CartDao
+import com.woowa.banchan.data.local.dao.OrderDao
 import com.woowa.banchan.data.local.dao.RecentDao
 import dagger.Module
 import dagger.Provides
@@ -29,5 +30,10 @@ object DataBaseModule {
     @Provides
     fun provideRecentDao(dataBase: BanchanDataBase): RecentDao {
         return dataBase.recentDao()
+    }
+
+    @Provides
+    fun provideOrderDao(dataBase: BanchanDataBase): OrderDao {
+        return dataBase.orderDao()
     }
 }
