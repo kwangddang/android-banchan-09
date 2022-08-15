@@ -20,12 +20,12 @@ class MainViewModel @Inject constructor(
     private var _mainUiState = MutableStateFlow<UiState<List<FoodItem>>>(UiState.Empty)
     val mainUiState: StateFlow<UiState<List<FoodItem>>> get() = _mainUiState.asStateFlow()
 
-    var defaultMainFood = emptyList<FoodItem>()
+    var defaultMainFoods = emptyList<FoodItem>()
 
     fun getMainFoods() {
         viewModelScope.launch {
             getFoodsUseCase("main").collect { uiState ->
-                if (uiState is UiState.Success) defaultMainFood = uiState.data
+                if (uiState is UiState.Success) defaultMainFoods = uiState.data
                 _mainUiState.emit(uiState)
             }
         }
@@ -33,10 +33,10 @@ class MainViewModel @Inject constructor(
 
     fun sortList(position: Int) {
         val sortedList = when (position) {
-            0 -> defaultMainFood
-            1 -> defaultMainFood.sortedByDescending { food -> food.sPrice }
-            2 -> defaultMainFood.sortedBy { food -> food.sPrice }
-            3 -> defaultMainFood.sortedByDescending { food -> food.percent }
+            0 -> defaultMainFoods
+            1 -> defaultMainFoods.sortedByDescending { food -> food.sPrice }
+            2 -> defaultMainFoods.sortedBy { food -> food.sPrice }
+            3 -> defaultMainFoods.sortedByDescending { food -> food.percent }
             else -> emptyList()
         }
         _mainUiState.value = UiState.Success(sortedList)
