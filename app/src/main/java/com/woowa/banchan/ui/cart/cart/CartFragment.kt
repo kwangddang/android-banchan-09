@@ -53,7 +53,7 @@ class CartFragment : Fragment() {
 
             override fun onClickCartCheckState(cart: Cart) {}
 
-            override fun onClickCartUpdateCount(cart: Cart, count: Int) {}
+            override fun onClickCartUpdateCount(cart: Cart) {}
 
             override fun onClickCartRemove(cart: Cart) {}
 

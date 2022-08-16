@@ -1,6 +1,5 @@
 package com.woowa.banchan.ui.cart.cart.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -16,6 +15,8 @@ import com.woowa.banchan.ui.cart.cart.adapter.viewholder.*
 class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
 
     private var recentPreviewList = listOf<Recent>()
+    private var cartList = mutableListOf<Cart>()
+
     private var recentPreviewViewHolder: RecentPreviewViewHolder? = null
     private var totalPriceViewHolder: TotalPriceViewHolder? = null
     private var cartFooterBtnViewHolder: CartFooterBtnViewHolder? = null
@@ -112,20 +113,24 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
 
     fun submitCartList(list: List<Cart>) {
         // 첫번째, 마지막, 마지막-1,마지막-2
+        cartList = list.toMutableList()
         val newList = mutableListOf<Cart?>()
-
-        totalPrice = 0
 
         newList.add(null)
         if (list.isEmpty()) newList.add(emptyCart())
-        else list.forEach {
-            newList.add(it)
-            if (it.checkState) totalPrice += it.price
-            Log.d("Tester", "submitCartList: $it")
-        }
+        else list.forEach { newList.add(it) }
         repeat(3) { newList.add(null) }
 
         submitList(newList)
+        updateTotalPrice()
+    }
+
+    private fun updateTotalPrice() {
+        totalPrice = 0
+
+        cartList.forEach {
+            if (it.checkState) totalPrice += (it.price * it.count)
+        }
         totalPriceViewHolder?.bind(totalPrice)
         cartFooterBtnViewHolder?.bind(totalPrice)
     }
@@ -135,22 +140,32 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
     }
 
     private fun onClickRemoveSelection() {
+        val tmpList = cartList.toMutableList()
+        cartList.forEach { tmpList.remove(it) }
+        submitCartList(tmpList)
         listener?.onClickRemoveSelection()
     }
 
     private fun onClickReleaseSelection() {
+        cartList.forEach { it.checkState = false }
+        notifyDataSetChanged()
+        updateTotalPrice()
         listener?.onClickReleaseSelection()
     }
 
     private fun onClickCartCheckState(cart: Cart) {
+        updateTotalPrice()
         listener?.onClickCartCheckState(cart)
     }
 
-    private fun onClickCartUpdateCount(cart: Cart, count: Int) {
-        listener?.onClickCartUpdateCount(cart, count)
+    private fun onClickCartUpdateCount(cart: Cart) {
+        updateTotalPrice()
+        listener?.onClickCartUpdateCount(cart)
     }
 
     private fun onClickCartRemove(cart: Cart) {
+        cartList.remove(cart)
+        submitCartList(cartList)
         listener?.onClickCartRemove(cart)
     }
 
@@ -177,7 +192,7 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
         fun onClickRemoveSelection()
         fun onClickReleaseSelection()
         fun onClickCartCheckState(cart: Cart)
-        fun onClickCartUpdateCount(cart: Cart, count: Int)
+        fun onClickCartUpdateCount(cart: Cart)
         fun onClickCartRemove(cart: Cart)
         fun onClickOrderButton()
         fun onClickAllRecentlyViewed()

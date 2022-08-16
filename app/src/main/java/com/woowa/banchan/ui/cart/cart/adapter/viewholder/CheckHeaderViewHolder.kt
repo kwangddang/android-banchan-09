@@ -10,7 +10,7 @@ class CheckHeaderViewHolder(private val binding: ItemCartCheckHeaderBinding) :
     var onClickReleaseSelection: () -> Unit = {}
 
     fun bind() {
-        binding.layoutUncheckBtn.setOnClickListener { onClickRemoveSelection() }
+        binding.tvRemoveSelection.setOnClickListener { onClickRemoveSelection() }
         binding.tvReleaseChecked.setOnClickListener { onClickReleaseSelection() }
     }
 }

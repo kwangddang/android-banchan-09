@@ -2,9 +2,9 @@ package com.woowa.banchan.domain.model
 
 class Cart(
     val hash: String,
-    val checkState: Boolean,
+    var checkState: Boolean,
     val price: Int,
-    val count: Int,
+    var count: Int,
     val title: String,
     val imageUrl: String,
 )

@@ -13,7 +13,7 @@
         android:padding="16dp">
 
         <LinearLayout
-            android:id="@+id/layout_uncheck_btn"
+            android:id="@+id/tv_release_checked"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -36,7 +36,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_release_checked"
+            android:id="@+id/tv_remove_selection"
             style="@style/normal_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
