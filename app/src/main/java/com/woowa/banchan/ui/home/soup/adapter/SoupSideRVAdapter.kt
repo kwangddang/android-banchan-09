@@ -18,7 +18,7 @@ import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
 import com.woowa.banchan.ui.home.soup.adapter.viewholder.SoupSideHeaderViewHolder
 
-class SoupRVAdapter(
+class SoupSideRVAdapter(
     private val spinnerCallback: (Int) -> Unit,
     itemClickListener: (String, String) -> Unit,
     cartClickListener: (FoodItem) -> Unit
