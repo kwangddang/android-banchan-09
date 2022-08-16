@@ -1,6 +1,7 @@
 package com.woowa.banchan.ui.cart.cart
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentCartBinding
 import com.woowa.banchan.domain.model.Cart
@@ -15,6 +17,7 @@ import com.woowa.banchan.ui.cart.CartViewModel
 import com.woowa.banchan.ui.cart.cart.adapter.CartRVAdapter
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.utils.showToast
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class CartFragment : Fragment() {
@@ -71,15 +74,16 @@ class CartFragment : Fragment() {
                     is UiState.Error -> showToast(it.message)
                     else -> {}
                 }
-            }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
         viewModel.recentUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
+                Log.d("Tester", "initObserve: $it")
                 when (it) {
                     is UiState.Success -> cartRVAdapter.setPreviewList(it.data)
                     is UiState.Error -> showToast(it.message)
                     else -> {}
                 }
-            }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun initAdapter() {

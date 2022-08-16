@@ -4,7 +4,9 @@ import android.graphics.Paint
 import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.woowa.banchan.ui.cart.cart.CartFragment
+import com.woowa.banchan.ui.cart.cart.CartFragment.Companion.freeShipping
+import com.woowa.banchan.ui.cart.cart.CartFragment.Companion.minimumPrice
+import com.woowa.banchan.ui.cart.cart.CartFragment.Companion.shipping
 import com.woowa.banchan.utils.DateUtil
 import com.woowa.banchan.utils.MoneyUtil
 import java.util.*
@@ -27,9 +29,9 @@ fun TextView.setOriginPrice(price: Int?) {
 
 @BindingAdapter("cartButtonPrice")
 fun TextView.setCartButton(price: Int) {
-    text = if (price <= 0) "최소주문금액을 확인해주세요"
+    text = if (price < minimumPrice) "최소주문금액을 확인해주세요"
     else {
-        val p = price + if (price >= CartFragment.freeShipping) 0 else CartFragment.shipping
+        val p = price + if (price >= freeShipping) 0 else shipping
         val str = MoneyUtil.getMoneyFormatString(p)
         "$str 주문하기"
     }
@@ -37,8 +39,8 @@ fun TextView.setCartButton(price: Int) {
 
 @BindingAdapter("cartFreeShippingPrice")
 fun TextView.setCartFreeShipping(price: Int) {
-    text = if (price <= 0) ""
-    else MoneyUtil.getMoneyFormatString(price) + "을 더 담으면 무료배송!"
+    text = if (price >= freeShipping) ""
+    else MoneyUtil.getMoneyFormatString(freeShipping - price) + "을 더 담으면 무료배송!"
 }
 
 @BindingAdapter("viewedDate")

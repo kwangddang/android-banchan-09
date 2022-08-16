@@ -1,5 +1,6 @@
 package com.woowa.banchan.ui.cart.cart.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -15,6 +16,10 @@ import com.woowa.banchan.ui.cart.cart.adapter.viewholder.*
 class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
 
     private var recentPreviewList = listOf<Recent>()
+    private var recentPreviewViewHolder: RecentPreviewViewHolder? = null
+    private var totalPriceViewHolder: TotalPriceViewHolder? = null
+    private var cartFooterBtnViewHolder: CartFooterBtnViewHolder? = null
+
     private var totalPrice = 0
     private var listener: CartButtonCallBackListener? = null
 
@@ -41,30 +46,39 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
                 onClickCartCheckState = this@CartRVAdapter::onClickCartCheckState
                 onClickCartUpdateCount = this@CartRVAdapter::onClickCartUpdateCount
             }
-            CART_TOTAL_PRICE -> TotalPriceViewHolder(
-                ItemTotalPriceBinding.inflate(
-                    LayoutInflater.from(
-                        parent.context
-                    ), parent, false
+            CART_TOTAL_PRICE -> {
+                totalPriceViewHolder = TotalPriceViewHolder(
+                    ItemTotalPriceBinding.inflate(
+                        LayoutInflater.from(
+                            parent.context
+                        ), parent, false
+                    )
                 )
-            )
-            CART_FOOTER_BTN -> CartFooterBtnViewHolder(
-                ItemCartButtonFooterBinding.inflate(
-                    LayoutInflater.from(
-                        parent.context
-                    ), parent, false
-                )
-            ).apply {
-                onClickOrderButton = this@CartRVAdapter::onClickOrderButton
+                totalPriceViewHolder!!
             }
-            else -> RecentPreviewViewHolder(
-                ItemRecentPreviewBinding.inflate(
-                    LayoutInflater.from(
-                        parent.context
-                    ), parent, false
-                )
-            ).apply {
-                onClickAllRecentlyViewed = this@CartRVAdapter::onClickAllRecentlyViewed
+            CART_FOOTER_BTN -> {
+                cartFooterBtnViewHolder = CartFooterBtnViewHolder(
+                    ItemCartButtonFooterBinding.inflate(
+                        LayoutInflater.from(
+                            parent.context
+                        ), parent, false
+                    )
+                ).apply {
+                    onClickOrderButton = this@CartRVAdapter::onClickOrderButton
+                }
+                cartFooterBtnViewHolder!!
+            }
+            else -> {
+                recentPreviewViewHolder = RecentPreviewViewHolder(
+                    ItemRecentPreviewBinding.inflate(
+                        LayoutInflater.from(
+                            parent.context
+                        ), parent, false
+                    ),
+                ).apply {
+                    onClickAllRecentlyViewed = this@CartRVAdapter::onClickAllRecentlyViewed
+                }
+                recentPreviewViewHolder!!
             }
         }
     }
@@ -93,18 +107,27 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
 
     fun setPreviewList(recentItems: List<Recent>) {
         this.recentPreviewList = recentItems
+        recentPreviewViewHolder?.bind(recentPreviewList)
     }
 
     fun submitCartList(list: List<Cart>) {
         // 첫번째, 마지막, 마지막-1,마지막-2
         val newList = mutableListOf<Cart?>()
 
+        totalPrice = 0
+
         newList.add(null)
         if (list.isEmpty()) newList.add(emptyCart())
-        else list.forEach { newList.add(it) }
+        else list.forEach {
+            newList.add(it)
+            if (it.checkState) totalPrice += it.price
+            Log.d("Tester", "submitCartList: $it")
+        }
         repeat(3) { newList.add(null) }
 
         submitList(newList)
+        totalPriceViewHolder?.bind(totalPrice)
+        cartFooterBtnViewHolder?.bind(totalPrice)
     }
 
     fun setCartButtonCallBackListener(listener: CartButtonCallBackListener) {
