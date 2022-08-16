@@ -141,26 +141,27 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
 
     private fun onClickRemoveSelection() {
         val tmpList = cartList.toMutableList()
-        cartList.forEach { tmpList.remove(it) }
-        submitCartList(tmpList)
-        listener?.onClickRemoveSelection()
+        tmpList.forEach { if (it.checkState) onClickCartRemove(it) }
     }
 
     private fun onClickReleaseSelection() {
-        cartList.forEach { it.checkState = false }
+        cartList.forEach {
+            if (it.checkState) {
+                it.checkState = false
+                onClickCartCheckState(it)
+            }
+        }
         notifyDataSetChanged()
-        updateTotalPrice()
-        listener?.onClickReleaseSelection()
     }
 
     private fun onClickCartCheckState(cart: Cart) {
         updateTotalPrice()
-        listener?.onClickCartCheckState(cart)
+        listener?.onClickCartUpdate(cart)
     }
 
     private fun onClickCartUpdateCount(cart: Cart) {
         updateTotalPrice()
-        listener?.onClickCartUpdateCount(cart)
+        listener?.onClickCartUpdate(cart)
     }
 
     private fun onClickCartRemove(cart: Cart) {
@@ -189,10 +190,7 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
 
     interface CartButtonCallBackListener {
 
-        fun onClickRemoveSelection()
-        fun onClickReleaseSelection()
-        fun onClickCartCheckState(cart: Cart)
-        fun onClickCartUpdateCount(cart: Cart)
+        fun onClickCartUpdate(cart: Cart)
         fun onClickCartRemove(cart: Cart)
         fun onClickOrderButton()
         fun onClickAllRecentlyViewed()

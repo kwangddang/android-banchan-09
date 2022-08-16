@@ -10,4 +10,10 @@ class CartDataSourceImpl @Inject constructor(
 
     override suspend fun getCartList(): Result<List<CartDto>> =
         runCatching { cartDao.getCartList() }
+
+    override suspend fun updateCart(cartDto: CartDto): Result<Unit> =
+        runCatching { cartDao.update(cartDto) }
+
+    override suspend fun deleteCart(cartDto: CartDto): Result<Unit> =
+        runCatching { cartDao.delete(cartDto) }
 }

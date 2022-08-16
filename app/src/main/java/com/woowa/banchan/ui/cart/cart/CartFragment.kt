@@ -1,7 +1,6 @@
 package com.woowa.banchan.ui.cart.cart
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,17 +44,20 @@ class CartFragment : Fragment() {
         initListener()
     }
 
+    override fun onStop() {
+        viewModel.updateCart()
+        super.onStop()
+    }
+
     private fun initListener() {
         val listener = object : CartRVAdapter.CartButtonCallBackListener {
-            override fun onClickRemoveSelection() {}
+            override fun onClickCartUpdate(cart: Cart) {
+                viewModel.addUpdateCartCache(cart, removeFlag = false)
+            }
 
-            override fun onClickReleaseSelection() {}
-
-            override fun onClickCartCheckState(cart: Cart) {}
-
-            override fun onClickCartUpdateCount(cart: Cart) {}
-
-            override fun onClickCartRemove(cart: Cart) {}
+            override fun onClickCartRemove(cart: Cart) {
+                viewModel.addUpdateCartCache(cart, removeFlag = true)
+            }
 
             override fun onClickOrderButton() {}
 
@@ -77,7 +79,6 @@ class CartFragment : Fragment() {
             }.launchIn(viewLifecycleOwner.lifecycleScope)
         viewModel.recentUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
-                Log.d("Tester", "initObserve: $it")
                 when (it) {
                     is UiState.Success -> cartRVAdapter.setPreviewList(it.data)
                     is UiState.Error -> showToast(it.message)
