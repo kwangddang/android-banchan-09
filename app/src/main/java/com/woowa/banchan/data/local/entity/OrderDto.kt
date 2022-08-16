@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.woowa.banchan.data.local.BanchanDataBase.Companion.orderTable
 import com.woowa.banchan.domain.model.Order
-import com.woowa.banchan.utils.DateUtil
 import java.util.*
 
 @Entity(tableName = orderTable)

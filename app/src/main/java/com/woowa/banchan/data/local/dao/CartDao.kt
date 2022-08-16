@@ -8,14 +8,14 @@ import com.woowa.banchan.data.local.entity.CartDto
 interface CartDao {
 
     @Insert
-    fun insert(cartDto: CartDto)
+    suspend fun insertCart(cartDto: CartDto)
 
     @Update
-    fun update(cartDto: CartDto)
+    suspend fun updateCart(cartDto: CartDto)
 
     @Delete
-    fun delete(cartDto: CartDto)
+    suspend fun deleteCart(cartDto: CartDto)
 
     @Query("SELECT * FROM $cartTable")
-    fun getCartList(): List<CartDto>
+    suspend fun getCartList(): List<CartDto>
 }

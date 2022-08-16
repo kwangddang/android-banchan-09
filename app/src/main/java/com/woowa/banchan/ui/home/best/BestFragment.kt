@@ -12,6 +12,8 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentBestBinding
+import com.woowa.banchan.domain.model.FoodItem
+import com.woowa.banchan.ui.common.bottomsheet.CartAddFragment
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.detail.DetailActivity
 import com.woowa.banchan.ui.home.best.adapter.BestRVAdapter
@@ -28,7 +30,7 @@ class BestFragment : Fragment() {
     private val viewModel: BestViewModel by viewModels()
 
     private val bestAdapter: BestRVAdapter by lazy {
-        BestRVAdapter(itemClickListener)
+        BestRVAdapter(itemClickListener, cartClickListener)
     }
 
     private val itemClickListener: (String, String) -> Unit = { title, hash ->
@@ -36,6 +38,10 @@ class BestFragment : Fragment() {
         intent.putExtra("title", title)
         intent.putExtra("hash", hash)
         startActivity(intent)
+    }
+
+    private val cartClickListener: (FoodItem) -> Unit = { food ->
+        CartAddFragment(food).show(childFragmentManager, "")
     }
 
     override fun onCreateView(

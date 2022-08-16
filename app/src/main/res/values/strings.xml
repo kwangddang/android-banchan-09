@@ -24,8 +24,12 @@
     <string name="order">주문하기</string>
 
     <string name="total_count">총 %d개 상품</string>
+    <string name="add_cart">%d개 담기</string>
 
     <string name="order_total_count">총 %d개</string>
     <string name="order_item_count">%d개</string>
     <string name="order_left_minute">%d분</string>
+
+    <string name="bottomsheet_title">장바구니 담기</string>
+    <string name="bottomsheet_cancel">취소</string>
 </resources>

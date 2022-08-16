@@ -24,3 +24,12 @@ fun CartDto.toCart(): Cart = Cart(
     title = title,
     imageUrl = imageUrl
 )
+
+fun Cart.toCartDto(): CartDto = CartDto(
+    hash = hash,
+    checkState = checkState,
+    price = price,
+    count = count,
+    title = title,
+    imageUrl = imageUrl
+)
