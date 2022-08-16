@@ -16,7 +16,9 @@ class CartRepositoryImpl @Inject constructor(
         return runCatching { list.map { it.toCart() } }
     }
 
-    override suspend fun insertCart(cart: Cart): Result<Unit> {
-        return runCatching { cartDataSource.insertCart(cart.toCartDto()) }
-    }
+    override suspend fun insertCart(cart: Cart): Result<Unit> =
+        runCatching {
+            cartDataSource.insertCart(cart.toCartDto()).getOrThrow()
+        }
+
 }
