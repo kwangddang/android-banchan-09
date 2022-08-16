@@ -11,6 +11,7 @@ import com.woowa.banchan.databinding.ActivityDetailBinding
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.detail.adapter.DetailRVAdapter
 import com.woowa.banchan.ui.detail.adapter.DetailVPAdapter
+import com.woowa.banchan.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -22,29 +23,35 @@ class DetailActivity : AppCompatActivity() {
 
     private val viewModel: DetailViewModel by viewModels()
 
-    private lateinit var title: String
-    private lateinit var hash: String
+    private var title: String = ""
+    private var hash: String = ""
+
+    private var sPrice = 0
+
+    private var totalPrice = 0
+    private var totalCount = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
-        getIntentValue()
+        getIntentValues()
+        initBinding()
         initViews()
-        initAdapter()
         initObserve()
+        initButtonSetting()
     }
 
-    private fun getIntentValue() {
+    private fun getIntentValues() {
         title = intent.getStringExtra("title")!!
         hash = intent.getStringExtra("hash")!!
     }
 
-    private fun initAdapter() {
-
+    private fun initBinding() {
+        binding.title = title
+        binding.count = totalCount
     }
 
     private fun initViews() {
-        binding.title = title
         viewModel.getDetailFood(hash)
     }
 
@@ -52,6 +59,8 @@ class DetailActivity : AppCompatActivity() {
         viewModel.detailUiState.flowWithLifecycle(lifecycle)
             .onEach { state ->
                 if (state is UiState.Success) {
+                    sPrice = state.data.sPrice
+                    binding.price = sPrice
                     binding.detail = state.data
                     binding.vpDetail.adapter = DetailVPAdapter(state.data.thumbImages)
                     binding.indicatorDetail.attachTo(binding.vpDetail)
@@ -63,5 +72,38 @@ class DetailActivity : AppCompatActivity() {
 
                 }
             }.launchIn(lifecycleScope)
+
+        viewModel.insertionUiState.flowWithLifecycle(lifecycle)
+        viewModel.insertionUiState.flowWithLifecycle(lifecycle)
+            .onEach { state ->
+                if (state is UiState.Success) {
+
+                } else if (state is UiState.Error) {
+                    showToast(state.message)
+                }
+            }.launchIn(lifecycleScope)
+    }
+
+    private fun initButtonSetting() {
+        binding.ivPlus.setOnClickListener {
+            totalCount++
+            totalPrice = totalCount * sPrice
+            setCountAndPrice()
+        }
+
+        binding.ivMinus.setOnClickListener {
+            if (totalCount > 1) {
+                totalCount--
+                totalPrice = totalCount * sPrice
+                setCountAndPrice()
+            }
+        }
+
+        binding.btnOrder.setOnClickListener { viewModel.insertCart(title, totalCount) }
+    }
+
+    private fun setCountAndPrice() {
+        binding.count = totalCount
+        binding.price = totalPrice
     }
 }
