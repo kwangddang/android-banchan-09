@@ -16,7 +16,7 @@ import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.ui.common.bottomsheet.CartAddFragment
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.detail.DetailActivity
-import com.woowa.banchan.ui.home.soup.adapter.SoupSideRVAdapter
+import com.woowa.banchan.ui.home.adapter.soupside.SoupSideRVAdapter
 import com.woowa.banchan.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -30,7 +30,7 @@ class SideFragment : Fragment() {
     private val viewModel: SideViewModel by viewModels()
 
     private val soupSideAdapter: SoupSideRVAdapter by lazy {
-        SoupSideRVAdapter(spinnerCallback, itemClickListener, cartClickListener)
+        SoupSideRVAdapter(false, spinnerCallback, itemClickListener, cartClickListener)
     }
 
     private val spinnerCallback: (Int) -> Unit = { position ->
