@@ -8,9 +8,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_recently_viewed"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center"
+        android:paddingStart="8dp"
         android:text="@string/fragment_recent"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
