@@ -41,7 +41,7 @@ class MainFragment : Fragment() {
     }
 
     private val cartClickListener: (FoodItem) -> Unit = { food ->
-        CartAddFragment(food).show(childFragmentManager, "")
+        CartAddFragment(food).show(childFragmentManager, getString(R.string.fragment_cart_add))
     }
 
     private val checkedChangeListener: (RadioGroup, Int) -> Unit = { group, checkedId ->

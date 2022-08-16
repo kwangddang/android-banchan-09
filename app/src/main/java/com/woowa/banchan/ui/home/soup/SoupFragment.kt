@@ -16,7 +16,7 @@ import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.ui.common.bottomsheet.CartAddFragment
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.detail.DetailActivity
-import com.woowa.banchan.ui.home.soup.adapter.SoupRVAdapter
+import com.woowa.banchan.ui.home.adapter.soupside.SoupSideRVAdapter
 import com.woowa.banchan.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -29,8 +29,8 @@ class SoupFragment : Fragment() {
 
     private val viewModel: SoupViewModel by viewModels()
 
-    private val soupAdapter: SoupRVAdapter by lazy {
-        SoupRVAdapter(spinnerCallback, itemClickListener, cartClickListener)
+    private val soupAdapter: SoupSideRVAdapter by lazy {
+        SoupSideRVAdapter(true, spinnerCallback, itemClickListener, cartClickListener)
     }
 
     private val spinnerCallback: (Int) -> Unit = { position ->
@@ -45,7 +45,7 @@ class SoupFragment : Fragment() {
     }
 
     private val cartClickListener: (FoodItem) -> Unit = { food ->
-        CartAddFragment(food).show(childFragmentManager, "")
+        CartAddFragment(food).show(childFragmentManager, getString(R.string.fragment_cart_add))
     }
 
     override fun onCreateView(
