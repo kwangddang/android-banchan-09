@@ -16,7 +16,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import okhttp3.internal.wait
 import javax.inject.Inject
 
 @HiltViewModel
@@ -82,15 +81,8 @@ class CartViewModel @Inject constructor(
                     val checkedList = mutableListOf<Cart>()
                     it.data.forEach { cart -> if (cart.checkState) checkedList.add(cart) }
                     insertCartToOrderUseCase(checkedList).collect { c ->
-                        when (it) {
-                            is UiState.Success -> {
-                                _orderUiState.emit(c)
-                                checkedList.forEach { launch { deleteCartUseCase(it).collect {} } }
-                            }
-                            is UiState.Error -> _orderUiState.emit(it)
-                            is UiState.Loading -> _orderUiState.emit(it)
-                            else -> {}
-                        }
+                        _orderUiState.emit(c)
+                        checkedList.forEach { launch { deleteCartUseCase(it).collect {} } }
                     }
                 }
                 is UiState.Error -> _orderUiState.emit(it)
