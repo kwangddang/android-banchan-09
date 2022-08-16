@@ -28,4 +28,6 @@
     <string name="order_total_count">총 %d개</string>
     <string name="order_item_count">%d개</string>
     <string name="order_left_minute">%d분</string>
+    <string name="bottomsheet_title">장바구니 담기</string>
+    <string name="bottomsheet_cancel">취소</string>
 </resources>

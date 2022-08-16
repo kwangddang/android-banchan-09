@@ -1,16 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/bottom_sheet_behavior"
-    tools:context=".ui.common.bottomsheet.CartAddFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+
+        <variable
+            name="food"
+            type="com.woowa.banchan.domain.model.FoodItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_bottomsheet"
+        android:padding="16dp">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/tv_bottomsheet_title"
+            style="@style/normal_14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/bottomsheet_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            style="@style/normal_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bottomsheet_cancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_thumbnail"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_bottomsheet_title"
+            tools:src="@color/main" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/normal_14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{food.title}"
+            app:layout_constraintBottom_toTopOf="@id/tv_s_price"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_thumbnail"
+            app:layout_constraintTop_toTopOf="@id/iv_thumbnail"
+            tools:text="오리 주물럭_반조리" />
+
+        <TextView
+            android:id="@+id/tv_percent"
+            style="@style/percent_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
+            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:percent="@{food.percent}"
+            tools:text="20%" />
+
+        <TextView
+            android:id="@+id/tv_s_price"
+            style="@style/normal_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
+            app:layout_constraintStart_toEndOf="@id/tv_percent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:nPrice="@{null}"
+            app:sPrice="@{food.sPrice}"
+            tools:text="12,640원" />
+
+        <TextView
+            android:id="@+id/tv_n_price"
+            style="@style/caption_grey"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_s_price"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:nPrice="@{food.nPrice}"
+            app:sPrice="@{null}"
+            tools:text="15,800원" />
+
+        <ImageView
+            android:id="@+id/iv_plus"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/circle_btn_background"
+            android:elevation="4dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_plus"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_s_price" />
+
+        <TextView
+            android:id="@+id/tv_count"
+            style="@style/normal_18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="24dp"
+            android:text="1"
+            app:layout_constraintBottom_toBottomOf="@id/iv_plus"
+            app:layout_constraintEnd_toStartOf="@id/iv_plus"
+            app:layout_constraintTop_toTopOf="@id/iv_plus" />
+
+        <ImageView
+            android:id="@+id/iv_minus"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/circle_btn_background"
+            android:elevation="4dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_minus"
+            app:layout_constraintEnd_toStartOf="@id/tv_count"
+            app:layout_constraintTop_toBottomOf="@id/tv_s_price" />
+
+        <TextView
+            android:id="@+id/tv_total_price"
+            style="@style/normal_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_minus"
+            app:layout_constraintBottom_toBottomOf="@id/iv_minus"
+            tools:text="12,640원"/>
+
+        <Button
+            android:id="@+id/btn_add"
+            style="@style/button"
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_minus"
+            tools:text="1개 담기"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
