@@ -28,16 +28,18 @@
             android:exported="false" />
         <activity
             android:name=".ui.detail.DetailActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ui.home.HomeActivity"
             android:exported="true"
             android:theme="@style/LaunchTheme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 

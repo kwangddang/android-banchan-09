@@ -11,6 +11,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingVertical="16dp"
@@ -29,7 +30,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_margin="8dp"
-            android:background="@drawable/cart_background"
+            android:background="@drawable/circle_btn_background"
             android:elevation="8dp"
             android:padding="8dp"
             android:src="@drawable/ic_cart"

@@ -9,10 +9,17 @@ import com.woowa.banchan.domain.model.FoodItem
 class HomeItemViewHolder(private val binding: ViewDataBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(food: FoodItem) {
-        if (binding is ItemHomeBinding)
+    fun bind(food: FoodItem, itemClickListener: (String, String) -> Unit) {
+        if (binding is ItemHomeBinding) {
             binding.food = food
-        else if (binding is ItemMainLinearBinding)
+            binding.layoutHome.setOnClickListener {
+                itemClickListener(food.title, food.detailHash)
+            }
+        } else if (binding is ItemMainLinearBinding) {
             binding.food = food
+            binding.layoutMain.setOnClickListener {
+                itemClickListener(food.title, food.detailHash)
+            }
+        }
     }
 }

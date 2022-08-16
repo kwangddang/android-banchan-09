@@ -16,6 +16,12 @@
     <string name="fragment_cart">cart</string>
     <string name="fragment_recent">recent</string>
     <string name="empty_notice">상품이 비어있습니다!</string>
+    <string name="point_label">적립금</string>
+    <string name="delivery_info_label">배송정보</string>
+    <string name="delivery_fee_label">배송비</string>
+    <string name="count_label">수량</string>
+    <string name="total_price">총 주문금액</string>
+    <string name="order">주문하기</string>
 
     <string name="total_count">총 %d개 상품</string>
 

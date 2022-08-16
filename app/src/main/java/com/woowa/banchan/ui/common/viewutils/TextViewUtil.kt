@@ -15,9 +15,14 @@ fun TextView.setPrice(price: Int) {
 }
 
 @BindingAdapter("originPrice")
-fun TextView.setOriginPrice(price: Int) {
+fun TextView.setOriginPrice(price: Int?) {
     paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-    text = MoneyUtil.getMoneyFormatString(price)
+    if (price == null) {
+        visibility = View.GONE
+    } else {
+        text = MoneyUtil.getMoneyFormatString(price)
+        visibility = View.VISIBLE
+    }
 }
 
 @BindingAdapter("cartButtonPrice")
@@ -48,6 +53,7 @@ fun TextView.setPercent(nPrice: Int?) {
         visibility = View.GONE
     } else {
         text = "$nPrice%"
+        visibility = View.VISIBLE
     }
 }
 

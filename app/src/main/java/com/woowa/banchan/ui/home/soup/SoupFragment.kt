@@ -1,5 +1,6 @@
 package com.woowa.banchan.ui.home.soup
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentSoupBinding
 import com.woowa.banchan.ui.common.uistate.UiState
+import com.woowa.banchan.ui.detail.DetailActivity
 import com.woowa.banchan.ui.home.soup.adapter.SoupRVAdapter
 import com.woowa.banchan.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,11 +28,18 @@ class SoupFragment : Fragment() {
     private val viewModel: SoupViewModel by viewModels()
 
     private val soupAdapter: SoupRVAdapter by lazy {
-        SoupRVAdapter(spinnerCallback)
+        SoupRVAdapter(spinnerCallback, itemClickListener)
     }
 
     private val spinnerCallback: (Int) -> Unit = { position ->
         viewModel.sortList(position)
+    }
+
+    private val itemClickListener: (String, String) -> Unit = { title, hash ->
+        val intent = Intent(context, DetailActivity::class.java)
+        intent.putExtra("title", title)
+        intent.putExtra("hash", hash)
+        startActivity(intent)
     }
 
     override fun onCreateView(

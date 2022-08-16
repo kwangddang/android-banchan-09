@@ -1,5 +1,6 @@
 package com.woowa.banchan.ui.home.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMainBinding
 import com.woowa.banchan.ui.common.uistate.UiState
+import com.woowa.banchan.ui.detail.DetailActivity
 import com.woowa.banchan.ui.home.GRID
 import com.woowa.banchan.ui.home.LINEAR_VERTICAL
 import com.woowa.banchan.ui.home.main.adapter.MainRVAdapter
@@ -29,7 +31,7 @@ class MainFragment : Fragment() {
     private val viewModel: MainViewModel by viewModels()
 
     private val mainAdapter: MainRVAdapter by lazy {
-        MainRVAdapter(checkedChangeListener, spinnerCallback)
+        MainRVAdapter(checkedChangeListener, spinnerCallback, itemClickListener)
     }
 
     private val spinnerCallback: (Int) -> Unit = { position ->
@@ -47,6 +49,13 @@ class MainFragment : Fragment() {
         }
         mainAdapter.homeRVAdapter.managerType = mainAdapter.managerType
         mainAdapter.notifyItemChanged(2)
+    }
+
+    private val itemClickListener: (String, String) -> Unit = { title, hash ->
+        val intent = Intent(context, DetailActivity::class.java)
+        intent.putExtra("title", title)
+        intent.putExtra("hash", hash)
+        startActivity(intent)
     }
 
     override fun onCreateView(
