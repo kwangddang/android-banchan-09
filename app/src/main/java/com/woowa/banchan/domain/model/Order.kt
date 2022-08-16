@@ -1,5 +1,6 @@
 package com.woowa.banchan.domain.model
 
+import java.io.Serializable
 import java.util.*
 
 data class Order(
@@ -10,4 +11,4 @@ data class Order(
     val price: Int,
     val title: String,
     val imageUrl: String,
-)
+) : Serializable

@@ -8,7 +8,7 @@ import com.woowa.banchan.data.local.entity.OrderDto
 interface OrderDao {
 
     @Insert
-    fun insert(orderDto: OrderDto)
+    fun insert(orderDto: OrderDto): Long
 
     @Update
     fun update(orderDto: OrderDto)
@@ -18,4 +18,7 @@ interface OrderDao {
 
     @Query("SELECT * FROM $orderTable")
     fun getTotalOrderList(): List<OrderDto>
+
+    @Query("SELECT * FROM $orderTable WHERE id = :orderId")
+    fun getOrder(orderId: Long): OrderDto
 }

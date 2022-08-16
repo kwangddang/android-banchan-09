@@ -17,4 +17,12 @@ class OrderDataSourceImpl @Inject constructor(
     override suspend fun getOrderDetail(orderId: Long): Result<List<OrderItemDto>> =
         runCatching { orderItemDao.getOrderDetail(orderId) }
 
+    override suspend fun getOrder(orderId: Long): Result<OrderDto> =
+        runCatching { orderDao.getOrder(orderId) }
+
+    override suspend fun insertNewOrder(orderDto: OrderDto): Result<Long> =
+        runCatching { orderDao.insert(orderDto) }
+
+    override suspend fun insertNewOrderItem(orderItemDto: List<OrderItemDto>): Result<Unit> =
+        runCatching { orderItemDto.forEach { orderItemDao.insert(it) } }
 }

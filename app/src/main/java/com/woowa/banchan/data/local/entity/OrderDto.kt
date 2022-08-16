@@ -4,13 +4,13 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.woowa.banchan.data.local.BanchanDataBase.Companion.orderTable
+import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.domain.model.Order
-import com.woowa.banchan.utils.DateUtil
 import java.util.*
 
 @Entity(tableName = orderTable)
 data class OrderDto(
-    @PrimaryKey(autoGenerate = true) val id: Long,
+    @PrimaryKey(autoGenerate = true) val id: Long?,
     @ColumnInfo(name = "time") val time: Date,
     @ColumnInfo(name = "count") val count: Int,
     @ColumnInfo(name = "price") val price: Int,
@@ -20,7 +20,7 @@ data class OrderDto(
 
 fun OrderDto.toOrder(): Order {
     return Order(
-        id = id,
+        id = id!!,
         deliveryState = (System.currentTimeMillis() - time.time < (60000 * 20)),
         time = time,
         count = count,
@@ -29,3 +29,12 @@ fun OrderDto.toOrder(): Order {
         imageUrl = imageUrl
     )
 }
+
+fun newOrderDto(count: Int, price: Int, thumbnailItem: Cart): OrderDto = OrderDto(
+    id = null,
+    time = Date(System.currentTimeMillis()),
+    count = count,
+    price = price,
+    title = thumbnailItem.title,
+    imageUrl = thumbnailItem.imageUrl,
+)

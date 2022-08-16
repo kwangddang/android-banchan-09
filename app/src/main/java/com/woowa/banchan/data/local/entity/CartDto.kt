@@ -24,3 +24,12 @@ fun CartDto.toCart(): Cart = Cart(
     title = title,
     imageUrl = imageUrl
 )
+
+fun CartDto.toOrderItemDto(orderId: Long): OrderItemDto = OrderItemDto(
+    id = -1,
+    orderId = orderId,
+    price = price,
+    count = count,
+    title = title,
+    imageUrl = imageUrl
+)
