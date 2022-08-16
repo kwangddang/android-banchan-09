@@ -9,6 +9,7 @@ import com.woowa.banchan.databinding.ItemBestHeaderBinding
 import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
 import com.woowa.banchan.domain.model.BestFoodCategory
+import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.ui.home.HOME_HEADER
 import com.woowa.banchan.ui.home.HOME_ITEM
 import com.woowa.banchan.ui.home.LINEAR_HORIZONTAL
@@ -20,7 +21,7 @@ import com.woowa.banchan.ui.home.best.adapter.viewholder.BestHeaderViewHolder
 
 class BestRVAdapter(
     private val itemClickListener: (String, String) -> Unit,
-    private val cartClickListener: () -> Unit
+    private val cartClickListener: (FoodItem) -> Unit
 ) : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

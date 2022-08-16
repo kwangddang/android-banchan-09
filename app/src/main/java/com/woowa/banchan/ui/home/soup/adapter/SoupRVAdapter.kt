@@ -21,7 +21,7 @@ import com.woowa.banchan.ui.home.soup.adapter.viewholder.SoupSideHeaderViewHolde
 class SoupRVAdapter(
     private val spinnerCallback: (Int) -> Unit,
     itemClickListener: (String, String) -> Unit,
-    cartClickListener: () -> Unit
+    cartClickListener: (FoodItem) -> Unit
 ) :
     ListAdapter<List<FoodItem>, RecyclerView.ViewHolder>(diffUtil) {
 

@@ -9,14 +9,14 @@ import com.woowa.banchan.domain.model.FoodItem
 class HomeItemViewHolder(private val binding: ViewDataBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(food: FoodItem, itemClickListener: (String, String) -> Unit, cartClickListener: () -> Unit) {
+    fun bind(food: FoodItem, itemClickListener: (String, String) -> Unit, cartClickListener: (FoodItem) -> Unit) {
         if (binding is ItemHomeBinding) {
             binding.food = food
             binding.layoutHome.setOnClickListener {
                 itemClickListener(food.title, food.detailHash)
             }
             binding.ivCart.setOnClickListener {
-                cartClickListener()
+                cartClickListener(food)
             }
         } else if (binding is ItemMainLinearBinding) {
             binding.food = food
@@ -24,7 +24,7 @@ class HomeItemViewHolder(private val binding: ViewDataBinding) :
                 itemClickListener(food.title, food.detailHash)
             }
             binding.ivCart.setOnClickListener {
-                cartClickListener()
+                cartClickListener(food)
             }
         }
     }

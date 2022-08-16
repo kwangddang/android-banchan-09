@@ -12,7 +12,7 @@ import com.woowa.banchan.ui.home.adapter.viewholder.HomeItemViewHolder
 
 class HomeRVAdapter(
     private val itemClickListener: (String, String) -> Unit,
-    private val cartClickListener: () -> Unit
+    private val cartClickListener: (FoodItem) -> Unit
 ) :
     ListAdapter<FoodItem, HomeItemViewHolder>(diffUtil) {
 

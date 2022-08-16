@@ -9,8 +9,9 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentCartAddBinding
+import com.woowa.banchan.domain.model.FoodItem
 
-class CartAddFragment : BottomSheetDialogFragment() {
+class CartAddFragment(private val foodItem: FoodItem) : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentCartAddBinding
 
@@ -24,5 +25,6 @@ class CartAddFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.food = foodItem
     }
 }

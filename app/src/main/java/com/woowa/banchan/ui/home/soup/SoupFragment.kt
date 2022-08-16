@@ -12,6 +12,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentSoupBinding
+import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.ui.common.bottomsheet.CartAddFragment
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.detail.DetailActivity
@@ -43,8 +44,8 @@ class SoupFragment : Fragment() {
         startActivity(intent)
     }
 
-    private val cartClickListener: () -> Unit = {
-        CartAddFragment().show(childFragmentManager, "")
+    private val cartClickListener: (FoodItem) -> Unit = { food ->
+        CartAddFragment(food).show(childFragmentManager, "")
     }
 
     override fun onCreateView(

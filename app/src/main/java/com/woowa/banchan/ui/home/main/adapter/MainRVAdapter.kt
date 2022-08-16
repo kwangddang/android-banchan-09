@@ -23,7 +23,7 @@ class MainRVAdapter(
     private val checkedChangeListener: (RadioGroup, Int) -> Unit,
     private val spinnerCallback: (Int) -> Unit,
     itemClickListener: (String, String) -> Unit,
-    cartClickListener: () -> Unit
+    cartClickListener: (FoodItem) -> Unit
 ) :
     ListAdapter<List<FoodItem>, RecyclerView.ViewHolder>(diffUtil) {
 
