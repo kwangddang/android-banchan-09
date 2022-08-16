@@ -8,4 +8,14 @@ data class FoodItem(
     val sPrice: Int,
     val percent: Int?,
     val title: String
-)
+) {
+    fun toCart(totalCount: Int, checkState: Boolean) : Cart =
+        Cart(
+            hash = detailHash,
+            checkState = checkState,
+            price = sPrice,
+            count = totalCount,
+            title = title,
+            imageUrl = image
+        )
+}

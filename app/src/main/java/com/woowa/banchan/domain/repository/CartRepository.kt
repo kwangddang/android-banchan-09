@@ -5,4 +5,6 @@ import com.woowa.banchan.domain.model.Cart
 interface CartRepository {
 
     suspend fun getCartList(): Result<List<Cart>>
+
+    suspend fun insertCart(cart: Cart): Result<Unit>
 }
