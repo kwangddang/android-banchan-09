@@ -2,7 +2,6 @@ package com.woowa.banchan.ui.common.bottomsheet
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.domain.usecase.cart.inter.InsertCartUseCase
 import com.woowa.banchan.ui.common.uistate.UiState
@@ -10,7 +9,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

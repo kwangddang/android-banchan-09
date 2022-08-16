@@ -12,11 +12,11 @@ import javax.inject.Inject
 
 class InsertCartUseCaseImpl @Inject constructor(
     private val cartRepository: CartRepository
-): InsertCartUseCase {
+) : InsertCartUseCase {
     override suspend fun insertCart(foodItem: FoodItem, totalCount: Int): Flow<UiState<Unit>> =
         flow {
             emit(UiState.Loading)
-            cartRepository.insertCart(foodItem.toCart(totalCount,true))
+            cartRepository.insertCart(foodItem.toCart(totalCount, true))
                 .onSuccess { emit(UiState.Success(it)) }
                 .onFailure { emit(UiState.Error(it.message)) }
         }.flowOn(Dispatchers.IO)

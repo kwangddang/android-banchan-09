@@ -17,6 +17,6 @@ class CartRepositoryImpl @Inject constructor(
     }
 
     override suspend fun insertCart(cart: Cart): Result<Unit> {
-        return kotlin.runCatching { cartDataSource.insertCart(cart.toCartDto()) }
+        return runCatching { cartDataSource.insertCart(cart.toCartDto()) }
     }
 }

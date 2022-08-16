@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -14,8 +13,6 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentCartAddBinding
 import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.ui.common.uistate.UiState
-import com.woowa.banchan.ui.detail.adapter.DetailRVAdapter
-import com.woowa.banchan.ui.detail.adapter.DetailVPAdapter
 import com.woowa.banchan.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -74,7 +71,7 @@ class CartAddFragment(private val foodItem: FoodItem) : BottomSheetDialogFragmen
         }
 
         binding.ivMinus.setOnClickListener {
-            if(totalCount > 1) {
+            if (totalCount > 1) {
                 totalCount--
                 totalPrice = totalCount * foodItem.sPrice
                 setCountAndPrice()

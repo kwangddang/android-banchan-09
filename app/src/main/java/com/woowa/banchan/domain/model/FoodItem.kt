@@ -9,7 +9,7 @@ data class FoodItem(
     val percent: Int?,
     val title: String
 ) {
-    fun toCart(totalCount: Int, checkState: Boolean) : Cart =
+    fun toCart(totalCount: Int, checkState: Boolean): Cart =
         Cart(
             hash = detailHash,
             checkState = checkState,
