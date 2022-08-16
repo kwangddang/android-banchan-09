@@ -15,6 +15,9 @@ class CartAddFragment(private val foodItem: FoodItem) : BottomSheetDialogFragmen
 
     private lateinit var binding: FragmentCartAddBinding
 
+    private var totalPrice = foodItem.sPrice
+    private var totalCount = 1
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -25,6 +28,37 @@ class CartAddFragment(private val foodItem: FoodItem) : BottomSheetDialogFragmen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.food = foodItem
+        initBinding()
+        initButtonSetting()
+    }
+
+    private fun initBinding() {
+        binding.apply {
+            food = foodItem
+            price = totalPrice
+            count = totalCount
+        }
+    }
+
+    private fun initButtonSetting() {
+        binding.tvCancel.setOnClickListener { dismiss() }
+        binding.ivPlus.setOnClickListener {
+            totalCount++
+            totalPrice = totalCount * foodItem.sPrice
+            setCountAndPrice()
+        }
+
+        binding.ivMinus.setOnClickListener {
+            if(totalCount > 1) {
+                totalCount--
+                totalPrice = totalCount * foodItem.sPrice
+                setCountAndPrice()
+            }
+        }
+    }
+
+    private fun setCountAndPrice() {
+        binding.count = totalCount
+        binding.price = totalPrice
     }
 }

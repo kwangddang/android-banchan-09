@@ -9,6 +9,14 @@
             name="food"
             type="com.woowa.banchan.domain.model.FoodItem" />
 
+        <variable
+            name="count"
+            type="Integer" />
+
+        <variable
+            name="price"
+            type="Integer" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,9 +50,9 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_marginTop="24dp"
+            app:image="@{food.image}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_bottomsheet_title"
-            app:image="@{food.image}"
             tools:src="@color/main" />
 
         <TextView
@@ -118,10 +126,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingHorizontal="24dp"
-            android:text="1"
+            android:text="@{Integer.toString(count)}"
             app:layout_constraintBottom_toBottomOf="@id/iv_plus"
             app:layout_constraintEnd_toStartOf="@id/iv_plus"
-            app:layout_constraintTop_toTopOf="@id/iv_plus" />
+            app:layout_constraintTop_toTopOf="@id/iv_plus"
+            tools:text="1"/>
 
         <ImageView
             android:id="@+id/iv_minus"
@@ -143,6 +152,7 @@
             app:layout_constraintBottom_toBottomOf="@id/iv_minus"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/iv_minus"
+            app:price="@{price}"
             tools:text="12,640원" />
 
         <Button
@@ -151,8 +161,8 @@
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_marginTop="24dp"
-            android:text="1개 담기"
             android:layout_marginBottom="8dp"
+            android:text="1개 담기"
             app:backgroundTint="@color/main"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
