@@ -12,6 +12,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentSoupBinding
+import com.woowa.banchan.ui.common.bottomsheet.CartAddFragment
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.detail.DetailActivity
 import com.woowa.banchan.ui.home.soup.adapter.SoupRVAdapter
@@ -28,7 +29,7 @@ class SoupFragment : Fragment() {
     private val viewModel: SoupViewModel by viewModels()
 
     private val soupAdapter: SoupRVAdapter by lazy {
-        SoupRVAdapter(spinnerCallback, itemClickListener)
+        SoupRVAdapter(spinnerCallback, itemClickListener, cartClickListener)
     }
 
     private val spinnerCallback: (Int) -> Unit = { position ->
@@ -40,6 +41,10 @@ class SoupFragment : Fragment() {
         intent.putExtra("title", title)
         intent.putExtra("hash", hash)
         startActivity(intent)
+    }
+
+    private val cartClickListener: () -> Unit = {
+        CartAddFragment().show(childFragmentManager, "")
     }
 
     override fun onCreateView(
