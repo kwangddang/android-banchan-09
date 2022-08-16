@@ -11,8 +11,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.R
 import com.woowa.banchan.domain.model.Recent
+import com.woowa.banchan.domain.model.toFoodItem
 import com.woowa.banchan.ui.cart.CartViewModel
 import com.woowa.banchan.ui.cart.recent.adapter.RecentRVAdapter
+import com.woowa.banchan.ui.common.bottomsheet.CartAddFragment
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.utils.showToast
 import kotlinx.coroutines.flow.launchIn
@@ -44,7 +46,12 @@ class RecentFragment : Fragment() {
 
     private fun initListener() {
         val listener = object : RecentRVAdapter.RecentlyViewedCallBackListener {
-            override fun onClickCartButton(recent: Recent) {}
+            override fun onClickCartButton(recent: Recent) {
+                CartAddFragment(recent.toFoodItem()).show(
+                    childFragmentManager,
+                    getString(R.string.fragment_cart_add)
+                )
+            }
         }
         adapter.setRecentlyViewedCallBackListener(listener)
     }
