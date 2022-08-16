@@ -35,7 +35,7 @@ class OrderActivity : AppCompatActivity() {
     private fun initAdapter() {
         orderRVAdapter = OrderRVAdapter {
             val intent = Intent(this, OrderDetailActivity::class.java)
-            intent.putExtra("id", it.id)
+            intent.putExtra("orderId", it.id)
             startActivity(intent)
         }
         binding.rvOrder.adapter = orderRVAdapter

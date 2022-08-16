@@ -6,7 +6,9 @@ import com.woowa.banchan.domain.usecase.food.GetBestFoodsUseCaseImpl
 import com.woowa.banchan.domain.usecase.food.GetFoodsUseCaseImpl
 import com.woowa.banchan.domain.usecase.food.inter.GetBestFoodsUseCase
 import com.woowa.banchan.domain.usecase.food.inter.GetFoodsUseCase
+import com.woowa.banchan.domain.usecase.order.GetOrderDetailUseCaseImpl
 import com.woowa.banchan.domain.usecase.order.GetTotalOrderUseCaseImpl
+import com.woowa.banchan.domain.usecase.order.inter.GetOrderDetailUseCase
 import com.woowa.banchan.domain.usecase.order.inter.GetTotalOrderUseCase
 import com.woowa.banchan.domain.usecase.recent.GetRecentlyViewedFoodsUseCaseImpl
 import com.woowa.banchan.domain.usecase.recent.inter.GetRecentlyViewedFoodsUseCase
@@ -49,4 +51,10 @@ abstract class UseCaseModule {
     abstract fun provideGetTotalOrderUseCase(
         GetTotalOrderUseCaseImpl: GetTotalOrderUseCaseImpl
     ): GetTotalOrderUseCase
+
+    @Singleton
+    @Binds
+    abstract fun provideGetOrderDetailUseCase(
+        GetOrderDetailUseCaseImpl: GetOrderDetailUseCaseImpl
+    ): GetOrderDetailUseCase
 }

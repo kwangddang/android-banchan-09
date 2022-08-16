@@ -4,6 +4,7 @@ import android.content.Context
 import com.woowa.banchan.data.local.BanchanDataBase
 import com.woowa.banchan.data.local.dao.CartDao
 import com.woowa.banchan.data.local.dao.OrderDao
+import com.woowa.banchan.data.local.dao.OrderItemDao
 import com.woowa.banchan.data.local.dao.RecentDao
 import dagger.Module
 import dagger.Provides
@@ -35,5 +36,10 @@ object DataBaseModule {
     @Provides
     fun provideOrderDao(dataBase: BanchanDataBase): OrderDao {
         return dataBase.orderDao()
+    }
+
+    @Provides
+    fun provideOrderItemDao(dataBase: BanchanDataBase): OrderItemDao {
+        return dataBase.orderItemDao()
     }
 }

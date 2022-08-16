@@ -18,4 +18,8 @@
     <string name="empty_notice">상품이 비어있습니다!</string>
 
     <string name="total_count">총 %d개 상품</string>
+
+    <string name="order_total_count">총 %d개</string>
+    <string name="order_item_count">%d개</string>
+    <string name="order_left_minute">%d분</string>
 </resources>
