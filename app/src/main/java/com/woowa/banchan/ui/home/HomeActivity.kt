@@ -9,6 +9,7 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ActivityHomeBinding
 import com.woowa.banchan.ui.cart.CartActivity
 import com.woowa.banchan.ui.home.adapter.HomeVPAdapter
+import com.woowa.banchan.ui.order.OrderActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,6 +41,9 @@ class HomeActivity : AppCompatActivity() {
     private fun initButtonSetting() {
         binding.tbHome.setOnClickCartIcon {
             startActivity(Intent(this, CartActivity::class.java))
+        }
+        binding.tbHome.setOnClickUserIcon {
+            startActivity(Intent(this, OrderActivity::class.java))
         }
     }
 }
