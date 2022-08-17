@@ -12,7 +12,7 @@ data class Recent(
 )
 
 fun Recent.toFoodItem(): FoodItem = FoodItem(
-    description = null,
+    description = "",
     detailHash = hash,
     image = imageUrl,
     nPrice = nPrice,
