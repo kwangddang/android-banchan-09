@@ -24,8 +24,8 @@ class DetailActivity : AppCompatActivity() {
 
     private val viewModel: DetailViewModel by viewModels()
 
-    private var title: String = ""
-    private var hash: String = ""
+    private var title: String? = null
+    private var hash: String? = null
 
     private var sPrice = 0
 
@@ -45,6 +45,7 @@ class DetailActivity : AppCompatActivity() {
     private fun getIntentValues() {
         title = intent.getStringExtra("title")!!
         hash = intent.getStringExtra("hash")!!
+        if(title == null || hash == null) finish()
     }
 
     private fun initBinding() {
@@ -53,7 +54,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        viewModel.getDetailFood(hash)
+        viewModel.getDetailFood(hash!!)
     }
 
     private fun initObserve() {
@@ -104,7 +105,7 @@ class DetailActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnOrder.setOnClickListener { viewModel.insertCart(title, totalCount) }
+        binding.btnOrder.setOnClickListener { viewModel.insertCart(title!!, totalCount) }
     }
 
     private fun setCountAndPrice() {
