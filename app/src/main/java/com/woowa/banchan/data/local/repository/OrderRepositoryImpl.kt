@@ -20,6 +20,12 @@ class OrderRepositoryImpl @Inject constructor(
             list.map { it.toOrder() }
         }
 
+    override suspend fun getEachOrder(orderId: Long): Result<Order> =
+        runCatching {
+            val item = orderDataSource.getOrder(orderId).getOrThrow()
+            item.toOrder()
+        }
+
     override suspend fun getOrderDetail(orderId: Long): Result<List<OrderItem>> =
         runCatching {
             val list = orderDataSource.getOrderDetail(orderId).getOrThrow()

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.woowa.banchan.domain.model.Order
 import com.woowa.banchan.domain.model.OrderItem
+import com.woowa.banchan.domain.usecase.order.inter.GetEachOrderUseCase
 import com.woowa.banchan.domain.usecase.order.inter.GetOrderDetailUseCase
 import com.woowa.banchan.ui.common.uistate.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class OrderDetailViewModel @Inject constructor(
     private val getOrderDetailUseCase: GetOrderDetailUseCase,
+    private val getEachOrderUseCase: GetEachOrderUseCase,
 ) : ViewModel() {
 
     private val _orderItemUiState = MutableStateFlow<UiState<List<OrderItem>>>(UiState.Empty)
@@ -25,5 +27,9 @@ class OrderDetailViewModel @Inject constructor(
 
     fun getOrderDetail(orderId: Long) = viewModelScope.launch {
         getOrderDetailUseCase(orderId).collect { _orderItemUiState.emit(it) }
+    }
+
+    fun getOrder(orderId: Long) = viewModelScope.launch {
+        getEachOrderUseCase(orderId).collect { _orderUiState.emit(it) }
     }
 }

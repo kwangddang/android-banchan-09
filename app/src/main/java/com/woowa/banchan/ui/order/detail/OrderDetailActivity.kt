@@ -23,12 +23,12 @@ class OrderDetailActivity : AppCompatActivity() {
     private val viewModel by viewModels<OrderDetailViewModel>()
     private lateinit var orderDetailRVAdapter: OrderDetailRVAdapter
 
-    private val order: Order? by lazy {
-        intent.getSerializableExtra("order") as Order?
-    }
+    private var order: Order? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        order = intent.getSerializableExtra("order") as Order?
 
         if (order == null) finish()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_detail)
@@ -48,6 +48,18 @@ class OrderDetailActivity : AppCompatActivity() {
                     else -> {}
                 }
             }.launchIn(lifecycleScope)
+
+        viewModel.orderUiState.flowWithLifecycle(this.lifecycle)
+            .onEach {
+                when (it) {
+                    is UiState.Success -> {
+                        this.order = it.data
+                        orderDetailRVAdapter.submitOrderItem(it.data)
+                    }
+                    is UiState.Error -> showToast(it.message)
+                    else -> {}
+                }
+            }.launchIn(lifecycleScope)
     }
 
     private fun initAdapter() {
@@ -57,6 +69,6 @@ class OrderDetailActivity : AppCompatActivity() {
 
     private fun initButton() {
         binding.ctbSubToolbar.setOnClickBackIcon { finish() }
-        binding.ctbSubToolbar.setOnClickRefreshIcon { }
+        binding.ctbSubToolbar.setOnClickRefreshIcon { viewModel.getOrder(order!!.id) }
     }
 }

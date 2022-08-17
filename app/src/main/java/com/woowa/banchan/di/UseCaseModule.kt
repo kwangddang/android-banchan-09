@@ -14,9 +14,11 @@ import com.woowa.banchan.domain.usecase.food.GetFoodsUseCaseImpl
 import com.woowa.banchan.domain.usecase.food.inter.GetBestFoodsUseCase
 import com.woowa.banchan.domain.usecase.food.inter.GetDetailFoodUseCase
 import com.woowa.banchan.domain.usecase.food.inter.GetFoodsUseCase
+import com.woowa.banchan.domain.usecase.order.GetEachOrderUseCaseImpl
 import com.woowa.banchan.domain.usecase.order.GetOrderDetailUseCaseImpl
 import com.woowa.banchan.domain.usecase.order.GetTotalOrderUseCaseImpl
 import com.woowa.banchan.domain.usecase.order.InsertCartToOrderUseCaseImpl
+import com.woowa.banchan.domain.usecase.order.inter.GetEachOrderUseCase
 import com.woowa.banchan.domain.usecase.order.inter.GetOrderDetailUseCase
 import com.woowa.banchan.domain.usecase.order.inter.GetTotalOrderUseCase
 import com.woowa.banchan.domain.usecase.order.inter.InsertCartToOrderUseCase
@@ -97,4 +99,10 @@ abstract class UseCaseModule {
     abstract fun provideInsertCartToOrderUseCase(
         InsertCartToOrderUseCaseImpl: InsertCartToOrderUseCaseImpl
     ): InsertCartToOrderUseCase
+
+    @Singleton
+    @Binds
+    abstract fun provideGetEachOrderUseCase(
+        GetEachOrderUseCaseImpl: GetEachOrderUseCaseImpl
+    ): GetEachOrderUseCase
 }
