@@ -75,9 +75,14 @@ class DetailActivity : AppCompatActivity() {
             }.launchIn(lifecycleScope)
 
         viewModel.insertionUiState.flowWithLifecycle(lifecycle)
-            .onEach { state ->
+            .onEach {
+                val state = it.getContentIfNotHandled()
+
                 if (state is UiState.Success) {
-                    CartCompleteFragment().show(supportFragmentManager, getString(R.string.fragment_cart_complete))
+                    CartCompleteFragment().show(
+                        supportFragmentManager,
+                        getString(R.string.fragment_cart_complete)
+                    )
                 } else if (state is UiState.Error) {
                     showToast(state.message)
                 }
