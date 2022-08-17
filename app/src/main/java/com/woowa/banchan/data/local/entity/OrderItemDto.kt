@@ -8,7 +8,7 @@ import com.woowa.banchan.domain.model.OrderItem
 
 @Entity(tableName = orderItemTable)
 data class OrderItemDto(
-    @PrimaryKey(autoGenerate = true) val id: Long,
+    @PrimaryKey(autoGenerate = true) val id: Long?,
     @ColumnInfo(name = "order_id") var orderId: Long,
     @ColumnInfo(name = "count") val count: Int,
     @ColumnInfo(name = "price") val price: Int,
@@ -18,7 +18,7 @@ data class OrderItemDto(
 
 fun OrderItemDto.toOrderItem(): OrderItem {
     return OrderItem(
-        id = id,
+        id = id!!,
         orderId = orderId,
         count = count,
         price = price,
