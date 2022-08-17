@@ -8,6 +8,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ActivityDetailBinding
+import com.woowa.banchan.ui.common.popup.CartCompleteFragment
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.detail.adapter.DetailRVAdapter
 import com.woowa.banchan.ui.detail.adapter.DetailVPAdapter
@@ -74,10 +75,9 @@ class DetailActivity : AppCompatActivity() {
             }.launchIn(lifecycleScope)
 
         viewModel.insertionUiState.flowWithLifecycle(lifecycle)
-        viewModel.insertionUiState.flowWithLifecycle(lifecycle)
             .onEach { state ->
                 if (state is UiState.Success) {
-
+                    CartCompleteFragment().show(supportFragmentManager, getString(R.string.fragment_cart_complete))
                 } else if (state is UiState.Error) {
                     showToast(state.message)
                 }
