@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -12,6 +13,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentCartAddBinding
 import com.woowa.banchan.domain.model.FoodItem
+import com.woowa.banchan.ui.common.popup.CartCompleteFragment
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,7 +57,8 @@ class CartAddFragment(private val foodItem: FoodItem) : BottomSheetDialogFragmen
         viewModel.insertionUiState.flowWithLifecycle(lifecycle)
             .onEach { state ->
                 if (state is UiState.Success) {
-                    dismiss()
+                    parentFragmentManager.commit { remove(this@CartAddFragment) }
+                    CartCompleteFragment().show(parentFragmentManager, getString(R.string.fragment_cart_complete))
                 } else if (state is UiState.Error) {
                     showToast(state.message)
                 }

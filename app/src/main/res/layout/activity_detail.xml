@@ -12,6 +12,15 @@
         <variable
             name="title"
             type="String" />
+
+        <variable
+            name="price"
+            type="Integer" />
+
+        <variable
+            name="count"
+            type="Integer" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,9 +41,9 @@
             android:id="@+id/nsv_detail"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ctb_toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -227,7 +236,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="24dp"
-                        android:text="1"
+                        android:text="@{Integer.toString(count)}"
                         app:layout_constraintBottom_toBottomOf="@id/iv_plus"
                         app:layout_constraintEnd_toStartOf="@id/iv_plus"
                         app:layout_constraintTop_toTopOf="@id/iv_plus" />
@@ -266,24 +275,25 @@
 
                     <TextView
                         android:id="@+id/tv_total_price_label"
+                        style="@style/normal_grey_18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="24dp"
+                        android:text="@string/total_price"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_total_price"
+                        app:layout_constraintEnd_toStartOf="@id/tv_total_price"
+                        app:layout_constraintTop_toTopOf="@id/tv_total_price" />
+
+                    <TextView
+                        android:id="@+id/tv_total_price"
                         style="@style/header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="32dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/view_divider3"
+                        app:price="@{price}"
                         tools:text="12,640원" />
-
-                    <TextView
-                        android:id="@+id/tv_total_price"
-                        style="@style/normal_grey_18"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingEnd="24dp"
-                        android:text="@string/total_price"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_total_price_label"
-                        app:layout_constraintEnd_toStartOf="@id/tv_total_price_label"
-                        app:layout_constraintTop_toTopOf="@id/tv_total_price_label" />
 
                     <Button
                         android:id="@+id/btn_order"
@@ -305,7 +315,7 @@
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/btn_order"/>
+                        app:layout_constraintTop_toBottomOf="@id/btn_order" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

@@ -1,5 +1,6 @@
 package com.woowa.banchan.domain.usecase.cart
 
+import com.woowa.banchan.domain.model.DetailItem
 import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.domain.repository.CartRepository
 import com.woowa.banchan.domain.usecase.cart.inter.InsertCartUseCase
@@ -17,6 +18,14 @@ class InsertCartUseCaseImpl @Inject constructor(
         flow {
             emit(UiState.Loading)
             cartRepository.insertCart(foodItem.toCart(totalCount, true))
+                .onSuccess { emit(UiState.Success(it)) }
+                .onFailure { emit(UiState.Error(it.message)) }
+        }.flowOn(Dispatchers.IO)
+
+    override suspend fun insertCart(detailItem: DetailItem, title: String, totalCount: Int): Flow<UiState<Unit>> =
+        flow {
+            emit(UiState.Loading)
+            cartRepository.insertCart(detailItem.toCart(title, totalCount, true))
                 .onSuccess { emit(UiState.Success(it)) }
                 .onFailure { emit(UiState.Error(it.message)) }
         }.flowOn(Dispatchers.IO)

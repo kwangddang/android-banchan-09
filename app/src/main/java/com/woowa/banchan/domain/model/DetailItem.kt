@@ -12,4 +12,14 @@ data class DetailItem(
     val productDescription: String,
     val thumbImages: List<String>,
     val topImage: String
-)
+) {
+    fun toCart(title: String, totalCount: Int, checkState: Boolean): Cart =
+        Cart(
+            hash = hash,
+            checkState = checkState,
+            price = sPrice,
+            count = totalCount,
+            title = title,
+            imageUrl = topImage
+        )
+}
