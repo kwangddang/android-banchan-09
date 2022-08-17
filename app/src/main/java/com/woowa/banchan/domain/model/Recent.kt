@@ -10,13 +10,3 @@ data class Recent(
     val title: String,
     val imageUrl: String,
 )
-
-fun Recent.toFoodItem(): FoodItem = FoodItem(
-    description = "",
-    detailHash = hash,
-    image = imageUrl,
-    nPrice = nPrice,
-    sPrice = sPrice,
-    percent = ((sPrice - nPrice) * 100) / sPrice,
-    title = title
-)
