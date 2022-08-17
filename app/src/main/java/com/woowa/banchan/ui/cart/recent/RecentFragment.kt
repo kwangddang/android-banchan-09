@@ -10,8 +10,8 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.R
+import com.woowa.banchan.data.local.entity.toFoodItem
 import com.woowa.banchan.domain.model.Recent
-import com.woowa.banchan.domain.model.toFoodItem
 import com.woowa.banchan.ui.cart.CartViewModel
 import com.woowa.banchan.ui.cart.recent.adapter.RecentRVAdapter
 import com.woowa.banchan.ui.common.bottomsheet.CartAddFragment

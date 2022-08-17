@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ActivityOrderBinding
 import com.woowa.banchan.ui.common.uistate.UiState
@@ -13,6 +14,7 @@ import com.woowa.banchan.ui.order.adapter.OrderRVAdapter
 import com.woowa.banchan.ui.order.detail.OrderDetailActivity
 import com.woowa.banchan.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
@@ -59,6 +61,6 @@ class OrderActivity : AppCompatActivity() {
                     is UiState.Error -> showToast(it.message)
                     else -> {}
                 }
-            }
+            }.launchIn(lifecycleScope)
     }
 }
