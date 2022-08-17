@@ -31,22 +31,20 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
                     LayoutInflater.from(
                         parent.context
                     ), parent, false
-                )
-            ).apply {
-                onClickRemoveSelection = this@CartRVAdapter::onClickRemoveSelection
-                onClickReleaseSelection = this@CartRVAdapter::onClickReleaseSelection
-            }
+                ),
+                onClickRemoveSelection = { onClickRemoveSelection() },
+                onClickReleaseSelection = { onClickReleaseSelection() }
+            )
             CART_CONTENT -> CartContentViewHolder(
                 ItemCartBinding.inflate(
                     LayoutInflater.from(
                         parent.context
                     ), parent, false
-                )
-            ).apply {
-                onClickCartRemove = this@CartRVAdapter::onClickCartRemove
-                onClickCartCheckState = this@CartRVAdapter::onClickCartCheckState
-                onClickCartUpdateCount = this@CartRVAdapter::onClickCartUpdateCount
-            }
+                ),
+                onClickCartRemove = { onClickCartRemove(it) },
+                onClickCartCheckState = { onClickCartCheckState(it) },
+                onClickCartUpdateCount = { onClickCartUpdateCount(it) }
+            )
             CART_TOTAL_PRICE -> {
                 totalPriceViewHolder = TotalPriceViewHolder(
                     ItemTotalPriceBinding.inflate(
@@ -63,10 +61,9 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
                         LayoutInflater.from(
                             parent.context
                         ), parent, false
-                    )
-                ).apply {
-                    onClickOrderButton = this@CartRVAdapter::onClickOrderButton
-                }
+                    ),
+                    onClickOrderButton = { onClickOrderButton() }
+                )
                 cartFooterBtnViewHolder!!
             }
             else -> {
@@ -75,10 +72,9 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
                         LayoutInflater.from(
                             parent.context
                         ), parent, false
-                    ),
-                ).apply {
-                    onClickAllRecentlyViewed = this@CartRVAdapter::onClickAllRecentlyViewed
-                }
+                    ), onClickAllRecentlyViewed
+                    = { onClickAllRecentlyViewed() }
+                )
                 recentPreviewViewHolder!!
             }
         }

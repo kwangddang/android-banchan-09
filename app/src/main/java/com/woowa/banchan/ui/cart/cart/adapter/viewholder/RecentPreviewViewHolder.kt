@@ -6,10 +6,11 @@ import com.woowa.banchan.databinding.ItemRecentPreviewBinding
 import com.woowa.banchan.domain.model.Recent
 import com.woowa.banchan.ui.cart.cart.adapter.RecentPreviewRVAdapter
 
-class RecentPreviewViewHolder(private val binding: ItemRecentPreviewBinding) :
+class RecentPreviewViewHolder(
+    private val binding: ItemRecentPreviewBinding,
+    private val onClickAllRecentlyViewed: () -> Unit = {}
+) :
     RecyclerView.ViewHolder(binding.root) {
-
-    var onClickAllRecentlyViewed: () -> Unit = {}
 
     fun bind(recentList: List<Recent>) {
         binding.tvEmptyNotice.isVisible = recentList.isEmpty()

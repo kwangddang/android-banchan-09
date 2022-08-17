@@ -4,10 +4,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemCartButtonFooterBinding
 import com.woowa.banchan.ui.cart.cart.CartFragment.Companion.minimumPrice
 
-class CartFooterBtnViewHolder(private val binding: ItemCartButtonFooterBinding) :
+class CartFooterBtnViewHolder(
+    private val binding: ItemCartButtonFooterBinding,
+    private val onClickOrderButton: () -> Unit = {}
+) :
     RecyclerView.ViewHolder(binding.root) {
-
-    var onClickOrderButton: () -> Unit = {}
 
     fun bind(totalPrice: Int) {
         binding.totalPrice = totalPrice

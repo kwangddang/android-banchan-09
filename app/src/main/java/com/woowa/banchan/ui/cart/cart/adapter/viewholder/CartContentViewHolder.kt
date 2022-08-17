@@ -7,12 +7,12 @@ import com.woowa.banchan.databinding.ItemCartBinding
 import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.domain.model.emptyCart
 
-class CartContentViewHolder(private val binding: ItemCartBinding) :
-    RecyclerView.ViewHolder(binding.root) {
-
-    var onClickCartCheckState: (cart: Cart) -> Unit = {}
-    var onClickCartUpdateCount: (cart: Cart) -> Unit = {}
-    var onClickCartRemove: (cart: Cart) -> Unit = {}
+class CartContentViewHolder(
+    private val binding: ItemCartBinding,
+    private val onClickCartCheckState: (cart: Cart) -> Unit = {},
+    private val onClickCartUpdateCount: (cart: Cart) -> Unit = {},
+    private val onClickCartRemove: (cart: Cart) -> Unit = {}
+) : RecyclerView.ViewHolder(binding.root) {
 
     private var cart = emptyCart()
 
