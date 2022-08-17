@@ -3,7 +3,6 @@ package com.woowa.banchan.ui.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.woowa.banchan.domain.model.DetailItem
-import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.domain.usecase.cart.inter.InsertCartUseCase
 import com.woowa.banchan.domain.usecase.food.inter.GetDetailFoodUseCase
 import com.woowa.banchan.ui.common.uistate.UiState
