@@ -66,8 +66,8 @@ class OrderDetailRVAdapter(
 
         return when (position) {
             0 -> ORDER_HEADER
-            lastIdx -> ORDER_CONTENT
-            else -> ORDER_TOTAL_PRICE
+            lastIdx -> ORDER_TOTAL_PRICE
+            else -> ORDER_CONTENT
         }
     }
 
