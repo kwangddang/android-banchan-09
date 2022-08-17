@@ -22,8 +22,7 @@ class OrderDetailActivity : AppCompatActivity() {
     private lateinit var orderDetailRVAdapter: OrderDetailRVAdapter
 
     private val order: Order? by lazy {
-        intent.getIntExtra("orderId", -1)
-        null
+        intent.getSerializableExtra("order") as Order?
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

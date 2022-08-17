@@ -8,7 +8,7 @@ import com.woowa.banchan.data.local.entity.OrderItemDto
 interface OrderItemDao {
 
     @Insert
-    fun insert(orderItemDto: OrderItemDto)
+    fun insert(vararg orderItemDto: OrderItemDto)
 
     @Update
     fun update(orderItemDto: OrderItemDto)

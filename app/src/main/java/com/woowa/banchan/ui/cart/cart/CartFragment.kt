@@ -1,5 +1,6 @@
 package com.woowa.banchan.ui.cart.cart
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.ui.cart.CartViewModel
 import com.woowa.banchan.ui.cart.cart.adapter.CartRVAdapter
 import com.woowa.banchan.ui.common.uistate.UiState
+import com.woowa.banchan.ui.order.detail.OrderDetailActivity
 import com.woowa.banchan.utils.showToast
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -44,19 +46,24 @@ class CartFragment : Fragment() {
         initListener()
     }
 
+    override fun onStop() {
+        viewModel.updateCart()
+        super.onStop()
+    }
+
     private fun initListener() {
         val listener = object : CartRVAdapter.CartButtonCallBackListener {
-            override fun onClickRemoveSelection() {}
+            override fun onClickCartUpdate(cart: Cart) {
+                viewModel.addUpdateCartCache(cart, removeFlag = false)
+            }
 
-            override fun onClickReleaseSelection() {}
+            override fun onClickCartRemove(cart: Cart) {
+                viewModel.addUpdateCartCache(cart, removeFlag = true)
+            }
 
-            override fun onClickCartCheckState(cart: Cart) {}
-
-            override fun onClickCartUpdateCount(cart: Cart, count: Int) {}
-
-            override fun onClickCartRemove(cart: Cart) {}
-
-            override fun onClickOrderButton() {}
+            override fun onClickOrderButton() {
+                viewModel.addOrder()
+            }
 
             override fun onClickAllRecentlyViewed() {
                 viewModel.setFragmentTag(getString(R.string.fragment_recent))
@@ -73,7 +80,7 @@ class CartFragment : Fragment() {
                     is UiState.Error -> showToast(it.message)
                     else -> {}
                 }
-            }.launchIn(lifecycleScope)
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
         viewModel.recentUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
                 when (it) {
@@ -81,7 +88,20 @@ class CartFragment : Fragment() {
                     is UiState.Error -> showToast(it.message)
                     else -> {}
                 }
-            }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
+        viewModel.orderUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach {
+                when (it) {
+                    is UiState.Success -> {
+                        val intent = Intent(requireActivity(), OrderDetailActivity::class.java)
+                        intent.putExtra("order", it.data)
+                        startActivity(intent)
+                        requireActivity().finish()
+                    }
+                    is UiState.Error -> showToast(it.message)
+                    else -> {}
+                }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun initAdapter() {

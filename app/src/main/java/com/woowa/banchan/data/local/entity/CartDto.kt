@@ -25,7 +25,16 @@ fun CartDto.toCart(): Cart = Cart(
     imageUrl = imageUrl
 )
 
-fun Cart.toCartDto(): CartDto = CartDto(
+fun CartDto.toOrderItemDto(orderId: Long): OrderItemDto = OrderItemDto(
+    id = -1,
+    orderId = orderId,
+    price = price,
+    count = count,
+    title = title,
+    imageUrl = imageUrl
+)
+
+fun Cart.toCartDto() = CartDto(
     hash = hash,
     checkState = checkState,
     price = price,

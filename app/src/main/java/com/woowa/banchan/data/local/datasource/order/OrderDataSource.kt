@@ -7,4 +7,14 @@ interface OrderDataSource {
 
     suspend fun getTotalOrderList(): Result<List<OrderDto>>
     suspend fun getOrderDetail(orderId: Long): Result<List<OrderItemDto>>
+
+    suspend fun getOrder(orderId: Long): Result<OrderDto>
+
+    suspend fun insertNewOrder(orderDto: OrderDto): Result<Long>
+    suspend fun insertNewOrderItem(orderItemDto: List<OrderItemDto>): Result<Unit>
+
+    suspend fun insertNewOrderAndItem(
+        newOrder: OrderDto,
+        orderItemList: List<OrderItemDto>
+    ): Result<OrderDto>
 }

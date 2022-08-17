@@ -15,6 +15,12 @@ import com.woowa.banchan.ui.cart.cart.adapter.viewholder.*
 class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
 
     private var recentPreviewList = listOf<Recent>()
+    private var cartList = mutableListOf<Cart>()
+
+    private var recentPreviewViewHolder: RecentPreviewViewHolder? = null
+    private var totalPriceViewHolder: TotalPriceViewHolder? = null
+    private var cartFooterBtnViewHolder: CartFooterBtnViewHolder? = null
+
     private var totalPrice = 0
     private var listener: CartButtonCallBackListener? = null
 
@@ -25,46 +31,51 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
                     LayoutInflater.from(
                         parent.context
                     ), parent, false
-                )
-            ).apply {
-                onClickRemoveSelection = this@CartRVAdapter::onClickRemoveSelection
-                onClickReleaseSelection = this@CartRVAdapter::onClickReleaseSelection
-            }
+                ),
+                onClickRemoveSelection = { onClickRemoveSelection() },
+                onClickReleaseSelection = { onClickReleaseSelection() }
+            )
             CART_CONTENT -> CartContentViewHolder(
                 ItemCartBinding.inflate(
                     LayoutInflater.from(
                         parent.context
                     ), parent, false
-                )
-            ).apply {
-                onClickCartRemove = this@CartRVAdapter::onClickCartRemove
-                onClickCartCheckState = this@CartRVAdapter::onClickCartCheckState
-                onClickCartUpdateCount = this@CartRVAdapter::onClickCartUpdateCount
-            }
-            CART_TOTAL_PRICE -> TotalPriceViewHolder(
-                ItemTotalPriceBinding.inflate(
-                    LayoutInflater.from(
-                        parent.context
-                    ), parent, false
-                )
+                ),
+                onClickCartRemove = { onClickCartRemove(it) },
+                onClickCartCheckState = { onClickCartCheckState(it) },
+                onClickCartUpdateCount = { onClickCartUpdateCount(it) }
             )
-            CART_FOOTER_BTN -> CartFooterBtnViewHolder(
-                ItemCartButtonFooterBinding.inflate(
-                    LayoutInflater.from(
-                        parent.context
-                    ), parent, false
+            CART_TOTAL_PRICE -> {
+                totalPriceViewHolder = TotalPriceViewHolder(
+                    ItemTotalPriceBinding.inflate(
+                        LayoutInflater.from(
+                            parent.context
+                        ), parent, false
+                    )
                 )
-            ).apply {
-                onClickOrderButton = this@CartRVAdapter::onClickOrderButton
+                totalPriceViewHolder!!
             }
-            else -> RecentPreviewViewHolder(
-                ItemRecentPreviewBinding.inflate(
-                    LayoutInflater.from(
-                        parent.context
-                    ), parent, false
+            CART_FOOTER_BTN -> {
+                cartFooterBtnViewHolder = CartFooterBtnViewHolder(
+                    ItemCartButtonFooterBinding.inflate(
+                        LayoutInflater.from(
+                            parent.context
+                        ), parent, false
+                    ),
+                    onClickOrderButton = { onClickOrderButton() }
                 )
-            ).apply {
-                onClickAllRecentlyViewed = this@CartRVAdapter::onClickAllRecentlyViewed
+                cartFooterBtnViewHolder!!
+            }
+            else -> {
+                recentPreviewViewHolder = RecentPreviewViewHolder(
+                    ItemRecentPreviewBinding.inflate(
+                        LayoutInflater.from(
+                            parent.context
+                        ), parent, false
+                    ), onClickAllRecentlyViewed
+                    = { onClickAllRecentlyViewed() }
+                )
+                recentPreviewViewHolder!!
             }
         }
     }
@@ -93,10 +104,12 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
 
     fun setPreviewList(recentItems: List<Recent>) {
         this.recentPreviewList = recentItems
+        recentPreviewViewHolder?.bind(recentPreviewList)
     }
 
     fun submitCartList(list: List<Cart>) {
         // 첫번째, 마지막, 마지막-1,마지막-2
+        cartList = list.toMutableList()
         val newList = mutableListOf<Cart?>()
 
         newList.add(null)
@@ -105,6 +118,17 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
         repeat(3) { newList.add(null) }
 
         submitList(newList)
+        updateTotalPrice()
+    }
+
+    private fun updateTotalPrice() {
+        totalPrice = 0
+
+        cartList.forEach {
+            if (it.checkState) totalPrice += (it.price * it.count)
+        }
+        totalPriceViewHolder?.bind(totalPrice)
+        cartFooterBtnViewHolder?.bind(totalPrice)
     }
 
     fun setCartButtonCallBackListener(listener: CartButtonCallBackListener) {
@@ -112,22 +136,33 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
     }
 
     private fun onClickRemoveSelection() {
-        listener?.onClickRemoveSelection()
+        val tmpList = cartList.toMutableList()
+        tmpList.forEach { if (it.checkState) onClickCartRemove(it) }
     }
 
     private fun onClickReleaseSelection() {
-        listener?.onClickReleaseSelection()
+        cartList.forEach {
+            if (it.checkState) {
+                it.checkState = false
+                onClickCartCheckState(it)
+            }
+        }
+        notifyDataSetChanged()
     }
 
     private fun onClickCartCheckState(cart: Cart) {
-        listener?.onClickCartCheckState(cart)
+        updateTotalPrice()
+        listener?.onClickCartUpdate(cart)
     }
 
-    private fun onClickCartUpdateCount(cart: Cart, count: Int) {
-        listener?.onClickCartUpdateCount(cart, count)
+    private fun onClickCartUpdateCount(cart: Cart) {
+        updateTotalPrice()
+        listener?.onClickCartUpdate(cart)
     }
 
     private fun onClickCartRemove(cart: Cart) {
+        cartList.remove(cart)
+        submitCartList(cartList)
         listener?.onClickCartRemove(cart)
     }
 
@@ -151,10 +186,7 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
 
     interface CartButtonCallBackListener {
 
-        fun onClickRemoveSelection()
-        fun onClickReleaseSelection()
-        fun onClickCartCheckState(cart: Cart)
-        fun onClickCartUpdateCount(cart: Cart, count: Int)
+        fun onClickCartUpdate(cart: Cart)
         fun onClickCartRemove(cart: Cart)
         fun onClickOrderButton()
         fun onClickAllRecentlyViewed()

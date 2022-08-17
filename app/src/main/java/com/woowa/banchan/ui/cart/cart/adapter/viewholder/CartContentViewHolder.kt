@@ -5,13 +5,16 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemCartBinding
 import com.woowa.banchan.domain.model.Cart
+import com.woowa.banchan.domain.model.emptyCart
 
-class CartContentViewHolder(private val binding: ItemCartBinding) :
-    RecyclerView.ViewHolder(binding.root) {
+class CartContentViewHolder(
+    private val binding: ItemCartBinding,
+    private val onClickCartCheckState: (cart: Cart) -> Unit = {},
+    private val onClickCartUpdateCount: (cart: Cart) -> Unit = {},
+    private val onClickCartRemove: (cart: Cart) -> Unit = {}
+) : RecyclerView.ViewHolder(binding.root) {
 
-    var onClickCartCheckState: (cart: Cart) -> Unit = {}
-    var onClickCartUpdateCount: (cart: Cart, count: Int) -> Unit = { _, _ -> }
-    var onClickCartRemove: (cart: Cart) -> Unit = {}
+    private var cart = emptyCart()
 
     fun bind(cart: Cart) {
         if (cart.hash == "empty") {
@@ -20,9 +23,27 @@ class CartContentViewHolder(private val binding: ItemCartBinding) :
         } else
             binding.cart = cart
 
-        binding.layoutCheckBtn.setOnClickListener { onClickCartCheckState(cart) }
-        binding.ivMinusCount.setOnClickListener { onClickCartUpdateCount(cart, cart.count - 1) }
-        binding.ivPlusCount.setOnClickListener { onClickCartUpdateCount(cart, cart.count + 1) }
+        this.cart = cart
+        initButton()
+    }
+
+    private fun initButton() {
+
+        binding.layoutCheckBtn.setOnClickListener {
+            cart.checkState = cart.checkState.not()
+            binding.cart = cart
+            onClickCartCheckState(cart)
+        }
+        binding.ivMinusCount.setOnClickListener {
+            cart.count = if (cart.count <= 1) 1 else cart.count - 1
+            binding.cart = cart
+            onClickCartUpdateCount(cart)
+        }
+        binding.ivPlusCount.setOnClickListener {
+            cart.count++
+            binding.cart = cart
+            onClickCartUpdateCount(cart)
+        }
         binding.ivRemove.setOnClickListener { onClickCartRemove(cart) }
     }
 }

@@ -6,5 +6,9 @@ interface CartDataSource {
 
     suspend fun getCartList(): Result<List<CartDto>>
 
+    suspend fun updateCart(cartDto: CartDto): Result<Unit>
+
+    suspend fun deleteCart(cartDto: CartDto): Result<Unit>
+
     suspend fun insertCart(cartDto: CartDto): Result<Unit>
 }

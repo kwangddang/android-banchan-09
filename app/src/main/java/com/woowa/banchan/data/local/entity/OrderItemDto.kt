@@ -9,7 +9,7 @@ import com.woowa.banchan.domain.model.OrderItem
 @Entity(tableName = orderItemTable)
 data class OrderItemDto(
     @PrimaryKey(autoGenerate = true) val id: Long,
-    @ColumnInfo(name = "order_id") val orderId: Long,
+    @ColumnInfo(name = "order_id") var orderId: Long,
     @ColumnInfo(name = "count") val count: Int,
     @ColumnInfo(name = "price") val price: Int,
     @ColumnInfo(name = "title") val title: String,
