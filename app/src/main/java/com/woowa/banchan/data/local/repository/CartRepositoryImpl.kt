@@ -2,8 +2,8 @@ package com.woowa.banchan.data.local.repository
 
 import com.woowa.banchan.data.local.datasource.cart.CartDataSource
 import com.woowa.banchan.data.local.entity.toCart
+import com.woowa.banchan.data.local.entity.toCartDto
 import com.woowa.banchan.domain.model.Cart
-import com.woowa.banchan.domain.model.toCartDto
 import com.woowa.banchan.domain.repository.CartRepository
 import javax.inject.Inject
 
