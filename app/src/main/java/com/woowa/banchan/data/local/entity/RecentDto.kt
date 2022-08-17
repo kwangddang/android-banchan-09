@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.woowa.banchan.data.local.BanchanDataBase
+import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.domain.model.Recent
 import java.util.*
 
@@ -24,4 +25,14 @@ fun RecentDto.toRecent(): Recent = Recent(
     sPrice = sPrice,
     title = title,
     imageUrl = imageUrl
+)
+
+fun Recent.toFoodItem(): FoodItem = FoodItem(
+    description = "",
+    detailHash = hash,
+    image = imageUrl,
+    nPrice = nPrice,
+    sPrice = sPrice,
+    percent = ((sPrice - nPrice) * 100) / sPrice,
+    title = title
 )

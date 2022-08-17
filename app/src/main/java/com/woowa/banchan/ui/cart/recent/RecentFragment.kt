@@ -7,13 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.R
 import com.woowa.banchan.domain.model.Recent
+import com.woowa.banchan.domain.model.toFoodItem
 import com.woowa.banchan.ui.cart.CartViewModel
 import com.woowa.banchan.ui.cart.recent.adapter.RecentRVAdapter
+import com.woowa.banchan.ui.common.bottomsheet.CartAddFragment
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.utils.showToast
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class RecentFragment : Fragment() {
@@ -28,8 +32,9 @@ class RecentFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        rvRecent = requireActivity().findViewById(R.id.rv_recent_preview)
-        return inflater.inflate(R.layout.fragment_recent, container, false)
+        val view = inflater.inflate(R.layout.fragment_recent, container, false)
+        rvRecent = view.findViewById(R.id.rv_recently_viewed)
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,7 +46,12 @@ class RecentFragment : Fragment() {
 
     private fun initListener() {
         val listener = object : RecentRVAdapter.RecentlyViewedCallBackListener {
-            override fun onClickCartButton(recent: Recent) {}
+            override fun onClickCartButton(recent: Recent) {
+                CartAddFragment(recent.toFoodItem()).show(
+                    childFragmentManager,
+                    getString(R.string.fragment_cart_add)
+                )
+            }
         }
         adapter.setRecentlyViewedCallBackListener(listener)
     }
@@ -54,7 +64,7 @@ class RecentFragment : Fragment() {
                     is UiState.Error -> showToast(null)
                     else -> {}
                 }
-            }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun initAdapter() {
