@@ -33,3 +33,12 @@ fun CartDto.toOrderItemDto(orderId: Long): OrderItemDto = OrderItemDto(
     title = title,
     imageUrl = imageUrl
 )
+
+fun Cart.toCartDto() = CartDto(
+    hash = hash,
+    checkState = checkState,
+    price = price,
+    count = count,
+    title = title,
+    imageUrl = imageUrl
+)

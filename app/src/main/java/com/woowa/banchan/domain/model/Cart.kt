@@ -19,12 +19,3 @@ fun emptyCart(): Cart = Cart(
     "",
     "https://i.insider.com/5484d9d1eab8ea3017b17e29?width=600&format=jpeg&auto=webp"
 )
-
-fun Cart.toCartDto() = CartDto(
-    hash = hash,
-    checkState = checkState,
-    price = price,
-    count = count,
-    title = title,
-    imageUrl = imageUrl
-)
