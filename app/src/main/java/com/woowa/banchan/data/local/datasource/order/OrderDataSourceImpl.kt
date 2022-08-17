@@ -1,5 +1,6 @@
 package com.woowa.banchan.data.local.datasource.order
 
+import com.woowa.banchan.data.local.BanchanDataBase
 import com.woowa.banchan.data.local.dao.OrderDao
 import com.woowa.banchan.data.local.dao.OrderItemDao
 import com.woowa.banchan.data.local.entity.OrderDto
@@ -8,7 +9,8 @@ import javax.inject.Inject
 
 class OrderDataSourceImpl @Inject constructor(
     private val orderDao: OrderDao,
-    private val orderItemDao: OrderItemDao
+    private val orderItemDao: OrderItemDao,
+    private val database: BanchanDataBase
 ) : OrderDataSource {
 
     override suspend fun getTotalOrderList(): Result<List<OrderDto>> =
@@ -24,5 +26,19 @@ class OrderDataSourceImpl @Inject constructor(
         runCatching { orderDao.insert(orderDto) }
 
     override suspend fun insertNewOrderItem(orderItemDto: List<OrderItemDto>): Result<Unit> =
-        runCatching { orderItemDto.forEach { orderItemDao.insert(it) } }
+        runCatching { orderItemDao.insert(*orderItemDto.toTypedArray()) }
+
+    override suspend fun insertNewOrderAndItem(
+        newOrder: OrderDto,
+        orderItemList: List<OrderItemDto>
+    ): Result<OrderDto> =
+        runCatching {
+            var orderId = 0L
+            database.runInTransaction {
+                orderId = orderDao.insert(newOrder)
+                orderItemList.forEach { it.orderId = orderId }
+                orderItemDao.insert(*orderItemList.toTypedArray())
+            }
+            orderDao.getOrder(orderId)
+        }
 }

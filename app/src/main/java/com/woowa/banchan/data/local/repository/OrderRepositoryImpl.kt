@@ -32,12 +32,10 @@ class OrderRepositoryImpl @Inject constructor(
             cart.forEach { totPrice += (it.price * it.count) }
             totPrice += (if (totPrice >= freeShipping) 0 else shipping)
 
-            val orderId =
-                orderDataSource.insertNewOrder(newOrderDto(cart.size, totPrice, cart.first()))
-                    .getOrThrow()
-            orderDataSource.insertNewOrderItem(cart.map { it.toCartDto().toOrderItemDto(orderId) })
-
-            val orderDto = orderDataSource.getOrder(orderId = orderId).getOrThrow()
+            val orderDto = orderDataSource.insertNewOrderAndItem(
+                newOrderDto(cart.size, totPrice, cart.first()),
+                cart.map { it.toCartDto().toOrderItemDto(-1) }
+            ).getOrThrow()
             orderDto.toOrder()
         }
 }

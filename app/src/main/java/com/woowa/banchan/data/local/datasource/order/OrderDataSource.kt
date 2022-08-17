@@ -12,4 +12,9 @@ interface OrderDataSource {
 
     suspend fun insertNewOrder(orderDto: OrderDto): Result<Long>
     suspend fun insertNewOrderItem(orderItemDto: List<OrderItemDto>): Result<Unit>
+
+    suspend fun insertNewOrderAndItem(
+        newOrder: OrderDto,
+        orderItemList: List<OrderItemDto>
+    ): Result<OrderDto>
 }
