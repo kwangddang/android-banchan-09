@@ -16,4 +16,8 @@ class CartDataSourceImpl @Inject constructor(
 
     override suspend fun deleteCart(cartDto: CartDto): Result<Unit> =
         runCatching { cartDao.delete(cartDto) }
+
+    override suspend fun insertCart(cartDto: CartDto): Result<Unit> =
+        runCatching { cartDao.insertCart(cartDto) }
+
 }

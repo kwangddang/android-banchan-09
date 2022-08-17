@@ -9,6 +9,7 @@ import com.woowa.banchan.databinding.ItemBestHeaderBinding
 import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
 import com.woowa.banchan.domain.model.BestFoodCategory
+import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.ui.home.HOME_HEADER
 import com.woowa.banchan.ui.home.HOME_ITEM
 import com.woowa.banchan.ui.home.LINEAR_HORIZONTAL
@@ -18,7 +19,10 @@ import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
 import com.woowa.banchan.ui.home.best.adapter.viewholder.BestHeaderViewHolder
 
-class BestRVAdapter(private val itemClickListener: (String, String) -> Unit) : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(diffUtil) {
+class BestRVAdapter(
+    private val itemClickListener: (String, String) -> Unit,
+    private val cartClickListener: (FoodItem) -> Unit
+) : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -51,7 +55,7 @@ class BestRVAdapter(private val itemClickListener: (String, String) -> Unit) : L
             HOME_HEADER -> (holder as HomeHeaderViewHolder).bind("한 번 주문하면\n두 번 반하는 반찬들", true)
             SUB_HEADER -> (holder as BestHeaderViewHolder).bind(getItem(position))
             else -> (holder as HomeRecyclerViewViewHolder).bind(
-                HomeRVAdapter(itemClickListener).apply { managerType = LINEAR_HORIZONTAL },
+                HomeRVAdapter(itemClickListener, cartClickListener).apply { managerType = LINEAR_HORIZONTAL },
                 getItem(position).items,
                 LINEAR_HORIZONTAL,
             )

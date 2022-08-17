@@ -1,4 +1,4 @@
-package com.woowa.banchan.ui.home.soup.adapter
+package com.woowa.banchan.ui.home.adapter.soupside
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,15 +14,20 @@ import com.woowa.banchan.ui.home.HOME_HEADER
 import com.woowa.banchan.ui.home.HOME_ITEM
 import com.woowa.banchan.ui.home.SUB_HEADER
 import com.woowa.banchan.ui.home.adapter.HomeRVAdapter
+import com.woowa.banchan.ui.home.adapter.soupside.viewholder.SoupSideHeaderViewHolder
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
-import com.woowa.banchan.ui.home.soup.adapter.viewholder.SoupSideHeaderViewHolder
 
-class SoupRVAdapter(private val spinnerCallback: (Int) -> Unit, private val itemClickListener: (String, String) -> Unit) :
+class SoupSideRVAdapter(
+    private val isSoup: Boolean,
+    private val spinnerCallback: (Int) -> Unit,
+    itemClickListener: (String, String) -> Unit,
+    cartClickListener: (FoodItem) -> Unit
+) :
     ListAdapter<List<FoodItem>, RecyclerView.ViewHolder>(diffUtil) {
 
     var managerType = GRID
-    private val homeRVAdapter: HomeRVAdapter = HomeRVAdapter(itemClickListener).apply { managerType = GRID }
+    private val homeRVAdapter: HomeRVAdapter = HomeRVAdapter(itemClickListener, cartClickListener).apply { managerType = GRID }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -52,7 +57,12 @@ class SoupRVAdapter(private val spinnerCallback: (Int) -> Unit, private val item
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
-            HOME_HEADER -> (holder as HomeHeaderViewHolder).bind("정성이 담긴\n뜨끈뜨끈 국물 요리", false)
+            HOME_HEADER -> (holder as HomeHeaderViewHolder).bind(
+                if (isSoup)
+                    "정성이 담긴\n뜨끈뜨끈 국물 요리"
+                else
+                    "식탁을 풍성하게 하는\n정갈한 밑반찬", false
+            )
             SUB_HEADER -> (holder as SoupSideHeaderViewHolder).bind(getItem(2).size, spinnerCallback)
             else -> (holder as HomeRecyclerViewViewHolder).bind(homeRVAdapter, getItem(position), managerType)
         }

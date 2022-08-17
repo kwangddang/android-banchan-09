@@ -1,4 +1,4 @@
-package com.woowa.banchan.ui.home.soup.adapter.viewholder
+package com.woowa.banchan.ui.home.adapter.soupside.viewholder
 
 import android.view.View
 import android.widget.AdapterView

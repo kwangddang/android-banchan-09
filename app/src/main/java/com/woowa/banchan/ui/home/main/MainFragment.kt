@@ -13,6 +13,8 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMainBinding
+import com.woowa.banchan.domain.model.FoodItem
+import com.woowa.banchan.ui.common.bottomsheet.CartAddFragment
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.detail.DetailActivity
 import com.woowa.banchan.ui.home.GRID
@@ -31,11 +33,15 @@ class MainFragment : Fragment() {
     private val viewModel: MainViewModel by viewModels()
 
     private val mainAdapter: MainRVAdapter by lazy {
-        MainRVAdapter(checkedChangeListener, spinnerCallback, itemClickListener)
+        MainRVAdapter(checkedChangeListener, spinnerCallback, itemClickListener, cartClickListener)
     }
 
     private val spinnerCallback: (Int) -> Unit = { position ->
         viewModel.sortList(position)
+    }
+
+    private val cartClickListener: (FoodItem) -> Unit = { food ->
+        CartAddFragment(food).show(childFragmentManager, getString(R.string.fragment_cart_add))
     }
 
     private val checkedChangeListener: (RadioGroup, Int) -> Unit = { group, checkedId ->
