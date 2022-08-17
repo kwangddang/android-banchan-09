@@ -1,7 +1,5 @@
 package com.woowa.banchan.domain.model
 
-import com.woowa.banchan.data.local.entity.CartDto
-
 class Cart(
     val hash: String,
     var checkState: Boolean,
