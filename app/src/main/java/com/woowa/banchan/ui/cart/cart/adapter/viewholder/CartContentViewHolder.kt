@@ -1,9 +1,8 @@
 package com.woowa.banchan.ui.cart.cart.adapter.viewholder
 
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemCartBinding
 import com.woowa.banchan.domain.model.Cart
@@ -13,9 +12,9 @@ import com.woowa.banchan.ui.cart.cart.CartFragment.Companion.minimumCount
 
 class CartContentViewHolder(
     private val binding: ItemCartBinding,
-    private val onClickCartCheckState: (cart: Cart) -> Unit = {},
-    private val onClickCartUpdateCount: (cart: Cart, message: String?) -> Unit = { _, _ -> },
-    private val onClickCartRemove: (cart: Cart) -> Unit = {}
+    private val onClickCartCheckState: (cart: Cart) -> Unit,
+    private val onClickCartUpdateCount: (cart: Cart, message: String?) -> Unit,
+    private val onClickCartRemove: (cart: Cart) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private var cart = emptyCart()
@@ -36,14 +35,7 @@ class CartContentViewHolder(
     }
 
     private fun initEditText() {
-        binding.etCount.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {}
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                val countStr = p0 ?: ""
-                updateCount(countStr.toString())
-            }
-        })
+        binding.etCount.doAfterTextChanged { updateCount((it ?: "").toString()) }
     }
 
     private fun initButton() {

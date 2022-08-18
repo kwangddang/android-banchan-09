@@ -43,7 +43,7 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
                 ),
                 onClickCartRemove = { onClickCartRemove(it) },
                 onClickCartCheckState = { onClickCartCheckState(it) },
-                onClickCartUpdateCount = { i, m -> onClickCartUpdateCount(i, m) }
+                onClickCartUpdateCount = { cart, message -> onClickCartUpdateCount(cart, message) }
             )
             CART_TOTAL_PRICE -> {
                 totalPriceViewHolder = TotalPriceViewHolder(
