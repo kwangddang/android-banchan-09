@@ -36,3 +36,13 @@ fun Recent.toFoodItem(): FoodItem = FoodItem(
     percent = ((sPrice - nPrice) * 100) / sPrice,
     title = title
 )
+
+fun Recent.toRecentDto(): RecentDto =
+    RecentDto(
+        hash,
+        time,
+        nPrice,
+        sPrice,
+        title,
+        imageUrl
+    )

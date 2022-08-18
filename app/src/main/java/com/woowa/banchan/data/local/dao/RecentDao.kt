@@ -7,7 +7,7 @@ import com.woowa.banchan.data.local.entity.RecentDto
 @Dao
 interface RecentDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(recentDto: RecentDto)
 
     @Update
@@ -16,6 +16,6 @@ interface RecentDao {
     @Delete
     fun delete(recentDto: RecentDto)
 
-    @Query("SELECT * FROM ${BanchanDataBase.recentTable}")
+    @Query("SELECT * FROM ${BanchanDataBase.recentTable} ORDER BY time DESC")
     fun getRecentList(): List<RecentDto>
 }

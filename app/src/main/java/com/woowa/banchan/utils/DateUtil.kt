@@ -7,11 +7,11 @@ object DateUtil {
 
     private val format: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss")
         .apply { timeZone = TimeZone.getTimeZone("Aisa/Seoul") }
-    private val currentDate: Date by lazy { Date(System.currentTimeMillis()) }
 
     fun getUpdateDate(date: Date): String {
+        val currentTime = System.currentTimeMillis()
 
-        val diff: Long = currentDate.time - date.time
+        val diff: Long = currentTime - date.time
         val seconds = diff / 1000
         val minutes = seconds / 60
         val hours = minutes / 60
