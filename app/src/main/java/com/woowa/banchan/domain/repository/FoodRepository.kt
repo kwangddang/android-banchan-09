@@ -8,7 +8,7 @@ interface FoodRepository {
 
     suspend fun getBestFoods(): Result<List<BestFoodCategory>>
 
-    suspend fun getFoods(type: String): List<FoodItem>
+    suspend fun getFoods(type: String): Result<List<FoodItem>>
 
     suspend fun getDetailFood(hash: String): Result<DetailItem>
 }

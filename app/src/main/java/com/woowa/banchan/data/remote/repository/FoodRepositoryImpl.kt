@@ -16,8 +16,8 @@ class FoodRepositoryImpl @Inject constructor(
             foodDataSource.getBestFoods().toBestFoodCategoryList()
         }
 
-    override suspend fun getFoods(type: String): List<FoodItem> =
-            foodDataSource.getFoods(type).toFoodList()
+    override suspend fun getFoods(type: String): Result<List<FoodItem>> =
+        runCatching { foodDataSource.getFoods(type).toFoodList() }
 
     override suspend fun getDetailFood(hash: String): Result<DetailItem> =
         runCatching {

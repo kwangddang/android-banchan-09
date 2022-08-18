@@ -76,7 +76,7 @@ class CartFragment : Fragment() {
         viewModel.cartUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
                 when (it) {
-                    is UiState.Success -> cartRVAdapter.submitCartList(it.data)
+                    is UiState.Success -> cartRVAdapter.submitCartList(it.data.values.toList())
                     is UiState.Error -> showToast(it.message)
                     else -> {}
                 }

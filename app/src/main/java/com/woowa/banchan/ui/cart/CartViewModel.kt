@@ -31,8 +31,8 @@ class CartViewModel @Inject constructor(
 
     private val updateCartCache = mutableListOf<Pair<Cart, Boolean>>()
 
-    private val _cartUiState = MutableStateFlow<UiState<List<Cart>>>(UiState.Empty)
-    val cartUiState: StateFlow<UiState<List<Cart>>> get() = _cartUiState
+    private val _cartUiState = MutableStateFlow<UiState<Map<String, Cart>>>(UiState.Empty)
+    val cartUiState: StateFlow<UiState<Map<String, Cart>>> get() = _cartUiState
 
     private val _recentUiState = MutableStateFlow<UiState<List<Recent>>>(UiState.Empty)
     val recentUiState: StateFlow<UiState<List<Recent>>> get() = _recentUiState
@@ -44,10 +44,8 @@ class CartViewModel @Inject constructor(
         viewModelScope.launch {
             launch {
                 _cartUiState.emit(UiState.Loading)
-                getCartListUseCase().onSuccess { flow ->
-                    flow.collect { _cartUiState.emit(UiState.Success(it.values.toList())) }
-                }.onFailure {
-                    _cartUiState.emit(UiState.Error(it.message))
+                getCartListUseCase().collect { uiState ->
+                    _cartUiState.emit(uiState)
                 }
             }
 
@@ -85,7 +83,7 @@ class CartViewModel @Inject constructor(
         updateCart().join()
         _orderUiState.emit(UiState.Loading)
         val checkedList = mutableListOf<Cart>()
-        (_cartUiState.value as UiState.Success).data.forEach { cart -> if (cart.checkState) checkedList.add(cart) }
+        (_cartUiState.value as UiState.Success).data.values.forEach { cart -> if (cart.checkState) checkedList.add(cart) }
         insertCartToOrderUseCase(checkedList).collect { c ->
             _orderUiState.emit(c)
             checkedList.forEach { launch { deleteCartUseCase(it).collect {} } }

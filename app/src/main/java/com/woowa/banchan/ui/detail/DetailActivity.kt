@@ -45,7 +45,7 @@ class DetailActivity : AppCompatActivity() {
     private fun getIntentValues() {
         title = intent.getStringExtra("title")!!
         hash = intent.getStringExtra("hash")!!
-        if(title == null || hash == null) finish()
+        if (title == null || hash == null) finish()
     }
 
     private fun initBinding() {

@@ -25,14 +25,10 @@ class SideViewModel @Inject constructor(
 
     fun getSideFoods() {
         viewModelScope.launch {
-            getFoodsUseCase("side").onSuccess { flow ->
-                flow.collect {
-                    Log.d("Test","side")
-                    defaultSideFoods = it
-                    _sideUiState.emit(UiState.Success(it))
-                }
-            }.onFailure {
-                _sideUiState.emit(UiState.Error(it.message))
+            getFoodsUseCase("side").collect { uiState ->
+                if (uiState is UiState.Success)
+                    defaultSideFoods = uiState.data
+                _sideUiState.emit(uiState)
             }
         }
     }
