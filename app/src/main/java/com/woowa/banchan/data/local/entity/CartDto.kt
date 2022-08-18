@@ -26,7 +26,7 @@ fun CartDto.toCart(): Cart = Cart(
 )
 
 fun CartDto.toOrderItemDto(orderId: Long): OrderItemDto = OrderItemDto(
-    id = -1,
+    id = null,
     orderId = orderId,
     price = price,
     count = count,
