@@ -13,6 +13,7 @@ import com.woowa.banchan.domain.usecase.recent.inter.GetRecentlyViewedFoodsUseCa
 import com.woowa.banchan.ui.common.livedata.SingleLiveData
 import com.woowa.banchan.ui.common.uistate.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -51,7 +52,7 @@ class CartViewModel @Inject constructor(
         fragmentTag.setValue(tag)
     }
 
-    fun updateCart() = viewModelScope.launch {
+    fun updateCart() = GlobalScope.launch {
         updateCartCache.forEach {
             if (it.second) {
                 launch { deleteCartUseCase(it.first).collect {} }
