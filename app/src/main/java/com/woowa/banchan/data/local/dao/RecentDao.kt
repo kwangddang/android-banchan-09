@@ -16,6 +16,6 @@ interface RecentDao {
     @Delete
     fun delete(recentDto: RecentDto)
 
-    @Query("SELECT * FROM ${BanchanDataBase.recentTable}")
+    @Query("SELECT * FROM ${BanchanDataBase.recentTable} ORDER BY time DESC")
     fun getRecentList(): List<RecentDto>
 }

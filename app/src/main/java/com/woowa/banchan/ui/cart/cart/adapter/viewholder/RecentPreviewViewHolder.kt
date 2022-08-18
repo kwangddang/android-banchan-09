@@ -12,10 +12,14 @@ class RecentPreviewViewHolder(
 ) :
     RecyclerView.ViewHolder(binding.root) {
 
+    val maxCount = 7
+
     fun bind(recentList: List<Recent>) {
         binding.tvEmptyNotice.isVisible = recentList.isEmpty()
+        val list = mutableListOf<Recent>()
+        recentList.forEachIndexed { index, recent -> if (index < maxCount) list.add(recent) }
         val adapter = RecentPreviewRVAdapter()
-        adapter.submitList(recentList)
+        adapter.submitList(list)
         binding.rvRecentPreview.adapter = adapter
         binding.tvAllRecent.setOnClickListener { onClickAllRecentlyViewed() }
     }
