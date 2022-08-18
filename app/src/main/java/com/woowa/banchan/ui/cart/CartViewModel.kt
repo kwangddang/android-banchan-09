@@ -33,8 +33,8 @@ class CartViewModel @Inject constructor(
 
     private val updateCartCache = mutableListOf<Pair<Cart, Boolean>>()
 
-    private val _cartUiState = MutableStateFlow<UiState<List<Cart>>>(UiState.Empty)
-    val cartUiState: StateFlow<UiState<List<Cart>>> get() = _cartUiState
+    private val _cartUiState = MutableStateFlow<UiState<Map<String, Cart>>>(UiState.Empty)
+    val cartUiState: StateFlow<UiState<Map<String, Cart>>> get() = _cartUiState
 
     private val _recentUiState = MutableStateFlow<UiState<List<Recent>>>(UiState.Empty)
     val recentUiState: StateFlow<UiState<List<Recent>>> get() = _recentUiState
@@ -44,7 +44,13 @@ class CartViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            launch { getCartListUseCase().collect { _cartUiState.emit(it) } }
+            launch {
+                _cartUiState.emit(UiState.Loading)
+                getCartListUseCase().collect { uiState ->
+                    _cartUiState.emit(uiState)
+                }
+            }
+
             launch { getRecentlyViewedFoodsUseCase().collect { _recentUiState.emit(it) } }
         }
     }
@@ -77,20 +83,18 @@ class CartViewModel @Inject constructor(
 
     fun addOrder() = viewModelScope.launch {
         updateCart().join()
-        getCartListUseCase().collect {
-            when (it) {
-                is UiState.Success -> {
-                    val checkedList = mutableListOf<Cart>()
-                    it.data.forEach { cart -> if (cart.checkState) checkedList.add(cart) }
-                    insertCartToOrderUseCase(checkedList).collect { c ->
-                        _orderUiState.emit(c)
-                        checkedList.forEach { launch { deleteCartUseCase(it).collect {} } }
-                    }
-                }
-                is UiState.Error -> _orderUiState.emit(it)
-                is UiState.Loading -> _orderUiState.emit(it)
-                else -> {}
+        _orderUiState.emit(UiState.Loading)
+        val checkedList = mutableListOf<Cart>()
+        val uiState = _cartUiState.value
+
+        if(uiState is UiState.Success) {
+            uiState.data.values.forEach { cart -> if (cart.checkState) checkedList.add(cart) }
+            insertCartToOrderUseCase(checkedList).collect { c ->
+                _orderUiState.emit(c)
+                checkedList.forEach { launch { deleteCartUseCase(it).collect {} } }
             }
+        } else {
+            _orderUiState.emit(UiState.Error(null))
         }
     }
 }

@@ -25,7 +25,8 @@ class SoupViewModel @Inject constructor(
     fun getSoupFoods() {
         viewModelScope.launch {
             getFoodsUseCase("soup").collect { uiState ->
-                if (uiState is UiState.Success) defaultSoupFoods = uiState.data
+                if (uiState is UiState.Success)
+                    defaultSoupFoods = uiState.data
                 _soupUiState.emit(uiState)
             }
         }

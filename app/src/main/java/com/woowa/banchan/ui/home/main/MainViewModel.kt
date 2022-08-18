@@ -25,7 +25,8 @@ class MainViewModel @Inject constructor(
     fun getMainFoods() {
         viewModelScope.launch {
             getFoodsUseCase("main").collect { uiState ->
-                if (uiState is UiState.Success) defaultMainFoods = uiState.data
+                if (uiState is UiState.Success)
+                    defaultMainFoods = uiState.data
                 _mainUiState.emit(uiState)
             }
         }
@@ -41,4 +42,5 @@ class MainViewModel @Inject constructor(
         }
         _mainUiState.value = UiState.Success(sortedList)
     }
+
 }

@@ -17,9 +17,7 @@ class FoodRepositoryImpl @Inject constructor(
         }
 
     override suspend fun getFoods(type: String): Result<List<FoodItem>> =
-        runCatching {
-            foodDataSource.getFoods(type).toFoodList()
-        }
+        runCatching { foodDataSource.getFoods(type).toFoodList() }
 
     override suspend fun getDetailFood(hash: String): Result<DetailItem> =
         runCatching {

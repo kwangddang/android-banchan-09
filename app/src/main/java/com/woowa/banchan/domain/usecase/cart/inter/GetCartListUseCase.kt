@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface GetCartListUseCase {
 
-    suspend operator fun invoke(): Flow<UiState<List<Cart>>>
+    suspend operator fun invoke(): Flow<UiState<Map<String, Cart>>>
 }
