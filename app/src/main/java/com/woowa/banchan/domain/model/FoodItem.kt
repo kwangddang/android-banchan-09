@@ -7,7 +7,8 @@ data class FoodItem(
     val nPrice: Int?,
     val sPrice: Int,
     val percent: Int?,
-    val title: String
+    val title: String,
+    var checkState: Boolean = false
 ) {
     fun toCart(totalCount: Int, checkState: Boolean): Cart =
         Cart(

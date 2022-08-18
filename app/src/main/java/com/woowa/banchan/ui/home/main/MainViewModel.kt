@@ -1,5 +1,6 @@
 package com.woowa.banchan.ui.home.main
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.woowa.banchan.domain.model.FoodItem
@@ -24,9 +25,14 @@ class MainViewModel @Inject constructor(
 
     fun getMainFoods() {
         viewModelScope.launch {
-            getFoodsUseCase("main").collect { uiState ->
-                if (uiState is UiState.Success) defaultMainFoods = uiState.data
-                _mainUiState.emit(uiState)
+            getFoodsUseCase("main").onSuccess { flow ->
+                flow.collect {
+                    Log.d("Test","main")
+                    defaultMainFoods = it
+                    _mainUiState.emit(UiState.Success(it))
+                }
+            }.onFailure {
+                _mainUiState.emit(UiState.Error(it.message))
             }
         }
     }

@@ -11,8 +11,6 @@ class GetCartListUseCaseImpl @Inject constructor(
     private val cartRepository: CartRepository
 ) : GetCartListUseCase {
 
-    override suspend operator fun invoke(): Result<Flow<List<Cart>>> =
-        cartRepository.getCartList()
-            .onSuccess { it }
-            .onFailure { UiState.Error(it.message) }
+    override suspend operator fun invoke(): Result<Flow<Map<String, Cart>>> =
+        runCatching { cartRepository.getCartList()  }
 }

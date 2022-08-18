@@ -1,5 +1,6 @@
 package com.woowa.banchan.ui.home.soup
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.woowa.banchan.domain.model.FoodItem
@@ -24,9 +25,14 @@ class SoupViewModel @Inject constructor(
 
     fun getSoupFoods() {
         viewModelScope.launch {
-            getFoodsUseCase("soup").collect { uiState ->
-                if (uiState is UiState.Success) defaultSoupFoods = uiState.data
-                _soupUiState.emit(uiState)
+            getFoodsUseCase("soup").onSuccess { flow ->
+                flow.collect {
+                    Log.d("Test","soup")
+                    defaultSoupFoods = it
+                    _soupUiState.emit(UiState.Success(it))
+                }
+            }.onFailure {
+                _soupUiState.emit(UiState.Error(it.message))
             }
         }
     }

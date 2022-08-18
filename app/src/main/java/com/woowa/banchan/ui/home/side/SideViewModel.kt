@@ -1,5 +1,6 @@
 package com.woowa.banchan.ui.home.side
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.woowa.banchan.domain.model.FoodItem
@@ -24,9 +25,14 @@ class SideViewModel @Inject constructor(
 
     fun getSideFoods() {
         viewModelScope.launch {
-            getFoodsUseCase("side").collect { uiState ->
-                if (uiState is UiState.Success) defaultSideFoods = uiState.data
-                _sideUiState.emit(uiState)
+            getFoodsUseCase("side").onSuccess { flow ->
+                flow.collect {
+                    Log.d("Test","side")
+                    defaultSideFoods = it
+                    _sideUiState.emit(UiState.Success(it))
+                }
+            }.onFailure {
+                _sideUiState.emit(UiState.Error(it.message))
             }
         }
     }

@@ -45,7 +45,7 @@ class CartViewModel @Inject constructor(
             launch {
                 _cartUiState.emit(UiState.Loading)
                 getCartListUseCase().onSuccess { flow ->
-                    flow.collect { _cartUiState.emit(UiState.Success(it)) }
+                    flow.collect { _cartUiState.emit(UiState.Success(it.values.toList())) }
                 }.onFailure {
                     _cartUiState.emit(UiState.Error(it.message))
                 }
