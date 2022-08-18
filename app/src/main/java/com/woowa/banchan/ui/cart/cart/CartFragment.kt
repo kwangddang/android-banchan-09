@@ -106,7 +106,7 @@ class CartFragment : Fragment() {
 
     private fun initAdapter() {
         binding.rvCartContent.adapter = cartRVAdapter
-        cartRVAdapter.submitCartList(emptyList())
+        //cartRVAdapter.submitCartList(emptyList())
     }
 
     companion object {
