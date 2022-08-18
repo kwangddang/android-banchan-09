@@ -1,5 +1,7 @@
 package com.woowa.banchan.domain.model
 
+import java.util.*
+
 data class DetailItem(
     val hash: String,
     val deliveryFee: String,
@@ -21,5 +23,15 @@ data class DetailItem(
             count = totalCount,
             title = title,
             imageUrl = topImage
+        )
+
+    fun toRecent(title: String): Recent =
+        Recent(
+            hash = hash,
+            time = Date(System.currentTimeMillis()),
+            nPrice = nPrice ?: sPrice,
+            sPrice = sPrice,
+            title = title,
+            imageUrl = topImage,
         )
 }

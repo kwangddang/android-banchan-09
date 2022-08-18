@@ -7,7 +7,7 @@ import com.woowa.banchan.data.local.entity.RecentDto
 @Dao
 interface RecentDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(recentDto: RecentDto)
 
     @Update

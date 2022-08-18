@@ -23,7 +23,9 @@ import com.woowa.banchan.domain.usecase.order.inter.GetOrderDetailUseCase
 import com.woowa.banchan.domain.usecase.order.inter.GetTotalOrderUseCase
 import com.woowa.banchan.domain.usecase.order.inter.InsertCartToOrderUseCase
 import com.woowa.banchan.domain.usecase.recent.GetRecentlyViewedFoodsUseCaseImpl
+import com.woowa.banchan.domain.usecase.recent.InsertRecentlyViewedFoodsUseCaseImpl
 import com.woowa.banchan.domain.usecase.recent.inter.GetRecentlyViewedFoodsUseCase
+import com.woowa.banchan.domain.usecase.recent.inter.InsertRecentlyViewedFoodsUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -105,4 +107,10 @@ abstract class UseCaseModule {
     abstract fun provideGetEachOrderUseCase(
         GetEachOrderUseCaseImpl: GetEachOrderUseCaseImpl
     ): GetEachOrderUseCase
+
+    @Singleton
+    @Binds
+    abstract fun provideInsertRecentlyViewedFoodsUseCase(
+        InsertRecentlyViewedFoodsUseCaseImpl: InsertRecentlyViewedFoodsUseCaseImpl
+    ): InsertRecentlyViewedFoodsUseCase
 }
