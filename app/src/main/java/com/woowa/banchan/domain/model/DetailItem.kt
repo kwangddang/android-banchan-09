@@ -29,7 +29,7 @@ data class DetailItem(
         Recent(
             hash = hash,
             time = Date(System.currentTimeMillis()),
-            nPrice = nPrice ?: sPrice,
+            nPrice = nPrice,
             sPrice = sPrice,
             title = title,
             imageUrl = topImage,

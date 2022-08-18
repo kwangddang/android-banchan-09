@@ -12,7 +12,7 @@ import java.util.*
 data class RecentDto(
     @PrimaryKey val hash: String,
     @ColumnInfo(name = "time") val time: Date,
-    @ColumnInfo(name = "n_price") val nPrice: Int,
+    @ColumnInfo(name = "n_price") val nPrice: Int?,
     @ColumnInfo(name = "s_price") val sPrice: Int,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "image_url") val imageUrl: String,
@@ -33,7 +33,8 @@ fun Recent.toFoodItem(): FoodItem = FoodItem(
     image = imageUrl,
     nPrice = nPrice,
     sPrice = sPrice,
-    percent = ((sPrice - nPrice) * 100) / sPrice,
+    percent = if (nPrice == null) null else (((sPrice - nPrice) * 100) / sPrice),
+    //((sPrice - nPrice) * 100) / sPrice,
     title = title
 )
 
