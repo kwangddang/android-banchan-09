@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.onEach
 @AndroidEntryPoint
 class BestFragment : HomeBaseFragment<FragmentBestBinding>(R.layout.fragment_best) {
 
-    private val viewModel: BestViewModel by viewModels()
+    override val viewModel: BestViewModel by viewModels()
 
     private val bestAdapter: BestRVAdapter by lazy {
         BestRVAdapter(itemClickListener, cartClickListener)

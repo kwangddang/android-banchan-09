@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.onEach
 @AndroidEntryPoint
 class SideFragment : HomeBaseFragment<FragmentSideBinding>(R.layout.fragment_side) {
 
-    private val viewModel: SideViewModel by viewModels()
+    override val viewModel: SideViewModel by viewModels()
 
     private val soupSideAdapter: SoupSideRVAdapter by lazy {
         SoupSideRVAdapter(false, spinnerCallback, itemClickListener, cartClickListener)
@@ -31,11 +31,11 @@ class SideFragment : HomeBaseFragment<FragmentSideBinding>(R.layout.fragment_sid
     }
 
     override fun initViews() {
-        viewModel.getSideFoods()
+        viewModel.getFoods(getString(R.string.fragment_side))
     }
 
     override fun initObserve() {
-        viewModel.sideUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+        viewModel.itemUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { state ->
                 if (state is UiState.Success) {
                     soupSideAdapter.submitHeaderList(state.data)

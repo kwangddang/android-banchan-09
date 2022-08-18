@@ -87,7 +87,7 @@ class CartViewModel @Inject constructor(
         val checkedList = mutableListOf<Cart>()
         val uiState = _cartUiState.value
 
-        if(uiState is UiState.Success) {
+        if (uiState is UiState.Success) {
             uiState.data.values.forEach { cart -> if (cart.checkState) checkedList.add(cart) }
             insertCartToOrderUseCase(checkedList).collect { c ->
                 _orderUiState.emit(c)

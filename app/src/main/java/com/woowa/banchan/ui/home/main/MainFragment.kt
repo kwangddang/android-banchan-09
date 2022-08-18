@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.onEach
 @AndroidEntryPoint
 class MainFragment : HomeBaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
 
-    private val viewModel: MainViewModel by viewModels()
+    override val viewModel: MainViewModel by viewModels()
 
     private val mainAdapter: MainRVAdapter by lazy {
         MainRVAdapter(checkedChangeListener, spinnerCallback, itemClickListener, cartClickListener)
@@ -47,11 +47,11 @@ class MainFragment : HomeBaseFragment<FragmentMainBinding>(R.layout.fragment_mai
     }
 
     override fun initViews() {
-        viewModel.getMainFoods()
+        viewModel.getFoods(getString(R.string.fragment_main))
     }
 
     override fun initObserve() {
-        viewModel.mainUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+        viewModel.itemUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { state ->
                 if (state is UiState.Success) {
                     mainAdapter.submitHeaderList(state.data)
