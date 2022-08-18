@@ -7,6 +7,7 @@ import com.woowa.banchan.domain.model.OrderItem
 interface OrderRepository {
 
     suspend fun getTotalOrderList(): Result<List<Order>>
+    suspend fun getEachOrder(orderId: Long): Result<Order>
     suspend fun getOrderDetail(orderId: Long): Result<List<OrderItem>>
     suspend fun insertCartToOrder(cart: List<Cart>): Result<Order>
 }
