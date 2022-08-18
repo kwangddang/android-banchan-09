@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface DeleteCartUseCase {
 
-    suspend operator fun invoke(cart: Cart): Flow<UiState<Unit>>
+    suspend operator fun invoke(hash: String): Flow<UiState<Unit>>
 }

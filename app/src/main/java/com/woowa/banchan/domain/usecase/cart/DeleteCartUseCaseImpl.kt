@@ -14,9 +14,9 @@ class DeleteCartUseCaseImpl @Inject constructor(
     private val cartRepository: CartRepository
 ) : DeleteCartUseCase {
 
-    override suspend operator fun invoke(cart: Cart): Flow<UiState<Unit>> = flow {
+    override suspend operator fun invoke(hash: String): Flow<UiState<Unit>> = flow {
         emit(UiState.Loading)
-        cartRepository.deleteCart(cart)
+        cartRepository.deleteCart(hash)
             .onSuccess { emit(UiState.Success(Unit)) }
             .onFailure { emit(UiState.Error(it.message)) }
     }.flowOn(Dispatchers.IO)

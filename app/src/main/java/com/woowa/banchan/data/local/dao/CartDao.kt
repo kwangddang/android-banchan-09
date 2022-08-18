@@ -14,9 +14,9 @@ interface CartDao {
     @Update
     suspend fun updateCart(cartDto: CartDto)
 
-    @Delete
-    suspend fun deleteCart(cartDto: CartDto)
-
     @Query("SELECT * FROM $cartTable")
     fun getCartList(): Flow<List<CartDto>>
+
+    @Query("DELETE FROM $cartTable WHERE hash = :hash")
+    suspend fun deleteCart(hash: String)
 }
