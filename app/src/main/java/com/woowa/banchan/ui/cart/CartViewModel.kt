@@ -83,10 +83,16 @@ class CartViewModel @Inject constructor(
         updateCart().join()
         _orderUiState.emit(UiState.Loading)
         val checkedList = mutableListOf<Cart>()
-        (_cartUiState.value as UiState.Success).data.values.forEach { cart -> if (cart.checkState) checkedList.add(cart) }
-        insertCartToOrderUseCase(checkedList).collect { c ->
-            _orderUiState.emit(c)
-            checkedList.forEach { launch { deleteCartUseCase(it).collect {} } }
+        val uiState = _cartUiState.value
+
+        if(uiState is UiState.Success) {
+            uiState.data.values.forEach { cart -> if (cart.checkState) checkedList.add(cart) }
+            insertCartToOrderUseCase(checkedList).collect { c ->
+                _orderUiState.emit(c)
+                checkedList.forEach { launch { deleteCartUseCase(it).collect {} } }
+            }
+        } else {
+            _orderUiState.emit(UiState.Error(null))
         }
     }
 }
