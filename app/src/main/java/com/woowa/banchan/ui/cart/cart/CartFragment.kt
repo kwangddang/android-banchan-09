@@ -53,7 +53,8 @@ class CartFragment : Fragment() {
 
     private fun initListener() {
         val listener = object : CartRVAdapter.CartButtonCallBackListener {
-            override fun onClickCartUpdate(cart: Cart) {
+            override fun onClickCartUpdate(cart: Cart, message: String?) {
+                message?.let { showToast(it) }
                 viewModel.addUpdateCartCache(cart, removeFlag = false)
             }
 
@@ -106,12 +107,14 @@ class CartFragment : Fragment() {
 
     private fun initAdapter() {
         binding.rvCartContent.adapter = cartRVAdapter
-        //cartRVAdapter.submitCartList(emptyList())
     }
 
     companion object {
         const val freeShipping = 40000
         const val shipping = 2500
         const val minimumPrice = 10000
+
+        const val minimumCount = 1
+        const val maximumCount = 100
     }
 }

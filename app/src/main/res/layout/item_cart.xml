@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="cart"
             type="com.woowa.banchan.domain.model.Cart" />
+
+        <variable
+            name="itemCount"
+            type="String" />
 
         <import type="android.view.View" />
     </data>
@@ -107,13 +112,19 @@
                     android:padding="6dp"
                     android:src="@drawable/ic_minus" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_count"
                     style="@style/normal_14"
                     android:layout_width="32dp"
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="4dp"
+                    android:background="@android:color/transparent"
                     android:gravity="center"
-                    android:text="@{String.valueOf(cart.count)}" />
+                    android:inputType="numberDecimal"
+                    android:maxLength="3"
+                    android:minEms="1"
+                    android:text="@{itemCount}"
+                    tools:text="123" />
 
                 <ImageView
                     android:id="@+id/iv_plus_count"
