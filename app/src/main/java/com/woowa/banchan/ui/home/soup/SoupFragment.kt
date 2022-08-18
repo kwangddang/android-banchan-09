@@ -11,11 +11,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
+import com.woowa.banchan.databinding.FragmentMainBinding
 import com.woowa.banchan.databinding.FragmentSoupBinding
 import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.ui.common.bottomsheet.CartAddFragment
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.detail.DetailActivity
+import com.woowa.banchan.ui.home.HomeBaseFragment
 import com.woowa.banchan.ui.home.adapter.soupside.SoupSideRVAdapter
 import com.woowa.banchan.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,9 +25,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
-class SoupFragment : Fragment() {
-
-    private lateinit var binding: FragmentSoupBinding
+class SoupFragment : HomeBaseFragment<FragmentSoupBinding>(R.layout.fragment_soup) {
 
     private val viewModel: SoupViewModel by viewModels()
 
@@ -37,41 +37,15 @@ class SoupFragment : Fragment() {
         viewModel.sortList(position)
     }
 
-    private val itemClickListener: (String, String) -> Unit = { title, hash ->
-        val intent = Intent(context, DetailActivity::class.java)
-        intent.putExtra("title", title)
-        intent.putExtra("hash", hash)
-        startActivity(intent)
-    }
-
-    private val cartClickListener: (FoodItem) -> Unit = { food ->
-        CartAddFragment(food).show(childFragmentManager, getString(R.string.fragment_cart_add))
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_soup, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initAdapter()
-        initViews()
-        initObserve()
-    }
-
-    private fun initAdapter() {
+    override fun initAdapter() {
         binding.rvSoup.adapter = soupAdapter
     }
 
-    private fun initViews() {
+    override fun initViews() {
         viewModel.getSoupFoods()
     }
 
-    private fun initObserve() {
+    override fun initObserve() {
         viewModel.soupUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { state ->
                 if (state is UiState.Success) {
