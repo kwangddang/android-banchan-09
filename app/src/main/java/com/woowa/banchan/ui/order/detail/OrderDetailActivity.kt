@@ -28,14 +28,18 @@ class OrderDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        order = intent.getSerializableExtra("order") as Order?
+        checkOrderIsNull()
 
-        if (order == null) finish()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order_detail)
 
         initViewModel()
         initButton()
         initAdapter()
+    }
+
+    private fun checkOrderIsNull() {
+        order = intent.getSerializableExtra("order") as Order?
+        if (order == null) finish()
     }
 
     private fun initViewModel() {
