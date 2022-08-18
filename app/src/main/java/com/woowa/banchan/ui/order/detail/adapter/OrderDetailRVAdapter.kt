@@ -18,20 +18,24 @@ import com.woowa.banchan.ui.order.detail.adapter.viewholder.OrderDetailHeaderVie
 import com.woowa.banchan.ui.order.detail.adapter.viewholder.OrderDetailViewHolder
 
 class OrderDetailRVAdapter(
-    private val orderData: Order
+    private var orderData: Order
 ) : ListAdapter<OrderItem, RecyclerView.ViewHolder>(diffUtil) {
 
     private var totalPrice = 0
+    private var orderDetailHeaderViewHolder: OrderDetailHeaderViewHolder? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            ORDER_HEADER -> OrderDetailHeaderViewHolder(
-                ItemOrderDetailHeaderBinding.inflate(
-                    LayoutInflater.from(
-                        parent.context
-                    ), parent, false
+            ORDER_HEADER -> {
+                orderDetailHeaderViewHolder = OrderDetailHeaderViewHolder(
+                    ItemOrderDetailHeaderBinding.inflate(
+                        LayoutInflater.from(
+                            parent.context
+                        ), parent, false
+                    )
                 )
-            )
+                orderDetailHeaderViewHolder!!
+            }
             ORDER_CONTENT -> OrderDetailViewHolder(
                 ItemOrderDetailBinding.inflate(
                     LayoutInflater.from(
@@ -66,9 +70,14 @@ class OrderDetailRVAdapter(
 
         return when (position) {
             0 -> ORDER_HEADER
-            lastIdx -> ORDER_CONTENT
-            else -> ORDER_TOTAL_PRICE
+            lastIdx -> ORDER_TOTAL_PRICE
+            else -> ORDER_CONTENT
         }
+    }
+
+    fun submitOrderItem(order: Order) {
+        this.orderData = order
+        orderDetailHeaderViewHolder?.bind(order.count, order.deliveryState, order.time)
     }
 
     fun submitOrderItemList(list: List<OrderItem>) {
