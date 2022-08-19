@@ -10,6 +10,7 @@ fun ImageView.setImage(url: String?) {
     url?.let {
         Glide.with(context)
             .load(url)
+            .placeholder(R.drawable.img_placeholder)
             .into(this)
     }
 }
