@@ -19,8 +19,8 @@
     <!--Splash Screen-->
     <style name="LaunchTheme" parent="@android:style/Theme.Light.NoTitleBar">
 
-        <item name="android:windowSplashScreenBackground">@android:color/transparent</item>
-        <item name="android:windowSplashscreenContent">@drawable/ic_user</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_user</item>
+        <item name="android:windowSplashScreenBackground">@color/ic_app_logo_background</item>
+        <item name="android:windowSplashscreenContent">@mipmap/ic_app_logo_round</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_app_logo_round</item>
     </style>
 </resources>
