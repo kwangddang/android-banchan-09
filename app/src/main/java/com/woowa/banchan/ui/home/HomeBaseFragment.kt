@@ -42,7 +42,6 @@ abstract class HomeBaseFragment<T : ViewDataBinding>(@LayoutRes val layoutRes: I
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("Tset", viewModel.toString())
         initAdapter()
         initViews()
         initObserve()

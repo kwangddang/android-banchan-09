@@ -13,14 +13,3 @@ fun ImageView.setImage(url: String?) {
             .into(this)
     }
 }
-
-@BindingAdapter("cartIcon")
-fun ImageView.setCartIcon(isCart: Boolean) {
-    if (isCart) {
-        setBackgroundResource(R.drawable.background_circle_accent)
-        setImageResource(R.drawable.ic_check_white)
-    } else {
-        setBackgroundResource(R.drawable.background_circle_white)
-        setImageResource(R.drawable.ic_cart)
-    }
-}
