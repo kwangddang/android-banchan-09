@@ -18,12 +18,18 @@ class HomeItemViewHolder(private val binding: ViewDataBinding) :
             binding.ivCart.setOnClickListener {
                 cartClickListener(food)
             }
+            binding.ivCheck.setOnClickListener {
+                cartClickListener(food)
+            }
         } else if (binding is ItemMainLinearBinding) {
             binding.food = food
             binding.layoutMain.setOnClickListener {
                 itemClickListener(food.title, food.detailHash)
             }
             binding.ivCart.setOnClickListener {
+                cartClickListener(food)
+            }
+            binding.ivCheck.setOnClickListener {
                 cartClickListener(food)
             }
         }

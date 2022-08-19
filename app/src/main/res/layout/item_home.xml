@@ -8,6 +8,9 @@
         <variable
             name="food"
             type="com.woowa.banchan.domain.model.FoodItem" />
+
+        <import type="android.view.View" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,10 +33,24 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_margin="8dp"
-            android:background="@drawable/circle_btn_background"
+            android:background="@drawable/background_circle_white"
             android:elevation="8dp"
             android:padding="8dp"
             android:src="@drawable/ic_cart"
+            android:visibility="@{food.checkState ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
+            app:layout_constraintEnd_toEndOf="@id/iv_thumbnail" />
+
+        <ImageView
+            android:id="@+id/iv_check"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/background_circle_accent"
+            android:elevation="8dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_check_white"
+            android:visibility="@{food.checkState ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
             app:layout_constraintEnd_toEndOf="@id/iv_thumbnail" />
 

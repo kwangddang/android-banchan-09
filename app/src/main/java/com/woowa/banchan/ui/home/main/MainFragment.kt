@@ -1,23 +1,14 @@
 package com.woowa.banchan.ui.home.main
 
-import android.content.Intent
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.RadioGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMainBinding
-import com.woowa.banchan.domain.model.FoodItem
-import com.woowa.banchan.ui.common.bottomsheet.CartAddFragment
 import com.woowa.banchan.ui.common.uistate.UiState
-import com.woowa.banchan.ui.detail.DetailActivity
 import com.woowa.banchan.ui.home.GRID
+import com.woowa.banchan.ui.home.HomeBaseFragment
 import com.woowa.banchan.ui.home.LINEAR_VERTICAL
 import com.woowa.banchan.ui.home.main.adapter.MainRVAdapter
 import com.woowa.banchan.utils.showToast
@@ -26,11 +17,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
-class MainFragment : Fragment() {
+class MainFragment : HomeBaseFragment<FragmentMainBinding>(R.layout.fragment_main) {
 
-    private lateinit var binding: FragmentMainBinding
-
-    private val viewModel: MainViewModel by viewModels()
+    override val viewModel: MainViewModel by viewModels()
 
     private val mainAdapter: MainRVAdapter by lazy {
         MainRVAdapter(checkedChangeListener, spinnerCallback, itemClickListener, cartClickListener)
@@ -38,10 +27,6 @@ class MainFragment : Fragment() {
 
     private val spinnerCallback: (Int) -> Unit = { position ->
         viewModel.sortList(position)
-    }
-
-    private val cartClickListener: (FoodItem) -> Unit = { food ->
-        CartAddFragment(food).show(childFragmentManager, getString(R.string.fragment_cart_add))
     }
 
     private val checkedChangeListener: (RadioGroup, Int) -> Unit = { group, checkedId ->
@@ -57,38 +42,16 @@ class MainFragment : Fragment() {
         mainAdapter.notifyItemChanged(2)
     }
 
-    private val itemClickListener: (String, String) -> Unit = { title, hash ->
-        val intent = Intent(context, DetailActivity::class.java)
-        intent.putExtra("title", title)
-        intent.putExtra("hash", hash)
-        startActivity(intent)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initAdapter()
-        initViews()
-        initObserve()
-    }
-
-    private fun initAdapter() {
+    override fun initAdapter() {
         binding.rvMain.adapter = mainAdapter
     }
 
-    private fun initViews() {
-        viewModel.getMainFoods()
+    override fun initViews() {
+        viewModel.getFoods(getString(R.string.fragment_main))
     }
 
-    private fun initObserve() {
-        viewModel.mainUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+    override fun initObserve() {
+        viewModel.itemUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { state ->
                 if (state is UiState.Success) {
                     mainAdapter.submitHeaderList(state.data)

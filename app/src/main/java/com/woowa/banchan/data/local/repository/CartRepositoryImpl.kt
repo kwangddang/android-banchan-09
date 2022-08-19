@@ -26,8 +26,8 @@ class CartRepositoryImpl @Inject constructor(
     override suspend fun updateCart(cart: Cart): Result<Unit> =
         runCatching { cartDataSource.updateCart(cart.toCartDto()) }
 
-    override suspend fun deleteCart(cart: Cart): Result<Unit> =
-        runCatching { cartDataSource.deleteCart(cart.toCartDto()) }
+    override suspend fun deleteCart(hash: String): Result<Unit> =
+        runCatching { cartDataSource.deleteCart(hash) }
 
     override suspend fun insertCart(cart: Cart): Result<Unit> =
         runCatching {

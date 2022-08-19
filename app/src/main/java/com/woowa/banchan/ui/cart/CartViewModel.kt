@@ -62,7 +62,7 @@ class CartViewModel @Inject constructor(
     fun updateCart() = CoroutineScope(Dispatchers.IO).launch {
         updateCartCache.forEach {
             if (it.second) {
-                launch { deleteCartUseCase(it.first).collect {} }
+                launch { deleteCartUseCase(it.first.hash).collect {} }
             } else {
                 launch { updateCartUseCase(it.first).collect {} }
             }
@@ -87,11 +87,11 @@ class CartViewModel @Inject constructor(
         val checkedList = mutableListOf<Cart>()
         val uiState = _cartUiState.value
 
-        if(uiState is UiState.Success) {
+        if (uiState is UiState.Success) {
             uiState.data.values.forEach { cart -> if (cart.checkState) checkedList.add(cart) }
             insertCartToOrderUseCase(checkedList).collect { c ->
                 _orderUiState.emit(c)
-                checkedList.forEach { launch { deleteCartUseCase(it).collect {} } }
+                checkedList.forEach { launch { deleteCartUseCase(it.hash).collect {} } }
             }
         } else {
             _orderUiState.emit(UiState.Error(null))
