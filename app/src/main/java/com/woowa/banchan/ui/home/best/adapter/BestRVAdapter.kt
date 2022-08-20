@@ -8,13 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemBestHeaderBinding
 import com.woowa.banchan.databinding.ItemBestRecyclerviewBinding
 import com.woowa.banchan.databinding.ItemHomeHeaderBinding
-import com.woowa.banchan.databinding.ItemRecyclerviewBinding
 import com.woowa.banchan.domain.model.BestFoodCategory
 import com.woowa.banchan.domain.model.FoodItem
+import com.woowa.banchan.ui.home.HOME_HEADER
+import com.woowa.banchan.ui.home.HOME_ITEM
+import com.woowa.banchan.ui.home.SUB_HEADER
 import com.woowa.banchan.ui.home.*
 import com.woowa.banchan.ui.home.adapter.HomeRVAdapter
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
-import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
 import com.woowa.banchan.ui.home.best.adapter.viewholder.BestHeaderViewHolder
 import com.woowa.banchan.ui.home.best.adapter.viewholder.BestViewHolder
 
