@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.woowa.banchan.ui.detail.DetailViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_dialog"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/tv_cart_update_title"
+            style="@style/normal_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cart_update_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_confirm"
+            style="@style/bold_accent_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/update_confirm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_cart_update_title" />
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            style="@style/bold_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="24dp"
+            android:text="@string/update_cancel"
+            app:layout_constraintEnd_toStartOf="@id/tv_confirm"
+            app:layout_constraintTop_toTopOf="@id/tv_confirm" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

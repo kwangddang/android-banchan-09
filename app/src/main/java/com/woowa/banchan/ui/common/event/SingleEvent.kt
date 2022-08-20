@@ -1,6 +1,7 @@
 package com.woowa.banchan.ui.common.event
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 
 open class SingleEvent<out T>(private val content: T) {
 
@@ -23,6 +24,14 @@ open class SingleEvent<out T>(private val content: T) {
      * Returns the content, even if it's already been handled.
      */
     fun peekContent(): T = content
+}
+
+class EventObserver<T>(private val onEventUnhandledContent: (T) -> Unit) : Observer<SingleEvent<T>> {
+    override fun onChanged(event: SingleEvent<T>?) {
+        event?.getContentIfNotHandled()?.let { value ->
+            onEventUnhandledContent(value)
+        }
+    }
 }
 
 fun MutableLiveData<SingleEvent<Unit>>.emit() {

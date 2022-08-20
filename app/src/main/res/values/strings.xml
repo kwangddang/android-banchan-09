@@ -11,6 +11,7 @@
     <string name="fragment_side">side</string>
     <string name="fragment_cart_add">cartAdd</string>
     <string name="fragment_cart_complete">cartComplete</string>
+    <string name="fragment_cart_update">cartUpdate</string>
     <string name="badge">기획전</string>
 
     <!--Header Title-->
@@ -37,4 +38,7 @@
     <string name="dlg_title">선택한 상품이 장바구니에 담겼습니다.</string>
     <string name="continue_shopping">계속 쇼핑하기</string>
     <string name="cart_confirm">장바구니 확인</string>
+    <string name="cart_update_title">이미 장바구니에 있습니다. 변경하시겠습니까?</string>
+    <string name="update_cancel">취소</string>
+    <string name="update_confirm">확인</string>
 </resources>

@@ -4,8 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.domain.model.DetailItem
+import com.woowa.banchan.domain.model.emptyDetailItem
 import com.woowa.banchan.domain.usecase.cart.inter.InsertCartUseCase
+import com.woowa.banchan.domain.usecase.cart.inter.UpdateCartUseCase
 import com.woowa.banchan.domain.usecase.food.inter.GetDetailFoodUseCase
 import com.woowa.banchan.domain.usecase.recent.inter.InsertRecentlyViewedFoodsUseCase
 import com.woowa.banchan.ui.common.event.SingleEvent
@@ -24,21 +27,32 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(
     private val getDetailFoodUseCase: GetDetailFoodUseCase,
     private val insertCartUseCase: InsertCartUseCase,
-    private val insertRecentlyViewedFoodsUseCase: InsertRecentlyViewedFoodsUseCase
+    private val insertRecentlyViewedFoodsUseCase: InsertRecentlyViewedFoodsUseCase,
+    private val updateCartUseCase: UpdateCartUseCase
 ) : ViewModel() {
 
     private var _detailUiState = MutableStateFlow<UiState<DetailItem>>(UiState.Empty)
     val detailUiState: StateFlow<UiState<DetailItem>> get() = _detailUiState.asStateFlow()
 
-    private val _insertionUiState =
-        MutableStateFlow<SingleEvent<UiState<Unit>>>(SingleEvent(UiState.Empty))
+    private val _insertionUiState = MutableStateFlow<SingleEvent<UiState<Unit>>>(SingleEvent(UiState.Empty))
     val insertionUiState: StateFlow<SingleEvent<UiState<Unit>>> get() = _insertionUiState.asStateFlow()
+
+    private val _updateUiState = MutableStateFlow<SingleEvent<UiState<Unit>>>(SingleEvent(UiState.Empty))
+    val updateUiState: StateFlow<SingleEvent<UiState<Unit>>> get() = _updateUiState.asStateFlow()
 
     private val _cartClickEvent = MutableLiveData<SingleEvent<Unit>>()
     val cartClickEvent: LiveData<SingleEvent<Unit>> get() = _cartClickEvent
 
     private val _userClickEvent = MutableLiveData<SingleEvent<Unit>>()
     val userClickEvent: LiveData<SingleEvent<Unit>> get() = _userClickEvent
+
+    private val _updateClickEvent = MutableLiveData<SingleEvent<Unit>>()
+    val updateClickEvent: LiveData<SingleEvent<Unit>> get() = _updateClickEvent
+
+    var sPrice = MutableLiveData(0)
+    var totalCount = MutableLiveData(1)
+    var title = MutableLiveData("")
+    var detailItem = MutableLiveData(emptyDetailItem())
 
     fun getDetailFood(hash: String) {
         viewModelScope.launch {
@@ -48,12 +62,12 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun insertCart(title: String, totalCount: Int) {
+    fun insertCart(title: String) {
         viewModelScope.launch {
             insertCartUseCase.insertCart(
                 (detailUiState.value as UiState.Success).data,
                 title,
-                totalCount
+                totalCount.value!!
             ).collect { uiState ->
                 _insertionUiState.emit(SingleEvent(uiState))
             }
@@ -77,4 +91,5 @@ class DetailViewModel @Inject constructor(
     fun setUserClickEvent() {
         _userClickEvent.emit()
     }
+
 }
