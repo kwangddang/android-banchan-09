@@ -16,6 +16,7 @@ abstract class HomeBaseViewModel : ViewModel() {
 
     @Inject
     lateinit var deleteCartUseCase: DeleteCartUseCase
+
     @Inject
     lateinit var getFoodsUseCase: GetFoodsUseCase
 

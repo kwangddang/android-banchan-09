@@ -38,6 +38,6 @@ fun MutableLiveData<SingleEvent<Unit>>.emit() {
     value = SingleEvent(Unit)
 }
 
-fun<T> MutableLiveData<SingleEvent<T>>.emit(data: T) {
+fun <T> MutableLiveData<SingleEvent<T>>.emit(data: T) {
     value = SingleEvent(data)
 }

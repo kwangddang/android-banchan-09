@@ -41,6 +41,7 @@
             android:layout_height="wrap_content"
             android:paddingEnd="24dp"
             android:text="@string/update_cancel"
+            android:onClick="@{() -> vm.setCancelClickEvent()}"
             app:layout_constraintEnd_toStartOf="@id/tv_confirm"
             app:layout_constraintTop_toTopOf="@id/tv_confirm" />
 

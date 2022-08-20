@@ -36,7 +36,7 @@ data class DetailItem(
         )
 }
 
-fun emptyDetailItem() : DetailItem =
+fun emptyDetailItem(): DetailItem =
     DetailItem(
         "",
         "",

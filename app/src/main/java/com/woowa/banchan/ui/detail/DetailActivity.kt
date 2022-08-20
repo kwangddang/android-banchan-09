@@ -85,7 +85,14 @@ class DetailActivity : AppCompatActivity() {
                         getString(R.string.fragment_cart_complete)
                     )
                 } else if (state is UiState.Error) {
-                    showToast(state.message)
+                    if (state.message?.substring(0, 6) == "UNIQUE") {
+                        CartUpdateFragment().show(
+                            supportFragmentManager,
+                            getString(R.string.fragment_cart_update)
+                        )
+                    } else {
+                        showToast(state.message)
+                    }
                 }
             }.launchIn(lifecycleScope)
 
