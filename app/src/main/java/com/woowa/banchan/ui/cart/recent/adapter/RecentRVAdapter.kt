@@ -23,11 +23,20 @@ class RecentRVAdapter : ListAdapter<Recent, RecentItemViewHolder>(diffUtil) {
     }
 
     override fun onBindViewHolder(holder: RecentItemViewHolder, position: Int) {
-        holder.bind(getItem(position), isPreview = false) { this.onClickCartButton(it) }
+        holder.bind(
+            getItem(position),
+            isPreview = false,
+            onClickItem = { onClickItem(it) },
+            onClickCartButton = { onClickCartButton(it) }
+        )
     }
 
     fun setPreviewList(recentItems: List<Recent>) {
         submitList(recentItems)
+    }
+
+    private fun onClickItem(recent: Recent) {
+        listener?.onClickItem(recent)
     }
 
     private fun onClickCartButton(recent: Recent) {
@@ -54,5 +63,6 @@ class RecentRVAdapter : ListAdapter<Recent, RecentItemViewHolder>(diffUtil) {
     interface RecentlyViewedCallBackListener {
 
         fun onClickCartButton(recent: Recent)
+        fun onClickItem(recent: Recent)
     }
 }

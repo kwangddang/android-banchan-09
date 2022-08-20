@@ -72,8 +72,9 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
                         LayoutInflater.from(
                             parent.context
                         ), parent, false
-                    ), onClickAllRecentlyViewed
-                    = { onClickAllRecentlyViewed() }
+                    ),
+                    onClickRecentItem = { onClickRecentItem(it) },
+                    onClickAllRecentlyViewed = { onClickAllRecentlyViewed() },
                 )
                 recentPreviewViewHolder!!
             }
@@ -170,6 +171,10 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
         listener?.onClickOrderButton()
     }
 
+    private fun onClickRecentItem(recent: Recent) {
+        listener?.onClickRecentItem(recent)
+    }
+
     private fun onClickAllRecentlyViewed() {
         listener?.onClickAllRecentlyViewed()
     }
@@ -189,6 +194,7 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
         fun onClickCartUpdate(cart: Cart, message: String? = null)
         fun onClickCartRemove(cart: Cart)
         fun onClickOrderButton()
+        fun onClickRecentItem(recent: Recent)
         fun onClickAllRecentlyViewed()
     }
 }
