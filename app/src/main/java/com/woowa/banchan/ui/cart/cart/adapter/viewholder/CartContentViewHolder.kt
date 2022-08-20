@@ -56,6 +56,7 @@ class CartContentViewHolder(
             if (c < minimumCount) minimumCount else if (c > maximumCount) maximumCount else c
 
         binding.itemCount = cart.count.toString()
+        binding.cart = cart
         onClickCartUpdateCount(cart, msg)
     }
 
@@ -67,6 +68,7 @@ class CartContentViewHolder(
             if (count < minimumCount || count > maximumCount) overflowMessage else null
         cart.count =
             if (count < minimumCount) minimumCount else if (count > maximumCount) maximumCount else count
+        binding.cart = cart
         onClickCartUpdateCount(cart, msg)
     }
 
