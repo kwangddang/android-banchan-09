@@ -5,6 +5,11 @@
 
     <data>
 
+        <variable
+            name="checkStateFlag"
+            type="Boolean" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,6 +25,7 @@
             android:focusable="true"
             android:gravity="center"
             android:orientation="horizontal"
+            android:visibility="@{checkStateFlag ? View.VISIBLE : View.GONE}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -33,6 +39,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="선택 해제" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tv_all_checked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="@{checkStateFlag ? View.GONE : View.VISIBLE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_unchecked" />
+
+            <TextView
+                style="@style/normal_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="전체 선택" />
         </LinearLayout>
 
         <TextView
