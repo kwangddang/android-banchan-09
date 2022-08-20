@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.domain.model.DetailItem
 import com.woowa.banchan.domain.model.emptyDetailItem
 import com.woowa.banchan.domain.usecase.cart.inter.InsertCartUseCase
@@ -13,7 +12,6 @@ import com.woowa.banchan.domain.usecase.food.inter.GetDetailFoodUseCase
 import com.woowa.banchan.domain.usecase.recent.inter.InsertRecentlyViewedFoodsUseCase
 import com.woowa.banchan.ui.common.event.SingleEvent
 import com.woowa.banchan.ui.common.event.emit
-import com.woowa.banchan.ui.common.livedata.SingleLiveData
 import com.woowa.banchan.ui.common.uistate.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -46,8 +44,8 @@ class DetailViewModel @Inject constructor(
     private val _userClickEvent = MutableLiveData<SingleEvent<Unit>>()
     val userClickEvent: LiveData<SingleEvent<Unit>> get() = _userClickEvent
 
-    private val _updateClickEvent = MutableLiveData<SingleEvent<Unit>>()
-    val updateClickEvent: LiveData<SingleEvent<Unit>> get() = _updateClickEvent
+    private val _cancelClickEvent = MutableLiveData<SingleEvent<Unit>>()
+    val cancelClickEvent: LiveData<SingleEvent<Unit>> get() = _cancelClickEvent
 
     var sPrice = MutableLiveData(0)
     var totalCount = MutableLiveData(1)
@@ -92,4 +90,15 @@ class DetailViewModel @Inject constructor(
         _userClickEvent.emit()
     }
 
+    fun setCancelClickEvent() {
+        _cancelClickEvent.emit()
+    }
+
+    fun setUpdateClickEvent() {
+        viewModelScope.launch {
+            updateCartUseCase(detailItem.value!!, title.value!!, totalCount.value!!).collect { uiState ->
+                _updateUiState.emit(SingleEvent(uiState))
+            }
+        }
+    }
 }

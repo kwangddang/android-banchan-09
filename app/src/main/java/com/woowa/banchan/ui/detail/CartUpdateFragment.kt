@@ -1,6 +1,5 @@
 package com.woowa.banchan.ui.detail
 
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -16,7 +15,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentCartUpdateBinding
-import com.woowa.banchan.ui.cart.CartActivity
+import com.woowa.banchan.ui.common.event.EventObserver
 import com.woowa.banchan.ui.common.popup.CartCompleteFragment
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.utils.showToast
@@ -65,6 +64,10 @@ class CartUpdateFragment : DialogFragment() {
                     showToast(state.message)
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.cancelClickEvent.observe(viewLifecycleOwner, EventObserver {
+            dismiss()
+        })
     }
 
 }

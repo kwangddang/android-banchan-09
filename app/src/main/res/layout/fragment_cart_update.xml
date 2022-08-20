@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="@string/update_confirm"
+            android:onClick="@{() -> vm.setUpdateClickEvent()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_cart_update_title" />
 
