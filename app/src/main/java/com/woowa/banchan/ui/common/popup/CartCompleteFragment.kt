@@ -23,7 +23,8 @@ class CartCompleteFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_cart_complete, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_cart_complete, container, false)
         initDialog()
         return binding.root
     }
@@ -41,6 +42,7 @@ class CartCompleteFragment : DialogFragment() {
     private fun initButtonSetting() {
         binding.tvCartConfirm.setOnClickListener {
             parentFragmentManager.commit { remove(this@CartCompleteFragment) }
+            if (this.requireActivity() is CartActivity) this.requireActivity().finish()
             startActivity(Intent(context, CartActivity::class.java))
         }
         binding.tvContinueShopping.setOnClickListener {
