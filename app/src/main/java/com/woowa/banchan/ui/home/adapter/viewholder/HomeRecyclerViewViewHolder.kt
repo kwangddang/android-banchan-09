@@ -26,6 +26,9 @@ class HomeRecyclerViewViewHolder(private val binding: ItemRecyclerviewBinding) :
     private fun initLayoutManager(homeRVAdapter: HomeRVAdapter) {
         binding.rvBest.apply {
             layoutManager = when (homeRVAdapter.managerType) {
+    fun bind(homeRVAdapter: HomeRVAdapter, food: List<FoodItem>, managerType: Int) {
+        binding.rvFood.apply {
+            layoutManager = when (managerType) {
                 LINEAR_HORIZONTAL -> LinearLayoutManager(
                     this.context,
                     LinearLayoutManager.HORIZONTAL,

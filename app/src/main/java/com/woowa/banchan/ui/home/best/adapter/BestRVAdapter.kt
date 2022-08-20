@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemBestHeaderBinding
+import com.woowa.banchan.databinding.ItemBestRecyclerviewBinding
 import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
 import com.woowa.banchan.domain.model.BestFoodCategory
@@ -15,6 +16,7 @@ import com.woowa.banchan.ui.home.adapter.HomeRVAdapter
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
 import com.woowa.banchan.ui.home.best.adapter.viewholder.BestHeaderViewHolder
+import com.woowa.banchan.ui.home.best.adapter.viewholder.BestViewHolder
 
 class BestRVAdapter(
     private val itemClickListener: (String, String) -> Unit,
@@ -37,8 +39,8 @@ class BestRVAdapter(
                     ), parent, false
                 )
             )
-            else -> HomeRecyclerViewViewHolder(
-                ItemRecyclerviewBinding.inflate(
+            else -> BestViewHolder(
+                ItemBestRecyclerviewBinding.inflate(
                     LayoutInflater.from(
                         parent.context
                     ), parent, false
@@ -54,6 +56,12 @@ class BestRVAdapter(
             is HomeRecyclerViewViewHolder -> holder.bind(
                 HomeRVAdapter(itemClickListener, cartClickListener).apply { managerType = LINEAR_HORIZONTAL },
                 (getItem(position) as RVItem.Item<BestFoodCategory>).item.items,
+        when (holder.itemViewType) {
+            HOME_HEADER -> (holder as HomeHeaderViewHolder).bind("한 번 주문하면\n두 번 반하는 반찬들", true)
+            SUB_HEADER -> (holder as BestHeaderViewHolder).bind(getItem(position))
+            else -> (holder as BestViewHolder).bind(
+                BestItemAdapter(itemClickListener, cartClickListener),
+                getItem(position).items
             )
         }
     }
@@ -88,6 +96,13 @@ class BestRVAdapter(
 
             override fun areContentsTheSame(oldItem: RVItem, newItem: RVItem): Boolean {
                 return oldItem == newItem
+            }
+
+            override fun areContentsTheSame(
+                oldItem: BestFoodCategory,
+                newItem: BestFoodCategory
+            ): Boolean {
+                return oldItem.categoryId == newItem.categoryId
             }
         }
     }
