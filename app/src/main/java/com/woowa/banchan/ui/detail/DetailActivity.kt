@@ -1,5 +1,6 @@
 package com.woowa.banchan.ui.detail
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -8,10 +9,12 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ActivityDetailBinding
+import com.woowa.banchan.ui.cart.CartActivity
 import com.woowa.banchan.ui.common.popup.CartCompleteFragment
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.detail.adapter.DetailRVAdapter
 import com.woowa.banchan.ui.detail.adapter.DetailVPAdapter
+import com.woowa.banchan.ui.order.OrderActivity
 import com.woowa.banchan.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
@@ -24,7 +27,7 @@ class DetailActivity : AppCompatActivity() {
 
     private val viewModel: DetailViewModel by viewModels()
 
-    private var title: String? = null
+    private var foodTitle: String? = null
     private var hash: String? = null
 
     private var sPrice = 0
@@ -38,26 +41,30 @@ class DetailActivity : AppCompatActivity() {
         getIntentValues()
         initBinding()
         initViews()
-        initObserve()
+        initObserver()
         initButtonSetting()
     }
 
     private fun getIntentValues() {
-        title = intent.getStringExtra("title")!!
+        foodTitle = intent.getStringExtra("title")!!
         hash = intent.getStringExtra("hash")!!
-        if (title == null || hash == null) finish()
+        if (foodTitle == null || hash == null) finish()
     }
 
     private fun initBinding() {
-        binding.title = title
-        binding.count = totalCount
+        binding.apply {
+            title = foodTitle
+            count = totalCount
+            vm = viewModel
+            lifecycleOwner = this@DetailActivity
+        }
     }
 
     private fun initViews() {
         viewModel.getDetailFood(hash!!)
     }
 
-    private fun initObserve() {
+    private fun initObserver() {
         viewModel.detailUiState.flowWithLifecycle(lifecycle)
             .onEach { state ->
                 if (state is UiState.Success) {
@@ -70,7 +77,7 @@ class DetailActivity : AppCompatActivity() {
                     val detailRVAdapter = DetailRVAdapter(state.data.detailSection)
                     binding.rvDetail.adapter = detailRVAdapter
                     detailRVAdapter.notifyDataSetChanged()
-                    viewModel.insertRecentlyViewed(title!!, totalCount)
+                    viewModel.insertRecentlyViewed(foodTitle!!, totalCount)
                 } else if (state is UiState.Error) {
 
                 }
@@ -89,6 +96,14 @@ class DetailActivity : AppCompatActivity() {
                     showToast(state.message)
                 }
             }.launchIn(lifecycleScope)
+
+        viewModel.cartClickEvent.observe(this) {
+            startActivity(Intent(this, CartActivity::class.java))
+        }
+
+        viewModel.userClickEvent.observe(this) {
+            startActivity(Intent(this, OrderActivity::class.java))
+        }
     }
 
     private fun initButtonSetting() {
@@ -106,7 +121,7 @@ class DetailActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnOrder.setOnClickListener { viewModel.insertCart(title!!, totalCount) }
+        binding.btnOrder.setOnClickListener { viewModel.insertCart(foodTitle!!, totalCount) }
     }
 
     private fun setCountAndPrice() {

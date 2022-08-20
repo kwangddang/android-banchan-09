@@ -21,6 +21,10 @@
             name="count"
             type="Integer" />
 
+        <variable
+            name="vm"
+            type="com.woowa.banchan.ui.detail.DetailViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,6 +36,8 @@
             android:id="@+id/ctb_toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:onClickCartIcon="@{vm.setCartClickEvent}"
+            app:onClickUserIcon="@{vm.setUserClickEvent}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
