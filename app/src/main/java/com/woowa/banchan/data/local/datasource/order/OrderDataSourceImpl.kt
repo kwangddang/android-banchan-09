@@ -16,10 +16,7 @@ class OrderDataSourceImpl @Inject constructor(
 ) : OrderDataSource {
 
     override suspend fun getTotalOrderList(): Result<Flow<List<OrderDto>>> =
-        runCatching {
-            Log.d("Test","getTotalList")
-            orderDao.getTotalOrderList()
-        }
+        runCatching { orderDao.getTotalOrderList() }
 
     override suspend fun getOrderDetail(orderId: Long): Result<List<OrderItemDto>> =
         runCatching { orderItemDao.getOrderDetail(orderId) }

@@ -43,11 +43,6 @@ class OrderActivity : AppCompatActivity() {
         binding.rvOrder.adapter = orderRVAdapter
     }
 
-    override fun onStart() {
-        viewModel.getOrderList()
-        super.onStart()
-    }
-
     private fun initToolBar() {
         binding.ctbSubToolbar.setOnClickBackIcon { finish() }
         binding.ctbSubToolbar.setAppBarTitle("Order List")

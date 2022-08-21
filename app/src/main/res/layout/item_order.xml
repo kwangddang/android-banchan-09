@@ -60,25 +60,25 @@
             tools:text="12,640원" />
 
         <TextView
-            android:id="@+id/tv_ready_to_delivery"
+            android:id="@+id/tv_delivery_complete"
             style="@style/normal_14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="배송완료"
-            android:visibility="@{order.deliveryState ? View.GONE : View.VISIBLE}"
+            android:text="@string/delivery_complete"
+            android:visibility="@{order.deliveryState ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_order_title"
             app:layout_constraintTop_toBottomOf="@id/tv_total_price"
             tools:visibility="gone" />
 
         <TextView
-            android:id="@+id/tv_delivered"
+            android:id="@+id/tv_delivery_ready"
             style="@style/normal_14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="배송 준비중"
+            android:text="@string/delivery_ready"
             android:textColor="@color/accent"
-            android:visibility="@{order.deliveryState ? View.VISIBLE : View.GONE}"
+            android:visibility="@{order.deliveryState ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_order_title"
             app:layout_constraintTop_toBottomOf="@id/tv_total_price" />
