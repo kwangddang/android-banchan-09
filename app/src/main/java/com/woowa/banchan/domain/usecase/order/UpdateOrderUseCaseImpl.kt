@@ -9,7 +9,7 @@ class UpdateOrderUseCaseImpl @Inject constructor(
     private val orderRepository: OrderRepository
 ) : UpdateOrderUseCase {
 
-    override suspend operator fun invoke(id:Long, deliverState: Boolean): UiState<Unit> {
+    override suspend operator fun invoke(id: Long, deliverState: Boolean): UiState<Unit> {
         orderRepository.updateOrder(id, deliverState).onSuccess {
             return UiState.Success(Unit)
         }.onFailure {

@@ -113,7 +113,7 @@ class CartFragment : Fragment() {
                 when (it) {
                     is UiState.Success -> {
                         val intent = Intent(requireActivity(), OrderDetailActivity::class.java)
-                        viewModel.reserveUpdateOrder(it.data,workManager)
+                        viewModel.reserveUpdateOrder(it.data, workManager)
                         intent.putExtra("order", it.data)
                         startActivity(intent)
                         requireActivity().finish()

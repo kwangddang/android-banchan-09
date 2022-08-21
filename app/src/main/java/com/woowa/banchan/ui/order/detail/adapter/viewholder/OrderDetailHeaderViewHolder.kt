@@ -11,6 +11,6 @@ class OrderDetailHeaderViewHolder(private val binding: ItemOrderDetailHeaderBind
         binding.itemCount = count
         binding.deliveryState = state
         val leftTime = (System.currentTimeMillis() - time.time) / 60000
-        binding.leftTime = (20 - leftTime.toInt())
+        binding.leftTime = (1 - leftTime.toInt())
     }
 }

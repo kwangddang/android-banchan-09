@@ -19,5 +19,8 @@ interface OrderDataSource {
         orderItemList: List<OrderItemDto>
     ): Result<OrderDto>
 
-    suspend fun updateOrder(id:Long, deliverState: Boolean): Result<Unit>
+    suspend fun updateOrder(id: Long, deliverState: Boolean): Result<Unit>
+
+    suspend fun getOrderState(): Result<Flow<Boolean>>
+
 }

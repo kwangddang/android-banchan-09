@@ -113,4 +113,10 @@ abstract class UseCaseModule {
     abstract fun provideGetCartCountUseCase(
         GetCartCountUseCase: GetCartCountUseCaseImpl
     ): GetCartCountUseCase
+
+    @Singleton
+    @Binds
+    abstract fun provideGetOrderStateUseCase(
+        getOrderStateUseCase: GetOrderStateUseCaseImpl
+    ): GetOrderStateUseCase
 }

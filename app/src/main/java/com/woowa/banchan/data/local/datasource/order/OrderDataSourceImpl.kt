@@ -1,6 +1,5 @@
 package com.woowa.banchan.data.local.datasource.order
 
-import android.util.Log
 import com.woowa.banchan.data.local.BanchanDataBase
 import com.woowa.banchan.data.local.dao.OrderDao
 import com.woowa.banchan.data.local.dao.OrderItemDao
@@ -44,7 +43,10 @@ class OrderDataSourceImpl @Inject constructor(
             orderDao.getOrder(orderId)
         }
 
-    override suspend fun updateOrder(id:Long, deliverState: Boolean): Result<Unit> =
+    override suspend fun updateOrder(id: Long, deliverState: Boolean): Result<Unit> =
         runCatching { orderDao.updateOrder(id, deliverState) }
+
+    override suspend fun getOrderState(): Result<Flow<Boolean>> =
+        runCatching { orderDao.getOrderState() }
 
 }

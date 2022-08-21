@@ -86,7 +86,7 @@ class CustomToolbar(
             with(binding.tvCartCount) {
                 this.isVisible = count > 0
                 this.text = count.toString()
-                if(count > 10)
+                if (count > 10)
                     this.text = "10+"
             }
     }

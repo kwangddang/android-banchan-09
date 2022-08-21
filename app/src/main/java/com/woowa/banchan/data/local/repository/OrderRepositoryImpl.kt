@@ -47,7 +47,10 @@ class OrderRepositoryImpl @Inject constructor(
             orderDto.toOrder()
         }
 
-    override suspend fun updateOrder(id:Long, deliverState: Boolean): Result<Unit> =
+    override suspend fun updateOrder(id: Long, deliverState: Boolean): Result<Unit> =
         runCatching { orderDataSource.updateOrder(id, deliverState) }
+
+    override suspend fun getOrderState(): Result<Flow<Boolean>> =
+        runCatching { orderDataSource.getOrderState().getOrThrow() }
 
 }

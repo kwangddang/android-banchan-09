@@ -2,6 +2,7 @@ package com.woowa.banchan.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -43,9 +44,22 @@ class HomeActivity : AppCompatActivity() {
     private fun initObserver() {
         viewModel.cartCountUiState.flowWithLifecycle(lifecycle)
             .onEach { state ->
-                if(state is UiState.Success)
+                if (state is UiState.Success)
                     binding.tbHome.setCartCountIcon(state.data)
-                else if(state is UiState.Error)
+                else if (state is UiState.Error)
+                    showToast(state.message)
+
+            }.launchIn(lifecycleScope)
+
+        viewModel.orderStateUiState.flowWithLifecycle(lifecycle)
+            .onEach { state ->
+                Log.d("Test", state.toString())
+                if (state is UiState.Success) {
+                    if (state.data)
+                        binding.tbHome.setUserNotifierIcon()
+                    else
+                        binding.tbHome.unSetUserNotifierIcon()
+                } else if (state is UiState.Error)
                     showToast(state.message)
 
             }.launchIn(lifecycleScope)
