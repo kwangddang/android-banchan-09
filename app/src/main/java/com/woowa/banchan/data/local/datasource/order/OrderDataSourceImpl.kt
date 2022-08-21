@@ -5,6 +5,7 @@ import com.woowa.banchan.data.local.dao.OrderDao
 import com.woowa.banchan.data.local.dao.OrderItemDao
 import com.woowa.banchan.data.local.entity.OrderDto
 import com.woowa.banchan.data.local.entity.OrderItemDto
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class OrderDataSourceImpl @Inject constructor(
@@ -13,7 +14,7 @@ class OrderDataSourceImpl @Inject constructor(
     private val database: BanchanDataBase
 ) : OrderDataSource {
 
-    override suspend fun getTotalOrderList(): Result<List<OrderDto>> =
+    override suspend fun getTotalOrderList(): Result<Flow<List<OrderDto>>> =
         runCatching { orderDao.getTotalOrderList() }
 
     override suspend fun getOrderDetail(orderId: Long): Result<List<OrderItemDto>> =
