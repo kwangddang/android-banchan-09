@@ -12,6 +12,7 @@ class HomeItemViewHolder(private val binding: ViewDataBinding) :
     fun bind(food: FoodItem, itemClickListener: (String, String) -> Unit, cartClickListener: (FoodItem) -> Unit) {
         if (binding is ItemHomeBinding) {
             binding.food = food
+            binding.checkState = food.checkState
             binding.layoutHome.setOnClickListener {
                 itemClickListener(food.title, food.detailHash)
             }
@@ -23,6 +24,7 @@ class HomeItemViewHolder(private val binding: ViewDataBinding) :
             }
         } else if (binding is ItemMainLinearBinding) {
             binding.food = food
+            binding.checkState = food.checkState
             binding.layoutMain.setOnClickListener {
                 itemClickListener(food.title, food.detailHash)
             }
@@ -32,6 +34,17 @@ class HomeItemViewHolder(private val binding: ViewDataBinding) :
             binding.ivCheck.setOnClickListener {
                 cartClickListener(food)
             }
+        }
+    }
+
+    fun bind(food: FoodItem) {
+        if(binding is ItemHomeBinding) {
+            binding.food!!.checkState = food.checkState
+            binding.checkState = food.checkState
+        }
+        else if(binding is ItemMainLinearBinding) {
+            binding.food!!.checkState = food.checkState
+            binding.checkState = food.checkState
         }
     }
 }

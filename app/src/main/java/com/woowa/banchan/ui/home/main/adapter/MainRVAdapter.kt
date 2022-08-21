@@ -1,5 +1,6 @@
 package com.woowa.banchan.ui.home.main.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.RadioGroup
@@ -28,6 +29,7 @@ class MainRVAdapter(
     val homeRVAdapter: HomeRVAdapter = HomeRVAdapter(itemClickListener, cartClickListener).apply { managerType = GRID }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        Log.d("Test","MainRVAdapter")
         return when (viewType) {
             HOME_HEADER -> HomeHeaderViewHolder(
                 ItemHomeHeaderBinding.inflate(
@@ -54,10 +56,10 @@ class MainRVAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder.itemViewType) {
-            HOME_HEADER -> (holder as HomeHeaderViewHolder).bind("모두가 좋아하는\n든든한 메인 요리", false)
-            SUB_HEADER -> (holder as MainHeaderViewHolder).bind(checkedChangeListener, spinnerCallback)
-            else -> (holder as HomeRecyclerViewViewHolder).bind(homeRVAdapter, (getItem(position) as RVItem.Item<List<FoodItem>>).item, managerType)
+        when (holder) {
+            is HomeHeaderViewHolder -> holder.bind("모두가 좋아하는\n든든한 메인 요리", false)
+            is MainHeaderViewHolder -> holder.bind(checkedChangeListener, spinnerCallback)
+            is HomeRecyclerViewViewHolder -> holder.bind(homeRVAdapter, (getItem(position) as RVItem.Item<List<FoodItem>>).item, managerType)
         }
     }
 
