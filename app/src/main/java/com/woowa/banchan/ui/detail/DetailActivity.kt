@@ -2,6 +2,7 @@ package com.woowa.banchan.ui.detail
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -94,6 +95,27 @@ class DetailActivity : AppCompatActivity() {
                         showToast(state.message)
                     }
                 }
+            }.launchIn(lifecycleScope)
+
+        viewModel.cartCountUiState.flowWithLifecycle(lifecycle)
+            .onEach { state ->
+                if (state is UiState.Success)
+                    binding.ctbToolbar.setCartCountIcon(state.data)
+                else if (state is UiState.Error)
+                    showToast(state.message)
+
+            }.launchIn(lifecycleScope)
+
+        viewModel.orderStateUiState.flowWithLifecycle(lifecycle)
+            .onEach { state ->
+                if (state is UiState.Success) {
+                    if (state.data)
+                        binding.ctbToolbar.setUserNotifierIcon()
+                    else
+                        binding.ctbToolbar.unSetUserNotifierIcon()
+                } else if (state is UiState.Error)
+                    showToast(state.message)
+
             }.launchIn(lifecycleScope)
 
         viewModel.cartClickEvent.observe(this, EventObserver {

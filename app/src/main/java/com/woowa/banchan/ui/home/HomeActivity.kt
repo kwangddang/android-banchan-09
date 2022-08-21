@@ -53,7 +53,6 @@ class HomeActivity : AppCompatActivity() {
 
         viewModel.orderStateUiState.flowWithLifecycle(lifecycle)
             .onEach { state ->
-                Log.d("Test", state.toString())
                 if (state is UiState.Success) {
                     if (state.data)
                         binding.tbHome.setUserNotifierIcon()

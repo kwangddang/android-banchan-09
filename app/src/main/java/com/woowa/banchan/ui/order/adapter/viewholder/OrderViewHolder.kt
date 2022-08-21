@@ -10,9 +10,6 @@ class OrderViewHolder(private val binding: ItemOrderBinding) :
 
     fun bind(order: Order, onClick: (order: Order) -> Unit = {}) {
         binding.order = order
-        binding.layoutOrderRoot.setOnClickListener {
-            Log.d("Test",order.toString())
-            onClick(order)
-        }
+        binding.layoutOrderRoot.setOnClickListener { onClick(order) }
     }
 }

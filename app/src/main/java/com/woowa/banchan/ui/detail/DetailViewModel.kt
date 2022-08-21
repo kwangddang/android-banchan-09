@@ -6,9 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.woowa.banchan.domain.model.DetailItem
 import com.woowa.banchan.domain.model.emptyDetailItem
+import com.woowa.banchan.domain.usecase.cart.inter.GetCartCountUseCase
 import com.woowa.banchan.domain.usecase.cart.inter.InsertCartUseCase
 import com.woowa.banchan.domain.usecase.cart.inter.UpdateCartUseCase
 import com.woowa.banchan.domain.usecase.food.inter.GetDetailFoodUseCase
+import com.woowa.banchan.domain.usecase.order.inter.GetOrderStateUseCase
 import com.woowa.banchan.domain.usecase.recent.inter.InsertRecentlyViewedFoodsUseCase
 import com.woowa.banchan.ui.common.event.SingleEvent
 import com.woowa.banchan.ui.common.event.setEvent
@@ -27,6 +29,9 @@ class DetailViewModel @Inject constructor(
     private val insertCartUseCase: InsertCartUseCase,
     private val insertRecentlyViewedFoodsUseCase: InsertRecentlyViewedFoodsUseCase,
     private val updateCartUseCase: UpdateCartUseCase
+    private val insertRecentlyViewedFoodsUseCase: InsertRecentlyViewedFoodsUseCase,
+    private val getCartCountUseCase: GetCartCountUseCase,
+    private val getOrderStateUseCase: GetOrderStateUseCase
 ) : ViewModel() {
 
     private var _detailUiState = MutableStateFlow<UiState<DetailItem>>(UiState.Empty)
@@ -51,6 +56,28 @@ class DetailViewModel @Inject constructor(
     var totalCount = MutableLiveData(1)
     var title = MutableLiveData("")
     var detailItem = MutableLiveData(emptyDetailItem())
+
+    private var _cartCountUiState = MutableStateFlow<UiState<Int>>(UiState.Empty)
+    val cartCountUiState: StateFlow<UiState<Int>> get() = _cartCountUiState.asStateFlow()
+
+    private var _orderStateUiState = MutableStateFlow<UiState<Boolean>>(UiState.Empty)
+    val orderStateUiState: StateFlow<UiState<Boolean>> get() = _orderStateUiState.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            launch {
+                getCartCountUseCase().collect { uiState ->
+                    _cartCountUiState.emit(uiState)
+                }
+            }
+
+            launch {
+                getOrderStateUseCase().collect { uiState ->
+                    _orderStateUiState.emit(uiState)
+                }
+            }
+        }
+    }
 
     fun getDetailFood(hash: String) {
         viewModelScope.launch {

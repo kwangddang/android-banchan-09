@@ -113,7 +113,6 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    @SuppressLint("RestrictedApi")
     fun reserveUpdateOrder(order: Order, workManager: WorkManager) {
         workManager.enqueue(
             OneTimeWorkRequestBuilder<OrderWorker>()
