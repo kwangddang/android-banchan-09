@@ -11,17 +11,18 @@ import java.util.*
 @Entity(tableName = orderTable)
 data class OrderDto(
     @PrimaryKey(autoGenerate = true) val id: Long?,
+    @ColumnInfo(name = "delivery_state") val deliveryState: Boolean,
     @ColumnInfo(name = "time") val time: Date,
     @ColumnInfo(name = "count") val count: Int,
     @ColumnInfo(name = "price") val price: Int,
     @ColumnInfo(name = "title") val title: String,
-    @ColumnInfo(name = "image_url") val imageUrl: String,
+    @ColumnInfo(name = "image_url") val imageUrl: String
 )
 
 fun OrderDto.toOrder(): Order {
     return Order(
         id = id!!,
-        deliveryState = (System.currentTimeMillis() - time.time < (60000 * 20)),
+        deliveryState = deliveryState,
         time = time,
         count = count,
         price = price,
@@ -32,6 +33,7 @@ fun OrderDto.toOrder(): Order {
 
 fun newOrderDto(count: Int, price: Int, thumbnailItem: Cart): OrderDto = OrderDto(
     id = null,
+    deliveryState = false,
     time = Date(System.currentTimeMillis()),
     count = count,
     price = price,

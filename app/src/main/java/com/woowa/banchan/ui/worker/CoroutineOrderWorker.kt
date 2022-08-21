@@ -9,6 +9,7 @@ import com.woowa.banchan.domain.usecase.order.inter.GetTotalOrderUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
+@HiltWorker
 class CoroutineOrderWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted params: WorkerParameters,
