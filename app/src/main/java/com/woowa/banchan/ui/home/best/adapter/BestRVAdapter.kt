@@ -19,7 +19,7 @@ import com.woowa.banchan.ui.home.best.adapter.viewholder.BestHeaderViewHolder
 class BestRVAdapter(
     private val itemClickListener: (String, String) -> Unit,
     private val cartClickListener: (FoodItem) -> Unit
-) : ListAdapter<RecyclerViewItem, RecyclerView.ViewHolder>(diffUtil) {
+) : ListAdapter<RVItem, RecyclerView.ViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -50,10 +50,10 @@ class BestRVAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
             HOME_HEADER -> (holder as HomeHeaderViewHolder).bind("한 번 주문하면\n두 번 반하는 반찬들", true)
-            SUB_HEADER -> (holder as BestHeaderViewHolder).bind((getItem(position) as RecyclerViewItem.Item<BestFoodCategory>).item)
+            SUB_HEADER -> (holder as BestHeaderViewHolder).bind((getItem(position) as RVItem.Item<BestFoodCategory>).item)
             else -> (holder as HomeRecyclerViewViewHolder).bind(
                 HomeRVAdapter(itemClickListener, cartClickListener).apply { managerType = LINEAR_HORIZONTAL },
-                (getItem(position) as RecyclerViewItem.Item<BestFoodCategory>).item.items,
+                (getItem(position) as RVItem.Item<BestFoodCategory>).item.items,
                 LINEAR_HORIZONTAL,
             )
         }
@@ -71,23 +71,23 @@ class BestRVAdapter(
     }
 
     fun submitHeaderList(list: List<BestFoodCategory>) {
-        val newList = mutableListOf<RecyclerViewItem>()
-        newList.add(RecyclerViewItem.Header)
+        val newList = mutableListOf<RVItem>()
+        newList.add(RVItem.Header)
         for (category in list) {
-            newList.add(RecyclerViewItem.Item(category))
-            newList.add(RecyclerViewItem.Item(category))
+            newList.add(RVItem.Item(category))
+            newList.add(RVItem.Item(category))
         }
         submitList(newList)
     }
 
     companion object {
 
-        val diffUtil = object : DiffUtil.ItemCallback<RecyclerViewItem>() {
-            override fun areItemsTheSame(oldItem: RecyclerViewItem, newItem: RecyclerViewItem): Boolean {
+        val diffUtil = object : DiffUtil.ItemCallback<RVItem>() {
+            override fun areItemsTheSame(oldItem: RVItem, newItem: RVItem): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: RecyclerViewItem, newItem: RecyclerViewItem): Boolean {
+            override fun areContentsTheSame(oldItem: RVItem, newItem: RVItem): Boolean {
                 return oldItem == newItem
             }
         }
