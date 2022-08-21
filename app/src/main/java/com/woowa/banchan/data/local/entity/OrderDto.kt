@@ -31,6 +31,17 @@ fun OrderDto.toOrder(): Order {
     )
 }
 
+fun Order.toOrderDto(): OrderDto =
+    OrderDto(
+        id = id,
+        deliveryState = deliveryState,
+        time = time,
+        count = count,
+        price = price,
+        title = title,
+        imageUrl = imageUrl
+    )
+
 fun newOrderDto(count: Int, price: Int, thumbnailItem: Cart): OrderDto = OrderDto(
     id = null,
     deliveryState = false,

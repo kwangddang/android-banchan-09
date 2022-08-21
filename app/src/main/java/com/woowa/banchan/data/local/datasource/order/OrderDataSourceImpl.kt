@@ -24,7 +24,7 @@ class OrderDataSourceImpl @Inject constructor(
         runCatching { orderDao.getOrder(orderId) }
 
     override suspend fun insertNewOrder(orderDto: OrderDto): Result<Long> =
-        runCatching { orderDao.insert(orderDto) }
+        runCatching { orderDao.insertOrder(orderDto) }
 
     override suspend fun insertNewOrderItem(orderItemDto: List<OrderItemDto>): Result<Unit> =
         runCatching { orderItemDao.insert(*orderItemDto.toTypedArray()) }
@@ -36,10 +36,13 @@ class OrderDataSourceImpl @Inject constructor(
         runCatching {
             var orderId = 0L
             database.runInTransaction {
-                orderId = orderDao.insert(newOrder)
+                orderId = orderDao.insertOrder(newOrder)
                 orderItemList.forEach { it.orderId = orderId }
                 orderItemDao.insert(*orderItemList.toTypedArray())
             }
             orderDao.getOrder(orderId)
         }
+
+    override suspend fun updateOrder(id:Long, deliverState: Boolean): Result<Unit> =
+        kotlin.runCatching { orderDao.updateOrder(id, deliverState) }
 }
