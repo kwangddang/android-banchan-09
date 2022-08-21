@@ -23,7 +23,12 @@ class RecentPreviewRVAdapter(
     }
 
     override fun onBindViewHolder(holder: RecentItemViewHolder, position: Int) {
-        holder.bind(getItem(position), onClickItem = { onClickItem(it) })
+        holder.bind(
+            getItem(position),
+            onClickItem = { onClickItem(it) },
+            onClickCartButton = {},
+            onClickCheckButton = {}
+        )
     }
 
 

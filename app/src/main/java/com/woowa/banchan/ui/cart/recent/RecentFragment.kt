@@ -60,6 +60,10 @@ class RecentFragment : Fragment() {
                 this@RecentFragment.requireActivity().finish()
             }
 
+            override fun onClickCheckButton(recent: Recent) {
+                viewModel.deleteCart(recent)
+            }
+
             override fun onClickCartButton(recent: Recent) {
                 CartAddFragment(recent.toFoodItem()).show(
                     childFragmentManager,
@@ -76,6 +80,15 @@ class RecentFragment : Fragment() {
                 when (it) {
                     is UiState.Success -> adapter.setPreviewList(it.data)
                     is UiState.Error -> showToast(null)
+                    else -> {}
+                }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.cartUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach {
+                when (it) {
+                    is UiState.Success -> adapter.setCartList(it.data.values.toList())
+                    is UiState.Error -> showToast(it.message)
                     else -> {}
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)

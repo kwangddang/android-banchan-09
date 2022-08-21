@@ -17,6 +17,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -67,6 +68,10 @@ class CartViewModel @Inject constructor(
                 launch { updateCartUseCase(it.first).collect {} }
             }
         }
+    }
+
+    fun deleteCart(recent: Recent) {
+        CoroutineScope(Dispatchers.IO).launch { deleteCartUseCase(recent.hash).collect() }
     }
 
     fun addUpdateCartCache(cart: Cart, removeFlag: Boolean) {
