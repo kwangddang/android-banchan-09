@@ -1,13 +1,7 @@
 package com.woowa.banchan.di
 
-import com.woowa.banchan.domain.usecase.cart.DeleteCartUseCaseImpl
-import com.woowa.banchan.domain.usecase.cart.GetCartListUseCaseImpl
-import com.woowa.banchan.domain.usecase.cart.InsertCartUseCaseImpl
-import com.woowa.banchan.domain.usecase.cart.UpdateCartUseCaseImpl
-import com.woowa.banchan.domain.usecase.cart.inter.DeleteCartUseCase
-import com.woowa.banchan.domain.usecase.cart.inter.GetCartListUseCase
-import com.woowa.banchan.domain.usecase.cart.inter.InsertCartUseCase
-import com.woowa.banchan.domain.usecase.cart.inter.UpdateCartUseCase
+import com.woowa.banchan.domain.usecase.cart.*
+import com.woowa.banchan.domain.usecase.cart.inter.*
 import com.woowa.banchan.domain.usecase.food.GetBestFoodsUseCaseImpl
 import com.woowa.banchan.domain.usecase.food.GetDetailFoodUseCaseImpl
 import com.woowa.banchan.domain.usecase.food.GetFoodsUseCaseImpl
@@ -113,4 +107,10 @@ abstract class UseCaseModule {
     abstract fun provideUpdateOrderUseCase(
         UpdateOrderUseCase: UpdateOrderUseCaseImpl
     ): UpdateOrderUseCase
+
+    @Singleton
+    @Binds
+    abstract fun provideGetCartCountUseCase(
+        GetCartCountUseCase: GetCartCountUseCaseImpl
+    ): GetCartCountUseCase
 }

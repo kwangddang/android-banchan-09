@@ -20,6 +20,9 @@ interface CartDao {
     @Query("SELECT * FROM $cartTable")
     fun getCartList(): Flow<List<CartDto>>
 
+    @Query("SELECT COUNT(*) FROM $cartTable")
+    fun getCartCount(): Flow<Int>
+
     @Query("DELETE FROM $cartTable WHERE hash = :hash")
     suspend fun deleteCart(hash: String)
 }

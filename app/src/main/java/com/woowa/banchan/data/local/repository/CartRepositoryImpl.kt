@@ -23,6 +23,9 @@ class CartRepositoryImpl @Inject constructor(
             }
         }
 
+    override suspend fun getCartCount(): Result<Flow<Int>> =
+        runCatching { cartDataSource.getCartCount().getOrThrow() }
+
     override suspend fun updateCart(cart: Cart): Result<Unit> =
         runCatching { cartDataSource.updateCart(cart.toCartDto()) }
 
