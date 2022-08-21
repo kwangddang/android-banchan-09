@@ -23,6 +23,7 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
     private var cartFooterBtnViewHolder: CartFooterBtnViewHolder? = null
 
     private var totalPrice = 0
+    private var checkOriginStateFlag = 0
     private var checkStateFlag = 0
     private var listener: CartButtonCallBackListener? = null
 
@@ -88,7 +89,10 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
-            CART_CHECK_HEADER -> (holder as CheckHeaderViewHolder).bind(checkStateFlag)
+            CART_CHECK_HEADER -> (holder as CheckHeaderViewHolder).bind(
+                checkOriginStateFlag,
+                checkStateFlag
+            )
             CART_CONTENT -> (holder as CartContentViewHolder).bind(getItem(position))
             CART_TOTAL_PRICE -> (holder as TotalPriceViewHolder).bind(totalPrice)
             CART_FOOTER_BTN -> (holder as CartFooterBtnViewHolder).bind(totalPrice)
@@ -116,6 +120,7 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
     fun submitCartList(list: List<Cart>) {
         // 첫번째, 마지막, 마지막-1,마지막-2
         cartList = list.toMutableList()
+        checkOriginStateFlag = (1).shl(list.size) - 1
         val newList = mutableListOf<Cart?>()
 
         newList.add(null)
@@ -128,7 +133,7 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
 
         submitList(newList)
         updateTotalPrice()
-        checkHeaderViewHolder?.bind(checkStateFlag)
+        checkHeaderViewHolder?.bind(checkOriginStateFlag, checkStateFlag)
     }
 
     private fun updateTotalPrice() {
@@ -172,7 +177,7 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
 
     private fun onClickCartCheckState(cart: Cart) {
         checkStateFlag = checkStateFlag.xor((1).shl(cartList.indexOf(cart)))
-        checkHeaderViewHolder?.bind(checkStateFlag)
+        checkHeaderViewHolder?.bind(checkOriginStateFlag, checkStateFlag)
         updateTotalPrice()
         listener?.onClickCartUpdate(cart)
     }
