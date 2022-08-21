@@ -25,11 +25,15 @@ class OrderDetailViewModel @Inject constructor(
     private val _orderUiState = MutableStateFlow<UiState<Order>>(UiState.Empty)
     val orderUiState: StateFlow<UiState<Order>> get() = _orderUiState
 
-    fun getOrderDetail(orderId: Long) = viewModelScope.launch {
-        getOrderDetailUseCase(orderId).collect { _orderItemUiState.emit(it) }
+    fun getOrderDetail(orderId: Long) {
+        viewModelScope.launch {
+            getOrderDetailUseCase(orderId).collect { _orderItemUiState.emit(it) }
+        }
     }
 
-    fun getOrder(orderId: Long) = viewModelScope.launch {
-        getEachOrderUseCase(orderId).collect { _orderUiState.emit(it) }
+    fun getOrder(orderId: Long) {
+        viewModelScope.launch {
+            getEachOrderUseCase(orderId).collect { _orderUiState.emit(it) }
+        }
     }
 }

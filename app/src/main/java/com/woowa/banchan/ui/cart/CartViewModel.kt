@@ -59,7 +59,7 @@ class CartViewModel @Inject constructor(
         fragmentTag.setValue(tag)
     }
 
-    fun updateCart() = CoroutineScope(Dispatchers.IO).launch {
+    private fun doUpdateCart() = CoroutineScope(Dispatchers.IO).launch {
         updateCartCache.forEach {
             if (it.second) {
                 launch { deleteCartUseCase(it.first.hash).collect {} }
@@ -67,6 +67,10 @@ class CartViewModel @Inject constructor(
                 launch { updateCartUseCase(it.first).collect {} }
             }
         }
+    }
+
+    fun updateCart() {
+        doUpdateCart()
     }
 
     fun addUpdateCartCache(cart: Cart, removeFlag: Boolean) {
@@ -82,7 +86,7 @@ class CartViewModel @Inject constructor(
     }
 
     fun addOrder() = viewModelScope.launch {
-        updateCart().join()
+        doUpdateCart().join()
         _orderUiState.emit(UiState.Loading)
         val checkedList = mutableListOf<Cart>()
         val uiState = _cartUiState.value
