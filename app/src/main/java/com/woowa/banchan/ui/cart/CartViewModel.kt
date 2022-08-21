@@ -1,7 +1,11 @@
 package com.woowa.banchan.ui.cart
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.domain.model.Order
 import com.woowa.banchan.domain.model.Recent
@@ -12,6 +16,7 @@ import com.woowa.banchan.domain.usecase.order.inter.InsertCartToOrderUseCase
 import com.woowa.banchan.domain.usecase.recent.inter.GetRecentlyViewedFoodsUseCase
 import com.woowa.banchan.ui.common.livedata.SingleLiveData
 import com.woowa.banchan.ui.common.uistate.UiState
+import com.woowa.banchan.ui.worker.OrderWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,6 +24,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
@@ -105,5 +111,17 @@ class CartViewModel @Inject constructor(
         } else {
             _orderUiState.emit(UiState.Error(null))
         }
+    }
+
+    @SuppressLint("RestrictedApi")
+    fun reserveUpdateOrder(order: Order, workManager: WorkManager) {
+        workManager.enqueue(
+            OneTimeWorkRequestBuilder<OrderWorker>()
+                .setInputData(
+                    Data.Builder().putLong("id", order.id).build()
+                )
+                .setInitialDelay(5, TimeUnit.SECONDS)
+                .build()
+        )
     }
 }

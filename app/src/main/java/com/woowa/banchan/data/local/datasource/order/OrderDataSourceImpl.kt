@@ -1,5 +1,6 @@
 package com.woowa.banchan.data.local.datasource.order
 
+import android.util.Log
 import com.woowa.banchan.data.local.BanchanDataBase
 import com.woowa.banchan.data.local.dao.OrderDao
 import com.woowa.banchan.data.local.dao.OrderItemDao
@@ -15,7 +16,10 @@ class OrderDataSourceImpl @Inject constructor(
 ) : OrderDataSource {
 
     override suspend fun getTotalOrderList(): Result<Flow<List<OrderDto>>> =
-        runCatching { orderDao.getTotalOrderList() }
+        runCatching {
+            Log.d("Test","getTotalList")
+            orderDao.getTotalOrderList()
+        }
 
     override suspend fun getOrderDetail(orderId: Long): Result<List<OrderItemDto>> =
         runCatching { orderItemDao.getOrderDetail(orderId) }
@@ -44,5 +48,6 @@ class OrderDataSourceImpl @Inject constructor(
         }
 
     override suspend fun updateOrder(id:Long, deliverState: Boolean): Result<Unit> =
-        kotlin.runCatching { orderDao.updateOrder(id, deliverState) }
+        runCatching { orderDao.updateOrder(id, deliverState) }
+
 }
