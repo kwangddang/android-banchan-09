@@ -9,7 +9,10 @@ import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
 import com.woowa.banchan.databinding.ItemSoupSideHeaderBinding
 import com.woowa.banchan.domain.model.FoodItem
-import com.woowa.banchan.ui.home.*
+import com.woowa.banchan.ui.home.HOME_HEADER
+import com.woowa.banchan.ui.home.HOME_ITEM
+import com.woowa.banchan.ui.home.RVItem
+import com.woowa.banchan.ui.home.SUB_HEADER
 import com.woowa.banchan.ui.home.adapter.HomeRVAdapter
 import com.woowa.banchan.ui.home.adapter.soupside.viewholder.SoupSideHeaderViewHolder
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
@@ -17,6 +20,7 @@ import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
 
 class SoupSideRVAdapter(
     private val isSoup: Boolean,
+    private val spinnerPosition: Int,
     private val spinnerCallback: (Int) -> Unit,
     private val homeRVAdapter: HomeRVAdapter
 ) :
@@ -51,7 +55,7 @@ class SoupSideRVAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is HomeHeaderViewHolder -> holder.bind(if (isSoup) "정성이 담긴\n뜨끈뜨끈 국물 요리" else "식탁을 풍성하게 하는\n정갈한 밑반찬", false)
-            is SoupSideHeaderViewHolder -> holder.bind(homeRVAdapter.itemCount, spinnerCallback)
+            is SoupSideHeaderViewHolder -> holder.bind(homeRVAdapter.itemCount, spinnerPosition, spinnerCallback)
             is HomeRecyclerViewViewHolder -> holder.bind(homeRVAdapter)
         }
     }

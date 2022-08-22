@@ -38,11 +38,10 @@ class HomeItemViewHolder(private val binding: ViewDataBinding) :
     }
 
     fun bind(food: FoodItem) {
-        if(binding is ItemHomeBinding) {
+        if (binding is ItemHomeBinding) {
             binding.food!!.checkState = food.checkState
             binding.checkState = food.checkState
-        }
-        else if(binding is ItemMainLinearBinding) {
+        } else if (binding is ItemMainLinearBinding) {
             binding.food!!.checkState = food.checkState
             binding.checkState = food.checkState
         }

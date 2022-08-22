@@ -1,6 +1,5 @@
 package com.woowa.banchan.ui.home.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -44,7 +43,7 @@ class HomeRVAdapter(
     }
 
     override fun onBindViewHolder(holder: HomeItemViewHolder, position: Int, payloads: MutableList<Any>) {
-        if(payloads.isEmpty()) {
+        if (payloads.isEmpty()) {
             super.onBindViewHolder(holder, position, payloads)
         } else {
             holder.bind(getItem(position))
@@ -63,7 +62,7 @@ class HomeRVAdapter(
             }
 
             override fun getChangePayload(oldItem: FoodItem, newItem: FoodItem): Any? {
-                if(oldItem.checkState != newItem.checkState) {
+                if (oldItem.checkState != newItem.checkState) {
                     return true
                 }
                 return super.getChangePayload(oldItem, newItem)

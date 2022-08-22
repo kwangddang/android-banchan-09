@@ -6,7 +6,6 @@ import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentSideBinding
 import com.woowa.banchan.ui.common.uistate.UiState
-import com.woowa.banchan.ui.home.GRID
 import com.woowa.banchan.ui.home.HomeBaseFragment
 import com.woowa.banchan.ui.home.adapter.soupside.SoupSideRVAdapter
 import com.woowa.banchan.utils.showToast
@@ -20,11 +19,12 @@ class SideFragment : HomeBaseFragment<FragmentSideBinding>(R.layout.fragment_sid
     override val viewModel: SideViewModel by viewModels()
 
     private val soupSideAdapter: SoupSideRVAdapter by lazy {
-        SoupSideRVAdapter(false, spinnerCallback, homeRVAdapter)
+        SoupSideRVAdapter(false, viewModel.spinnerPosition, spinnerCallback, homeRVAdapter)
     }
 
     private val spinnerCallback: (Int) -> Unit = { position ->
-        viewModel.sortList(position)
+        viewModel.spinnerPosition = position
+        viewModel.sortList()
     }
 
     override fun initAdapter() {
@@ -39,7 +39,7 @@ class SideFragment : HomeBaseFragment<FragmentSideBinding>(R.layout.fragment_sid
         viewModel.itemUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { state ->
                 if (state is UiState.Success) {
-                    if(homeRVAdapter.itemCount == 0)
+                    if (homeRVAdapter.itemCount == 0)
                         soupSideAdapter.submitHeaderList(state.data)
                     homeRVAdapter.submitList(state.data)
                 } else if (state is UiState.Error) {

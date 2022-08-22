@@ -6,12 +6,10 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMainBinding
-import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.home.GRID
 import com.woowa.banchan.ui.home.HomeBaseFragment
 import com.woowa.banchan.ui.home.LINEAR_VERTICAL
-import com.woowa.banchan.ui.home.adapter.HomeRVAdapter
 import com.woowa.banchan.ui.home.main.adapter.MainRVAdapter
 import com.woowa.banchan.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,11 +22,12 @@ class MainFragment : HomeBaseFragment<FragmentMainBinding>(R.layout.fragment_mai
     override val viewModel: MainViewModel by viewModels()
 
     private val mainAdapter: MainRVAdapter by lazy {
-        MainRVAdapter(checkedChangeListener, spinnerCallback, homeRVAdapter)
+        MainRVAdapter(checkedChangeListener, viewModel.spinnerPosition, spinnerCallback, homeRVAdapter)
     }
 
     private val spinnerCallback: (Int) -> Unit = { position ->
-        viewModel.sortList(position)
+        viewModel.spinnerPosition = position
+        viewModel.sortList()
     }
 
     private val checkedChangeListener: (RadioGroup, Int) -> Unit = { group, checkedId ->

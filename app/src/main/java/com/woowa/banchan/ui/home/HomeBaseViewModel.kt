@@ -16,6 +16,7 @@ abstract class HomeBaseViewModel : ViewModel() {
 
     @Inject
     lateinit var deleteCartUseCase: DeleteCartUseCase
+
     @Inject
     lateinit var getFoodsUseCase: GetFoodsUseCase
 
@@ -26,6 +27,8 @@ abstract class HomeBaseViewModel : ViewModel() {
     val itemUiState: StateFlow<UiState<List<FoodItem>>> get() = _itemUiState.asStateFlow()
 
     private var defaultFoods = emptyList<FoodItem>()
+
+    var spinnerPosition = 0
 
     fun deleteCart(hash: String) {
         viewModelScope.launch {
@@ -38,15 +41,18 @@ abstract class HomeBaseViewModel : ViewModel() {
     fun getFoods(type: String) {
         viewModelScope.launch {
             getFoodsUseCase(type).collect { uiState ->
-                if (uiState is UiState.Success)
+                if (uiState is UiState.Success) {
                     defaultFoods = uiState.data
-                _itemUiState.emit(uiState)
+                    sortList()
+                } else{
+                    _itemUiState.emit(uiState)
+                }
             }
         }
     }
 
-    fun sortList(position: Int) {
-        val sortedList = when (position) {
+    fun sortList() {
+        val sortedList = when (spinnerPosition) {
             0 -> defaultFoods
             1 -> defaultFoods.sortedByDescending { food -> food.sPrice }
             2 -> defaultFoods.sortedBy { food -> food.sPrice }
