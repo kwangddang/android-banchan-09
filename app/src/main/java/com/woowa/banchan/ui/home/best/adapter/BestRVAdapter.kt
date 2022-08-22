@@ -10,10 +10,7 @@ import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
 import com.woowa.banchan.domain.model.BestFoodCategory
 import com.woowa.banchan.domain.model.FoodItem
-import com.woowa.banchan.ui.home.HOME_HEADER
-import com.woowa.banchan.ui.home.HOME_ITEM
-import com.woowa.banchan.ui.home.LINEAR_HORIZONTAL
-import com.woowa.banchan.ui.home.SUB_HEADER
+import com.woowa.banchan.ui.home.*
 import com.woowa.banchan.ui.home.adapter.HomeRVAdapter
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
@@ -22,7 +19,7 @@ import com.woowa.banchan.ui.home.best.adapter.viewholder.BestHeaderViewHolder
 class BestRVAdapter(
     private val itemClickListener: (String, String) -> Unit,
     private val cartClickListener: (FoodItem) -> Unit
-) : ListAdapter<BestFoodCategory, RecyclerView.ViewHolder>(diffUtil) {
+) : ListAdapter<RVItem, RecyclerView.ViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -51,13 +48,12 @@ class BestRVAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder.itemViewType) {
-            HOME_HEADER -> (holder as HomeHeaderViewHolder).bind("한 번 주문하면\n두 번 반하는 반찬들", true)
-            SUB_HEADER -> (holder as BestHeaderViewHolder).bind(getItem(position))
-            else -> (holder as HomeRecyclerViewViewHolder).bind(
+        when (holder) {
+            is HomeHeaderViewHolder -> holder.bind("한 번 주문하면\n두 번 반하는 반찬들", true)
+            is BestHeaderViewHolder -> holder.bind((getItem(position) as RVItem.Item<BestFoodCategory>).item)
+            is HomeRecyclerViewViewHolder -> holder.bind(
                 HomeRVAdapter(itemClickListener, cartClickListener).apply { managerType = LINEAR_HORIZONTAL },
-                getItem(position).items,
-                LINEAR_HORIZONTAL,
+                (getItem(position) as RVItem.Item<BestFoodCategory>).item.items,
             )
         }
     }
@@ -74,30 +70,24 @@ class BestRVAdapter(
     }
 
     fun submitHeaderList(list: List<BestFoodCategory>) {
-        val newList = mutableListOf<BestFoodCategory?>()
-        newList.add(null)
+        val newList = mutableListOf<RVItem>()
+        newList.add(RVItem.Header)
         for (category in list) {
-            newList.add(category)
-            newList.add(category)
+            newList.add(RVItem.Item(category))
+            newList.add(RVItem.Item(category))
         }
         submitList(newList)
     }
 
     companion object {
 
-        val diffUtil = object : DiffUtil.ItemCallback<BestFoodCategory>() {
-            override fun areItemsTheSame(
-                oldItem: BestFoodCategory,
-                newItem: BestFoodCategory
-            ): Boolean {
-                return oldItem == newItem
+        val diffUtil = object : DiffUtil.ItemCallback<RVItem>() {
+            override fun areItemsTheSame(oldItem: RVItem, newItem: RVItem): Boolean {
+                return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(
-                oldItem: BestFoodCategory,
-                newItem: BestFoodCategory
-            ): Boolean {
-                return oldItem.categoryId == newItem.categoryId
+            override fun areContentsTheSame(oldItem: RVItem, newItem: RVItem): Boolean {
+                return oldItem == newItem
             }
         }
     }

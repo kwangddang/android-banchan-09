@@ -18,16 +18,17 @@ class SoupFragment : HomeBaseFragment<FragmentSoupBinding>(R.layout.fragment_sou
 
     override val viewModel: SoupViewModel by viewModels()
 
-    private val soupAdapter: SoupSideRVAdapter by lazy {
-        SoupSideRVAdapter(true, spinnerCallback, itemClickListener, cartClickListener)
+    private val soupSideAdapter: SoupSideRVAdapter by lazy {
+        SoupSideRVAdapter(false, viewModel.spinnerPosition, spinnerCallback, homeRVAdapter)
     }
 
     private val spinnerCallback: (Int) -> Unit = { position ->
-        viewModel.sortList(position)
+        viewModel.spinnerPosition = position
+        viewModel.sortList()
     }
 
     override fun initAdapter() {
-        binding.rvSoup.adapter = soupAdapter
+        binding.rvSoup.adapter = soupSideAdapter
     }
 
     override fun initViews() {
@@ -38,7 +39,9 @@ class SoupFragment : HomeBaseFragment<FragmentSoupBinding>(R.layout.fragment_sou
         viewModel.itemUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { state ->
                 if (state is UiState.Success) {
-                    soupAdapter.submitHeaderList(state.data)
+                    if (homeRVAdapter.itemCount == 0)
+                        soupSideAdapter.submitHeaderList(state.data)
+                    homeRVAdapter.submitList(state.data)
                 } else if (state is UiState.Error) {
                     showToast(state.message)
                 }

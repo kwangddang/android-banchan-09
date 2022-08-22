@@ -9,9 +9,9 @@ import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
 import com.woowa.banchan.databinding.ItemSoupSideHeaderBinding
 import com.woowa.banchan.domain.model.FoodItem
-import com.woowa.banchan.ui.home.GRID
 import com.woowa.banchan.ui.home.HOME_HEADER
 import com.woowa.banchan.ui.home.HOME_ITEM
+import com.woowa.banchan.ui.home.RVItem
 import com.woowa.banchan.ui.home.SUB_HEADER
 import com.woowa.banchan.ui.home.adapter.HomeRVAdapter
 import com.woowa.banchan.ui.home.adapter.soupside.viewholder.SoupSideHeaderViewHolder
@@ -20,14 +20,11 @@ import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
 
 class SoupSideRVAdapter(
     private val isSoup: Boolean,
+    private val spinnerPosition: Int,
     private val spinnerCallback: (Int) -> Unit,
-    itemClickListener: (String, String) -> Unit,
-    cartClickListener: (FoodItem) -> Unit
+    private val homeRVAdapter: HomeRVAdapter
 ) :
-    ListAdapter<List<FoodItem>, RecyclerView.ViewHolder>(diffUtil) {
-
-    var managerType = GRID
-    private val homeRVAdapter: HomeRVAdapter = HomeRVAdapter(itemClickListener, cartClickListener).apply { managerType = GRID }
+    ListAdapter<RVItem, RecyclerView.ViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -56,15 +53,10 @@ class SoupSideRVAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder.itemViewType) {
-            HOME_HEADER -> (holder as HomeHeaderViewHolder).bind(
-                if (isSoup)
-                    "정성이 담긴\n뜨끈뜨끈 국물 요리"
-                else
-                    "식탁을 풍성하게 하는\n정갈한 밑반찬", false
-            )
-            SUB_HEADER -> (holder as SoupSideHeaderViewHolder).bind(getItem(2).size, spinnerCallback)
-            else -> (holder as HomeRecyclerViewViewHolder).bind(homeRVAdapter, getItem(position), managerType)
+        when (holder) {
+            is HomeHeaderViewHolder -> holder.bind(if (isSoup) "정성이 담긴\n뜨끈뜨끈 국물 요리" else "식탁을 풍성하게 하는\n정갈한 밑반찬", false)
+            is SoupSideHeaderViewHolder -> holder.bind(homeRVAdapter.itemCount, spinnerPosition, spinnerCallback)
+            is HomeRecyclerViewViewHolder -> holder.bind(homeRVAdapter)
         }
     }
 
@@ -77,21 +69,21 @@ class SoupSideRVAdapter(
     }
 
     fun submitHeaderList(food: List<FoodItem>) {
-        val newList = mutableListOf<List<FoodItem>?>()
-        newList.add(null)
-        newList.add(null)
-        newList.add(food)
+        val newList = mutableListOf<RVItem>()
+        newList.add(RVItem.Header)
+        newList.add(RVItem.SubHeader)
+        newList.add(RVItem.Item(food))
         submitList(newList)
     }
 
     companion object {
 
-        val diffUtil = object : DiffUtil.ItemCallback<List<FoodItem>>() {
-            override fun areItemsTheSame(oldItem: List<FoodItem>, newItem: List<FoodItem>): Boolean {
-                return oldItem.hashCode() == newItem.hashCode()
+        val diffUtil = object : DiffUtil.ItemCallback<RVItem>() {
+            override fun areItemsTheSame(oldItem: RVItem, newItem: RVItem): Boolean {
+                return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: List<FoodItem>, newItem: List<FoodItem>): Boolean {
+            override fun areContentsTheSame(oldItem: RVItem, newItem: RVItem): Boolean {
                 return oldItem == newItem
             }
         }

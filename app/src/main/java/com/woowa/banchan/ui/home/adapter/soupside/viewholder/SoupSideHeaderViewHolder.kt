@@ -8,9 +8,11 @@ import com.woowa.banchan.ui.home.main.adapter.SpinnerAdapter
 
 class SoupSideHeaderViewHolder(private val binding: ItemSoupSideHeaderBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(count: Int, spinnerCallback: (Int) -> Unit) {
+    fun bind(count: Int, spinnerPosition: Int, spinnerCallback: (Int) -> Unit) {
         val spinnerAdapter = SpinnerAdapter(binding.spinnerSort.context)
+
         binding.spinnerSort.adapter = spinnerAdapter
+        binding.spinnerSort.setSelection(spinnerPosition)
         binding.spinnerSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 spinnerAdapter.selectedPosition = position

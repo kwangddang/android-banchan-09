@@ -9,6 +9,10 @@
             name="food"
             type="com.woowa.banchan.domain.model.FoodItem" />
 
+        <variable
+            name="checkState"
+            type="Boolean" />
+
         <import type="android.view.View" />
 
     </data>
@@ -37,7 +41,7 @@
             android:elevation="8dp"
             android:padding="8dp"
             android:src="@drawable/ic_cart"
-            android:visibility="@{food.checkState ? View.GONE : View.VISIBLE}"
+            android:visibility="@{checkState ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
             app:layout_constraintEnd_toEndOf="@id/iv_thumbnail" />
 
@@ -50,7 +54,7 @@
             android:elevation="8dp"
             android:padding="8dp"
             android:src="@drawable/ic_check_white"
-            android:visibility="@{food.checkState ? View.VISIBLE : View.GONE}"
+            android:visibility="@{checkState ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
             app:layout_constraintEnd_toEndOf="@id/iv_thumbnail" />
 

@@ -9,9 +9,10 @@ import com.woowa.banchan.ui.home.main.adapter.SpinnerAdapter
 
 class MainHeaderViewHolder(private val binding: ItemMainHeaderBinding) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(checkedChangeListener: (RadioGroup, Int) -> Unit, spinnerCallback: (Int) -> Unit) {
+    fun bind(spinnerPosition: Int, checkedChangeListener: (RadioGroup, Int) -> Unit, spinnerCallback: (Int) -> Unit) {
         val spinnerAdapter = SpinnerAdapter(binding.spinnerSort.context)
         binding.spinnerSort.adapter = spinnerAdapter
+        binding.spinnerSort.setSelection(spinnerPosition)
         binding.spinnerSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 spinnerAdapter.selectedPosition = position

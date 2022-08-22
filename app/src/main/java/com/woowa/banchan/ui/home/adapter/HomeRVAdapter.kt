@@ -42,15 +42,30 @@ class HomeRVAdapter(
         holder.bind(getItem(position), itemClickListener, cartClickListener)
     }
 
+    override fun onBindViewHolder(holder: HomeItemViewHolder, position: Int, payloads: MutableList<Any>) {
+        if (payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else {
+            holder.bind(getItem(position))
+        }
+    }
+
     companion object {
 
         val diffUtil = object : DiffUtil.ItemCallback<FoodItem>() {
             override fun areItemsTheSame(oldItem: FoodItem, newItem: FoodItem): Boolean {
-                return oldItem == newItem
+                return oldItem.detailHash == newItem.detailHash
             }
 
             override fun areContentsTheSame(oldItem: FoodItem, newItem: FoodItem): Boolean {
-                return oldItem.detailHash == newItem.detailHash
+                return oldItem == newItem
+            }
+
+            override fun getChangePayload(oldItem: FoodItem, newItem: FoodItem): Any? {
+                if (oldItem.checkState != newItem.checkState) {
+                    return true
+                }
+                return super.getChangePayload(oldItem, newItem)
             }
         }
     }
