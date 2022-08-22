@@ -78,11 +78,11 @@ class RecentRVAdapter : ListAdapter<Recent, RecentItemViewHolder>(diffUtil) {
 
         val diffUtil = object : DiffUtil.ItemCallback<Recent>() {
             override fun areItemsTheSame(oldItem: Recent, newItem: Recent): Boolean {
-                return oldItem == newItem
+                return oldItem.hash == newItem.hash
             }
 
             override fun areContentsTheSame(oldItem: Recent, newItem: Recent): Boolean {
-                return oldItem.hash == newItem.hash
+                return oldItem == newItem
             }
         }
     }
