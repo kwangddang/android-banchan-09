@@ -1,6 +1,5 @@
 package com.woowa.banchan.ui.home.main.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.RadioGroup
@@ -10,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 import com.woowa.banchan.databinding.ItemMainHeaderBinding
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
-import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.ui.home.*
 import com.woowa.banchan.ui.home.adapter.HomeRVAdapter
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
@@ -69,14 +67,6 @@ class MainRVAdapter(
     }
 
     override fun getItemCount(): Int = 3
-
-    fun submitHeaderList(food: List<FoodItem>) {
-        val newList = mutableListOf<RVItem>()
-        newList.add(RVItem.Header)
-        newList.add(RVItem.SubHeader)
-        newList.add(RVItem.Item(food))
-        submitList(newList)
-    }
 
     companion object {
 

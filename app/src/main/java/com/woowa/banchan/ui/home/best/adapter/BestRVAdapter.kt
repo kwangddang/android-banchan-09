@@ -48,10 +48,10 @@ class BestRVAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (holder.itemViewType) {
-            HOME_HEADER -> (holder as HomeHeaderViewHolder).bind("한 번 주문하면\n두 번 반하는 반찬들", true)
-            SUB_HEADER -> (holder as BestHeaderViewHolder).bind((getItem(position) as RVItem.Item<BestFoodCategory>).item)
-            else -> (holder as HomeRecyclerViewViewHolder).bind(
+        when (holder) {
+            is HomeHeaderViewHolder -> holder.bind("한 번 주문하면\n두 번 반하는 반찬들", true)
+            is BestHeaderViewHolder -> holder.bind((getItem(position) as RVItem.Item<BestFoodCategory>).item)
+            is HomeRecyclerViewViewHolder -> holder.bind(
                 HomeRVAdapter(itemClickListener, cartClickListener).apply { managerType = LINEAR_HORIZONTAL },
                 (getItem(position) as RVItem.Item<BestFoodCategory>).item.items,
             )
