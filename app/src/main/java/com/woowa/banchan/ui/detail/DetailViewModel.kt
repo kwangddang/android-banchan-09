@@ -27,8 +27,7 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(
     private val getDetailFoodUseCase: GetDetailFoodUseCase,
     private val insertCartUseCase: InsertCartUseCase,
-    private val insertRecentlyViewedFoodsUseCase: InsertRecentlyViewedFoodsUseCase,
-    private val updateCartUseCase: UpdateCartUseCase
+    private val updateCartUseCase: UpdateCartUseCase,
     private val insertRecentlyViewedFoodsUseCase: InsertRecentlyViewedFoodsUseCase,
     private val getCartCountUseCase: GetCartCountUseCase,
     private val getOrderStateUseCase: GetOrderStateUseCase
