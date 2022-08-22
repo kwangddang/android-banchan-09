@@ -12,9 +12,8 @@ import com.woowa.banchan.domain.model.BestFoodCategory
 import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.ui.home.HOME_HEADER
 import com.woowa.banchan.ui.home.HOME_ITEM
+import com.woowa.banchan.ui.home.RVItem
 import com.woowa.banchan.ui.home.SUB_HEADER
-import com.woowa.banchan.ui.home.*
-import com.woowa.banchan.ui.home.adapter.HomeRVAdapter
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 import com.woowa.banchan.ui.home.best.adapter.viewholder.BestHeaderViewHolder
 import com.woowa.banchan.ui.home.best.adapter.viewholder.BestViewHolder
@@ -54,15 +53,9 @@ class BestRVAdapter(
         when (holder) {
             is HomeHeaderViewHolder -> holder.bind("한 번 주문하면\n두 번 반하는 반찬들", true)
             is BestHeaderViewHolder -> holder.bind((getItem(position) as RVItem.Item<BestFoodCategory>).item)
-            is HomeRecyclerViewViewHolder -> holder.bind(
-                HomeRVAdapter(itemClickListener, cartClickListener).apply { managerType = LINEAR_HORIZONTAL },
-                (getItem(position) as RVItem.Item<BestFoodCategory>).item.items,
-        when (holder.itemViewType) {
-            HOME_HEADER -> (holder as HomeHeaderViewHolder).bind("한 번 주문하면\n두 번 반하는 반찬들", true)
-            SUB_HEADER -> (holder as BestHeaderViewHolder).bind(getItem(position))
-            else -> (holder as BestViewHolder).bind(
+            is BestViewHolder -> holder.bind(
                 BestItemAdapter(itemClickListener, cartClickListener),
-                getItem(position).items
+                (getItem(position) as RVItem.Item<BestFoodCategory>).item.items
             )
         }
     }
@@ -97,13 +90,6 @@ class BestRVAdapter(
 
             override fun areContentsTheSame(oldItem: RVItem, newItem: RVItem): Boolean {
                 return oldItem == newItem
-            }
-
-            override fun areContentsTheSame(
-                oldItem: BestFoodCategory,
-                newItem: BestFoodCategory
-            ): Boolean {
-                return oldItem.categoryId == newItem.categoryId
             }
         }
     }

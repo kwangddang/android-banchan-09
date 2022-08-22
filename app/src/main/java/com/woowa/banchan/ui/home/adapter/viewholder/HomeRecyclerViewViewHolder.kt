@@ -14,21 +14,18 @@ class HomeRecyclerViewViewHolder(private val binding: ItemRecyclerviewBinding) :
 
     fun bind(homeRVAdapter: HomeRVAdapter) {
         initLayoutManager(homeRVAdapter)
-        binding.rvBest.adapter = homeRVAdapter
+        binding.rvFood.adapter = homeRVAdapter
     }
 
     fun bind(homeRVAdapter: HomeRVAdapter, items: List<FoodItem>) {
         initLayoutManager(homeRVAdapter)
-        binding.rvBest.adapter = homeRVAdapter
+        binding.rvFood.adapter = homeRVAdapter
         homeRVAdapter.submitList(items)
     }
 
     private fun initLayoutManager(homeRVAdapter: HomeRVAdapter) {
-        binding.rvBest.apply {
-            layoutManager = when (homeRVAdapter.managerType) {
-    fun bind(homeRVAdapter: HomeRVAdapter, food: List<FoodItem>, managerType: Int) {
         binding.rvFood.apply {
-            layoutManager = when (managerType) {
+            layoutManager = when (homeRVAdapter.managerType) {
                 LINEAR_HORIZONTAL -> LinearLayoutManager(
                     this.context,
                     LinearLayoutManager.HORIZONTAL,
