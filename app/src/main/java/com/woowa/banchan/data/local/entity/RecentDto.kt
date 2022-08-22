@@ -33,8 +33,7 @@ fun Recent.toFoodItem(): FoodItem = FoodItem(
     image = imageUrl,
     nPrice = nPrice,
     sPrice = sPrice,
-    percent = if (nPrice == null) null else (((sPrice - nPrice) * 100) / sPrice),
-    //((sPrice - nPrice) * 100) / sPrice,
+    percent = if (nPrice == null) null else (((nPrice - sPrice) * 100) / nPrice),
     title = title
 )
 
