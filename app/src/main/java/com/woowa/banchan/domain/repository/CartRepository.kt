@@ -7,6 +7,8 @@ interface CartRepository {
 
     suspend fun getCartList(): Result<Flow<Map<String, Cart>>>
 
+    suspend fun getCartCount(): Result<Flow<Int>>
+
     suspend fun updateCart(cart: Cart): Result<Unit>
 
     suspend fun deleteCart(hash: String): Result<Unit>

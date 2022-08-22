@@ -35,28 +35,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="8dp"
-                android:text="주문이 접수되었습니다."
-                android:visibility="@{deliveryState ? View.VISIBLE : View.GONE}" />
+                android:text="@string/order_complete"
+                android:visibility="@{deliveryState ? View.GONE : View.VISIBLE}" />
 
             <TextView
                 style="@style/label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="8dp"
-                android:text="배송이 완료되었습니다."
-                android:visibility="@{deliveryState ? View.GONE : View.VISIBLE}" />
+                android:text="@string/delivery_complete_long"
+                android:visibility="@{deliveryState ? View.VISIBLE : View.GONE}" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="@{deliveryState ? View.VISIBLE : View.GONE}">
+                android:visibility="@{deliveryState ? View.GONE : View.VISIBLE}">
 
                 <TextView
                     style="@style/normal_grey_14"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="배송까지 남은 시간 " />
+                    android:text="@string/delivery_time" />
 
                 <TextView
                     android:id="@+id/tv_left_time"

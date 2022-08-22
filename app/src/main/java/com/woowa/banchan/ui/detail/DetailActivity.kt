@@ -96,6 +96,27 @@ class DetailActivity : AppCompatActivity() {
                 }
             }.launchIn(lifecycleScope)
 
+        viewModel.cartCountUiState.flowWithLifecycle(lifecycle)
+            .onEach { state ->
+                if (state is UiState.Success)
+                    binding.ctbToolbar.setCartCountIcon(state.data)
+                else if (state is UiState.Error)
+                    showToast(state.message)
+
+            }.launchIn(lifecycleScope)
+
+        viewModel.orderStateUiState.flowWithLifecycle(lifecycle)
+            .onEach { state ->
+                if (state is UiState.Success) {
+                    if (state.data)
+                        binding.ctbToolbar.setUserNotifierIcon()
+                    else
+                        binding.ctbToolbar.unSetUserNotifierIcon()
+                } else if (state is UiState.Error)
+                    showToast(state.message)
+
+            }.launchIn(lifecycleScope)
+
         viewModel.cartClickEvent.observe(this, EventObserver {
             startActivity(Intent(this, CartActivity::class.java))
         })

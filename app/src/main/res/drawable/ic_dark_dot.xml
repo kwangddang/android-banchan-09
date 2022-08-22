@@ -1,24 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp"
-    android:height="24dp"
-    android:viewportWidth="24"
-    android:viewportHeight="24">
-    <item>
-        <shape android:shape="rectangle">
-            <solid android:color="@color/main" />
-            <corners android:radius="1000dp" />
-        </shape>
-    </item>
-    <item
-        android:bottom="2dp"
-        android:gravity="center"
-        android:left="2dp"
-        android:right="2dp"
-        android:top="2dp">
-        <shape android:shape="rectangle">
-            <solid android:color="@color/black" />
-            <corners android:radius="1000dp" />
-        </shape>
-    </item>
-</layer-list>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <solid
+        android:color="@color/black"/>
+
+</shape>

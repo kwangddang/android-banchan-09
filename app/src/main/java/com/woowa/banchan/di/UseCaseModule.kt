@@ -1,27 +1,15 @@
 package com.woowa.banchan.di
 
-import com.woowa.banchan.domain.usecase.cart.DeleteCartUseCaseImpl
-import com.woowa.banchan.domain.usecase.cart.GetCartListUseCaseImpl
-import com.woowa.banchan.domain.usecase.cart.InsertCartUseCaseImpl
-import com.woowa.banchan.domain.usecase.cart.UpdateCartUseCaseImpl
-import com.woowa.banchan.domain.usecase.cart.inter.DeleteCartUseCase
-import com.woowa.banchan.domain.usecase.cart.inter.GetCartListUseCase
-import com.woowa.banchan.domain.usecase.cart.inter.InsertCartUseCase
-import com.woowa.banchan.domain.usecase.cart.inter.UpdateCartUseCase
+import com.woowa.banchan.domain.usecase.cart.*
+import com.woowa.banchan.domain.usecase.cart.inter.*
 import com.woowa.banchan.domain.usecase.food.GetBestFoodsUseCaseImpl
 import com.woowa.banchan.domain.usecase.food.GetDetailFoodUseCaseImpl
 import com.woowa.banchan.domain.usecase.food.GetFoodsUseCaseImpl
 import com.woowa.banchan.domain.usecase.food.inter.GetBestFoodsUseCase
 import com.woowa.banchan.domain.usecase.food.inter.GetDetailFoodUseCase
 import com.woowa.banchan.domain.usecase.food.inter.GetFoodsUseCase
-import com.woowa.banchan.domain.usecase.order.GetEachOrderUseCaseImpl
-import com.woowa.banchan.domain.usecase.order.GetOrderDetailUseCaseImpl
-import com.woowa.banchan.domain.usecase.order.GetTotalOrderUseCaseImpl
-import com.woowa.banchan.domain.usecase.order.InsertCartToOrderUseCaseImpl
-import com.woowa.banchan.domain.usecase.order.inter.GetEachOrderUseCase
-import com.woowa.banchan.domain.usecase.order.inter.GetOrderDetailUseCase
-import com.woowa.banchan.domain.usecase.order.inter.GetTotalOrderUseCase
-import com.woowa.banchan.domain.usecase.order.inter.InsertCartToOrderUseCase
+import com.woowa.banchan.domain.usecase.order.*
+import com.woowa.banchan.domain.usecase.order.inter.*
 import com.woowa.banchan.domain.usecase.recent.GetRecentlyViewedFoodsUseCaseImpl
 import com.woowa.banchan.domain.usecase.recent.InsertRecentlyViewedFoodsUseCaseImpl
 import com.woowa.banchan.domain.usecase.recent.inter.GetRecentlyViewedFoodsUseCase
@@ -113,4 +101,22 @@ abstract class UseCaseModule {
     abstract fun provideInsertRecentlyViewedFoodsUseCase(
         InsertRecentlyViewedFoodsUseCaseImpl: InsertRecentlyViewedFoodsUseCaseImpl
     ): InsertRecentlyViewedFoodsUseCase
+
+    @Singleton
+    @Binds
+    abstract fun provideUpdateOrderUseCase(
+        UpdateOrderUseCase: UpdateOrderUseCaseImpl
+    ): UpdateOrderUseCase
+
+    @Singleton
+    @Binds
+    abstract fun provideGetCartCountUseCase(
+        GetCartCountUseCase: GetCartCountUseCaseImpl
+    ): GetCartCountUseCase
+
+    @Singleton
+    @Binds
+    abstract fun provideGetOrderStateUseCase(
+        getOrderStateUseCase: GetOrderStateUseCaseImpl
+    ): GetOrderStateUseCase
 }

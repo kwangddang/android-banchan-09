@@ -11,6 +11,7 @@ buildscript {
         okhttp_version = "4.10.0"
         glide_version = '4.13.2'
         indicator_version = '4.3'
+        work_version = '2.7.1'
 
         junit = '4.13.2'
         androidx_junit = '1.1.3'

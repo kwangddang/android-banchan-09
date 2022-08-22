@@ -7,6 +7,8 @@ interface CartDataSource {
 
     suspend fun getCartList(): Result<Flow<Map<String, CartDto>>>
 
+    suspend fun getCartCount(): Result<Flow<Int>>
+
     suspend fun updateCart(cartDto: CartDto): Result<Unit>
 
     suspend fun deleteCart(hash: String): Result<Unit>

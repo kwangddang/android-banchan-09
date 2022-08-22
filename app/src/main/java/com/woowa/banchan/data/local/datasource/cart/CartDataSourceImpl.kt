@@ -17,6 +17,9 @@ class CartDataSourceImpl @Inject constructor(
             }
         }
 
+    override suspend fun getCartCount(): Result<Flow<Int>> =
+        runCatching { cartDao.getCartCount() }
+
     override suspend fun updateCart(cartDto: CartDto): Result<Unit> =
         runCatching { cartDao.updateCart(cartDto) }
 

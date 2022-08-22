@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.work.WorkManager
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentCartBinding
 import com.woowa.banchan.domain.model.Cart
@@ -30,6 +31,10 @@ class CartFragment : Fragment() {
 
     private val cartRVAdapter: CartRVAdapter by lazy {
         CartRVAdapter()
+    }
+
+    private val workManager: WorkManager by lazy {
+        WorkManager.getInstance(requireContext())
     }
 
     override fun onCreateView(
@@ -108,6 +113,7 @@ class CartFragment : Fragment() {
                 when (it) {
                     is UiState.Success -> {
                         val intent = Intent(requireActivity(), OrderDetailActivity::class.java)
+                        viewModel.reserveUpdateOrder(it.data, workManager)
                         intent.putExtra("order", it.data)
                         startActivity(intent)
                         requireActivity().finish()

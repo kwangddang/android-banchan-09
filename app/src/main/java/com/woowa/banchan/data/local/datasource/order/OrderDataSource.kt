@@ -2,10 +2,11 @@ package com.woowa.banchan.data.local.datasource.order
 
 import com.woowa.banchan.data.local.entity.OrderDto
 import com.woowa.banchan.data.local.entity.OrderItemDto
+import kotlinx.coroutines.flow.Flow
 
 interface OrderDataSource {
 
-    suspend fun getTotalOrderList(): Result<List<OrderDto>>
+    suspend fun getTotalOrderList(): Result<Flow<List<OrderDto>>>
     suspend fun getOrderDetail(orderId: Long): Result<List<OrderItemDto>>
 
     suspend fun getOrder(orderId: Long): Result<OrderDto>
@@ -17,4 +18,9 @@ interface OrderDataSource {
         newOrder: OrderDto,
         orderItemList: List<OrderItemDto>
     ): Result<OrderDto>
+
+    suspend fun updateOrder(id: Long, deliverState: Boolean): Result<Unit>
+
+    suspend fun getOrderState(): Result<Flow<Boolean>>
+
 }

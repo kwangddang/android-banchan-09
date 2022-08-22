@@ -8,16 +8,18 @@ import com.woowa.banchan.domain.model.OrderItem
 import com.woowa.banchan.domain.repository.OrderRepository
 import com.woowa.banchan.ui.cart.cart.CartFragment.Companion.freeShipping
 import com.woowa.banchan.ui.cart.cart.CartFragment.Companion.shipping
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class OrderRepositoryImpl @Inject constructor(
     private val orderDataSource: OrderDataSource
 ) : OrderRepository {
 
-    override suspend fun getTotalOrderList(): Result<List<Order>> =
+    override suspend fun getTotalOrderList(): Result<Flow<List<Order>>> =
         runCatching {
-            val list = orderDataSource.getTotalOrderList().getOrThrow()
-            list.map { it.toOrder() }
+            val flow = orderDataSource.getTotalOrderList().getOrThrow()
+            flow.map { list -> list.map { it.toOrder() } }
         }
 
     override suspend fun getEachOrder(orderId: Long): Result<Order> =
@@ -44,4 +46,11 @@ class OrderRepositoryImpl @Inject constructor(
             ).getOrThrow()
             orderDto.toOrder()
         }
+
+    override suspend fun updateOrder(id: Long, deliverState: Boolean): Result<Unit> =
+        runCatching { orderDataSource.updateOrder(id, deliverState) }
+
+    override suspend fun getOrderState(): Result<Flow<Boolean>> =
+        runCatching { orderDataSource.getOrderState().getOrThrow() }
+
 }

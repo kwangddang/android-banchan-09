@@ -5,6 +5,7 @@ import com.woowa.banchan.data.local.dao.OrderDao
 import com.woowa.banchan.data.local.dao.OrderItemDao
 import com.woowa.banchan.data.local.entity.OrderDto
 import com.woowa.banchan.data.local.entity.OrderItemDto
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class OrderDataSourceImpl @Inject constructor(
@@ -13,7 +14,7 @@ class OrderDataSourceImpl @Inject constructor(
     private val database: BanchanDataBase
 ) : OrderDataSource {
 
-    override suspend fun getTotalOrderList(): Result<List<OrderDto>> =
+    override suspend fun getTotalOrderList(): Result<Flow<List<OrderDto>>> =
         runCatching { orderDao.getTotalOrderList() }
 
     override suspend fun getOrderDetail(orderId: Long): Result<List<OrderItemDto>> =
@@ -23,7 +24,7 @@ class OrderDataSourceImpl @Inject constructor(
         runCatching { orderDao.getOrder(orderId) }
 
     override suspend fun insertNewOrder(orderDto: OrderDto): Result<Long> =
-        runCatching { orderDao.insert(orderDto) }
+        runCatching { orderDao.insertOrder(orderDto) }
 
     override suspend fun insertNewOrderItem(orderItemDto: List<OrderItemDto>): Result<Unit> =
         runCatching { orderItemDao.insert(*orderItemDto.toTypedArray()) }
@@ -35,10 +36,17 @@ class OrderDataSourceImpl @Inject constructor(
         runCatching {
             var orderId = 0L
             database.runInTransaction {
-                orderId = orderDao.insert(newOrder)
+                orderId = orderDao.insertOrder(newOrder)
                 orderItemList.forEach { it.orderId = orderId }
                 orderItemDao.insert(*orderItemList.toTypedArray())
             }
             orderDao.getOrder(orderId)
         }
+
+    override suspend fun updateOrder(id: Long, deliverState: Boolean): Result<Unit> =
+        runCatching { orderDao.updateOrder(id, deliverState) }
+
+    override suspend fun getOrderState(): Result<Flow<Boolean>> =
+        runCatching { orderDao.getOrderState() }
+
 }
