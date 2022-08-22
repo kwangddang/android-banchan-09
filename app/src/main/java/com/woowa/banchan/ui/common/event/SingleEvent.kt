@@ -34,10 +34,10 @@ class EventObserver<T>(private val onEventUnhandledContent: (T) -> Unit) : Obser
     }
 }
 
-fun MutableLiveData<SingleEvent<Unit>>.emit() {
+fun MutableLiveData<SingleEvent<Unit>>.setEvent() {
     value = SingleEvent(Unit)
 }
 
-fun <T> MutableLiveData<SingleEvent<T>>.emit(data: T) {
+fun <T> MutableLiveData<SingleEvent<T>>.setEvent(data: T) {
     value = SingleEvent(data)
 }

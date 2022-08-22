@@ -66,7 +66,6 @@ class CartUpdateFragment : DialogFragment() {
     private fun initObserver() {
         viewModel.updateUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
-                Log.d("Test", it.toString())
                 val state = it.getContentIfNotHandled()
                 if (state is UiState.Success) {
                     parentFragmentManager.commit { remove(this@CartUpdateFragment) }

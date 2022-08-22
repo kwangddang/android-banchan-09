@@ -11,7 +11,7 @@ import com.woowa.banchan.domain.usecase.cart.inter.UpdateCartUseCase
 import com.woowa.banchan.domain.usecase.food.inter.GetDetailFoodUseCase
 import com.woowa.banchan.domain.usecase.recent.inter.InsertRecentlyViewedFoodsUseCase
 import com.woowa.banchan.ui.common.event.SingleEvent
-import com.woowa.banchan.ui.common.event.emit
+import com.woowa.banchan.ui.common.event.setEvent
 import com.woowa.banchan.ui.common.uistate.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -83,15 +83,15 @@ class DetailViewModel @Inject constructor(
     }
 
     fun setCartClickEvent() {
-        _cartClickEvent.emit()
+        _cartClickEvent.setEvent()
     }
 
     fun setUserClickEvent() {
-        _userClickEvent.emit()
+        _userClickEvent.setEvent()
     }
 
     fun setCancelClickEvent() {
-        _cancelClickEvent.emit()
+        _cancelClickEvent.setEvent()
     }
 
     fun setUpdateClickEvent() {
