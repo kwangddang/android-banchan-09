@@ -11,6 +11,9 @@ class RecentDataSourceImpl @Inject constructor(
     override suspend fun getRecentList(): Result<List<RecentDto>> =
         runCatching { recentDao.getRecentList() }
 
+    override suspend fun deleteRecent(recentDto: RecentDto): Result<Unit> =
+        runCatching { recentDao.delete(recentDto) }
+
     override suspend fun insertRecent(recentDto: RecentDto): Result<Unit> =
         runCatching { recentDao.insert(recentDto) }
 }

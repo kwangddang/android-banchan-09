@@ -8,6 +8,7 @@ import com.woowa.banchan.ui.cart.cart.adapter.RecentPreviewRVAdapter
 
 class RecentPreviewViewHolder(
     private val binding: ItemRecentPreviewBinding,
+    private val onClickRecentItem: (recent: Recent) -> Unit,
     private val onClickAllRecentlyViewed: () -> Unit = {}
 ) :
     RecyclerView.ViewHolder(binding.root) {
@@ -18,7 +19,7 @@ class RecentPreviewViewHolder(
         binding.tvEmptyNotice.isVisible = recentList.isEmpty()
         val list = mutableListOf<Recent>()
         recentList.forEachIndexed { index, recent -> if (index < maxCount) list.add(recent) }
-        val adapter = RecentPreviewRVAdapter()
+        val adapter = RecentPreviewRVAdapter(onClickRecentItem)
         adapter.submitList(list)
         binding.rvRecentPreview.adapter = adapter
         binding.tvAllRecent.setOnClickListener { onClickAllRecentlyViewed() }

@@ -42,10 +42,23 @@
             android:focusable="true"
             android:padding="8dp"
             android:src="@drawable/ic_cart"
-            android:visibility="@{isPreview ? View.GONE : View.VISIBLE}"
+            android:visibility="@{(isPreview||recent.checkState) ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
             app:layout_constraintEnd_toEndOf="@id/iv_thumbnail" />
-F
+
+        <ImageView
+            android:id="@+id/iv_check"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/background_circle_accent"
+            android:elevation="8dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_check_white"
+            android:visibility="@{(!isPreview &amp;&amp; recent.checkState) ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
+            app:layout_constraintEnd_toEndOf="@id/iv_thumbnail" />
+
         <TextView
             android:id="@+id/tv_title"
             style="@style/bold_14"

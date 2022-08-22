@@ -13,9 +13,11 @@ import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentCartBinding
 import com.woowa.banchan.domain.model.Cart
+import com.woowa.banchan.domain.model.Recent
 import com.woowa.banchan.ui.cart.CartViewModel
 import com.woowa.banchan.ui.cart.cart.adapter.CartRVAdapter
 import com.woowa.banchan.ui.common.uistate.UiState
+import com.woowa.banchan.ui.detail.DetailActivity
 import com.woowa.banchan.ui.order.detail.OrderDetailActivity
 import com.woowa.banchan.utils.showToast
 import kotlinx.coroutines.flow.launchIn
@@ -64,6 +66,17 @@ class CartFragment : Fragment() {
 
             override fun onClickOrderButton() {
                 viewModel.addOrder()
+            }
+
+            override fun onClickRecentItem(recent: Recent) {
+                val intent =
+                    Intent(this@CartFragment.requireActivity(), DetailActivity::class.java)
+                with(intent) {
+                    putExtra("title", recent.title)
+                    putExtra("hash", recent.hash)
+                }
+                startActivity(intent)
+                this@CartFragment.requireActivity().finish()
             }
 
             override fun onClickAllRecentlyViewed() {

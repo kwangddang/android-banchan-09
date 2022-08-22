@@ -10,11 +10,15 @@ class RecentItemViewHolder(private val binding: ItemRecentBinding) :
     fun bind(
         recent: Recent,
         isPreview: Boolean = true,
-        onClickCartButton: (recent: Recent) -> Unit = {}
+        onClickItem: (recent: Recent) -> Unit,
+        onClickCartButton: (recent: Recent) -> Unit = {},
+        onClickCheckButton: (recent: Recent) -> Unit = {}
     ) {
         binding.isPreview = isPreview
         binding.recent = recent
 
         binding.ivCart.setOnClickListener { onClickCartButton(recent) }
+        binding.ivCheck.setOnClickListener { onClickCheckButton(recent) }
+        binding.root.setOnClickListener { onClickItem(recent) }
     }
 }

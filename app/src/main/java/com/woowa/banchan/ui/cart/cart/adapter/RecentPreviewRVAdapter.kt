@@ -8,7 +8,9 @@ import com.woowa.banchan.databinding.ItemRecentBinding
 import com.woowa.banchan.domain.model.Recent
 import com.woowa.banchan.ui.cart.cart.adapter.viewholder.RecentItemViewHolder
 
-class RecentPreviewRVAdapter : ListAdapter<Recent, RecentItemViewHolder>(diffUtil) {
+class RecentPreviewRVAdapter(
+    private val onClickItem: (recent: Recent) -> Unit,
+) : ListAdapter<Recent, RecentItemViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentItemViewHolder {
         return RecentItemViewHolder(
@@ -21,7 +23,12 @@ class RecentPreviewRVAdapter : ListAdapter<Recent, RecentItemViewHolder>(diffUti
     }
 
     override fun onBindViewHolder(holder: RecentItemViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(
+            getItem(position),
+            onClickItem = { onClickItem(it) },
+            onClickCartButton = {},
+            onClickCheckButton = {}
+        )
     }
 
 
