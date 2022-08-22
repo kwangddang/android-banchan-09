@@ -1,6 +1,5 @@
 package com.woowa.banchan.ui.cart
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.Data
@@ -80,6 +79,7 @@ class CartViewModel @Inject constructor(
     fun updateCart() {
         doUpdateCart()
     }
+
     fun deleteCart(recent: Recent) {
         CoroutineScope(Dispatchers.IO).launch { deleteCartUseCase(recent.hash).collect() }
     }
@@ -119,7 +119,7 @@ class CartViewModel @Inject constructor(
                 .setInputData(
                     Data.Builder().putLong("id", order.id).build()
                 )
-                .setInitialDelay(5, TimeUnit.SECONDS)
+                .setInitialDelay(20, TimeUnit.MINUTES)
                 .build()
         )
     }

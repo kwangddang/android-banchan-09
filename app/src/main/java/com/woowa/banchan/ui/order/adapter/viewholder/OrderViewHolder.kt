@@ -1,6 +1,5 @@
 package com.woowa.banchan.ui.order.adapter.viewholder
 
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemOrderBinding
 import com.woowa.banchan.domain.model.Order

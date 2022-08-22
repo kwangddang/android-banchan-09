@@ -44,7 +44,7 @@ abstract class HomeBaseViewModel : ViewModel() {
                 if (uiState is UiState.Success) {
                     defaultFoods = uiState.data
                     sortList()
-                } else{
+                } else {
                     _itemUiState.emit(uiState)
                 }
             }
