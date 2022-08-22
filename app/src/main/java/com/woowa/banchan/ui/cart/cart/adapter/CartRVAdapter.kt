@@ -17,24 +17,31 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
     private var recentPreviewList = listOf<Recent>()
     private var cartList = mutableListOf<Cart>()
 
+    private var checkHeaderViewHolder: CheckHeaderViewHolder? = null
     private var recentPreviewViewHolder: RecentPreviewViewHolder? = null
     private var totalPriceViewHolder: TotalPriceViewHolder? = null
     private var cartFooterBtnViewHolder: CartFooterBtnViewHolder? = null
 
     private var totalPrice = 0
+    private var checkOriginStateFlag = 0
+    private var checkStateFlag = 0
     private var listener: CartButtonCallBackListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            CART_CHECK_HEADER -> CheckHeaderViewHolder(
-                ItemCartCheckHeaderBinding.inflate(
-                    LayoutInflater.from(
-                        parent.context
-                    ), parent, false
-                ),
-                onClickRemoveSelection = { onClickRemoveSelection() },
-                onClickReleaseSelection = { onClickReleaseSelection() }
-            )
+            CART_CHECK_HEADER -> {
+                checkHeaderViewHolder = CheckHeaderViewHolder(
+                    ItemCartCheckHeaderBinding.inflate(
+                        LayoutInflater.from(
+                            parent.context
+                        ), parent, false
+                    ),
+                    onClickRemoveSelection = { onClickRemoveSelection() },
+                    onClickAllSelection = { onClickAllSelection() },
+                    onClickReleaseSelection = { onClickReleaseSelection() }
+                )
+                checkHeaderViewHolder!!
+            }
             CART_CONTENT -> CartContentViewHolder(
                 ItemCartBinding.inflate(
                     LayoutInflater.from(
@@ -82,7 +89,10 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
-            CART_CHECK_HEADER -> (holder as CheckHeaderViewHolder).bind()
+            CART_CHECK_HEADER -> (holder as CheckHeaderViewHolder).bind(
+                checkOriginStateFlag,
+                checkStateFlag
+            )
             CART_CONTENT -> (holder as CartContentViewHolder).bind(getItem(position))
             CART_TOTAL_PRICE -> (holder as TotalPriceViewHolder).bind(totalPrice)
             CART_FOOTER_BTN -> (holder as CartFooterBtnViewHolder).bind(totalPrice)
@@ -110,15 +120,20 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
     fun submitCartList(list: List<Cart>) {
         // 첫번째, 마지막, 마지막-1,마지막-2
         cartList = list.toMutableList()
+        checkOriginStateFlag = (1).shl(list.size) - 1
         val newList = mutableListOf<Cart?>()
 
         newList.add(null)
         if (list.isEmpty()) newList.add(emptyCart())
-        else list.forEach { newList.add(it) }
+        else list.forEachIndexed { index, cart ->
+            checkStateFlag = checkStateFlag.or(cart.checkState.toInt().shl(index))
+            newList.add(cart)
+        }
         repeat(3) { newList.add(null) }
 
         submitList(newList)
         updateTotalPrice()
+        checkHeaderViewHolder?.bind(checkOriginStateFlag, checkStateFlag)
     }
 
     private fun updateTotalPrice() {
@@ -140,6 +155,16 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
         tmpList.forEach { if (it.checkState) onClickCartRemove(it) }
     }
 
+    private fun onClickAllSelection() {
+        cartList.forEach {
+            if (it.checkState.not()) {
+                it.checkState = true
+                onClickCartCheckState(it)
+            }
+        }
+        notifyDataSetChanged()
+    }
+
     private fun onClickReleaseSelection() {
         cartList.forEach {
             if (it.checkState) {
@@ -151,6 +176,8 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
     }
 
     private fun onClickCartCheckState(cart: Cart) {
+        checkStateFlag = checkStateFlag.xor((1).shl(cartList.indexOf(cart)))
+        checkHeaderViewHolder?.bind(checkOriginStateFlag, checkStateFlag)
         updateTotalPrice()
         listener?.onClickCartUpdate(cart)
     }
@@ -183,6 +210,8 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
                 oldItem.hash == newItem.hash
         }
     }
+
+    private fun Boolean.toInt() = if (this) 1 else 0
 
     interface CartButtonCallBackListener {
 
