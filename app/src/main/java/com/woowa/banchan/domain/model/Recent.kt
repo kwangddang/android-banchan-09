@@ -9,4 +9,5 @@ data class Recent(
     val sPrice: Int,
     val title: String,
     val imageUrl: String,
+    var checkState: Boolean = false
 )

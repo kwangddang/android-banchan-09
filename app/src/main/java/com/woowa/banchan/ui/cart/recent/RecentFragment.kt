@@ -1,5 +1,6 @@
 package com.woowa.banchan.ui.cart.recent
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import com.woowa.banchan.ui.cart.CartViewModel
 import com.woowa.banchan.ui.cart.recent.adapter.RecentRVAdapter
 import com.woowa.banchan.ui.common.bottomsheet.CartAddFragment
 import com.woowa.banchan.ui.common.uistate.UiState
+import com.woowa.banchan.ui.detail.DetailActivity
 import com.woowa.banchan.utils.showToast
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -46,6 +48,22 @@ class RecentFragment : Fragment() {
 
     private fun initListener() {
         val listener = object : RecentRVAdapter.RecentlyViewedCallBackListener {
+
+            override fun onClickItem(recent: Recent) {
+                val intent =
+                    Intent(this@RecentFragment.requireActivity(), DetailActivity::class.java)
+                with(intent) {
+                    putExtra("title", recent.title)
+                    putExtra("hash", recent.hash)
+                }
+                startActivity(intent)
+                this@RecentFragment.requireActivity().finish()
+            }
+
+            override fun onClickCheckButton(recent: Recent) {
+                viewModel.deleteCart(recent)
+            }
+
             override fun onClickCartButton(recent: Recent) {
                 CartAddFragment(recent.toFoodItem()).show(
                     childFragmentManager,
@@ -62,6 +80,15 @@ class RecentFragment : Fragment() {
                 when (it) {
                     is UiState.Success -> adapter.setPreviewList(it.data)
                     is UiState.Error -> showToast(null)
+                    else -> {}
+                }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.cartUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach {
+                when (it) {
+                    is UiState.Success -> adapter.setCartList(it.data.values.toList())
+                    is UiState.Error -> showToast(it.message)
                     else -> {}
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
