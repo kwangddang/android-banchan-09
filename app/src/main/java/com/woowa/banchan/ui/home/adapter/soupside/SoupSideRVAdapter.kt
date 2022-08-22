@@ -18,13 +18,9 @@ import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder
 class SoupSideRVAdapter(
     private val isSoup: Boolean,
     private val spinnerCallback: (Int) -> Unit,
-    itemClickListener: (String, String) -> Unit,
-    cartClickListener: (FoodItem) -> Unit
+    private val homeRVAdapter: HomeRVAdapter
 ) :
     ListAdapter<RVItem, RecyclerView.ViewHolder>(diffUtil) {
-
-    var managerType = GRID
-    private val homeRVAdapter: HomeRVAdapter = HomeRVAdapter(itemClickListener, cartClickListener).apply { managerType = GRID }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -60,8 +56,8 @@ class SoupSideRVAdapter(
                 else
                     "식탁을 풍성하게 하는\n정갈한 밑반찬", false
             )
-            SUB_HEADER -> (holder as SoupSideHeaderViewHolder).bind((getItem(2) as RVItem.Item<List<FoodItem>>).item.size, spinnerCallback)
-            else -> (holder as HomeRecyclerViewViewHolder).bind(homeRVAdapter, (getItem(2) as RVItem.Item<List<FoodItem>>).item, managerType)
+            SUB_HEADER -> (holder as SoupSideHeaderViewHolder).bind(homeRVAdapter.itemCount, spinnerCallback)
+            else -> (holder as HomeRecyclerViewViewHolder).bind(homeRVAdapter)
         }
     }
 

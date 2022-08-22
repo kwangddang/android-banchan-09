@@ -6,10 +6,12 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMainBinding
+import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.home.GRID
 import com.woowa.banchan.ui.home.HomeBaseFragment
 import com.woowa.banchan.ui.home.LINEAR_VERTICAL
+import com.woowa.banchan.ui.home.adapter.HomeRVAdapter
 import com.woowa.banchan.ui.home.main.adapter.MainRVAdapter
 import com.woowa.banchan.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +24,7 @@ class MainFragment : HomeBaseFragment<FragmentMainBinding>(R.layout.fragment_mai
     override val viewModel: MainViewModel by viewModels()
 
     private val mainAdapter: MainRVAdapter by lazy {
-        MainRVAdapter(checkedChangeListener, spinnerCallback, itemClickListener, cartClickListener)
+        MainRVAdapter(checkedChangeListener, spinnerCallback, homeRVAdapter)
     }
 
     private val spinnerCallback: (Int) -> Unit = { position ->
@@ -38,7 +40,7 @@ class MainFragment : HomeBaseFragment<FragmentMainBinding>(R.layout.fragment_mai
                 mainAdapter.managerType = LINEAR_VERTICAL
             }
         }
-        mainAdapter.homeRVAdapter.managerType = mainAdapter.managerType
+        homeRVAdapter.managerType = mainAdapter.managerType
         mainAdapter.notifyItemChanged(2)
     }
 
@@ -54,7 +56,7 @@ class MainFragment : HomeBaseFragment<FragmentMainBinding>(R.layout.fragment_mai
         viewModel.itemUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { state ->
                 if (state is UiState.Success) {
-                    mainAdapter.submitHeaderList(state.data)
+                    homeRVAdapter.submitList(state.data)
                 } else if (state is UiState.Error) {
                     showToast(state.message)
                 }

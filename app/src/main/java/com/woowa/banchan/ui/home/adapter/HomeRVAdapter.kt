@@ -1,5 +1,6 @@
 package com.woowa.banchan.ui.home.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -54,8 +55,6 @@ class HomeRVAdapter(
 
         val diffUtil = object : DiffUtil.ItemCallback<FoodItem>() {
             override fun areItemsTheSame(oldItem: FoodItem, newItem: FoodItem): Boolean {
-                if(oldItem.detailHash != newItem.detailHash) {
-                }
                 return oldItem.detailHash == newItem.detailHash
             }
 

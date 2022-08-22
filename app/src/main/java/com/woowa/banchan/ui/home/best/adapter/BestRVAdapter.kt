@@ -54,7 +54,6 @@ class BestRVAdapter(
             else -> (holder as HomeRecyclerViewViewHolder).bind(
                 HomeRVAdapter(itemClickListener, cartClickListener).apply { managerType = LINEAR_HORIZONTAL },
                 (getItem(position) as RVItem.Item<BestFoodCategory>).item.items,
-                LINEAR_HORIZONTAL,
             )
         }
     }

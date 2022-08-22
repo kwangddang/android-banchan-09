@@ -14,6 +14,7 @@ import com.woowa.banchan.R
 import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.ui.common.bottomsheet.CartAddFragment
 import com.woowa.banchan.ui.detail.DetailActivity
+import com.woowa.banchan.ui.home.adapter.HomeRVAdapter
 
 abstract class HomeBaseFragment<T : ViewDataBinding>(@LayoutRes val layoutRes: Int) : Fragment() {
 
@@ -33,6 +34,10 @@ abstract class HomeBaseFragment<T : ViewDataBinding>(@LayoutRes val layoutRes: I
             viewModel.deleteCart(food.detailHash)
         else
             CartAddFragment(food).show(childFragmentManager, getString(R.string.fragment_cart_add))
+    }
+
+    val homeRVAdapter: HomeRVAdapter by lazy {
+        HomeRVAdapter(itemClickListener, cartClickListener).apply { managerType = GRID }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

@@ -12,9 +12,20 @@ import com.woowa.banchan.ui.home.adapter.HomeRVAdapter
 class HomeRecyclerViewViewHolder(private val binding: ItemRecyclerviewBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(homeRVAdapter: HomeRVAdapter, food: List<FoodItem>, managerType: Int) {
+    fun bind(homeRVAdapter: HomeRVAdapter) {
+        initLayoutManager(homeRVAdapter)
+        binding.rvBest.adapter = homeRVAdapter
+    }
+
+    fun bind(homeRVAdapter: HomeRVAdapter, items: List<FoodItem>) {
+        initLayoutManager(homeRVAdapter)
+        binding.rvBest.adapter = homeRVAdapter
+        homeRVAdapter.submitList(items)
+    }
+
+    private fun initLayoutManager(homeRVAdapter: HomeRVAdapter) {
         binding.rvBest.apply {
-            layoutManager = when (managerType) {
+            layoutManager = when (homeRVAdapter.managerType) {
                 LINEAR_HORIZONTAL -> LinearLayoutManager(
                     this.context,
                     LinearLayoutManager.HORIZONTAL,
@@ -28,7 +39,5 @@ class HomeRecyclerViewViewHolder(private val binding: ItemRecyclerviewBinding) :
                 else -> GridLayoutManager(this.context, 2)
             }
         }
-        binding.rvBest.adapter = homeRVAdapter
-        homeRVAdapter.submitList(food)
     }
 }

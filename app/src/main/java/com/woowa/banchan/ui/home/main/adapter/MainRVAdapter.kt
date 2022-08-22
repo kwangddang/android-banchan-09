@@ -20,16 +20,13 @@ import com.woowa.banchan.ui.home.main.adapter.viewholder.MainHeaderViewHolder
 class MainRVAdapter(
     private val checkedChangeListener: (RadioGroup, Int) -> Unit,
     private val spinnerCallback: (Int) -> Unit,
-    itemClickListener: (String, String) -> Unit,
-    cartClickListener: (FoodItem) -> Unit
+    private val homeRVAdapter: HomeRVAdapter,
 ) :
     ListAdapter<RVItem, RecyclerView.ViewHolder>(diffUtil) {
 
     var managerType = GRID
-    val homeRVAdapter: HomeRVAdapter = HomeRVAdapter(itemClickListener, cartClickListener).apply { managerType = GRID }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        Log.d("Test","MainRVAdapter")
         return when (viewType) {
             HOME_HEADER -> HomeHeaderViewHolder(
                 ItemHomeHeaderBinding.inflate(
@@ -59,7 +56,7 @@ class MainRVAdapter(
         when (holder) {
             is HomeHeaderViewHolder -> holder.bind("모두가 좋아하는\n든든한 메인 요리", false)
             is MainHeaderViewHolder -> holder.bind(checkedChangeListener, spinnerCallback)
-            is HomeRecyclerViewViewHolder -> holder.bind(homeRVAdapter, (getItem(position) as RVItem.Item<List<FoodItem>>).item, managerType)
+            is HomeRecyclerViewViewHolder -> holder.bind(homeRVAdapter)
         }
     }
 
@@ -70,6 +67,8 @@ class MainRVAdapter(
             else -> HOME_ITEM
         }
     }
+
+    override fun getItemCount(): Int = 3
 
     fun submitHeaderList(food: List<FoodItem>) {
         val newList = mutableListOf<RVItem>()
