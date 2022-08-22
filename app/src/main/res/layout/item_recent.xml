@@ -31,34 +31,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/iv_cart"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_margin="8dp"
-            android:background="@drawable/background_circle_white"
-            android:clickable="true"
-            android:elevation="8dp"
-            android:focusable="true"
-            android:padding="8dp"
-            android:src="@drawable/ic_cart"
-            android:visibility="@{(isPreview||recent.checkState) ? View.GONE : View.VISIBLE}"
-            app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
-            app:layout_constraintEnd_toEndOf="@id/iv_thumbnail" />
-
-        <ImageView
-            android:id="@+id/iv_check"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_margin="8dp"
-            android:background="@drawable/background_circle_accent"
-            android:elevation="8dp"
-            android:padding="8dp"
-            android:src="@drawable/ic_check_white"
-            android:visibility="@{(!isPreview &amp;&amp; recent.checkState) ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
-            app:layout_constraintEnd_toEndOf="@id/iv_thumbnail" />
-
         <TextView
             android:id="@+id/tv_title"
             style="@style/bold_14"

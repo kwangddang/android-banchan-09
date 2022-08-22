@@ -4,18 +4,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.woowa.banchan.databinding.ItemRecentBinding
+import com.woowa.banchan.databinding.ItemRecentGridBinding
 import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.domain.model.Recent
-import com.woowa.banchan.ui.cart.cart.adapter.viewholder.RecentItemViewHolder
 
-class RecentRVAdapter : ListAdapter<Recent, RecentItemViewHolder>(diffUtil) {
+class RecentRVAdapter : ListAdapter<Recent, RecentGridItemViewHolder>(diffUtil) {
 
     private var listener: RecentlyViewedCallBackListener? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentItemViewHolder {
-        return RecentItemViewHolder(
-            ItemRecentBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentGridItemViewHolder {
+        return RecentGridItemViewHolder(
+            ItemRecentGridBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -23,7 +22,7 @@ class RecentRVAdapter : ListAdapter<Recent, RecentItemViewHolder>(diffUtil) {
         )
     }
 
-    override fun onBindViewHolder(holder: RecentItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecentGridItemViewHolder, position: Int) {
         holder.bind(
             getItem(position),
             isPreview = false,

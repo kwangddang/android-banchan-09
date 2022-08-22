@@ -8,10 +8,11 @@
     </data>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_food"
+        android:id="@+id/rv_best"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="8dp"
+        android:paddingHorizontal="16dp"
+        android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:context=".ui.home.best.BestFragment"
         tools:listitem="@layout/item_best" />
