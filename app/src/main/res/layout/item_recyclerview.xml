@@ -11,6 +11,7 @@
         android:id="@+id/rv_food"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:context=".ui.home.best.BestFragment"
         tools:listitem="@layout/item_best" />
