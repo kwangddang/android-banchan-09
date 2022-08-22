@@ -35,3 +35,18 @@ data class DetailItem(
             imageUrl = topImage,
         )
 }
+
+fun emptyDetailItem(): DetailItem =
+    DetailItem(
+        "",
+        "",
+        "",
+        emptyList(),
+        "",
+        0,
+        0,
+        0,
+        "",
+        emptyList(),
+        ""
+    )

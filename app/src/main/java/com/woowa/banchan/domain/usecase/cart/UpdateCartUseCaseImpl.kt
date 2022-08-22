@@ -1,6 +1,7 @@
 package com.woowa.banchan.domain.usecase.cart
 
 import com.woowa.banchan.domain.model.Cart
+import com.woowa.banchan.domain.model.DetailItem
 import com.woowa.banchan.domain.repository.CartRepository
 import com.woowa.banchan.domain.usecase.cart.inter.UpdateCartUseCase
 import com.woowa.banchan.ui.common.uistate.UiState
@@ -17,6 +18,13 @@ class UpdateCartUseCaseImpl @Inject constructor(
     override suspend operator fun invoke(cart: Cart): Flow<UiState<Unit>> = flow {
         emit(UiState.Loading)
         cartRepository.updateCart(cart)
+            .onSuccess { emit(UiState.Success(Unit)) }
+            .onFailure { emit(UiState.Error(it.message)) }
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun invoke(detailItem: DetailItem, title: String, totalCount: Int): Flow<UiState<Unit>> = flow {
+        emit(UiState.Loading)
+        cartRepository.updateCart(detailItem.toCart(title, totalCount, true))
             .onSuccess { emit(UiState.Success(Unit)) }
             .onFailure { emit(UiState.Error(it.message)) }
     }.flowOn(Dispatchers.IO)

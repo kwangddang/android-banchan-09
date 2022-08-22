@@ -6,20 +6,8 @@
     <data>
 
         <variable
-            name="detail"
-            type="com.woowa.banchan.domain.model.DetailItem" />
-
-        <variable
-            name="title"
-            type="String" />
-
-        <variable
-            name="price"
-            type="Integer" />
-
-        <variable
-            name="count"
-            type="Integer" />
+            name="vm"
+            type="com.woowa.banchan.ui.detail.DetailViewModel" />
 
     </data>
 
@@ -32,6 +20,8 @@
             android:id="@+id/ctb_toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:onClickCartIcon="@{vm.setCartClickEvent}"
+            app:onClickUserIcon="@{vm.setUserClickEvent}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -89,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:paddingTop="32dp"
                         android:paddingBottom="8dp"
-                        android:text="@{title}"
+                        android:text="@{vm.title}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="오리 주물럭_반조리" />
@@ -100,7 +90,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingBottom="8dp"
-                        android:text="@{detail.productDescription}"
+                        android:text="@{vm.detailItem.productDescription}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_title"
                         tools:text="감칠맛 나는 매콤한 양념" />
@@ -114,7 +104,7 @@
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_content"
-                        app:percent="@{detail.percent}"
+                        app:percent="@{vm.detailItem.percent}"
                         tools:text="10%" />
 
                     <TextView
@@ -125,7 +115,7 @@
                         android:paddingEnd="8dp"
                         app:layout_constraintStart_toEndOf="@id/tv_percent"
                         app:layout_constraintTop_toBottomOf="@id/tv_content"
-                        app:price="@{detail.sPrice}"
+                        app:price="@{vm.detailItem.sPrice}"
                         tools:text="12,640원" />
 
                     <TextView
@@ -135,7 +125,7 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintBottom_toBottomOf="@id/tv_s_price"
                         app:layout_constraintStart_toEndOf="@id/tv_s_price"
-                        app:originPrice="@{detail.nPrice}"
+                        app:originPrice="@{vm.detailItem.nPrice}"
                         tools:text="15,800원" />
 
                     <View
@@ -162,7 +152,7 @@
                         android:id="@+id/tv_point"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@{detail.point}"
+                        android:text="@{vm.detailItem.point}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tv_point_label"
                         app:layout_constraintTop_toTopOf="@id/tv_point_label"
@@ -182,7 +172,7 @@
                         android:id="@+id/tv_delivery_info"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@{detail.deliveryInfo}"
+                        android:text="@{vm.detailItem.deliveryInfo}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tv_delivery_info_label"
                         app:layout_constraintTop_toTopOf="@id/tv_delivery_info_label"
@@ -202,7 +192,7 @@
                         android:id="@+id/tv_delivery_fee"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@{detail.deliveryFee}"
+                        android:text="@{vm.detailItem.deliveryFee}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tv_delivery_fee_label"
                         app:layout_constraintTop_toTopOf="@id/tv_delivery_fee_label"
@@ -236,7 +226,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="24dp"
-                        android:text="@{Integer.toString(count)}"
+                        android:text="@{Integer.toString(vm.totalCount)}"
                         app:layout_constraintBottom_toBottomOf="@id/iv_plus"
                         app:layout_constraintEnd_toStartOf="@id/iv_plus"
                         app:layout_constraintTop_toTopOf="@id/iv_plus" />
@@ -292,7 +282,7 @@
                         android:layout_marginTop="32dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/view_divider3"
-                        app:price="@{price}"
+                        app:price="@{vm.sPrice * vm.totalCount}"
                         tools:text="12,640원" />
 
                     <Button
