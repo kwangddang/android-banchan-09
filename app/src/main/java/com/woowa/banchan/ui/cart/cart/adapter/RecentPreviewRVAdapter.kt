@@ -26,8 +26,6 @@ class RecentPreviewRVAdapter(
         holder.bind(
             getItem(position),
             onClickItem = { onClickItem(it) },
-            onClickCartButton = {},
-            onClickCheckButton = {}
         )
     }
 

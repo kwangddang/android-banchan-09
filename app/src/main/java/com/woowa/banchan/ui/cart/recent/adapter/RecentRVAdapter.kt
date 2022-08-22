@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.woowa.banchan.databinding.ItemRecentGridBinding
-import com.woowa.banchan.databinding.ItemRecentBinding
 import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.domain.model.Recent
 
@@ -24,8 +23,6 @@ class RecentRVAdapter : ListAdapter<Recent, RecentGridItemViewHolder>(diffUtil) 
     }
 
     override fun onBindViewHolder(holder: RecentGridItemViewHolder, position: Int) {
-        holder.bind(getItem(position), isPreview = false) { this.onClickCartButton(it) }
-    override fun onBindViewHolder(holder: RecentItemViewHolder, position: Int) {
         holder.bind(
             getItem(position),
             isPreview = false,
