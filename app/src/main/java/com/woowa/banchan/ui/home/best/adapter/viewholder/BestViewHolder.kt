@@ -35,10 +35,7 @@ class BestViewHolder(private val binding: ItemBestRecyclerviewBinding, private v
                     MotionEvent.ACTION_MOVE -> {
                         val distanceX = abs(lastX - e.x)
                         val distanceY = abs(lastY - e.y)
-                        if (distanceY > distanceX)
-                            rv.parent.requestDisallowInterceptTouchEvent(false)
-                        else
-                            rv.parent.requestDisallowInterceptTouchEvent(true)
+                        rv.parent.requestDisallowInterceptTouchEvent(distanceY <= distanceX)
                     }
                     MotionEvent.ACTION_UP -> {
                         lastX = 0
