@@ -28,4 +28,7 @@ interface OrderDao {
 
     @Query("SELECT EXISTS (SELECT * FROM $orderTable WHERE delivery_state = 0)")
     fun getOrderState(): Flow<Boolean>
+
+    @Query("SELECT * FROM $orderTable")
+    fun getOrderListForTest(): List<OrderDto>
 }
