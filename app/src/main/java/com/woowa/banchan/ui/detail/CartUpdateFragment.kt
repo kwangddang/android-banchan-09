@@ -39,7 +39,6 @@ class CartUpdateFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initBinding()
-        initButtonSetting()
         initObserver()
     }
 
@@ -53,13 +52,6 @@ class CartUpdateFragment : DialogFragment() {
     private fun initDialog() {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
-    }
-
-    private fun initButtonSetting() {
-        binding.tvConfirm.setOnClickListener { }
-        binding.tvCancel.setOnClickListener {
-            dismiss()
-        }
     }
 
     private fun initObserver() {

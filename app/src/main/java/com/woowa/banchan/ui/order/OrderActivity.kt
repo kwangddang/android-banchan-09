@@ -9,6 +9,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ActivityOrderBinding
+import com.woowa.banchan.ui.common.event.EventObserver
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.order.adapter.OrderRVAdapter
 import com.woowa.banchan.ui.order.detail.OrderDetailActivity
@@ -26,29 +27,23 @@ class OrderActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order)
 
-        initViewModel()
-        initAdapter()
         initToolBar()
-    }
-
-    private fun initAdapter() {
-        orderRVAdapter = OrderRVAdapter {
-            val intent = Intent(this, OrderDetailActivity::class.java)
-            intent.putExtra("order", it)
-            startActivity(intent)
-        }
-        binding.rvOrder.adapter = orderRVAdapter
+        initBinding()
+        initObserver()
+        initAdapter()
     }
 
     private fun initToolBar() {
-        binding.ctbSubToolbar.setOnClickBackIcon { finish() }
         binding.ctbSubToolbar.setAppBarTitle("Order List")
     }
 
-    private fun initViewModel() {
+    private fun initBinding() {
+        binding.vm = viewModel
+    }
+
+    private fun initObserver() {
         viewModel.orderUiState.flowWithLifecycle(this.lifecycle)
             .onEach {
                 when (it) {
@@ -57,5 +52,19 @@ class OrderActivity : AppCompatActivity() {
                     else -> {}
                 }
             }.launchIn(lifecycleScope)
+
+        viewModel.backClickEvent.observe(this, EventObserver { finish() })
+
+        viewModel.orderItemClickEvent.observe(this, EventObserver {
+            val intent = Intent(this, OrderDetailActivity::class.java)
+            intent.putExtra("order", it)
+            startActivity(intent)
+        })
     }
+
+    private fun initAdapter() {
+        orderRVAdapter = OrderRVAdapter(viewModel.orderItemClickListener)
+        binding.rvOrder.adapter = orderRVAdapter
+    }
+
 }

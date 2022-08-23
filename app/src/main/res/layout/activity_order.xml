@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="vm"
+            type="com.woowa.banchan.ui.order.OrderViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,6 +19,7 @@
             android:id="@+id/ctb_sub_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:onClickBackIcon="@{vm.setBackClickEvent}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
