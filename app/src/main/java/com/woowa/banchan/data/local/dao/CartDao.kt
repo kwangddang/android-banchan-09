@@ -25,4 +25,10 @@ interface CartDao {
 
     @Query("DELETE FROM $cartTable WHERE hash = :hash")
     suspend fun deleteCart(hash: String)
+
+    @Query("SELECT * FROM $cartTable WHERE hash = :hash")
+    fun getCartByHashForTest(hash: String): CartDto
+
+    @Query("SELECT * FROM $cartTable")
+    fun getAllCartListForTest(): List<CartDto>
 }

@@ -18,4 +18,7 @@ interface OrderItemDao {
 
     @Query("SELECT * FROM $orderItemTable WHERE order_id = :orderId")
     fun getOrderDetail(orderId: Long): List<OrderItemDto>
+
+    @Query("SELECT * FROM $orderItemTable WHERE order_id = :orderId")
+    fun getOrderItemById(orderId: Int): OrderItemDto?
 }
