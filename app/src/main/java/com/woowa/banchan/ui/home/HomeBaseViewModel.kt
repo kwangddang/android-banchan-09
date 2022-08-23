@@ -1,19 +1,15 @@
 package com.woowa.banchan.ui.home
 
-import android.content.Intent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.woowa.banchan.R
 import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.domain.usecase.cart.inter.DeleteCartUseCase
 import com.woowa.banchan.domain.usecase.food.inter.GetFoodsUseCase
-import com.woowa.banchan.ui.common.bottomsheet.CartAddFragment
 import com.woowa.banchan.ui.common.event.SingleEvent
 import com.woowa.banchan.ui.common.event.setEvent
 import com.woowa.banchan.ui.common.uistate.UiState
-import com.woowa.banchan.ui.detail.DetailActivity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -78,7 +74,7 @@ abstract class HomeBaseViewModel : ViewModel() {
         }
     }
 
-    fun sortList() {
+    private fun sortList() {
         val sortedList = when (spinnerPosition) {
             0 -> defaultFoods
             1 -> defaultFoods.sortedByDescending { food -> food.sPrice }

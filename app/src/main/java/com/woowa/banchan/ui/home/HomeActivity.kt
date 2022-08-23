@@ -11,6 +11,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ActivityHomeBinding
 import com.woowa.banchan.ui.cart.CartActivity
+import com.woowa.banchan.ui.common.event.EventObserver
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.home.adapter.HomeVPAdapter
 import com.woowa.banchan.ui.order.OrderActivity
@@ -30,10 +31,14 @@ class HomeActivity : AppCompatActivity() {
         setTheme(R.style.Theme_Banchan)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        initBinding()
         initAdapter()
         initObserver()
         initTabLayoutMediator()
-        initButtonSetting()
+    }
+
+    private fun initBinding() {
+        binding.vm = viewModel
     }
 
     private fun initAdapter() {
@@ -61,6 +66,14 @@ class HomeActivity : AppCompatActivity() {
                     showToast(state.message)
 
             }.launchIn(lifecycleScope)
+
+        viewModel.cartClickEvent.observe(this, EventObserver {
+            startActivity(Intent(this, CartActivity::class.java))
+        })
+
+        viewModel.userClickEvent.observe(this, EventObserver {
+            startActivity(Intent(this, OrderActivity::class.java))
+        })
     }
 
     private fun initTabLayoutMediator() {
@@ -71,12 +84,4 @@ class HomeActivity : AppCompatActivity() {
         }.attach()
     }
 
-    private fun initButtonSetting() {
-        binding.tbHome.setOnClickCartIcon {
-            startActivity(Intent(this, CartActivity::class.java))
-        }
-        binding.tbHome.setOnClickUserIcon {
-            startActivity(Intent(this, OrderActivity::class.java))
-        }
-    }
 }

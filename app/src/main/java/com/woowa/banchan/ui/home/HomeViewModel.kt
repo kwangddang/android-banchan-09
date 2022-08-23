@@ -1,9 +1,13 @@
 package com.woowa.banchan.ui.home
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.woowa.banchan.domain.usecase.cart.inter.GetCartCountUseCase
 import com.woowa.banchan.domain.usecase.order.inter.GetOrderStateUseCase
+import com.woowa.banchan.ui.common.event.SingleEvent
+import com.woowa.banchan.ui.common.event.setEvent
 import com.woowa.banchan.ui.common.uistate.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +28,13 @@ class HomeViewModel @Inject constructor(
     private var _orderStateUiState = MutableStateFlow<UiState<Boolean>>(UiState.Empty)
     val orderStateUiState: StateFlow<UiState<Boolean>> get() = _orderStateUiState.asStateFlow()
 
+    private val _cartClickEvent = MutableLiveData<SingleEvent<Unit>>()
+    val cartClickEvent: LiveData<SingleEvent<Unit>> get() = _cartClickEvent
+
+    private val _userClickEvent = MutableLiveData<SingleEvent<Unit>>()
+    val userClickEvent: LiveData<SingleEvent<Unit>> get() = _userClickEvent
+
+
     init {
         viewModelScope.launch {
             launch {
@@ -38,6 +49,14 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun setCartClickEvent() {
+        _cartClickEvent.setEvent()
+    }
+
+    fun setUserClickEvent() {
+        _userClickEvent.setEvent()
     }
 
 }
