@@ -19,12 +19,7 @@ class SideFragment : HomeBaseFragment<FragmentSideBinding>(R.layout.fragment_sid
     override val viewModel: SideViewModel by viewModels()
 
     private val soupSideAdapter: SoupSideRVAdapter by lazy {
-        SoupSideRVAdapter(false, viewModel.spinnerPosition, spinnerCallback, homeRVAdapter)
-    }
-
-    private val spinnerCallback: (Int) -> Unit = { position ->
-        viewModel.spinnerPosition = position
-        viewModel.sortList()
+        SoupSideRVAdapter(false, viewModel.spinnerPosition, viewModel.spinnerCallback, homeRVAdapter)
     }
 
     override fun initAdapter() {
@@ -35,7 +30,7 @@ class SideFragment : HomeBaseFragment<FragmentSideBinding>(R.layout.fragment_sid
         viewModel.getFoods(getString(R.string.fragment_side))
     }
 
-    override fun initObserve() {
+    override fun initObserver() {
         viewModel.itemUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { state ->
                 if (state is UiState.Success) {

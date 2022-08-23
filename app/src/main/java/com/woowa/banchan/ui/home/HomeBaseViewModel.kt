@@ -1,11 +1,19 @@
 package com.woowa.banchan.ui.home
 
+import android.content.Intent
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.woowa.banchan.R
 import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.domain.usecase.cart.inter.DeleteCartUseCase
 import com.woowa.banchan.domain.usecase.food.inter.GetFoodsUseCase
+import com.woowa.banchan.ui.common.bottomsheet.CartAddFragment
+import com.woowa.banchan.ui.common.event.SingleEvent
+import com.woowa.banchan.ui.common.event.setEvent
 import com.woowa.banchan.ui.common.uistate.UiState
+import com.woowa.banchan.ui.detail.DetailActivity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -26,9 +34,28 @@ abstract class HomeBaseViewModel : ViewModel() {
     private var _itemUiState = MutableStateFlow<UiState<List<FoodItem>>>(UiState.Empty)
     val itemUiState: StateFlow<UiState<List<FoodItem>>> get() = _itemUiState.asStateFlow()
 
+    private val _itemClickEvent = MutableLiveData<SingleEvent<String>>()
+    val itemClickEvent: LiveData<SingleEvent<String>> get() = _itemClickEvent
+
+    private val _cartClickEvent = MutableLiveData<SingleEvent<FoodItem>>()
+    val cartClickEvent: LiveData<SingleEvent<FoodItem>> get() = _cartClickEvent
+
     private var defaultFoods = emptyList<FoodItem>()
 
     var spinnerPosition = 0
+
+    val itemClickListener: (String, String) -> Unit = { title, hash ->
+        _itemClickEvent.setEvent("$title,$hash")
+    }
+
+    val cartClickListener: (FoodItem) -> Unit = { food ->
+        _cartClickEvent.setEvent(food)
+    }
+
+    val spinnerCallback: (Int) -> Unit = { position ->
+        spinnerPosition = position
+        sortList()
+    }
 
     fun deleteCart(hash: String) {
         viewModelScope.launch {
@@ -61,4 +88,5 @@ abstract class HomeBaseViewModel : ViewModel() {
         }
         _itemUiState.value = UiState.Success(sortedList)
     }
+
 }
