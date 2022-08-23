@@ -7,6 +7,8 @@ import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMainBinding
 import com.woowa.banchan.ui.common.uistate.UiState
+import com.woowa.banchan.ui.common.viewutils.showContent
+import com.woowa.banchan.ui.common.viewutils.showLoading
 import com.woowa.banchan.ui.home.GRID
 import com.woowa.banchan.ui.home.HomeBaseFragment
 import com.woowa.banchan.ui.home.LINEAR_VERTICAL
@@ -22,7 +24,12 @@ class MainFragment : HomeBaseFragment<FragmentMainBinding>(R.layout.fragment_mai
     override val viewModel: MainViewModel by viewModels()
 
     private val mainAdapter: MainRVAdapter by lazy {
-        MainRVAdapter(checkedChangeListener, viewModel.spinnerPosition, spinnerCallback, homeRVAdapter)
+        MainRVAdapter(
+            checkedChangeListener,
+            viewModel.spinnerPosition,
+            spinnerCallback,
+            homeRVAdapter
+        )
     }
 
     private val spinnerCallback: (Int) -> Unit = { position ->
@@ -54,10 +61,17 @@ class MainFragment : HomeBaseFragment<FragmentMainBinding>(R.layout.fragment_mai
     override fun initObserve() {
         viewModel.itemUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { state ->
-                if (state is UiState.Success) {
-                    homeRVAdapter.submitList(state.data)
-                } else if (state is UiState.Error) {
-                    showToast(state.message)
+                when (state) {
+                    is UiState.Success -> {
+                        homeRVAdapter.submitList(state.data)
+                        showContent(binding.rvMain, binding.pbLoading)
+                    }
+                    is UiState.Error -> {
+                        showContent(binding.rvMain, binding.pbLoading)
+                        showToast(state.message)
+                    }
+                    is UiState.Loading -> showLoading(binding.rvMain, binding.pbLoading)
+                    else -> {}
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
