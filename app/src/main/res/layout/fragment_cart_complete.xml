@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="vm"
+            type="com.woowa.banchan.ui.common.popup.CartCompleteViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="@string/continue_shopping"
+            android:onClick="@{() -> vm.setContinueClickEvent()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_popup_title" />
 
@@ -38,6 +41,7 @@
             android:layout_height="wrap_content"
             android:paddingEnd="24dp"
             android:text="@string/cart_confirm"
+            android:onClick="@{() -> vm.setConfirmClickEvent()}"
             app:layout_constraintEnd_toStartOf="@id/tv_continue_shopping"
             app:layout_constraintTop_toTopOf="@id/tv_continue_shopping" />
 
