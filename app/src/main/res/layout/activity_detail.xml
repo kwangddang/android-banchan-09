@@ -217,6 +217,7 @@
                         android:elevation="4dp"
                         android:padding="12dp"
                         android:src="@drawable/ic_plus"
+                        android:onClick="@{() -> vm.setPlusClickEvent()}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/view_divider2" />
 
@@ -240,6 +241,7 @@
                         android:elevation="4dp"
                         android:padding="12dp"
                         android:src="@drawable/ic_minus"
+                        android:onClick="@{() -> vm.setMinusClickEvent()}"
                         app:layout_constraintEnd_toStartOf="@id/tv_count"
                         app:layout_constraintTop_toBottomOf="@id/view_divider2" />
 
@@ -292,6 +294,7 @@
                         android:layout_height="64dp"
                         android:layout_marginTop="32dp"
                         android:text="@string/order"
+                        android:onClick="@{() -> vm.setOrderClickEvent()}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tv_total_price" />
