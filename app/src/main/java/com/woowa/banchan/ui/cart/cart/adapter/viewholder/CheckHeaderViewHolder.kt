@@ -11,8 +11,8 @@ class CheckHeaderViewHolder(
 ) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(checkOriginStateFlag: Int, checkStateFlag: Int) {
-        binding.checkStateFlag = checkStateFlag == checkOriginStateFlag
+    fun bind(checkStateOriginCount: Int, checkStateCount: Int) {
+        binding.checkStateFlag = checkStateCount == checkStateOriginCount
         binding.tvRemoveSelection.setOnClickListener { onClickRemoveSelection() }
         binding.tvAllChecked.setOnClickListener { onClickAllSelection() }
         binding.tvReleaseChecked.setOnClickListener { onClickReleaseSelection() }

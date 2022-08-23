@@ -1,6 +1,6 @@
 package com.woowa.banchan.domain.model
 
-class Cart(
+data class Cart(
     val hash: String,
     var checkState: Boolean,
     val price: Int,
