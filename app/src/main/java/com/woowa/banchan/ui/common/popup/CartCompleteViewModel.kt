@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.woowa.banchan.ui.common.event.SingleEvent
 import com.woowa.banchan.ui.common.event.setEvent
 
-class CartCompleteViewModel : ViewModel(){
+class CartCompleteViewModel : ViewModel() {
 
     private val _confirmClickEvent = MutableLiveData<SingleEvent<Unit>>()
     val confirmClickEvent: LiveData<SingleEvent<Unit>> get() = _confirmClickEvent

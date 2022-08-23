@@ -166,11 +166,10 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
 
     private fun onClickRemoveSelection() {
         val removedList = cartList.filter {
-            if(it.checkState) {
+            if (it.checkState) {
                 listener?.onClickCartRemove(it)
                 false
-            }
-            else true
+            } else true
         }
         submitCartList(removedList)
     }

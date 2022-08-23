@@ -55,6 +55,33 @@ class CartViewModel @Inject constructor(
     private val _backClickEvent = MutableLiveData<SingleEvent<Unit>>()
     val backClickEvent: LiveData<SingleEvent<Unit>> get() = _backClickEvent
 
+    private val _messageEvent = MutableLiveData<SingleEvent<String>>()
+    val messageEvent: LiveData<SingleEvent<String>> get() = _messageEvent
+
+    private val _recentClickEvent = MutableLiveData<SingleEvent<Recent>>()
+    val recentClickEvent: LiveData<SingleEvent<Recent>> get() = _recentClickEvent
+
+    val cartUpdateListener: (Cart, String?) -> Unit = { cart, message ->
+        addUpdateCartCache(cart, removeFlag = false)
+        message?.let { _messageEvent.setEvent(it) }
+    }
+
+    val cartRemoveListener: (Cart) -> Unit = { cart ->
+        addUpdateCartCache(cart, removeFlag = true)
+    }
+
+    val orderClickListener: () -> Unit = {
+        addOrder()
+    }
+
+    val recentClickListener: (Recent) -> Unit = { recent ->
+        _recentClickEvent.setEvent(recent)
+    }
+
+    val recentAllClickListener: () -> Unit = {
+        setFragmentTag("recent")
+    }
+
     init {
         viewModelScope.launch {
             launch {

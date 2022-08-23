@@ -17,6 +17,7 @@ import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.domain.model.Recent
 import com.woowa.banchan.ui.cart.CartViewModel
 import com.woowa.banchan.ui.cart.cart.adapter.CartRVAdapter
+import com.woowa.banchan.ui.common.event.EventObserver
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.detail.DetailActivity
 import com.woowa.banchan.ui.order.detail.OrderDetailActivity
@@ -49,7 +50,7 @@ class CartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initAdapter()
-        initObserve()
+        initObserver()
         initListener()
     }
 
@@ -61,37 +62,29 @@ class CartFragment : Fragment() {
     private fun initListener() {
         val listener = object : CartRVAdapter.CartButtonCallBackListener {
             override fun onClickCartUpdate(cart: Cart, message: String?) {
-                message?.let { showToast(it) }
-                viewModel.addUpdateCartCache(cart, removeFlag = false)
+                viewModel.cartUpdateListener(cart, message)
             }
 
             override fun onClickCartRemove(cart: Cart) {
-                viewModel.addUpdateCartCache(cart, removeFlag = true)
+                viewModel.cartRemoveListener(cart)
             }
 
             override fun onClickOrderButton() {
-                viewModel.addOrder()
+                viewModel.orderClickListener
             }
 
             override fun onClickRecentItem(recent: Recent) {
-                val intent =
-                    Intent(this@CartFragment.requireActivity(), DetailActivity::class.java)
-                with(intent) {
-                    putExtra("title", recent.title)
-                    putExtra("hash", recent.hash)
-                }
-                startActivity(intent)
-                this@CartFragment.requireActivity().finish()
+                viewModel.recentClickListener(recent)
             }
 
             override fun onClickAllRecentlyViewed() {
-                viewModel.setFragmentTag(getString(R.string.fragment_recent))
+                viewModel.recentAllClickListener()
             }
         }
         cartRVAdapter.setCartButtonCallBackListener(listener)
     }
 
-    private fun initObserve() {
+    private fun initObserver() {
         viewModel.cartUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
                 when (it) {
@@ -100,6 +93,7 @@ class CartFragment : Fragment() {
                     else -> {}
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
+
         viewModel.recentUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
                 when (it) {
@@ -108,6 +102,7 @@ class CartFragment : Fragment() {
                     else -> {}
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
+
         viewModel.orderUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
                 when (it) {
@@ -122,6 +117,18 @@ class CartFragment : Fragment() {
                     else -> {}
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.messageEvent.observe(viewLifecycleOwner, EventObserver { showToast(it) })
+
+        viewModel.recentClickEvent.observe(viewLifecycleOwner, EventObserver { recent ->
+            val intent = Intent(this@CartFragment.requireActivity(), DetailActivity::class.java)
+            with(intent) {
+                putExtra("title", recent.title)
+                putExtra("hash", recent.hash)
+            }
+            startActivity(intent)
+            this@CartFragment.requireActivity().finish()
+        })
     }
 
     private fun initAdapter() {

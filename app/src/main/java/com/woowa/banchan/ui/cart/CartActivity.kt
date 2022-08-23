@@ -6,10 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ActivityCartBinding
-import com.woowa.banchan.databinding.ActivityOrderBinding
 import com.woowa.banchan.ui.cart.cart.CartFragment
 import com.woowa.banchan.ui.cart.recent.RecentFragment
-import com.woowa.banchan.ui.common.custom.CustomToolbar
 import com.woowa.banchan.ui.common.event.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
 
