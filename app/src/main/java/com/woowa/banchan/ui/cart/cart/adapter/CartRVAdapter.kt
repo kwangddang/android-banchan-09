@@ -142,7 +142,7 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
         if (list.isEmpty()) newList.add(emptyCart())
         else list.forEachIndexed { index, cart ->
             if (cart.checkState) checkStateCount++
-            newList.add(cart.copy())
+            newList.add(cart)
         }
         repeat(3) { newList.add(null) }
 
@@ -154,9 +154,8 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
     private fun updateTotalPrice() {
         totalPrice = 0
 
-        cartList.forEach {
-            if (it.checkState) totalPrice += (it.price * it.count)
-        }
+        cartList.forEach { if (it.checkState) totalPrice += (it.price * it.count) }
+
         totalPriceViewHolder?.bind(totalPrice)
         cartFooterBtnViewHolder?.bind(totalPrice)
     }
@@ -166,47 +165,47 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
     }
 
     private fun onClickRemoveSelection() {
-        val tmpList = cartList.toMutableList()
-        tmpList.forEach { if (it.checkState) onClickCartRemove(it) }
+        val removedList = cartList.filter {
+            if(it.checkState) {
+                listener?.onClickCartRemove(it)
+                false
+            }
+            else true
+        }
+        submitCartList(removedList)
     }
 
     private fun onClickAllSelection() {
-        cartList.forEach {
-            if (it.checkState.not()) {
-                it.checkState = true
-                onClickCartCheckState(it)
-            }
+        val newList = cartList.map { cart ->
+            cart.copy(checkState = true).apply { listener?.onClickCartUpdate(this) }
         }
-        submitCartList(cartList)
+        submitCartList(newList)
     }
 
     private fun onClickReleaseSelection() {
-        cartList.forEach {
-            if (it.checkState) {
-                it.checkState = false
-                onClickCartCheckState(it)
-            }
+        val newList = cartList.map { cart ->
+            cart.copy(checkState = false).apply { listener?.onClickCartUpdate(this) }
         }
-        submitCartList(cartList)
+        submitCartList(newList)
     }
 
     private fun onClickCartCheckState(cart: Cart) {
         checkStateCount = if (cart.checkState) checkStateCount + 1 else checkStateCount - 1
         checkHeaderViewHolder?.bind(checkStateOriginCount, checkStateCount)
-        cartList.forEach { if (it.hash == cart.hash) it.checkState = cart.checkState }
+        cartList.map { if (it.hash == cart.hash) it.checkState = cart.checkState }
         updateTotalPrice()
         listener?.onClickCartUpdate(cart)
     }
 
     private fun onClickCartUpdateCount(cart: Cart, message: String? = null) {
-        cartList.forEach { if (it.hash == cart.hash) it.count = cart.count }
+        cartList.map { if (it.hash == cart.hash) it.count = cart.count }
         updateTotalPrice()
         listener?.onClickCartUpdate(cart, message)
     }
 
     private fun onClickCartRemove(cart: Cart) {
-        cartList.removeIf { cart.hash == it.hash }
-        submitCartList(cartList)
+        val removedList = cartList.filter { cart.hash != it.hash }
+        submitCartList(removedList)
         listener?.onClickCartRemove(cart)
     }
 
@@ -237,8 +236,6 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
             }
         }
     }
-
-    private fun Boolean.toInt() = if (this) 1 else 0
 
     interface CartButtonCallBackListener {
 
