@@ -17,6 +17,7 @@ import com.woowa.banchan.domain.usecase.order.inter.InsertCartToOrderUseCase
 import com.woowa.banchan.domain.usecase.recent.inter.GetRecentlyViewedFoodsUseCase
 import com.woowa.banchan.ui.common.event.SingleEvent
 import com.woowa.banchan.ui.common.event.setEvent
+import com.woowa.banchan.ui.common.key.orderWorkerId
 import com.woowa.banchan.ui.common.livedata.SingleLiveData
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.worker.OrderWorker
@@ -137,7 +138,7 @@ class CartViewModel @Inject constructor(
         workManager.enqueue(
             OneTimeWorkRequestBuilder<OrderWorker>()
                 .setInputData(
-                    Data.Builder().putLong("id", order.id).build()
+                    Data.Builder().putLong(orderWorkerId, order.id).build()
                 )
                 .setInitialDelay(20, TimeUnit.MINUTES)
                 .build()

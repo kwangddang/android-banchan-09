@@ -10,6 +10,7 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ActivityOrderDetailBinding
 import com.woowa.banchan.domain.model.Order
 import com.woowa.banchan.ui.common.event.EventObserver
+import com.woowa.banchan.ui.common.key.orderId
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.order.detail.adapter.OrderDetailRVAdapter
 import com.woowa.banchan.utils.showToast
@@ -41,7 +42,7 @@ class OrderDetailActivity : AppCompatActivity() {
     }
 
     private fun checkOrderIsNull() {
-        viewModel.order = intent.getSerializableExtra("order") as Order?
+        viewModel.order = intent.getSerializableExtra(orderId) as Order?
         if (viewModel.order == null) finish()
     }
 

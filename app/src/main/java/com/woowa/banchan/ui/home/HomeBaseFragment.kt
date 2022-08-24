@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment
 import com.woowa.banchan.R
 import com.woowa.banchan.ui.common.bottomsheet.CartAddFragment
 import com.woowa.banchan.ui.common.event.EventObserver
+import com.woowa.banchan.ui.common.key.foodDetailHash
+import com.woowa.banchan.ui.common.key.foodDetailTitle
 import com.woowa.banchan.ui.detail.DetailActivity
 import com.woowa.banchan.ui.home.adapter.HomeRVAdapter
 
@@ -59,8 +61,9 @@ abstract class HomeBaseFragment<T : ViewDataBinding>(@LayoutRes val layoutRes: I
         viewModel.itemClickEvent.observe(viewLifecycleOwner, EventObserver {
             val intent = Intent(context, DetailActivity::class.java)
             val titleHash = it.split(",")
-            intent.putExtra("title", titleHash[0])
-            intent.putExtra("hash", titleHash[1])
+
+            intent.putExtra(foodDetailTitle, titleHash[0])
+            intent.putExtra(foodDetailHash, titleHash[1])
             startActivity(intent)
         })
     }

@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ActivityOrderBinding
 import com.woowa.banchan.ui.common.event.EventObserver
+import com.woowa.banchan.ui.common.key.orderId
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.order.adapter.OrderRVAdapter
 import com.woowa.banchan.ui.order.detail.OrderDetailActivity
@@ -57,7 +58,7 @@ class OrderActivity : AppCompatActivity() {
 
         viewModel.orderItemClickEvent.observe(this, EventObserver {
             val intent = Intent(this, OrderDetailActivity::class.java)
-            intent.putExtra("order", it)
+            intent.putExtra(orderId, it)
             startActivity(intent)
         })
     }
