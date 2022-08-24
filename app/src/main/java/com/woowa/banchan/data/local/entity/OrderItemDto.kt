@@ -14,15 +14,16 @@ data class OrderItemDto(
     @ColumnInfo(name = "price") val price: Int,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "image_url") val imageUrl: String,
-)
+) {
 
-fun OrderItemDto.toOrderItem(): OrderItem {
-    return OrderItem(
-        id = id!!,
-        orderId = orderId,
-        count = count,
-        price = price,
-        title = title,
-        imageUrl = imageUrl
-    )
+    fun toOrderItem(): OrderItem {
+        return OrderItem(
+            id = id!!,
+            orderId = orderId,
+            count = count,
+            price = price,
+            title = title,
+            imageUrl = imageUrl
+        )
+    }
 }

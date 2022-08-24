@@ -11,7 +11,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
-import com.woowa.banchan.data.local.entity.toFoodItem
 import com.woowa.banchan.databinding.FragmentRecentBinding
 import com.woowa.banchan.domain.model.Recent
 import com.woowa.banchan.ui.cart.CartViewModel

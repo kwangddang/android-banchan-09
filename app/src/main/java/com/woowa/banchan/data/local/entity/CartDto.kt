@@ -14,25 +14,26 @@ data class CartDto(
     @ColumnInfo(name = "count") val count: Int,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "image_url") val imageUrl: String,
-)
+) {
 
-fun CartDto.toCart(): Cart = Cart(
-    hash = hash,
-    checkState = checkState,
-    price = price,
-    count = count,
-    title = title,
-    imageUrl = imageUrl
-)
+    fun toCart(): Cart = Cart(
+        hash = hash,
+        checkState = checkState,
+        price = price,
+        count = count,
+        title = title,
+        imageUrl = imageUrl
+    )
 
-fun CartDto.toOrderItemDto(orderId: Long): OrderItemDto = OrderItemDto(
-    id = null,
-    orderId = orderId,
-    price = price,
-    count = count,
-    title = title,
-    imageUrl = imageUrl
-)
+    fun toOrderItemDto(orderId: Long): OrderItemDto = OrderItemDto(
+        id = null,
+        orderId = orderId,
+        price = price,
+        count = count,
+        title = title,
+        imageUrl = imageUrl
+    )
+}
 
 fun Cart.toCartDto() = CartDto(
     hash = hash,

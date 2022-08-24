@@ -17,10 +17,9 @@ data class OrderDto(
     @ColumnInfo(name = "price") val price: Int,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "image_url") val imageUrl: String
-)
+) {
 
-fun OrderDto.toOrder(): Order {
-    return Order(
+    fun toOrder(): Order = Order(
         id = id!!,
         deliveryState = deliveryState,
         time = time,
@@ -30,17 +29,6 @@ fun OrderDto.toOrder(): Order {
         imageUrl = imageUrl
     )
 }
-
-fun Order.toOrderDto(): OrderDto =
-    OrderDto(
-        id = id,
-        deliveryState = deliveryState,
-        time = time,
-        count = count,
-        price = price,
-        title = title,
-        imageUrl = imageUrl
-    )
 
 fun newOrderDto(count: Int, price: Int, thumbnailItem: Cart): OrderDto = OrderDto(
     id = null,
