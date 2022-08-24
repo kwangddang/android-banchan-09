@@ -16,12 +16,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.work.WorkManager
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentCartBinding
 import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.domain.model.Recent
-import com.woowa.banchan.service.worker.OrderReceiver
+import com.woowa.banchan.service.OrderReceiver
 import com.woowa.banchan.ui.cart.CartViewModel
 import com.woowa.banchan.ui.cart.cart.adapter.CartRVAdapter
 import com.woowa.banchan.ui.common.event.EventObserver
@@ -40,10 +39,6 @@ class CartFragment : Fragment() {
 
     private val cartRVAdapter: CartRVAdapter by lazy {
         CartRVAdapter()
-    }
-
-    private val workManager: WorkManager by lazy {
-        WorkManager.getInstance(requireContext())
     }
 
     override fun onCreateView(
@@ -158,7 +153,7 @@ class CartFragment : Fragment() {
                 )
             }
 
-        val deliveryTime = 5 * 1000
+        val deliveryTime = 60 * 1000
         alarmManager.setExact(
             AlarmManager.ELAPSED_REALTIME_WAKEUP,
             SystemClock.elapsedRealtime() + deliveryTime,

@@ -12,12 +12,11 @@ class CartRepositoryImpl @Inject constructor(
     private val cartDataSource: CartDataSource
 ) : CartRepository {
 
-    override suspend fun getCartList(): Flow<Map<String, Cart>> =
-        cartDataSource.getCartList().map { map ->
-            map.values.associate { cartDto ->
-                cartDto.hash to cartDto.toCart()
-            }
+    override suspend fun getCartList(): Flow<Map<String, Cart>> = cartDataSource.getCartList().map { map ->
+        map.values.associate { cartDto ->
+            cartDto.hash to cartDto.toCart()
         }
+    }
 
     override suspend fun getCartCount(): Result<Flow<Int>> =
         runCatching { cartDataSource.getCartCount().getOrThrow() }

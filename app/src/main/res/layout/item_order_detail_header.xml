@@ -9,6 +9,10 @@
             name="order"
             type="com.woowa.banchan.domain.model.Order" />
 
+        <variable
+            name="time"
+            type="java.util.Date" />
+
         <import type="android.view.View" />
     </data>
 
@@ -57,7 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="4dp"
-                    app:time="@{order.time}"
+                    app:time="@{time}"
                     tools:text="20분" />
             </LinearLayout>
 

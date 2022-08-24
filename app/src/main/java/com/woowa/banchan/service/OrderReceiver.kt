@@ -17,7 +17,7 @@ import androidx.work.WorkManager
 import com.woowa.banchan.R
 import com.woowa.banchan.ui.order.detail.OrderDetailActivity
 
-class OrderReceiver : BroadcastReceiver(){
+class OrderReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
 
         val orderTitle = intent?.getStringExtra(context!!.getString(R.string.order_title))!!
@@ -29,7 +29,7 @@ class OrderReceiver : BroadcastReceiver(){
         val newIntent = Intent(context, OrderDetailActivity::class.java).apply {
             putExtra("order", orderId)
         }
-        val pendingIntent = PendingIntent.getActivity(context, 0,newIntent, FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE)
+        val pendingIntent = PendingIntent.getActivity(context, 0, newIntent, FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE)
 
         val builder = createNotificationBuilder(context, orderChannelId, orderTitle, orderContent, pendingIntent)
 
@@ -39,7 +39,7 @@ class OrderReceiver : BroadcastReceiver(){
             notify(orderChannelId.toInt(), builder.build())
         }
 
-        startOrderWork(context,orderId)
+        startOrderWork(context, orderId)
     }
 
     private fun createNotificationBuilder(
@@ -50,12 +50,12 @@ class OrderReceiver : BroadcastReceiver(){
         pendingIntent: PendingIntent?
     ) =
         NotificationCompat.Builder(context!!, orderChannelId)
-        .setSmallIcon(R.mipmap.ic_app_logo_accent_round)
-        .setContentTitle(orderTitle)
-        .setContentText(orderContent)
-        .setPriority(NotificationCompat.PRIORITY_HIGH)
-        .setContentIntent(pendingIntent)
-        .setAutoCancel(true)
+            .setSmallIcon(R.mipmap.ic_app_logo_accent_round)
+            .setContentTitle(orderTitle)
+            .setContentText(orderContent)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
 
     private fun createNotificationChannel(context: Context, orderName: String, orderChannelId: String, orderContent: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

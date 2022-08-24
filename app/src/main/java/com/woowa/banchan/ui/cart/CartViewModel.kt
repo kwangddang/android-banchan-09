@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.woowa.banchan.domain.model.Cart
-import com.woowa.banchan.domain.model.Order
 import com.woowa.banchan.domain.model.Recent
 import com.woowa.banchan.domain.usecase.cart.inter.DeleteCartUseCase
 import com.woowa.banchan.domain.usecase.cart.inter.GetCartListUseCase

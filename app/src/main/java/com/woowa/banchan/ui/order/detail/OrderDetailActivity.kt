@@ -23,7 +23,9 @@ class OrderDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityOrderDetailBinding
     private val viewModel by viewModels<OrderDetailViewModel>()
-    private lateinit var orderDetailRVAdapter: OrderDetailRVAdapter
+    private val orderDetailRVAdapter: OrderDetailRVAdapter by lazy {
+        OrderDetailRVAdapter()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,11 +57,12 @@ class OrderDetailActivity : AppCompatActivity() {
                     )
             }.launchIn(lifecycleScope)
 
+        viewModel.refreshClickEvent.observe(this, EventObserver { orderDetailRVAdapter.refreshTime() })
+
         viewModel.backClickEvent.observe(this, EventObserver { finish() })
     }
 
     private fun initAdapter() {
-        orderDetailRVAdapter = OrderDetailRVAdapter()
         binding.rvOrderDetail.adapter = orderDetailRVAdapter
     }
 

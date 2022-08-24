@@ -82,5 +82,5 @@ fun TextView.setOrderSummaryText(thumbnailTitle: String, itemCount: Int) {
 @BindingAdapter("time")
 fun TextView.setTime(time: Date) {
     val leftTime = (System.currentTimeMillis() - time.time) / 60000
-    text = "${(20 - leftTime.toInt())}분"
+    text = "${(1 - leftTime.toInt())}분"
 }

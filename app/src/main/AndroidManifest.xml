@@ -51,7 +51,7 @@
             tools:node="remove">
         </provider>
 
-        <receiver android:name=".service.worker.OrderReceiver"  android:exported="true">
+        <receiver android:name=".service.OrderReceiver"  android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />

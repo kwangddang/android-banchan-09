@@ -18,7 +18,7 @@ import com.woowa.banchan.ui.order.detail.ORDER_TOTAL_PRICE
 import com.woowa.banchan.ui.order.detail.adapter.viewholder.OrderDetailHeaderViewHolder
 import com.woowa.banchan.ui.order.detail.adapter.viewholder.OrderDetailViewHolder
 
-class OrderDetailRVAdapter() : ListAdapter<RVItem, RecyclerView.ViewHolder>(diffUtil) {
+class OrderDetailRVAdapter : ListAdapter<RVItem, RecyclerView.ViewHolder>(diffUtil) {
 
     private var totalPrice = 0
     private var orderDetailHeaderViewHolder: OrderDetailHeaderViewHolder? = null
@@ -85,6 +85,10 @@ class OrderDetailRVAdapter() : ListAdapter<RVItem, RecyclerView.ViewHolder>(diff
         newList.add(RVItem.Footer)
 
         submitList(newList)
+    }
+
+    fun refreshTime() {
+        orderDetailHeaderViewHolder?.refresh()
     }
 
     companion object {
