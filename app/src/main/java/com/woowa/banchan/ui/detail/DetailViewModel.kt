@@ -36,10 +36,12 @@ class DetailViewModel @Inject constructor(
     private var _detailUiState = MutableStateFlow<UiState<DetailItem>>(UiState.Empty)
     val detailUiState: StateFlow<UiState<DetailItem>> get() = _detailUiState.asStateFlow()
 
-    private val _insertionUiState = MutableStateFlow<SingleEvent<UiState<Unit>>>(SingleEvent(UiState.Empty))
+    private val _insertionUiState =
+        MutableStateFlow<SingleEvent<UiState<Unit>>>(SingleEvent(UiState.Empty))
     val insertionUiState: StateFlow<SingleEvent<UiState<Unit>>> get() = _insertionUiState.asStateFlow()
 
-    private val _updateUiState = MutableStateFlow<SingleEvent<UiState<Unit>>>(SingleEvent(UiState.Empty))
+    private val _updateUiState =
+        MutableStateFlow<SingleEvent<UiState<Unit>>>(SingleEvent(UiState.Empty))
     val updateUiState: StateFlow<SingleEvent<UiState<Unit>>> get() = _updateUiState.asStateFlow()
 
     private val _cartClickEvent = MutableLiveData<SingleEvent<Unit>>()
@@ -51,6 +53,7 @@ class DetailViewModel @Inject constructor(
     private val _cancelClickEvent = MutableLiveData<SingleEvent<Unit>>()
     val cancelClickEvent: LiveData<SingleEvent<Unit>> get() = _cancelClickEvent
 
+    var hash: String? = null
     var sPrice = MutableLiveData(0)
     var totalCount = MutableLiveData(1)
     var title = MutableLiveData("")
@@ -76,6 +79,10 @@ class DetailViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun refreshDetailFood() {
+        getDetailFood(this.hash!!)
     }
 
     fun getDetailFood(hash: String) {
@@ -122,7 +129,11 @@ class DetailViewModel @Inject constructor(
 
     fun setUpdateClickEvent() {
         viewModelScope.launch {
-            updateCartUseCase(detailItem.value!!, title.value!!, totalCount.value!!).collect { uiState ->
+            updateCartUseCase(
+                detailItem.value!!,
+                title.value!!,
+                totalCount.value!!
+            ).collect { uiState ->
                 _updateUiState.emit(SingleEvent(uiState))
             }
         }
