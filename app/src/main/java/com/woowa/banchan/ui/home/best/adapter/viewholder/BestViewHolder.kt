@@ -7,7 +7,10 @@ import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.ui.home.best.adapter.BestItemAdapter
 import kotlin.math.abs
 
-class BestViewHolder(private val binding: ItemBestRecyclerviewBinding, private val bestItemAdapter: BestItemAdapter) :
+class BestViewHolder(
+    private val binding: ItemBestRecyclerviewBinding,
+    private val bestItemAdapter: BestItemAdapter
+) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(food: List<FoodItem>, categoryName: String) {

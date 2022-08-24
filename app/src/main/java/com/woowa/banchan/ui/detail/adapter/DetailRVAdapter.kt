@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.databinding.ItemRvDetailBinding
 import com.woowa.banchan.ui.detail.viewholder.DetailRVViewHolder
 
-class DetailRVAdapter(private val urlList: List<String>) : RecyclerView.Adapter<DetailRVViewHolder>() {
+class DetailRVAdapter(private val urlList: List<String>) :
+    RecyclerView.Adapter<DetailRVViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailRVViewHolder {
         return DetailRVViewHolder(

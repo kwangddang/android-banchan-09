@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.woowa.banchan.data.local.BanchanDataBase
-import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.domain.model.Recent
 import java.util.*
 
@@ -16,7 +15,7 @@ data class RecentDto(
     @ColumnInfo(name = "s_price") val sPrice: Int,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "image_url") val imageUrl: String,
-){
+) {
 
     fun toRecent(): Recent = Recent(
         hash = hash,

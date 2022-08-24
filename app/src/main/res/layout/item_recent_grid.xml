@@ -26,8 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/main"
-            app:layout_constraintDimensionRatio="1:1"
             app:image="@{recent.imageUrl}"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

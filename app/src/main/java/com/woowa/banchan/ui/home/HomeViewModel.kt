@@ -41,9 +41,7 @@ class HomeViewModel @Inject constructor(
                 getCartCountUseCase()
                     .onSuccess { item ->
                         item.collect {
-                            _cartCountUiState.emit(
-                                UiState.Success(it)
-                            )
+                            _cartCountUiState.emit(UiState.Success(it))
                         }
                     }
                     .onFailure { _cartCountUiState.emit(UiState.Error(it.message)) }
@@ -53,11 +51,7 @@ class HomeViewModel @Inject constructor(
                 getOrderStateUseCase()
                     .onSuccess { uiState ->
                         uiState.collect {
-                            _orderStateUiState.emit(
-                                UiState.Success(
-                                    it
-                                )
-                            )
+                            _orderStateUiState.emit(UiState.Success(it))
                         }
                     }
                     .onFailure { _orderStateUiState.emit(UiState.Error(it.message)) }

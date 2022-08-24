@@ -21,7 +21,6 @@ class MainViewModel @Inject constructor() : HomeBaseViewModel() {
         _linearGridClickEvent.setEvent(checkedId)
     }
 
-
     fun refreshFoodList() {
         super.getFoods(type!!)
     }

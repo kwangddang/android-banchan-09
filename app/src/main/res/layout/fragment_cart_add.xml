@@ -45,8 +45,8 @@
             style="@style/normal_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/bottomsheet_cancel"
             android:onClick="@{() -> vm.setCancelClickEvent()}"
+            android:text="@string/bottomsheet_cancel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -120,9 +120,9 @@
             android:layout_marginTop="24dp"
             android:background="@drawable/background_circle_white"
             android:elevation="4dp"
+            android:onClick="@{() -> vm.setPlusClickEvent()}"
             android:padding="12dp"
             android:src="@drawable/ic_plus"
-            android:onClick="@{() -> vm.setPlusClickEvent()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_s_price" />
 
@@ -136,7 +136,7 @@
             app:layout_constraintBottom_toBottomOf="@id/iv_plus"
             app:layout_constraintEnd_toStartOf="@id/iv_plus"
             app:layout_constraintTop_toTopOf="@id/iv_plus"
-            tools:text="1"/>
+            tools:text="1" />
 
         <ImageView
             android:id="@+id/iv_minus"
@@ -145,9 +145,9 @@
             android:layout_marginTop="24dp"
             android:background="@drawable/background_circle_white"
             android:elevation="4dp"
+            android:onClick="@{() -> vm.setMinusClickEvent()}"
             android:padding="12dp"
             android:src="@drawable/ic_minus"
-            android:onClick="@{() -> vm.setMinusClickEvent()}"
             app:layout_constraintEnd_toStartOf="@id/tv_count"
             app:layout_constraintTop_toBottomOf="@id/tv_s_price" />
 
@@ -169,8 +169,8 @@
             android:layout_height="64dp"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="8dp"
-            android:text="@{@string/add_cart(count)}"
             android:onClick="@{() -> vm.setAddClickEvent(food,count)}"
+            android:text="@{@string/add_cart(count)}"
             app:backgroundTint="@color/main"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

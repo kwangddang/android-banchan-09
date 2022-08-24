@@ -66,35 +66,6 @@ class CartViewModel @Inject constructor(
     private val _bottomsheetEvent = MutableLiveData<SingleEvent<Recent>>()
     val bottomsheetEvent: LiveData<SingleEvent<Recent>> get() = _bottomsheetEvent
 
-    val cartUpdateListener: (Cart, String?) -> Unit = { cart, message ->
-        addUpdateCartCache(cart, removeFlag = false)
-        message?.let { _messageEvent.setEvent(it) }
-    }
-
-    val cartRemoveListener: (Cart) -> Unit = { cart ->
-        addUpdateCartCache(cart, removeFlag = true)
-    }
-
-    val orderClickListener: () -> Unit = {
-        addOrder()
-    }
-
-    val recentClickListener: (Recent) -> Unit = { recent ->
-        _recentClickEvent.setEvent(recent)
-    }
-
-    val recentAllClickListener: () -> Unit = {
-        setFragmentTag("recent")
-    }
-
-    val cartDeleteListener: (Recent) -> Unit = { recent ->
-        deleteCart(recent)
-    }
-
-    val cartAddListener: (Recent) -> Unit = { recent ->
-        _bottomsheetEvent.setEvent(recent)
-    }
-
     init {
         viewModelScope.launch {
             launch {
@@ -127,7 +98,6 @@ class CartViewModel @Inject constructor(
         }
     }
 
-
     fun updateCart() {
         doUpdateCart()
     }
@@ -136,7 +106,7 @@ class CartViewModel @Inject constructor(
         CoroutineScope(Dispatchers.IO).launch { deleteCartUseCase(recent.hash) }
     }
 
-    fun addUpdateCartCache(cart: Cart, removeFlag: Boolean) {
+    private fun addUpdateCartCache(cart: Cart, removeFlag: Boolean) {
         val idx = getCartCacheIdx(cart)
 
         if (idx == -1) updateCartCache.add(Pair(cart, removeFlag))
@@ -148,7 +118,7 @@ class CartViewModel @Inject constructor(
         return -1
     }
 
-    fun addOrder() = viewModelScope.launch {
+    private fun addOrder() = viewModelScope.launch {
         doUpdateCart().join()
         _orderUiState.emit(UiState.Loading)
         val checkedList = mutableListOf<Cart>()
@@ -175,6 +145,35 @@ class CartViewModel @Inject constructor(
                 .setInitialDelay(20, TimeUnit.MINUTES)
                 .build()
         )
+    }
+
+    val cartUpdateListener: (Cart, String?) -> Unit = { cart, message ->
+        addUpdateCartCache(cart, removeFlag = false)
+        message?.let { _messageEvent.setEvent(it) }
+    }
+
+    val cartRemoveListener: (Cart) -> Unit = { cart ->
+        addUpdateCartCache(cart, removeFlag = true)
+    }
+
+    val orderClickListener: () -> Unit = {
+        addOrder()
+    }
+
+    val recentClickListener: (Recent) -> Unit = { recent ->
+        _recentClickEvent.setEvent(recent)
+    }
+
+    val recentAllClickListener: () -> Unit = {
+        setFragmentTag("recent")
+    }
+
+    val cartDeleteListener: (Recent) -> Unit = { recent ->
+        deleteCart(recent)
+    }
+
+    val cartAddListener: (Recent) -> Unit = { recent ->
+        _bottomsheetEvent.setEvent(recent)
     }
 
     fun setBackClickEvent() {

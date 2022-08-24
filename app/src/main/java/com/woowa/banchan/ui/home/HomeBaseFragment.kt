@@ -22,10 +22,17 @@ abstract class HomeBaseFragment<T : ViewDataBinding>(@LayoutRes val layoutRes: I
     abstract val viewModel: HomeBaseViewModel
 
     val homeRVAdapter: HomeRVAdapter by lazy {
-        HomeRVAdapter(viewModel.itemClickListener, viewModel.cartClickListener).apply { managerType = GRID }
+        HomeRVAdapter(
+            viewModel.itemClickListener,
+            viewModel.cartClickListener
+        ).apply { managerType = GRID }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(inflater, layoutRes, container, false)
         return binding.root
     }
@@ -43,7 +50,10 @@ abstract class HomeBaseFragment<T : ViewDataBinding>(@LayoutRes val layoutRes: I
             if (food.checkState)
                 viewModel.deleteCart(food.detailHash)
             else
-                CartAddFragment(food).show(childFragmentManager, getString(R.string.fragment_cart_add))
+                CartAddFragment(food).show(
+                    childFragmentManager,
+                    getString(R.string.fragment_cart_add)
+                )
         })
 
         viewModel.itemClickEvent.observe(viewLifecycleOwner, EventObserver {

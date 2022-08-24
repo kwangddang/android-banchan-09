@@ -7,7 +7,11 @@ import com.woowa.banchan.domain.model.FoodItem
 class BestItemViewHolder(private val binding: ItemBestBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(food: FoodItem, itemClickListener: (String, String) -> Unit, cartClickListener: (FoodItem) -> Unit) {
+    fun bind(
+        food: FoodItem,
+        itemClickListener: (String, String) -> Unit,
+        cartClickListener: (FoodItem) -> Unit
+    ) {
         binding.food = food
         binding.checkState = food.checkState
         binding.layoutHome.setOnClickListener {

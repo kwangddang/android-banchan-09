@@ -27,7 +27,8 @@ class CartCompleteFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_cart_complete, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_cart_complete, container, false)
         initDialog()
         return binding.root
     }

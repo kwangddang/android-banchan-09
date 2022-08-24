@@ -21,8 +21,8 @@
         android:id="@+id/layout_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="16dp"
-        android:paddingHorizontal="8dp">
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="16dp">
 
         <ImageView
             android:id="@+id/iv_thumbnail"

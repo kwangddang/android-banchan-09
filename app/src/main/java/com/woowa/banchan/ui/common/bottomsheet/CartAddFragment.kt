@@ -59,7 +59,10 @@ class CartAddFragment(private val foodItem: FoodItem) : BottomSheetDialogFragmen
             .onEach { state ->
                 if (state is UiState.Success) {
                     parentFragmentManager.commit { remove(this@CartAddFragment) }
-                    CartCompleteFragment().show(parentFragmentManager, getString(R.string.fragment_cart_complete))
+                    CartCompleteFragment().show(
+                        parentFragmentManager,
+                        getString(R.string.fragment_cart_complete)
+                    )
                 } else if (state is UiState.Error) {
                     showToast(state.message)
                 }

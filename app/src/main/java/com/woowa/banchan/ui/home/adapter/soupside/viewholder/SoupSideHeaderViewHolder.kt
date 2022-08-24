@@ -14,7 +14,12 @@ class SoupSideHeaderViewHolder(private val binding: ItemSoupSideHeaderBinding) :
         binding.spinnerSort.adapter = spinnerAdapter
         binding.spinnerSort.setSelection(spinnerPosition)
         binding.spinnerSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 spinnerAdapter.selectedPosition = position
                 spinnerCallback(position)
             }
