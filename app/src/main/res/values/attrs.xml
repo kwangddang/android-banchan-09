@@ -14,4 +14,7 @@
             <flag name="sub_refresh" value="0x03" />
         </attr>
     </declare-styleable>
+    <declare-styleable name="CustomErrorView">
+        <attr name="onClickRefreshButton" format="string" />
+    </declare-styleable>
 </resources>
