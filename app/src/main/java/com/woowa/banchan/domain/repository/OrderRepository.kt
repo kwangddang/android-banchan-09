@@ -7,10 +7,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface OrderRepository {
 
-    suspend fun getTotalOrderList(): Result<Flow<List<Order>>>
-    suspend fun getEachOrder(orderId: Long): Result<Order>
-    suspend fun getOrderDetail(orderId: Long): Result<List<OrderItem>>
-    suspend fun insertCartToOrder(cart: List<Cart>): Result<Order>
-    suspend fun updateOrder(id: Long, deliverState: Boolean): Result<Unit>
-    suspend fun getOrderState(): Result<Flow<Boolean>>
+    suspend fun getTotalOrderList(): Flow<List<Order>>
+    suspend fun getEachOrder(orderId: Long): Order
+    suspend fun getOrderDetail(orderId: Long): List<OrderItem>
+    suspend fun insertCartToOrder(cart: List<Cart>): Order
+    suspend fun updateOrder(id: Long, deliverState: Boolean)
+    suspend fun getOrderState(): Flow<Boolean>
 }

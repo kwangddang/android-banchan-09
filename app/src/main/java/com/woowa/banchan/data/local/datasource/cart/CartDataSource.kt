@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface CartDataSource {
 
-    suspend fun getCartList(): Result<Flow<Map<String, CartDto>>>
+    suspend fun getCartList(): Flow<Map<String, CartDto>>
 
     suspend fun getCartCount(): Result<Flow<Int>>
 

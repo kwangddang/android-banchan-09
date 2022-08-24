@@ -6,9 +6,9 @@ import com.woowa.banchan.domain.model.FoodItem
 
 interface FoodRepository {
 
-    suspend fun getBestFoods(): Result<List<BestFoodCategory>>
+    suspend fun getBestFoods(): List<BestFoodCategory>
 
-    suspend fun getFoods(type: String): Result<List<FoodItem>>
+    suspend fun getFoods(type: String): List<FoodItem>
 
-    suspend fun getDetailFood(hash: String): Result<DetailItem>
+    suspend fun getDetailFood(hash: String): DetailItem
 }

@@ -55,23 +55,22 @@ abstract class HomeBaseViewModel : ViewModel() {
 
     fun deleteCart(hash: String) {
         viewModelScope.launch {
-            deleteCartUseCase(hash).collect { uiState ->
-                _deleteUiState.emit(uiState)
-            }
+            deleteCartUseCase(hash)
+                .onSuccess { _deleteUiState.emit(UiState.Success(Unit)) }
+                .onFailure { _deleteUiState.emit(UiState.Error(it.message)) }
         }
     }
 
     fun getFoods(type: String) {
         viewModelScope.launch {
             _itemUiState.emit(UiState.Loading)
-            getFoodsUseCase(type).collect { uiState ->
-                if (uiState is UiState.Success) {
-                    defaultFoods = uiState.data
+            getFoodsUseCase(type).onSuccess { uiState ->
+                uiState.collect {
+                    defaultFoods = it
                     sortList()
-                } else {
-                    _itemUiState.emit(uiState)
                 }
-            }
+
+            }.onFailure { _itemUiState.emit(UiState.Error(it.message)) }
         }
     }
 

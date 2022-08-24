@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface CartRepository {
 
-    suspend fun getCartList(): Result<Flow<Map<String, Cart>>>
+    suspend fun getCartList(): Flow<Map<String, Cart>>
 
     suspend fun getCartCount(): Result<Flow<Int>>
 

@@ -36,13 +36,17 @@ class OrderDetailViewModel @Inject constructor(
 
     fun getOrderDetail() {
         viewModelScope.launch {
-            getOrderDetailUseCase(order!!.id).collect { _orderItemUiState.emit(it) }
+            getOrderDetailUseCase(order!!.id)
+                .onSuccess { _orderItemUiState.emit(UiState.Success(it)) }
+                .onFailure { _orderItemUiState.emit(UiState.Error(it.message)) }
         }
     }
 
     fun setRefreshClickEvent() {
         viewModelScope.launch {
-            getEachOrderUseCase(order!!.id).collect { _orderUiState.emit(it) }
+            getEachOrderUseCase(order!!.id)
+                .onSuccess { _orderUiState.emit(UiState.Success(it)) }
+                .onFailure { _orderUiState.emit(UiState.Error(it.message)) }
         }
     }
 

@@ -5,7 +5,6 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.woowa.banchan.domain.usecase.order.inter.UpdateOrderUseCase
-import com.woowa.banchan.ui.common.uistate.UiState
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
@@ -18,11 +17,10 @@ class OrderWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
 
-        val result = updateOrderUseCase(inputData.getLong("id", 0), true)
-        return if (result is UiState.Success) {
-            Result.success()
-        } else {
-            Result.failure()
-        }
+        updateOrderUseCase(inputData.getLong("id", 0), true)
+            .onSuccess { return Result.success() }
+            .onFailure { return Result.failure() }
+
+        return Result.failure()
     }
 }

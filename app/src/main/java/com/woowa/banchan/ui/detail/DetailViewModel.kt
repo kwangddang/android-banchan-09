@@ -19,7 +19,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -68,15 +67,23 @@ class DetailViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             launch {
-                getCartCountUseCase().collect { uiState ->
-                    _cartCountUiState.emit(uiState)
-                }
+                getCartCountUseCase()
+                    .onSuccess { it.collect { item -> _cartCountUiState.emit(UiState.Success(item)) } }
+                    .onFailure { _cartCountUiState.emit(UiState.Error(it.message)) }
             }
 
             launch {
-                getOrderStateUseCase().collect { uiState ->
-                    _orderStateUiState.emit(uiState)
-                }
+                getOrderStateUseCase()
+                    .onSuccess { uiState ->
+                        uiState.collect {
+                            _orderStateUiState.emit(
+                                UiState.Success(
+                                    it
+                                )
+                            )
+                        }
+                    }
+                    .onFailure { _orderStateUiState.emit(UiState.Error(it.message)) }
             }
         }
     }
@@ -87,9 +94,9 @@ class DetailViewModel @Inject constructor(
 
     fun getDetailFood(hash: String) {
         viewModelScope.launch {
-            getDetailFoodUseCase(hash).collect { uiState ->
-                _detailUiState.emit(uiState)
-            }
+            getDetailFoodUseCase(hash)
+                .onSuccess { _detailUiState.emit(UiState.Success(it)) }
+                .onFailure { _detailUiState.emit(UiState.Error(it.message)) }
         }
     }
 
@@ -99,9 +106,9 @@ class DetailViewModel @Inject constructor(
                 (detailUiState.value as UiState.Success).data,
                 title,
                 totalCount.value!!
-            ).collect { uiState ->
-                _insertionUiState.emit(SingleEvent(uiState))
-            }
+            )
+                .onSuccess { _insertionUiState.emit(SingleEvent(UiState.Success(Unit))) }
+                .onFailure { _insertionUiState.emit(SingleEvent(UiState.Error(it.message))) }
         }
     }
 
@@ -111,7 +118,7 @@ class DetailViewModel @Inject constructor(
                 (detailUiState.value as UiState.Success).data,
                 title,
                 totalCount
-            ).collect()
+            )
         }
     }
 
@@ -133,9 +140,9 @@ class DetailViewModel @Inject constructor(
                 detailItem.value!!,
                 title.value!!,
                 totalCount.value!!
-            ).collect { uiState ->
-                _updateUiState.emit(SingleEvent(uiState))
-            }
+            )
+                .onSuccess { _updateUiState.emit(SingleEvent(UiState.Success(Unit))) }
+                .onFailure { _updateUiState.emit(SingleEvent(UiState.Error(it.message))) }
         }
     }
 
