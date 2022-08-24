@@ -68,21 +68,13 @@ class DetailViewModel @Inject constructor(
         viewModelScope.launch {
             launch {
                 getCartCountUseCase()
-                    .onSuccess { it.collect { item -> _cartCountUiState.emit(UiState.Success(item)) } }
+                    .onSuccess { flow -> flow.collect { _cartCountUiState.emit(UiState.Success(it)) } }
                     .onFailure { _cartCountUiState.emit(UiState.Error(it.message)) }
             }
 
             launch {
                 getOrderStateUseCase()
-                    .onSuccess { uiState ->
-                        uiState.collect {
-                            _orderStateUiState.emit(
-                                UiState.Success(
-                                    it
-                                )
-                            )
-                        }
-                    }
+                    .onSuccess { flow -> flow.collect { _orderStateUiState.emit(UiState.Success(it)) } }
                     .onFailure { _orderStateUiState.emit(UiState.Error(it.message)) }
             }
         }
@@ -136,11 +128,7 @@ class DetailViewModel @Inject constructor(
 
     fun setUpdateClickEvent() {
         viewModelScope.launch {
-            updateCartUseCase(
-                detailItem.value!!,
-                title.value!!,
-                totalCount.value!!
-            )
+            updateCartUseCase(detailItem.value!!, title.value!!, totalCount.value!!)
                 .onSuccess { _updateUiState.emit(SingleEvent(UiState.Success(Unit))) }
                 .onFailure { _updateUiState.emit(SingleEvent(UiState.Error(it.message))) }
         }

@@ -60,9 +60,6 @@ class CartViewModel @Inject constructor(
     private val _recentClickEvent = MutableLiveData<SingleEvent<Recent>>()
     val recentClickEvent: LiveData<SingleEvent<Recent>> get() = _recentClickEvent
 
-    private val _checkClickEvent = MutableLiveData<SingleEvent<Unit>>()
-    val checkClickEvent: LiveData<SingleEvent<Unit>> get() = _checkClickEvent
-
     private val _bottomsheetEvent = MutableLiveData<SingleEvent<Recent>>()
     val bottomsheetEvent: LiveData<SingleEvent<Recent>> get() = _bottomsheetEvent
 
@@ -71,14 +68,14 @@ class CartViewModel @Inject constructor(
             launch {
                 _cartUiState.emit(UiState.Loading)
                 getCartListUseCase()
-                    .onSuccess { it.collect { item -> _cartUiState.emit(UiState.Success(item)) } }
+                    .onSuccess { flow -> flow.collect { _cartUiState.emit(UiState.Success(it)) } }
                     .onFailure { _cartUiState.emit(UiState.Error(it.message)) }
             }
 
             launch {
                 _recentUiState.emit(UiState.Loading)
                 getRecentlyViewedFoodsUseCase()
-                    .onSuccess { it.collect { item -> _recentUiState.emit(UiState.Success(item)) } }
+                    .onSuccess { flow -> flow.collect { _recentUiState.emit(UiState.Success(it)) } }
                     .onFailure { _recentUiState.emit(UiState.Error(it.message)) }
             }
         }

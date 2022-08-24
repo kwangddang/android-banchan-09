@@ -17,11 +17,11 @@ class MainViewModel @Inject constructor() : HomeBaseViewModel() {
     private val _linearGridClickEvent = MutableLiveData<SingleEvent<Int>>()
     val linearGridClickEvent: LiveData<SingleEvent<Int>> get() = _linearGridClickEvent
 
-    val checkedChangeListener: (RadioGroup, Int) -> Unit = { group, checkedId ->
+    val checkedChangeListener: (RadioGroup, Int) -> Unit = { _, checkedId ->
         _linearGridClickEvent.setEvent(checkedId)
     }
 
     fun refreshFoodList() {
-        super.getFoods(type!!)
+        getFoods(type!!)
     }
 }

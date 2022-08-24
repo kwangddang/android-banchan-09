@@ -10,6 +10,6 @@ class SoupViewModel @Inject constructor() : HomeBaseViewModel() {
     var type: String? = null
 
     fun refreshFoodList() {
-        super.getFoods(type!!)
+        getFoods(type!!)
     }
 }

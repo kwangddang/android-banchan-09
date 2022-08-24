@@ -32,17 +32,14 @@ class CustomToolbar(
         currentMode = a.getInt(R.styleable.CustomToolbar_toolBarType, 0)
 
         with(binding) {
-            // title 설정
             tvTitle.text = a.getString(R.styleable.CustomToolbar_toolbarTitle).toString()
 
-            // mode에 따른 보여지는 view 설정
             ivBack.isVisible = currentMode != 0x00
             ivRefresh.isVisible = currentMode == 0x03
             layoutMainIcons.isVisible = currentMode == 0x00
             unSetUserNotifierIcon()
             setCartCountIcon(0)
 
-            // 기본 버튼 설정
             ivBack.setOnClickListener {
                 val callBackStr = a.getString(R.styleable.CustomToolbar_onClickBackIcon)
                     ?: return@setOnClickListener
@@ -94,8 +91,6 @@ class CustomToolbar(
     fun setAppBarTitle(title: String) {
         binding.tvTitle.text = title
     }
-
-    fun getCurrentMode(): Int = currentMode
 
     private fun createCallBackFunc(callBackStr: String): () -> Unit {
         val decoded = Base64.decode(callBackStr, Base64.DEFAULT)

@@ -36,7 +36,7 @@ class OrderViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             getTotalOrderUseCase()
-                .onSuccess { it.collect { item -> _orderUiState.emit(UiState.Success(item)) } }
+                .onSuccess { flow -> flow.collect { _orderUiState.emit(UiState.Success(it)) } }
                 .onFailure { _orderUiState.emit(UiState.Error(it.message)) }
         }
     }

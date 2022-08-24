@@ -73,9 +73,7 @@ class CartUpdateFragment : DialogFragment() {
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-        viewModel.cancelClickEvent.observe(viewLifecycleOwner, EventObserver {
-            dismiss()
-        })
+        viewModel.cancelClickEvent.observe(viewLifecycleOwner, EventObserver { dismiss() })
     }
 
 }
