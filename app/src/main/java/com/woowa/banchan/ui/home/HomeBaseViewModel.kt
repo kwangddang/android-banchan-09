@@ -64,14 +64,13 @@ abstract class HomeBaseViewModel : ViewModel() {
     fun getFoods(type: String) {
         viewModelScope.launch {
             _itemUiState.emit(UiState.Loading)
-            getFoodsUseCase(type).collect { uiState ->
-                if (uiState is UiState.Success) {
-                    defaultFoods = uiState.data
+            getFoodsUseCase(type).onSuccess { uiState ->
+                uiState.collect {
+                    defaultFoods = it
                     sortList()
-                } else {
-                    _itemUiState.emit(uiState)
                 }
-            }
+
+            }.onFailure { _itemUiState.emit(UiState.Error(it.message)) }
         }
     }
 
