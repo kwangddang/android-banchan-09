@@ -8,6 +8,7 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMainBinding
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.common.viewutils.showContent
+import com.woowa.banchan.ui.common.viewutils.showError
 import com.woowa.banchan.ui.common.viewutils.showLoading
 import com.woowa.banchan.ui.home.GRID
 import com.woowa.banchan.ui.home.HomeBaseFragment
@@ -64,13 +65,17 @@ class MainFragment : HomeBaseFragment<FragmentMainBinding>(R.layout.fragment_mai
                 when (state) {
                     is UiState.Success -> {
                         homeRVAdapter.submitList(state.data)
-                        showContent(binding.rvMain, binding.pbLoading)
+                        showContent(binding.rvMain, binding.pbLoading, binding.evNetwork)
                     }
                     is UiState.Error -> {
-                        showContent(binding.rvMain, binding.pbLoading)
+                        showError(binding.rvMain, binding.pbLoading, binding.evNetwork)
                         showToast(state.message)
                     }
-                    is UiState.Loading -> showLoading(binding.rvMain, binding.pbLoading)
+                    is UiState.Loading -> showLoading(
+                        binding.rvMain,
+                        binding.pbLoading,
+                        binding.evNetwork
+                    )
                     else -> {}
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)

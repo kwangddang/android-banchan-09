@@ -14,6 +14,7 @@ import com.woowa.banchan.ui.common.event.EventObserver
 import com.woowa.banchan.ui.common.popup.CartCompleteFragment
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.common.viewutils.showContent
+import com.woowa.banchan.ui.common.viewutils.showError
 import com.woowa.banchan.ui.common.viewutils.showLoading
 import com.woowa.banchan.ui.detail.adapter.DetailRVAdapter
 import com.woowa.banchan.ui.detail.adapter.DetailVPAdapter
@@ -64,7 +65,7 @@ class DetailActivity : AppCompatActivity() {
             .onEach { state ->
                 when (state) {
                     is UiState.Success -> {
-                        showContent(binding.nsvDetail, binding.pbLoading)
+                        showContent(binding.nsvDetail, binding.pbLoading, binding.evNetwork)
                         viewModel.sPrice.value = state.data.sPrice
                         viewModel.detailItem.value = state.data
                         binding.vpDetail.adapter = DetailVPAdapter(state.data.thumbImages)
@@ -79,10 +80,14 @@ class DetailActivity : AppCompatActivity() {
                         )
                     }
                     is UiState.Error -> {
-                        showContent(binding.nsvDetail, binding.pbLoading)
+                        showError(binding.nsvDetail, binding.pbLoading, binding.evNetwork)
                         showToast(state.message)
                     }
-                    is UiState.Loading -> showLoading(binding.nsvDetail, binding.pbLoading)
+                    is UiState.Loading -> showLoading(
+                        binding.nsvDetail,
+                        binding.pbLoading,
+                        binding.evNetwork
+                    )
                     else -> {}
                 }
             }.launchIn(lifecycleScope)
