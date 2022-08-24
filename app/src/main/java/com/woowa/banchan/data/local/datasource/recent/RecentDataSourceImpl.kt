@@ -10,16 +10,16 @@ class RecentDataSourceImpl @Inject constructor(
     private val recentDao: RecentDao
 ) : RecentDataSource {
 
-    override suspend fun getRecentList(): Result<List<RecentDto>> =
-        runCatching {
-            withContext(Dispatchers.IO) {
-                recentDao.getRecentList()
-            }
+    override suspend fun getRecentList(): List<RecentDto> =
+        withContext(Dispatchers.IO) {
+            recentDao.getRecentList()
         }
 
-    override suspend fun deleteRecent(recentDto: RecentDto): Result<Unit> =
-        runCatching { recentDao.delete(recentDto) }
+    override suspend fun deleteRecent(recentDto: RecentDto) {
+        recentDao.delete(recentDto)
+    }
 
-    override suspend fun insertRecent(recentDto: RecentDto): Result<Unit> =
-        runCatching { recentDao.insert(recentDto) }
+    override suspend fun insertRecent(recentDto: RecentDto) {
+        recentDao.insert(recentDto)
+    }
 }

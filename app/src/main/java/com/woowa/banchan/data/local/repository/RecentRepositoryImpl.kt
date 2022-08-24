@@ -13,22 +13,22 @@ class RecentRepositoryImpl @Inject constructor(
     private val recentDataSource: RecentDataSource
 ) : RecentRepository {
 
-    override suspend fun getRecentList(): Result<List<Recent>> =
-        runCatching {
-            val list = recentDataSource.getRecentList().getOrThrow()
-            val curCalendar = Calendar.getInstance().apply { time = Date() }
-            val calendar = Calendar.getInstance()
+    override suspend fun getRecentList(): List<Recent> {
+        val list = recentDataSource.getRecentList()
+        val curCalendar = Calendar.getInstance().apply { time = Date() }
+        val calendar = Calendar.getInstance()
 
-            val retList = mutableListOf<RecentDto>()
-            list.forEach {
-                calendar.time = it.time
-                if (calendar.get(Calendar.DAY_OF_WEEK) != curCalendar.get(Calendar.DAY_OF_WEEK))
-                    recentDataSource.deleteRecent(it)
-                else retList.add(it)
-            }
-            retList.map { it.toRecent() }
+        val retList = mutableListOf<RecentDto>()
+        list.forEach {
+            calendar.time = it.time
+            if (calendar.get(Calendar.DAY_OF_WEEK) != curCalendar.get(Calendar.DAY_OF_WEEK))
+                recentDataSource.deleteRecent(it)
+            else retList.add(it)
         }
+        return retList.map { it.toRecent() }
+    }
 
-    override suspend fun insertRecent(recent: Recent): Result<Unit> =
-        runCatching { recentDataSource.insertRecent(recent.toRecentDto()) }
+    override suspend fun insertRecent(recent: Recent) {
+        recentDataSource.insertRecent(recent.toRecentDto())
+    }
 }

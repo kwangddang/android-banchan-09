@@ -106,9 +106,9 @@ class CartViewModel @Inject constructor(
 
             launch {
                 _recentUiState.emit(UiState.Loading)
-                getRecentlyViewedFoodsUseCase().collect {
-                    _recentUiState.emit(it)
-                }
+                getRecentlyViewedFoodsUseCase()
+                    .onSuccess { it.collect { item -> _recentUiState.emit(UiState.Success(item)) } }
+                    .onFailure { _recentUiState.emit(UiState.Error(it.message)) }
             }
         }
     }
@@ -156,10 +156,11 @@ class CartViewModel @Inject constructor(
 
         if (uiState is UiState.Success) {
             uiState.data.values.forEach { cart -> if (cart.checkState) checkedList.add(cart) }
-            insertCartToOrderUseCase(checkedList).collect { c ->
-                _orderUiState.emit(c)
+            insertCartToOrderUseCase(checkedList).onSuccess { order ->
+                _orderUiState.emit(UiState.Success(order))
                 checkedList.forEach { launch { deleteCartUseCase(it.hash) } }
             }
+                .onFailure { _orderUiState.emit(UiState.Error(it.message)) }
         } else {
             _orderUiState.emit(UiState.Error(null))
         }
