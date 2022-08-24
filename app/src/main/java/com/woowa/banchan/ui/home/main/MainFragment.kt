@@ -52,7 +52,7 @@ class MainFragment : HomeBaseFragment<FragmentMainBinding>(R.layout.fragment_mai
                     }
                     is UiState.Error -> {
                         showError(binding.rvMain, binding.pbLoading, binding.evNetwork)
-                        showToast(state.message)
+                        showToast(state.error.throwable.message)
                     }
                     is UiState.Loading -> showLoading(
                         binding.rvMain,

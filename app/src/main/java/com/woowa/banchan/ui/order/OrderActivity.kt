@@ -49,7 +49,7 @@ class OrderActivity : AppCompatActivity() {
             .onEach {
                 when (it) {
                     is UiState.Success -> orderRVAdapter.submitOrderList(it.data)
-                    is UiState.Error -> showToast(it.message)
+                    is UiState.Error -> showToast(it.error.throwable.message)
                     else -> {}
                 }
             }.launchIn(lifecycleScope)

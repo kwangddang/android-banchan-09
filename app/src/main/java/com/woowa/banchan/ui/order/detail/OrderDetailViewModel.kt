@@ -8,6 +8,7 @@ import com.woowa.banchan.domain.model.Order
 import com.woowa.banchan.domain.model.OrderItem
 import com.woowa.banchan.domain.usecase.order.inter.GetEachOrderUseCase
 import com.woowa.banchan.domain.usecase.order.inter.GetOrderDetailUseCase
+import com.woowa.banchan.ui.common.error.getErrorState
 import com.woowa.banchan.ui.common.event.SingleEvent
 import com.woowa.banchan.ui.common.event.setEvent
 import com.woowa.banchan.ui.common.uistate.UiState
@@ -38,7 +39,7 @@ class OrderDetailViewModel @Inject constructor(
         viewModelScope.launch {
             getOrderDetailUseCase(order!!.id)
                 .onSuccess { _orderItemUiState.emit(UiState.Success(it)) }
-                .onFailure { _orderItemUiState.emit(UiState.Error(it.message)) }
+                .onFailure { _orderItemUiState.emit(UiState.Error(getErrorState(it))) }
         }
     }
 
@@ -46,7 +47,7 @@ class OrderDetailViewModel @Inject constructor(
         viewModelScope.launch {
             getEachOrderUseCase(order!!.id)
                 .onSuccess { _orderUiState.emit(UiState.Success(it)) }
-                .onFailure { _orderUiState.emit(UiState.Error(it.message)) }
+                .onFailure { _orderUiState.emit(UiState.Error(getErrorState(it))) }
         }
     }
 

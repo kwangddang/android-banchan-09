@@ -74,7 +74,7 @@ class RecentFragment : Fragment() {
             .onEach {
                 when (it) {
                     is UiState.Success -> adapter.submitList(it.data)
-                    is UiState.Error -> showToast(it.message)
+                    is UiState.Error -> showToast(it.error.throwable.message)
                     else -> {}
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)

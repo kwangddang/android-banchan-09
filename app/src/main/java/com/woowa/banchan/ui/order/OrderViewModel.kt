@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.woowa.banchan.domain.model.Order
 import com.woowa.banchan.domain.usecase.order.inter.GetTotalOrderUseCase
+import com.woowa.banchan.ui.common.error.getErrorState
 import com.woowa.banchan.ui.common.event.SingleEvent
 import com.woowa.banchan.ui.common.event.setEvent
 import com.woowa.banchan.ui.common.uistate.UiState
@@ -37,7 +38,7 @@ class OrderViewModel @Inject constructor(
         viewModelScope.launch {
             getTotalOrderUseCase()
                 .onSuccess { flow -> flow.collect { _orderUiState.emit(UiState.Success(it)) } }
-                .onFailure { _orderUiState.emit(UiState.Error(it.message)) }
+                .onFailure { _orderUiState.emit(UiState.Error(getErrorState(it))) }
         }
     }
 

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.domain.usecase.cart.inter.DeleteCartUseCase
 import com.woowa.banchan.domain.usecase.food.inter.GetFoodsUseCase
+import com.woowa.banchan.ui.common.error.getErrorState
 import com.woowa.banchan.ui.common.event.SingleEvent
 import com.woowa.banchan.ui.common.event.setEvent
 import com.woowa.banchan.ui.common.uistate.UiState
@@ -57,7 +58,7 @@ abstract class HomeBaseViewModel : ViewModel() {
         viewModelScope.launch {
             deleteCartUseCase(hash)
                 .onSuccess { _deleteUiState.emit(UiState.Success(Unit)) }
-                .onFailure { _deleteUiState.emit(UiState.Error(it.message)) }
+                .onFailure { _deleteUiState.emit(UiState.Error(getErrorState(it))) }
         }
     }
 
@@ -70,7 +71,7 @@ abstract class HomeBaseViewModel : ViewModel() {
                     sortList()
                 }
 
-            }.onFailure { _itemUiState.emit(UiState.Error(it.message)) }
+            }.onFailure { _itemUiState.emit(UiState.Error(getErrorState(it))) }
         }
     }
 

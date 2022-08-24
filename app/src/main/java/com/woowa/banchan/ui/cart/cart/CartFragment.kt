@@ -89,7 +89,7 @@ class CartFragment : Fragment() {
             .onEach {
                 when (it) {
                     is UiState.Success -> cartRVAdapter.submitCartList(it.data.values.toList())
-                    is UiState.Error -> showToast(it.message)
+                    is UiState.Error -> showToast(it.error.throwable.message)
                     else -> {}
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
@@ -98,7 +98,7 @@ class CartFragment : Fragment() {
             .onEach {
                 when (it) {
                     is UiState.Success -> cartRVAdapter.setPreviewList(it.data)
-                    is UiState.Error -> showToast(it.message)
+                    is UiState.Error -> showToast(it.error.throwable.message)
                     else -> {}
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
@@ -113,7 +113,7 @@ class CartFragment : Fragment() {
                         startActivity(intent)
                         requireActivity().finish()
                     }
-                    is UiState.Error -> showToast(it.message)
+                    is UiState.Error -> showToast(it.error.throwable.message)
                     else -> {}
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)

@@ -51,7 +51,7 @@ class SideFragment : HomeBaseFragment<FragmentSideBinding>(R.layout.fragment_sid
                     }
                     is UiState.Error -> {
                         showError(binding.rvSide, binding.pbLoading, binding.evNetwork)
-                        showToast(state.message)
+                        showToast(state.error.throwable.message)
                     }
                     is UiState.Loading -> showLoading(
                         binding.rvSide,

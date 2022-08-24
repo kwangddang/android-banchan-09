@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.woowa.banchan.domain.usecase.cart.inter.GetCartCountUseCase
 import com.woowa.banchan.domain.usecase.order.inter.GetOrderStateUseCase
+import com.woowa.banchan.ui.common.error.getErrorState
 import com.woowa.banchan.ui.common.event.SingleEvent
 import com.woowa.banchan.ui.common.event.setEvent
 import com.woowa.banchan.ui.common.uistate.UiState
@@ -40,13 +41,13 @@ class HomeViewModel @Inject constructor(
             launch {
                 getCartCountUseCase()
                     .onSuccess { flow -> flow.collect { _cartCountUiState.emit(UiState.Success(it)) } }
-                    .onFailure { _cartCountUiState.emit(UiState.Error(it.message)) }
+                    .onFailure { _cartCountUiState.emit(UiState.Error(getErrorState(it))) }
             }
 
             launch {
                 getOrderStateUseCase()
                     .onSuccess { flow -> flow.collect { _orderStateUiState.emit(UiState.Success(it)) } }
-                    .onFailure { _orderStateUiState.emit(UiState.Error(it.message)) }
+                    .onFailure { _orderStateUiState.emit(UiState.Error(getErrorState(it))) }
             }
         }
     }

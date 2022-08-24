@@ -10,6 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ActivityDetailBinding
 import com.woowa.banchan.ui.cart.CartActivity
+import com.woowa.banchan.ui.common.error.DataBaseError.UNIQUE_KEY_DUPLICATE
+import com.woowa.banchan.ui.common.error.ErrorType
 import com.woowa.banchan.ui.common.event.EventObserver
 import com.woowa.banchan.ui.common.key.foodDetailHash
 import com.woowa.banchan.ui.common.key.foodDetailTitle
@@ -80,7 +82,7 @@ class DetailActivity : AppCompatActivity() {
                     }
                     is UiState.Error -> {
                         showError(binding.nsvDetail, binding.pbLoading, binding.evNetwork)
-                        showToast(state.message)
+                        showToast(state.error.throwable.message)
                     }
                     is UiState.Loading -> showLoading(
                         binding.nsvDetail,
@@ -101,13 +103,13 @@ class DetailActivity : AppCompatActivity() {
                         getString(R.string.fragment_cart_complete)
                     )
                 } else if (state is UiState.Error) {
-                    if (state.message?.substring(0, 6) == "UNIQUE") {
+                    if (state.error.errorType == ErrorType.DATABASE && state.error.errorStatsCode == UNIQUE_KEY_DUPLICATE) {
                         CartUpdateFragment().show(
                             supportFragmentManager,
                             getString(R.string.fragment_cart_update)
                         )
                     } else {
-                        showToast(state.message)
+                        showToast(state.error.throwable.message)
                     }
                 }
             }.launchIn(lifecycleScope)
@@ -117,7 +119,7 @@ class DetailActivity : AppCompatActivity() {
                 if (state is UiState.Success)
                     binding.ctbToolbar.setCartCountIcon(state.data)
                 else if (state is UiState.Error)
-                    showToast(state.message)
+                    showToast(state.error.throwable.message)
 
             }.launchIn(lifecycleScope)
 
@@ -129,7 +131,7 @@ class DetailActivity : AppCompatActivity() {
                     else
                         binding.ctbToolbar.unSetUserNotifierIcon()
                 } else if (state is UiState.Error)
-                    showToast(state.message)
+                    showToast(state.error.throwable.message)
 
             }.launchIn(lifecycleScope)
 
