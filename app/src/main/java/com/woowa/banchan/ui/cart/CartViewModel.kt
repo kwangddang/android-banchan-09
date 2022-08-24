@@ -21,7 +21,6 @@ import com.woowa.banchan.ui.common.event.setEvent
 import com.woowa.banchan.ui.common.key.orderWorkerId
 import com.woowa.banchan.ui.common.livedata.SingleLiveData
 import com.woowa.banchan.ui.common.uistate.UiState
-import com.woowa.banchan.ui.worker.OrderWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
