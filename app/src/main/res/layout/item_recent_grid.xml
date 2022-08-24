@@ -10,7 +10,7 @@
             type="com.woowa.banchan.domain.model.Recent" />
 
         <variable
-            name="isPreview"
+            name="checkState"
             type="Boolean" />
 
         <import type="android.view.View" />
@@ -42,7 +42,7 @@
             android:focusable="true"
             android:padding="8dp"
             android:src="@drawable/ic_cart"
-            android:visibility="@{isPreview ? View.GONE : View.VISIBLE}"
+            android:visibility="@{checkState ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
             app:layout_constraintEnd_toEndOf="@id/iv_thumbnail" />
 
@@ -55,7 +55,7 @@
             android:elevation="8dp"
             android:padding="8dp"
             android:src="@drawable/ic_check_white"
-            android:visibility="@{(!isPreview &amp;&amp; recent.checkState) ? View.VISIBLE : View.GONE}"
+            android:visibility="@{checkState ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
             app:layout_constraintEnd_toEndOf="@id/iv_thumbnail" />
 
