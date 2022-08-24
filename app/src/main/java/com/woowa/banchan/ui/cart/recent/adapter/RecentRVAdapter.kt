@@ -31,7 +31,7 @@ class RecentRVAdapter : ListAdapter<Recent, RecentGridItemViewHolder>(diffUtil) 
     }
 
     override fun onBindViewHolder(holder: RecentGridItemViewHolder, position: Int, payloads: MutableList<Any>) {
-        if(payloads.isEmpty())
+        if (payloads.isEmpty())
             super.onBindViewHolder(holder, position, payloads)
         else
             holder.bind(payloads.first() as Boolean)
@@ -65,7 +65,7 @@ class RecentRVAdapter : ListAdapter<Recent, RecentGridItemViewHolder>(diffUtil) 
             }
 
             override fun getChangePayload(oldItem: Recent, newItem: Recent): Any? {
-                if(oldItem.checkState != newItem.checkState)
+                if (oldItem.checkState != newItem.checkState)
                     return newItem.checkState
 
                 return super.getChangePayload(oldItem, newItem)

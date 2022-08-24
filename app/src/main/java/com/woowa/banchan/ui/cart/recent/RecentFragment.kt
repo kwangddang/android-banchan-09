@@ -10,15 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.RecyclerView
 import com.woowa.banchan.R
 import com.woowa.banchan.data.local.entity.toFoodItem
-import com.woowa.banchan.databinding.FragmentCartBinding
 import com.woowa.banchan.databinding.FragmentRecentBinding
 import com.woowa.banchan.domain.model.Recent
 import com.woowa.banchan.ui.cart.CartViewModel
 import com.woowa.banchan.ui.cart.recent.adapter.RecentRVAdapter
 import com.woowa.banchan.ui.common.bottomsheet.CartAddFragment
+import com.woowa.banchan.ui.common.event.EventObserver
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.detail.DetailActivity
 import com.woowa.banchan.utils.showToast
@@ -56,27 +55,16 @@ class RecentFragment : Fragment() {
 
     private fun initListener() {
         val listener = object : RecentRVAdapter.RecentlyViewedCallBackListener {
-
             override fun onClickItem(recent: Recent) {
-                val intent =
-                    Intent(this@RecentFragment.requireActivity(), DetailActivity::class.java)
-                with(intent) {
-                    putExtra("title", recent.title)
-                    putExtra("hash", recent.hash)
-                }
-                startActivity(intent)
-                this@RecentFragment.requireActivity().finish()
+                viewModel.recentClickListener(recent)
             }
 
             override fun onClickCheckButton(recent: Recent) {
-                viewModel.deleteCart(recent)
+                viewModel.cartDeleteListener(recent)
             }
 
             override fun onClickCartButton(recent: Recent) {
-                CartAddFragment(recent.toFoodItem()).show(
-                    childFragmentManager,
-                    getString(R.string.fragment_cart_add)
-                )
+                viewModel.cartAddListener(recent)
             }
         }
         adapter.setRecentlyViewedCallBackListener(listener)
@@ -91,5 +79,22 @@ class RecentFragment : Fragment() {
                     else -> {}
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.recentClickEvent.observe(viewLifecycleOwner, EventObserver { recent ->
+            val intent = Intent(this@RecentFragment.requireActivity(), DetailActivity::class.java)
+            with(intent) {
+                putExtra("title", recent.title)
+                putExtra("hash", recent.hash)
+            }
+            startActivity(intent)
+            this@RecentFragment.requireActivity().finish()
+        })
+
+        viewModel.bottomsheetEvent.observe(viewLifecycleOwner, EventObserver { recent ->
+            CartAddFragment(recent.toFoodItem()).show(
+                childFragmentManager,
+                getString(R.string.fragment_cart_add)
+            )
+        })
     }
 }

@@ -61,6 +61,12 @@ class CartViewModel @Inject constructor(
     private val _recentClickEvent = MutableLiveData<SingleEvent<Recent>>()
     val recentClickEvent: LiveData<SingleEvent<Recent>> get() = _recentClickEvent
 
+    private val _checkClickEvent = MutableLiveData<SingleEvent<Unit>>()
+    val checkClickEvent: LiveData<SingleEvent<Unit>> get() = _checkClickEvent
+
+    private val _bottomsheetEvent = MutableLiveData<SingleEvent<Recent>>()
+    val bottomsheetEvent: LiveData<SingleEvent<Recent>> get() = _bottomsheetEvent
+
     val cartUpdateListener: (Cart, String?) -> Unit = { cart, message ->
         addUpdateCartCache(cart, removeFlag = false)
         message?.let { _messageEvent.setEvent(it) }
@@ -80,6 +86,14 @@ class CartViewModel @Inject constructor(
 
     val recentAllClickListener: () -> Unit = {
         setFragmentTag("recent")
+    }
+
+    val cartDeleteListener: (Recent) -> Unit = { recent ->
+        deleteCart(recent)
+    }
+
+    val cartAddListener: (Recent) -> Unit = { recent ->
+        _bottomsheetEvent.setEvent(recent)
     }
 
     init {
