@@ -20,7 +20,7 @@ class OrderDataSourceImpl @Inject constructor(
     override suspend fun getTotalOrderList(): Flow<List<OrderDto>> =
         orderDao.getTotalOrderList()
 
-    override suspend fun getOrderDetail(orderId: Long): List<OrderItemDto> =
+    override suspend fun getOrderDetail(orderId: Long): Flow<List<OrderItemDto>> =
         orderItemDao.getOrderDetail(orderId)
 
     @WorkerThread

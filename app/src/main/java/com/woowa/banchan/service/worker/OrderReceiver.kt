@@ -76,7 +76,6 @@ class OrderReceiver : BroadcastReceiver(){
         workManager.enqueue(
             OneTimeWorkRequestBuilder<OrderWorker>()
                 .setInputData(Data.Builder().putLong("id", orderId).build())
-                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 .build()
         )
     }

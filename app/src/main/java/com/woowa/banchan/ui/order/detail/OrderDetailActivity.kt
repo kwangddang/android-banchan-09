@@ -9,11 +9,11 @@ import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ActivityOrderDetailBinding
 import com.woowa.banchan.domain.model.Order
+import com.woowa.banchan.domain.model.OrderItem
 import com.woowa.banchan.ui.common.event.EventObserver
 import com.woowa.banchan.ui.common.key.orderId
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.order.detail.adapter.OrderDetailRVAdapter
-import com.woowa.banchan.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -33,7 +33,6 @@ class OrderDetailActivity : AppCompatActivity() {
 
         initBinding()
         initObserver()
-        initViews()
         initAdapter()
     }
 
@@ -42,41 +41,25 @@ class OrderDetailActivity : AppCompatActivity() {
     }
 
     private fun checkOrderIsNull() {
-        viewModel.order = intent.getSerializableExtra(orderId) as Order?
-        if (viewModel.order == null) finish()
+        viewModel.orderId = intent.getLongExtra(orderId, 0L)
+        if (viewModel.orderId == 0L) finish()
     }
 
     private fun initObserver() {
-        viewModel.orderItemUiState.flowWithLifecycle(this.lifecycle)
+        viewModel.orderState.flowWithLifecycle(lifecycle)
             .onEach {
-                when (it) {
-                    is UiState.Success -> orderDetailRVAdapter.submitOrderItemList(it.data)
-                    is UiState.Error -> showToast(it.error.message)
-                    else -> {}
-                }
-            }.launchIn(lifecycleScope)
-
-        viewModel.orderUiState.flowWithLifecycle(this.lifecycle)
-            .onEach {
-                when (it) {
-                    is UiState.Success -> {
-                        viewModel.order = it.data
-                        orderDetailRVAdapter.submitOrderItem(it.data)
-                    }
-                    is UiState.Error -> showToast(it.error.message)
-                    else -> {}
-                }
+                if (it.first is UiState.Success && it.second is UiState.Success)
+                    orderDetailRVAdapter.submitOrderAndItem(
+                        (it.first as UiState.Success<Order>).data,
+                        (it.second as UiState.Success<List<OrderItem>>).data
+                    )
             }.launchIn(lifecycleScope)
 
         viewModel.backClickEvent.observe(this, EventObserver { finish() })
     }
 
-    private fun initViews() {
-        viewModel.getOrderDetail()
-    }
-
     private fun initAdapter() {
-        orderDetailRVAdapter = OrderDetailRVAdapter(viewModel.order!!)
+        orderDetailRVAdapter = OrderDetailRVAdapter()
         binding.rvOrderDetail.adapter = orderDetailRVAdapter
     }
 

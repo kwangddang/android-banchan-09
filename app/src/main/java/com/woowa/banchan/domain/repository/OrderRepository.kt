@@ -11,7 +11,7 @@ interface OrderRepository {
 
     suspend fun getEachOrder(orderId: Long): Flow<Order>
 
-    suspend fun getOrderDetail(orderId: Long): List<OrderItem>
+    suspend fun getOrderDetail(orderId: Long): Flow<List<OrderItem>>
 
     suspend fun insertCartToOrder(cart: List<Cart>): Long
 

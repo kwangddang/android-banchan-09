@@ -25,9 +25,9 @@ class OrderRepositoryImpl @Inject constructor(
     override suspend fun getEachOrder(orderId: Long): Flow<Order> =
         orderDataSource.getOrder(orderId).map { it.toOrder() }
 
-    override suspend fun getOrderDetail(orderId: Long): List<OrderItem> =
+    override suspend fun getOrderDetail(orderId: Long): Flow<List<OrderItem>> =
         withContext(Dispatchers.IO) {
-            orderDataSource.getOrderDetail(orderId).map { it.toOrderItem() }
+            orderDataSource.getOrderDetail(orderId).map { list -> list.map { it.toOrderItem() } }
         }
 
     override suspend fun insertCartToOrder(cart: List<Cart>): Long {

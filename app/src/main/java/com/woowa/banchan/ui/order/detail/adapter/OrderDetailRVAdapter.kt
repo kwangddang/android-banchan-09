@@ -11,15 +11,14 @@ import com.woowa.banchan.databinding.ItemTotalPriceBinding
 import com.woowa.banchan.domain.model.Order
 import com.woowa.banchan.domain.model.OrderItem
 import com.woowa.banchan.ui.cart.cart.adapter.viewholder.TotalPriceViewHolder
+import com.woowa.banchan.ui.home.RVItem
 import com.woowa.banchan.ui.order.detail.ORDER_CONTENT
 import com.woowa.banchan.ui.order.detail.ORDER_HEADER
 import com.woowa.banchan.ui.order.detail.ORDER_TOTAL_PRICE
 import com.woowa.banchan.ui.order.detail.adapter.viewholder.OrderDetailHeaderViewHolder
 import com.woowa.banchan.ui.order.detail.adapter.viewholder.OrderDetailViewHolder
 
-class OrderDetailRVAdapter(
-    private var orderData: Order
-) : ListAdapter<OrderItem, RecyclerView.ViewHolder>(diffUtil) {
+class OrderDetailRVAdapter() : ListAdapter<RVItem, RecyclerView.ViewHolder>(diffUtil) {
 
     private var totalPrice = 0
     private var orderDetailHeaderViewHolder: OrderDetailHeaderViewHolder? = null
@@ -56,11 +55,9 @@ class OrderDetailRVAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
             ORDER_HEADER -> (holder as OrderDetailHeaderViewHolder).bind(
-                orderData.count,
-                orderData.deliveryState,
-                orderData.time
+                (getItem(0) as RVItem.Item<Order>).item
             )
-            ORDER_CONTENT -> (holder as OrderDetailViewHolder).bind(getItem(position))
+            ORDER_CONTENT -> (holder as OrderDetailViewHolder).bind((getItem(position) as RVItem.Item<OrderItem>).item)
             else -> (holder as TotalPriceViewHolder).bind(totalPrice)
         }
     }
@@ -75,33 +72,28 @@ class OrderDetailRVAdapter(
         }
     }
 
-    fun submitOrderItem(order: Order) {
-        this.orderData = order
-        orderDetailHeaderViewHolder?.bind(order.count, order.deliveryState, order.time)
-    }
-
-    fun submitOrderItemList(list: List<OrderItem>) {
-        val newList = mutableListOf<OrderItem?>()
+    fun submitOrderAndItem(order: Order, list: List<OrderItem>) {
+        val newList = mutableListOf<RVItem>()
 
         totalPrice = 0
 
-        newList.add(null)
+        newList.add(RVItem.Item(order))
         list.forEach {
             totalPrice += (it.price * it.count)
-            newList.add(it)
+            newList.add(RVItem.Item(it))
         }
-        newList.add(null)
+        newList.add(RVItem.Footer)
 
         submitList(newList)
     }
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<OrderItem>() {
-            override fun areItemsTheSame(oldItem: OrderItem, newItem: OrderItem): Boolean =
-                oldItem == newItem
-
-            override fun areContentsTheSame(oldItem: OrderItem, newItem: OrderItem): Boolean =
+        val diffUtil = object : DiffUtil.ItemCallback<RVItem>() {
+            override fun areItemsTheSame(oldItem: RVItem, newItem: RVItem): Boolean =
                 oldItem.id == newItem.id
+
+            override fun areContentsTheSame(oldItem: RVItem, newItem: RVItem): Boolean =
+                oldItem == newItem
         }
     }
 }

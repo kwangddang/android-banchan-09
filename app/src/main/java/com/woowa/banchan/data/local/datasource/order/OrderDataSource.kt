@@ -8,7 +8,7 @@ interface OrderDataSource {
 
     suspend fun getTotalOrderList(): Flow<List<OrderDto>>
 
-    suspend fun getOrderDetail(orderId: Long): List<OrderItemDto>
+    suspend fun getOrderDetail(orderId: Long): Flow<List<OrderItemDto>>
 
     suspend fun getOrder(orderId: Long): Flow<OrderDto>
 
