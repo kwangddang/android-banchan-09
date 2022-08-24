@@ -1,7 +1,13 @@
 package com.woowa.banchan.ui.cart.cart
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
+import android.app.PendingIntent.FLAG_UPDATE_CURRENT
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +21,11 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentCartBinding
 import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.domain.model.Recent
+import com.woowa.banchan.service.worker.OrderReceiver
 import com.woowa.banchan.ui.cart.CartViewModel
 import com.woowa.banchan.ui.cart.cart.adapter.CartRVAdapter
 import com.woowa.banchan.ui.common.event.EventObserver
+import com.woowa.banchan.ui.common.key.ORDER_ID
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.detail.DetailActivity
 import com.woowa.banchan.ui.order.detail.OrderDetailActivity
@@ -104,12 +112,12 @@ class CartFragment : Fragment() {
             }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.orderUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
-            .onEach {
-                when (it) {
+            .onEach { order ->
+                when (order) {
                     is UiState.Success -> {
                         val intent = Intent(requireActivity(), OrderDetailActivity::class.java)
-                        viewModel.reserveUpdateOrder(it.data, workManager)
-                        intent.putExtra("order", it.data)
+                        setAlarm(order.data.id, order.data.title)
+                        intent.putExtra(ORDER_ID, order.data)
                         startActivity(intent)
                         requireActivity().finish()
                     }
@@ -133,6 +141,29 @@ class CartFragment : Fragment() {
 
     private fun initAdapter() {
         binding.rvCartContent.adapter = cartRVAdapter
+    }
+
+    private fun setAlarm(orderId: Long, orderTitle: String) {
+        val alarmManager: AlarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val alarmIntent: PendingIntent =
+            Intent(requireContext(), OrderReceiver::class.java).let { intent ->
+                intent.putExtra(getString(R.string.order_id), orderId)
+                intent.putExtra(getString(R.string.order_title), orderTitle)
+                PendingIntent.getBroadcast(
+                    requireContext(),
+                    orderId.toInt(),
+                    intent,
+                    FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE
+                )
+            }
+
+        val deliveryTime = 5 * 1000
+        alarmManager.setExact(
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            SystemClock.elapsedRealtime() + deliveryTime,
+            alarmIntent
+        )
     }
 
     companion object {

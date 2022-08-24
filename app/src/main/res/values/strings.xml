@@ -48,4 +48,12 @@
     <string name="delivery_time">배송까지 남은 시간</string>
     <string name="error_text">네트워크에 문제가 발생했습니다!</string>
     <string name="error_refresh">다시 불러오기</string>
+
+    <string name="order_name">order</string>
+    <string name="order_channel">orderChannel</string>
+    <string name="order_channel_id">411</string>
+    <string name="order_id">orderId</string>
+    <string name="order_title">orderTitle</string>
+    <string name="order_content">배송이 완료되었습니다.</string>
+
 </resources>
