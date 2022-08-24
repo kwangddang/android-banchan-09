@@ -4,6 +4,9 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.woowa.banchan.ui.home.side.SideViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,6 +36,7 @@
             android:layout_height="wrap_content"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:onClickRefreshButton="@{vm::refreshFoodList}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

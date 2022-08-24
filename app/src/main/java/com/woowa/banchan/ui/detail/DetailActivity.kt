@@ -31,8 +31,6 @@ class DetailActivity : AppCompatActivity() {
 
     private val viewModel: DetailViewModel by viewModels()
 
-    private var hash: String? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
@@ -44,8 +42,8 @@ class DetailActivity : AppCompatActivity() {
 
     private fun getIntentValues() {
         viewModel.title.value = intent.getStringExtra("title")!!
-        hash = intent.getStringExtra("hash")!!
-        if (viewModel.title.value == null || hash == null) finish()
+        viewModel.hash = intent.getStringExtra("hash")!!
+        if (viewModel.title.value == null || viewModel.hash == null) finish()
     }
 
     private fun initBinding() {
@@ -56,7 +54,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        viewModel.getDetailFood(hash!!)
+        viewModel.getDetailFood(viewModel.hash!!)
     }
 
     private fun initObserver() {

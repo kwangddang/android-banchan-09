@@ -22,7 +22,12 @@ class SoupFragment : HomeBaseFragment<FragmentSoupBinding>(R.layout.fragment_sou
     override val viewModel: SoupViewModel by viewModels()
 
     private val soupSideAdapter: SoupSideRVAdapter by lazy {
-        SoupSideRVAdapter(false, viewModel.spinnerPosition, viewModel.spinnerCallback, homeRVAdapter)
+        SoupSideRVAdapter(
+            false,
+            viewModel.spinnerPosition,
+            viewModel.spinnerCallback,
+            homeRVAdapter
+        )
     }
 
     override fun initAdapter() {
@@ -30,7 +35,8 @@ class SoupFragment : HomeBaseFragment<FragmentSoupBinding>(R.layout.fragment_sou
     }
 
     override fun initViews() {
-        viewModel.getFoods(getString(R.string.fragment_soup))
+        viewModel.type = getString(R.string.fragment_soup)
+        viewModel.getFoods(viewModel.type!!)
     }
 
     override fun initObserver() {
