@@ -22,6 +22,7 @@ class BestViewModel @Inject constructor(
 
     fun getBestFoods() {
         viewModelScope.launch {
+            _bestUiState.emit(UiState.Loading)
             getBestFoodsUseCase().collect { uiState ->
                 _bestUiState.emit(uiState)
             }

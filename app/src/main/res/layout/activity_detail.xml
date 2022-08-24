@@ -20,11 +20,11 @@
             android:id="@+id/ctb_toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:onClickCartIcon="@{vm.setCartClickEvent}"
-            app:onClickUserIcon="@{vm.setUserClickEvent}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:onClickCartIcon="@{vm.setCartClickEvent}"
+            app:onClickUserIcon="@{vm.setUserClickEvent}"
             app:toolbarTitle="@string/toolbar_title" />
 
         <androidx.core.widget.NestedScrollView
@@ -310,5 +310,15 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/main"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -6,6 +6,8 @@ import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentSideBinding
 import com.woowa.banchan.ui.common.uistate.UiState
+import com.woowa.banchan.ui.common.viewutils.showContent
+import com.woowa.banchan.ui.common.viewutils.showLoading
 import com.woowa.banchan.ui.home.HomeBaseFragment
 import com.woowa.banchan.ui.home.adapter.soupside.SoupSideRVAdapter
 import com.woowa.banchan.utils.showToast
@@ -38,12 +40,19 @@ class SideFragment : HomeBaseFragment<FragmentSideBinding>(R.layout.fragment_sid
     override fun initObserve() {
         viewModel.itemUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { state ->
-                if (state is UiState.Success) {
-                    if (homeRVAdapter.itemCount == 0)
-                        soupSideAdapter.submitHeaderList(state.data)
-                    homeRVAdapter.submitList(state.data)
-                } else if (state is UiState.Error) {
-                    showToast(state.message)
+                when (state) {
+                    is UiState.Success -> {
+                        if (homeRVAdapter.itemCount == 0)
+                            soupSideAdapter.submitHeaderList(state.data)
+                        homeRVAdapter.submitList(state.data)
+                        showContent(binding.rvSide, binding.pbLoading)
+                    }
+                    is UiState.Error -> {
+                        showContent(binding.rvSide, binding.pbLoading)
+                        showToast(state.message)
+                    }
+                    is UiState.Loading -> showLoading(binding.rvSide, binding.pbLoading)
+                    else -> {}
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
     }

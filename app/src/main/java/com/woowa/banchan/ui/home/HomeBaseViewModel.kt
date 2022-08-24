@@ -40,6 +40,7 @@ abstract class HomeBaseViewModel : ViewModel() {
 
     fun getFoods(type: String) {
         viewModelScope.launch {
+            _itemUiState.emit(UiState.Loading)
             getFoodsUseCase(type).collect { uiState ->
                 if (uiState is UiState.Success) {
                     defaultFoods = uiState.data

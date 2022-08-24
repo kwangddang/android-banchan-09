@@ -13,6 +13,8 @@ import com.woowa.banchan.ui.cart.CartActivity
 import com.woowa.banchan.ui.common.event.EventObserver
 import com.woowa.banchan.ui.common.popup.CartCompleteFragment
 import com.woowa.banchan.ui.common.uistate.UiState
+import com.woowa.banchan.ui.common.viewutils.showContent
+import com.woowa.banchan.ui.common.viewutils.showLoading
 import com.woowa.banchan.ui.detail.adapter.DetailRVAdapter
 import com.woowa.banchan.ui.detail.adapter.DetailVPAdapter
 import com.woowa.banchan.ui.order.OrderActivity
@@ -60,18 +62,28 @@ class DetailActivity : AppCompatActivity() {
     private fun initObserver() {
         viewModel.detailUiState.flowWithLifecycle(lifecycle)
             .onEach { state ->
-                if (state is UiState.Success) {
-                    viewModel.sPrice.value = state.data.sPrice
-                    viewModel.detailItem.value = state.data
-                    binding.vpDetail.adapter = DetailVPAdapter(state.data.thumbImages)
-                    binding.indicatorDetail.attachTo(binding.vpDetail)
+                when (state) {
+                    is UiState.Success -> {
+                        showContent(binding.nsvDetail, binding.pbLoading)
+                        viewModel.sPrice.value = state.data.sPrice
+                        viewModel.detailItem.value = state.data
+                        binding.vpDetail.adapter = DetailVPAdapter(state.data.thumbImages)
+                        binding.indicatorDetail.attachTo(binding.vpDetail)
 
-                    val detailRVAdapter = DetailRVAdapter(state.data.detailSection)
-                    binding.rvDetail.adapter = detailRVAdapter
-                    detailRVAdapter.notifyDataSetChanged()
-                    viewModel.insertRecentlyViewed(viewModel.title.value!!, viewModel.totalCount.value!!)
-                } else if (state is UiState.Error) {
-
+                        val detailRVAdapter = DetailRVAdapter(state.data.detailSection)
+                        binding.rvDetail.adapter = detailRVAdapter
+                        detailRVAdapter.notifyDataSetChanged()
+                        viewModel.insertRecentlyViewed(
+                            viewModel.title.value!!,
+                            viewModel.totalCount.value!!
+                        )
+                    }
+                    is UiState.Error -> {
+                        showContent(binding.nsvDetail, binding.pbLoading)
+                        showToast(state.message)
+                    }
+                    is UiState.Loading -> showLoading(binding.nsvDetail, binding.pbLoading)
+                    else -> {}
                 }
             }.launchIn(lifecycleScope)
 
