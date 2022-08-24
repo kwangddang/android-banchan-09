@@ -19,7 +19,7 @@ class CustomErrorView(
     private val binding: ViewErrorCustomBinding =
         DataBindingUtil.inflate(
             LayoutInflater.from(context),
-            R.layout.view_tool_bar_custom,
+            R.layout.view_error_custom,
             this,
             true
         )

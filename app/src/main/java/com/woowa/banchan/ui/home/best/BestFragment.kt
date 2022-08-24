@@ -7,6 +7,7 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentBestBinding
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.common.viewutils.showContent
+import com.woowa.banchan.ui.common.viewutils.showError
 import com.woowa.banchan.ui.common.viewutils.showLoading
 import com.woowa.banchan.ui.home.HomeBaseFragment
 import com.woowa.banchan.ui.home.best.adapter.BestRVAdapter
@@ -38,13 +39,17 @@ class BestFragment : HomeBaseFragment<FragmentBestBinding>(R.layout.fragment_bes
                 when (state) {
                     is UiState.Success -> {
                         bestAdapter.submitHeaderList(state.data)
-                        showContent(binding.rvBest, binding.pbLoading)
+                        showContent(binding.rvBest, binding.pbLoading, binding.evNetwork)
                     }
                     is UiState.Error -> {
-                        showContent(binding.rvBest, binding.pbLoading)
+                        showError(binding.rvBest, binding.pbLoading, binding.evNetwork)
                         showToast(state.message)
                     }
-                    is UiState.Loading -> showLoading(binding.rvBest, binding.pbLoading)
+                    is UiState.Loading -> showLoading(
+                        binding.rvBest,
+                        binding.pbLoading,
+                        binding.evNetwork
+                    )
                     else -> {}
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)

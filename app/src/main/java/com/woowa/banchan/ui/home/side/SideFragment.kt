@@ -7,6 +7,7 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentSideBinding
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.common.viewutils.showContent
+import com.woowa.banchan.ui.common.viewutils.showError
 import com.woowa.banchan.ui.common.viewutils.showLoading
 import com.woowa.banchan.ui.home.HomeBaseFragment
 import com.woowa.banchan.ui.home.adapter.soupside.SoupSideRVAdapter
@@ -45,13 +46,17 @@ class SideFragment : HomeBaseFragment<FragmentSideBinding>(R.layout.fragment_sid
                         if (homeRVAdapter.itemCount == 0)
                             soupSideAdapter.submitHeaderList(state.data)
                         homeRVAdapter.submitList(state.data)
-                        showContent(binding.rvSide, binding.pbLoading)
+                        showContent(binding.rvSide, binding.pbLoading, binding.evNetwork)
                     }
                     is UiState.Error -> {
-                        showContent(binding.rvSide, binding.pbLoading)
+                        showError(binding.rvSide, binding.pbLoading, binding.evNetwork)
                         showToast(state.message)
                     }
-                    is UiState.Loading -> showLoading(binding.rvSide, binding.pbLoading)
+                    is UiState.Loading -> showLoading(
+                        binding.rvSide,
+                        binding.pbLoading,
+                        binding.evNetwork
+                    )
                     else -> {}
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
