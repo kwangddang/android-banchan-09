@@ -6,21 +6,21 @@ import kotlinx.coroutines.flow.Flow
 
 interface OrderDataSource {
 
-    suspend fun getTotalOrderList(): Result<Flow<List<OrderDto>>>
-    suspend fun getOrderDetail(orderId: Long): Result<List<OrderItemDto>>
+    suspend fun getTotalOrderList(): Flow<List<OrderDto>>
+    suspend fun getOrderDetail(orderId: Long): List<OrderItemDto>
 
-    suspend fun getOrder(orderId: Long): Result<OrderDto>
+    suspend fun getOrder(orderId: Long): OrderDto
 
-    suspend fun insertNewOrder(orderDto: OrderDto): Result<Long>
-    suspend fun insertNewOrderItem(orderItemDto: List<OrderItemDto>): Result<Unit>
+    suspend fun insertNewOrder(orderDto: OrderDto): Long
+    suspend fun insertNewOrderItem(orderItemDto: List<OrderItemDto>)
 
     suspend fun insertNewOrderAndItem(
         newOrder: OrderDto,
         orderItemList: List<OrderItemDto>
-    ): Result<OrderDto>
+    ): OrderDto
 
-    suspend fun updateOrder(id: Long, deliverState: Boolean): Result<Unit>
+    suspend fun updateOrder(id: Long, deliverState: Boolean)
 
-    suspend fun getOrderState(): Result<Flow<Boolean>>
+    suspend fun getOrderState(): Flow<Boolean>
 
 }

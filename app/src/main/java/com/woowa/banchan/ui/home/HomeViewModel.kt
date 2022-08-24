@@ -50,9 +50,17 @@ class HomeViewModel @Inject constructor(
             }
 
             launch {
-                getOrderStateUseCase().collect { uiState ->
-                    _orderStateUiState.emit(uiState)
-                }
+                getOrderStateUseCase()
+                    .onSuccess { uiState ->
+                        uiState.collect {
+                            _orderStateUiState.emit(
+                                UiState.Success(
+                                    it
+                                )
+                            )
+                        }
+                    }
+                    .onFailure { _orderStateUiState.emit(UiState.Error(it.message)) }
             }
         }
     }
