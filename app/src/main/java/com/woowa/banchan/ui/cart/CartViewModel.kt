@@ -91,7 +91,12 @@ class CartViewModel @Inject constructor(
                 }
             }
 
-            launch { getRecentlyViewedFoodsUseCase().collect { _recentUiState.emit(it) } }
+            launch {
+                _recentUiState.emit(UiState.Loading)
+                getRecentlyViewedFoodsUseCase().collect {
+                    _recentUiState.emit(it)
+                }
+            }
         }
     }
 

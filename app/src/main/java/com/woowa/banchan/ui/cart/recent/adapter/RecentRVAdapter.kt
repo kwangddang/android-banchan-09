@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.woowa.banchan.databinding.ItemRecentGridBinding
-import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.domain.model.Recent
 
 class RecentRVAdapter : ListAdapter<Recent, RecentGridItemViewHolder>(diffUtil) {
@@ -30,27 +29,6 @@ class RecentRVAdapter : ListAdapter<Recent, RecentGridItemViewHolder>(diffUtil) 
             onClickCartButton = { onClickCartButton(it) },
             onClickCheckButton = { onClickCheckButton(it) }
         )
-    }
-
-    fun setCartList(cartItems: List<Cart>) {
-        val list = currentList.toMutableList()
-        list.forEachIndexed { index, it ->
-            var isInCart = false
-            for (item in cartItems) {
-                if (item.hash == it.hash) {
-                    isInCart = true
-                    if (it.checkState.not()) {
-                        it.checkState = true
-                        notifyItemChanged(index)
-                        break
-                    }
-                }
-            }
-            if (!isInCart && it.checkState) {
-                it.checkState = false
-                notifyItemChanged(index)
-            }
-        }
     }
 
     fun setPreviewList(recentItems: List<Recent>) {

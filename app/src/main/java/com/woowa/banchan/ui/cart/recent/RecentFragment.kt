@@ -43,7 +43,7 @@ class RecentFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
         initListener()
-        initObserve()
+        initObserver()
     }
 
     private fun initListener() {
@@ -74,21 +74,12 @@ class RecentFragment : Fragment() {
         adapter.setRecentlyViewedCallBackListener(listener)
     }
 
-    private fun initObserve() {
+    private fun initObserver() {
         viewModel.recentUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
                 when (it) {
                     is UiState.Success -> adapter.setPreviewList(it.data)
                     is UiState.Error -> showToast(null)
-                    else -> {}
-                }
-            }.launchIn(viewLifecycleOwner.lifecycleScope)
-
-        viewModel.cartUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
-            .onEach {
-                when (it) {
-                    is UiState.Success -> adapter.setCartList(it.data.values.toList())
-                    is UiState.Error -> showToast(it.message)
                     else -> {}
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
