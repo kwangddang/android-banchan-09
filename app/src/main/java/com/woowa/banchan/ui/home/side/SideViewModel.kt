@@ -5,4 +5,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SideViewModel @Inject constructor() : HomeBaseViewModel()
+class SideViewModel @Inject constructor() : HomeBaseViewModel() {
+
+    var type: String? = null
+
+    fun refreshFoodList() {
+        super.getFoods(type!!)
+    }
+}

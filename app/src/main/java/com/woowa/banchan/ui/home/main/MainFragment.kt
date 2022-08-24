@@ -25,7 +25,12 @@ class MainFragment : HomeBaseFragment<FragmentMainBinding>(R.layout.fragment_mai
     override val viewModel: MainViewModel by viewModels()
 
     private val mainAdapter: MainRVAdapter by lazy {
-        MainRVAdapter(viewModel.checkedChangeListener, viewModel.spinnerPosition, viewModel.spinnerCallback, homeRVAdapter)
+        MainRVAdapter(
+            viewModel.checkedChangeListener,
+            viewModel.spinnerPosition,
+            viewModel.spinnerCallback,
+            homeRVAdapter
+        )
     }
 
     override fun initAdapter() {
@@ -33,7 +38,8 @@ class MainFragment : HomeBaseFragment<FragmentMainBinding>(R.layout.fragment_mai
     }
 
     override fun initViews() {
-        viewModel.getFoods(getString(R.string.fragment_main))
+        viewModel.type = getString(R.string.fragment_main)
+        viewModel.getFoods(viewModel.type!!)
     }
 
     override fun initObserver() {

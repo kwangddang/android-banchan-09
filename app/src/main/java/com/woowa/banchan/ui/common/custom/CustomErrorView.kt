@@ -35,7 +35,7 @@ class CustomErrorView(
         a.recycle()
     }
 
-    fun setOnClickRefreshButton(c: () -> Unit) = binding.btnRefresh.setOnClickListener { c() }
+    fun setOnClickRefresh(c: () -> Unit) = binding.btnRefresh.setOnClickListener { c() }
 
     private fun createCallBackFunc(callBackStr: String): () -> Unit {
         val decoded = Base64.decode(callBackStr, Base64.DEFAULT)
