@@ -25,7 +25,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -100,9 +99,9 @@ class CartViewModel @Inject constructor(
         viewModelScope.launch {
             launch {
                 _cartUiState.emit(UiState.Loading)
-                getCartListUseCase().collect { uiState ->
-                    _cartUiState.emit(uiState)
-                }
+                getCartListUseCase()
+                    .onSuccess { it.collect { item -> _cartUiState.emit(UiState.Success(item)) } }
+                    .onFailure { _cartUiState.emit(UiState.Error(it.message)) }
             }
 
             launch {
@@ -121,9 +120,9 @@ class CartViewModel @Inject constructor(
     private fun doUpdateCart() = CoroutineScope(Dispatchers.IO).launch {
         updateCartCache.forEach {
             if (it.second) {
-                launch { deleteCartUseCase(it.first.hash).collect {} }
+                launch { deleteCartUseCase(it.first.hash) }
             } else {
-                launch { updateCartUseCase(it.first).collect {} }
+                launch { updateCartUseCase(it.first) }
             }
         }
     }
@@ -134,7 +133,7 @@ class CartViewModel @Inject constructor(
     }
 
     fun deleteCart(recent: Recent) {
-        CoroutineScope(Dispatchers.IO).launch { deleteCartUseCase(recent.hash).collect() }
+        CoroutineScope(Dispatchers.IO).launch { deleteCartUseCase(recent.hash) }
     }
 
     fun addUpdateCartCache(cart: Cart, removeFlag: Boolean) {
@@ -159,7 +158,7 @@ class CartViewModel @Inject constructor(
             uiState.data.values.forEach { cart -> if (cart.checkState) checkedList.add(cart) }
             insertCartToOrderUseCase(checkedList).collect { c ->
                 _orderUiState.emit(c)
-                checkedList.forEach { launch { deleteCartUseCase(it.hash).collect {} } }
+                checkedList.forEach { launch { deleteCartUseCase(it.hash) } }
             }
         } else {
             _orderUiState.emit(UiState.Error(null))

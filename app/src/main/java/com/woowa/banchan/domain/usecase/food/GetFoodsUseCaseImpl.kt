@@ -18,7 +18,7 @@ class GetFoodsUseCaseImpl @Inject constructor(
     override suspend operator fun invoke(type: String): Flow<UiState<List<FoodItem>>> {
         var message: String? = null
         runCatching {
-            val cartFlow = cartRepository.getCartList().getOrThrow()
+            val cartFlow = cartRepository.getCartList()
             val foodList = foodRepository.getFoods(type).getOrThrow()
 
             return cartFlow.map { map ->

@@ -68,9 +68,9 @@ class DetailViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             launch {
-                getCartCountUseCase().collect { uiState ->
-                    _cartCountUiState.emit(uiState)
-                }
+                getCartCountUseCase()
+                    .onSuccess { it.collect { item -> _cartCountUiState.emit(UiState.Success(item)) } }
+                    .onFailure { _cartCountUiState.emit(UiState.Error(it.message)) }
             }
 
             launch {
@@ -99,9 +99,9 @@ class DetailViewModel @Inject constructor(
                 (detailUiState.value as UiState.Success).data,
                 title,
                 totalCount.value!!
-            ).collect { uiState ->
-                _insertionUiState.emit(SingleEvent(uiState))
-            }
+            )
+                .onSuccess { _insertionUiState.emit(SingleEvent(UiState.Success(Unit))) }
+                .onFailure { _insertionUiState.emit(SingleEvent(UiState.Error(it.message))) }
         }
     }
 
@@ -133,9 +133,9 @@ class DetailViewModel @Inject constructor(
                 detailItem.value!!,
                 title.value!!,
                 totalCount.value!!
-            ).collect { uiState ->
-                _updateUiState.emit(SingleEvent(uiState))
-            }
+            )
+                .onSuccess { _updateUiState.emit(SingleEvent(UiState.Success(Unit))) }
+                .onFailure { _updateUiState.emit(SingleEvent(UiState.Error(it.message))) }
         }
     }
 

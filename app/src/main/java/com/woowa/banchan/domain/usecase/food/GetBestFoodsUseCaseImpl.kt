@@ -19,7 +19,7 @@ class GetBestFoodsUseCaseImpl @Inject constructor(
         var message: String? = null
 
         runCatching {
-            val cartFlow = cartRepository.getCartList().getOrThrow()
+            val cartFlow = cartRepository.getCartList()
             val foodCategory = foodRepository.getBestFoods().getOrThrow()
 
             return cartFlow.map { map ->

@@ -19,7 +19,7 @@ class GetRecentlyViewedFoodsUseCaseImpl @Inject constructor(
         var message: String? = null
 
         runCatching {
-            val cartFlow = cartRepository.getCartList().getOrThrow()
+            val cartFlow = cartRepository.getCartList()
             val recentFood = recentRepository.getRecentList().getOrThrow()
 
             return cartFlow.map { map ->

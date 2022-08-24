@@ -35,9 +35,9 @@ class CartAddViewModel @Inject constructor(
 
     fun insertCart(foodItem: FoodItem, totalCount: Int) {
         viewModelScope.launch {
-            insertCartUseCase.insertCart(foodItem, totalCount).collect { uiState ->
-                _insertionUiState.emit(uiState)
-            }
+            insertCartUseCase.insertCart(foodItem, totalCount)
+                .onSuccess { _insertionUiState.emit(UiState.Success(Unit)) }
+                .onFailure { _insertionUiState.emit(UiState.Error(it.message)) }
         }
     }
 

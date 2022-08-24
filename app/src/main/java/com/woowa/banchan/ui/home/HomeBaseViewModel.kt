@@ -55,9 +55,9 @@ abstract class HomeBaseViewModel : ViewModel() {
 
     fun deleteCart(hash: String) {
         viewModelScope.launch {
-            deleteCartUseCase(hash).collect { uiState ->
-                _deleteUiState.emit(uiState)
-            }
+            deleteCartUseCase(hash)
+                .onSuccess { _deleteUiState.emit(UiState.Success(Unit)) }
+                .onFailure { _deleteUiState.emit(UiState.Error(it.message)) }
         }
     }
 

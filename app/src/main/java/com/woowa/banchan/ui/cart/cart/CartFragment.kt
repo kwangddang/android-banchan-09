@@ -70,7 +70,7 @@ class CartFragment : Fragment() {
             }
 
             override fun onClickOrderButton() {
-                viewModel.orderClickListener
+                viewModel.orderClickListener()
             }
 
             override fun onClickRecentItem(recent: Recent) {
