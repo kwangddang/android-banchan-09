@@ -1,4 +1,4 @@
-package com.woowa.banchan.service.worker
+package com.woowa.banchan.service
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker

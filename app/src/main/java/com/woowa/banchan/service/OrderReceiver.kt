@@ -1,4 +1,4 @@
-package com.woowa.banchan.service.worker
+package com.woowa.banchan.service
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -13,10 +13,9 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
 import com.woowa.banchan.R
-import com.woowa.banchan.ui.order.OrderActivity
+import com.woowa.banchan.ui.order.detail.OrderDetailActivity
 
 class OrderReceiver : BroadcastReceiver(){
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -27,8 +26,8 @@ class OrderReceiver : BroadcastReceiver(){
         val orderName = context.getString(R.string.order_name)
         val orderContent = context.getString(R.string.order_content)
 
-        val newIntent = Intent(context, OrderActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        val newIntent = Intent(context, OrderDetailActivity::class.java).apply {
+            putExtra("order", orderId)
         }
         val pendingIntent = PendingIntent.getActivity(context, 0,newIntent, FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE)
 
