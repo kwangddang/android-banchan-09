@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.woowa.banchan.databinding.ItemRecentGridBinding
-import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.domain.model.Recent
 
 class RecentRVAdapter : ListAdapter<Recent, RecentGridItemViewHolder>(diffUtil) {
@@ -25,36 +24,17 @@ class RecentRVAdapter : ListAdapter<Recent, RecentGridItemViewHolder>(diffUtil) 
     override fun onBindViewHolder(holder: RecentGridItemViewHolder, position: Int) {
         holder.bind(
             getItem(position),
-            isPreview = false,
             onClickItem = { onClickItem(it) },
             onClickCartButton = { onClickCartButton(it) },
             onClickCheckButton = { onClickCheckButton(it) }
         )
     }
 
-    fun setCartList(cartItems: List<Cart>) {
-        val list = currentList.toMutableList()
-        list.forEachIndexed { index, it ->
-            var isInCart = false
-            for (item in cartItems) {
-                if (item.hash == it.hash) {
-                    isInCart = true
-                    if (it.checkState.not()) {
-                        it.checkState = true
-                        notifyItemChanged(index)
-                        break
-                    }
-                }
-            }
-            if (!isInCart && it.checkState) {
-                it.checkState = false
-                notifyItemChanged(index)
-            }
-        }
-    }
-
-    fun setPreviewList(recentItems: List<Recent>) {
-        submitList(recentItems)
+    override fun onBindViewHolder(holder: RecentGridItemViewHolder, position: Int, payloads: MutableList<Any>) {
+        if (payloads.isEmpty())
+            super.onBindViewHolder(holder, position, payloads)
+        else
+            holder.bind(payloads.first() as Boolean)
     }
 
     private fun onClickItem(recent: Recent) {
@@ -82,6 +62,13 @@ class RecentRVAdapter : ListAdapter<Recent, RecentGridItemViewHolder>(diffUtil) 
 
             override fun areContentsTheSame(oldItem: Recent, newItem: Recent): Boolean {
                 return oldItem == newItem
+            }
+
+            override fun getChangePayload(oldItem: Recent, newItem: Recent): Any? {
+                if (oldItem.checkState != newItem.checkState)
+                    return newItem.checkState
+
+                return super.getChangePayload(oldItem, newItem)
             }
         }
     }

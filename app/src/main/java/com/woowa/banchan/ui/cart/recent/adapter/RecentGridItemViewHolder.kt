@@ -9,16 +9,19 @@ class RecentGridItemViewHolder(private val binding: ItemRecentGridBinding) :
 
     fun bind(
         recent: Recent,
-        isPreview: Boolean = true,
         onClickItem: (recent: Recent) -> Unit,
         onClickCartButton: (recent: Recent) -> Unit = {},
         onClickCheckButton: (recent: Recent) -> Unit = {}
     ) {
-        binding.isPreview = isPreview
         binding.recent = recent
-
+        binding.checkState = recent.checkState
         binding.ivCart.setOnClickListener { onClickCartButton(recent) }
         binding.ivCheck.setOnClickListener { onClickCheckButton(recent) }
         binding.root.setOnClickListener { onClickItem(recent) }
+    }
+
+    fun bind(checkState: Boolean) {
+        binding.checkState = checkState
+        binding.recent!!.checkState = checkState
     }
 }

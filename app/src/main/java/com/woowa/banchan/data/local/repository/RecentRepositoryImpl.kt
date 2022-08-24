@@ -16,9 +16,9 @@ class RecentRepositoryImpl @Inject constructor(
     override suspend fun getRecentList(): Result<List<Recent>> =
         runCatching {
             val list = recentDataSource.getRecentList().getOrThrow()
-            val curCalendar = Calendar.getInstance()
-                .apply { time = Date() }
+            val curCalendar = Calendar.getInstance().apply { time = Date() }
             val calendar = Calendar.getInstance()
+
             val retList = mutableListOf<RecentDto>()
             list.forEach {
                 calendar.time = it.time
