@@ -4,9 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.work.Data
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
 import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.domain.model.Order
 import com.woowa.banchan.domain.model.Recent
@@ -27,7 +24,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
@@ -49,8 +45,8 @@ class CartViewModel @Inject constructor(
     private val _recentUiState = MutableStateFlow<UiState<List<Recent>>>(UiState.Empty)
     val recentUiState: StateFlow<UiState<List<Recent>>> get() = _recentUiState
 
-    private val _orderUiState = MutableStateFlow<UiState<Order>>(UiState.Empty)
-    val orderUiState: StateFlow<UiState<Order>> get() = _orderUiState
+    private val _insertionUiState = MutableStateFlow<UiState<Long>>(UiState.Empty)
+    val insertionUiState: StateFlow<UiState<Long>> get() = _insertionUiState
 
     private val _backClickEvent = MutableLiveData<SingleEvent<Unit>>()
     val backClickEvent: LiveData<SingleEvent<Unit>> get() = _backClickEvent
@@ -118,31 +114,21 @@ class CartViewModel @Inject constructor(
 
     private fun addOrder() = viewModelScope.launch {
         doUpdateCart().join()
-        _orderUiState.emit(UiState.Loading)
+        _insertionUiState.emit(UiState.Loading)
         val checkedList = mutableListOf<Cart>()
         val uiState = _cartUiState.value
 
         if (uiState is UiState.Success) {
             uiState.data.values.forEach { cart -> if (cart.checkState) checkedList.add(cart) }
-            insertCartToOrderUseCase(checkedList).onSuccess { order ->
-                _orderUiState.emit(UiState.Success(order))
+            orderTitle = checkedList.first().title
+            insertCartToOrderUseCase(checkedList).onSuccess { id ->
+                _insertionUiState.emit(UiState.Success(id))
                 checkedList.forEach { launch { deleteCartUseCase(it.hash) } }
             }
                 .onFailure { _orderUiState.emit(UiState.Error(getErrorState(it))) }
         } else {
             _orderUiState.emit(UiState.Error(getErrorState(Exception())))
         }
-    }
-
-    fun reserveUpdateOrder(order: Order, workManager: WorkManager) {
-        workManager.enqueue(
-            OneTimeWorkRequestBuilder<OrderWorker>()
-                .setInputData(
-                    Data.Builder().putLong(orderWorkerId, order.id).build()
-                )
-                .setInitialDelay(20, TimeUnit.MINUTES)
-                .build()
-        )
     }
 
     val cartUpdateListener: (Cart, String?) -> Unit = { cart, message ->

@@ -111,13 +111,13 @@ class CartFragment : Fragment() {
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-        viewModel.orderUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+        viewModel.insertionUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { order ->
                 when (order) {
                     is UiState.Success -> {
                         val intent = Intent(requireActivity(), OrderDetailActivity::class.java)
-                        setAlarm(order.data.id, order.data.title)
-                        intent.putExtra(ORDER_ID, order.data)
+                        setAlarm(order.data, viewModel.orderTitle)
+                        intent.putExtra("order", order.data)
                         startActivity(intent)
                         requireActivity().finish()
                     }

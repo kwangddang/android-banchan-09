@@ -45,6 +45,7 @@ class OrderDetailViewModel @Inject constructor(
 
     fun setRefreshClickEvent() {
         viewModelScope.launch {
+            _orderUiState.emit(UiState.Loading)
             getEachOrderUseCase(order!!.id)
                 .onSuccess { _orderUiState.emit(UiState.Success(it)) }
                 .onFailure { _orderUiState.emit(UiState.Error(getErrorState(it))) }
