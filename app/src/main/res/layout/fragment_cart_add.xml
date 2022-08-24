@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="vm"
+            type="com.woowa.banchan.ui.common.bottomsheet.CartAddViewModel" />
+
+        <variable
             name="food"
             type="com.woowa.banchan.domain.model.FoodItem" />
 
@@ -42,6 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/bottomsheet_cancel"
+            android:onClick="@{() -> vm.setCancelClickEvent()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -117,6 +122,7 @@
             android:elevation="4dp"
             android:padding="12dp"
             android:src="@drawable/ic_plus"
+            android:onClick="@{() -> vm.setPlusClickEvent()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_s_price" />
 
@@ -141,6 +147,7 @@
             android:elevation="4dp"
             android:padding="12dp"
             android:src="@drawable/ic_minus"
+            android:onClick="@{() -> vm.setMinusClickEvent()}"
             app:layout_constraintEnd_toStartOf="@id/tv_count"
             app:layout_constraintTop_toBottomOf="@id/tv_s_price" />
 
@@ -163,6 +170,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="8dp"
             android:text="@{@string/add_cart(count)}"
+            android:onClick="@{() -> vm.setAddClickEvent(food,count)}"
             app:backgroundTint="@color/main"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

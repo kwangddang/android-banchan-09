@@ -1,5 +1,7 @@
 package com.woowa.banchan.ui.cart
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.Data
@@ -13,6 +15,8 @@ import com.woowa.banchan.domain.usecase.cart.inter.GetCartListUseCase
 import com.woowa.banchan.domain.usecase.cart.inter.UpdateCartUseCase
 import com.woowa.banchan.domain.usecase.order.inter.InsertCartToOrderUseCase
 import com.woowa.banchan.domain.usecase.recent.inter.GetRecentlyViewedFoodsUseCase
+import com.woowa.banchan.ui.common.event.SingleEvent
+import com.woowa.banchan.ui.common.event.setEvent
 import com.woowa.banchan.ui.common.livedata.SingleLiveData
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.worker.OrderWorker
@@ -47,6 +51,36 @@ class CartViewModel @Inject constructor(
 
     private val _orderUiState = MutableStateFlow<UiState<Order>>(UiState.Empty)
     val orderUiState: StateFlow<UiState<Order>> get() = _orderUiState
+
+    private val _backClickEvent = MutableLiveData<SingleEvent<Unit>>()
+    val backClickEvent: LiveData<SingleEvent<Unit>> get() = _backClickEvent
+
+    private val _messageEvent = MutableLiveData<SingleEvent<String>>()
+    val messageEvent: LiveData<SingleEvent<String>> get() = _messageEvent
+
+    private val _recentClickEvent = MutableLiveData<SingleEvent<Recent>>()
+    val recentClickEvent: LiveData<SingleEvent<Recent>> get() = _recentClickEvent
+
+    val cartUpdateListener: (Cart, String?) -> Unit = { cart, message ->
+        addUpdateCartCache(cart, removeFlag = false)
+        message?.let { _messageEvent.setEvent(it) }
+    }
+
+    val cartRemoveListener: (Cart) -> Unit = { cart ->
+        addUpdateCartCache(cart, removeFlag = true)
+    }
+
+    val orderClickListener: () -> Unit = {
+        addOrder()
+    }
+
+    val recentClickListener: (Recent) -> Unit = { recent ->
+        _recentClickEvent.setEvent(recent)
+    }
+
+    val recentAllClickListener: () -> Unit = {
+        setFragmentTag("recent")
+    }
 
     init {
         viewModelScope.launch {
@@ -122,5 +156,9 @@ class CartViewModel @Inject constructor(
                 .setInitialDelay(20, TimeUnit.MINUTES)
                 .build()
         )
+    }
+
+    fun setBackClickEvent() {
+        _backClickEvent.setEvent()
     }
 }

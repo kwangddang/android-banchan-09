@@ -8,11 +8,11 @@ import com.woowa.banchan.databinding.ItemOrderBinding
 import com.woowa.banchan.domain.model.Order
 import com.woowa.banchan.ui.order.adapter.viewholder.OrderViewHolder
 
-class OrderRVAdapter(private var onClickItem: (order: Order) -> Unit = {}) :
+class OrderRVAdapter(private var orderItemClickListener: (order: Order) -> Unit) :
     ListAdapter<Order, OrderViewHolder>(diffUtil) {
 
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
-        holder.bind(getItem(position)) { onClickItem(it) }
+        holder.bind(getItem(position)) { orderItemClickListener(it) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder =

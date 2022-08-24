@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="vm"
+            type="com.woowa.banchan.ui.home.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,6 +21,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:onClickCartIcon="@{vm::setCartClickEvent}"
+            app:onClickUserIcon="@{vm::setUserClickEvent}"
             app:toolBarType="main"
             app:toolbarTitle="@string/toolbar_title" />
 

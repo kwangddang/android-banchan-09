@@ -1,11 +1,11 @@
 package com.woowa.banchan.ui.home.main
 
-import android.widget.RadioGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentMainBinding
+import com.woowa.banchan.ui.common.event.EventObserver
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.common.viewutils.showContent
 import com.woowa.banchan.ui.common.viewutils.showError
@@ -25,30 +25,7 @@ class MainFragment : HomeBaseFragment<FragmentMainBinding>(R.layout.fragment_mai
     override val viewModel: MainViewModel by viewModels()
 
     private val mainAdapter: MainRVAdapter by lazy {
-        MainRVAdapter(
-            checkedChangeListener,
-            viewModel.spinnerPosition,
-            spinnerCallback,
-            homeRVAdapter
-        )
-    }
-
-    private val spinnerCallback: (Int) -> Unit = { position ->
-        viewModel.spinnerPosition = position
-        viewModel.sortList()
-    }
-
-    private val checkedChangeListener: (RadioGroup, Int) -> Unit = { group, checkedId ->
-        when (checkedId) {
-            R.id.btn_grid -> {
-                mainAdapter.managerType = GRID
-            }
-            R.id.btn_linear -> {
-                mainAdapter.managerType = LINEAR_VERTICAL
-            }
-        }
-        homeRVAdapter.managerType = mainAdapter.managerType
-        mainAdapter.notifyItemChanged(2)
+        MainRVAdapter(viewModel.checkedChangeListener, viewModel.spinnerPosition, viewModel.spinnerCallback, homeRVAdapter)
     }
 
     override fun initAdapter() {
@@ -59,7 +36,7 @@ class MainFragment : HomeBaseFragment<FragmentMainBinding>(R.layout.fragment_mai
         viewModel.getFoods(getString(R.string.fragment_main))
     }
 
-    override fun initObserve() {
+    override fun initObserver() {
         viewModel.itemUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { state ->
                 when (state) {
@@ -79,6 +56,19 @@ class MainFragment : HomeBaseFragment<FragmentMainBinding>(R.layout.fragment_mai
                     else -> {}
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.linearGridClickEvent.observe(viewLifecycleOwner, EventObserver { checkedId ->
+            when (checkedId) {
+                R.id.btn_grid -> {
+                    mainAdapter.managerType = GRID
+                }
+                R.id.btn_linear -> {
+                    mainAdapter.managerType = LINEAR_VERTICAL
+                }
+            }
+            homeRVAdapter.managerType = mainAdapter.managerType
+            mainAdapter.notifyItemChanged(2)
+        })
     }
 
 }

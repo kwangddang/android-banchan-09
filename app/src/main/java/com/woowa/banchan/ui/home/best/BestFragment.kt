@@ -22,7 +22,7 @@ class BestFragment : HomeBaseFragment<FragmentBestBinding>(R.layout.fragment_bes
     override val viewModel: BestViewModel by viewModels()
 
     private val bestAdapter: BestRVAdapter by lazy {
-        BestRVAdapter(itemClickListener, cartClickListener)
+        BestRVAdapter(viewModel.itemClickListener, viewModel.cartClickListener)
     }
 
     override fun initAdapter() {
@@ -33,7 +33,7 @@ class BestFragment : HomeBaseFragment<FragmentBestBinding>(R.layout.fragment_bes
         viewModel.getBestFoods()
     }
 
-    override fun initObserve() {
+    override fun initObserver() {
         viewModel.bestUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { state ->
                 when (state) {

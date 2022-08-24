@@ -40,7 +40,6 @@ class DetailActivity : AppCompatActivity() {
         initBinding()
         initViews()
         initObserver()
-        initButtonSetting()
     }
 
     private fun getIntentValues() {
@@ -143,21 +142,4 @@ class DetailActivity : AppCompatActivity() {
         })
     }
 
-    private fun initButtonSetting() {
-        binding.ivPlus.setOnClickListener {
-            viewModel.apply {
-                totalCount.value = totalCount.value!! + 1
-            }
-        }
-
-        binding.ivMinus.setOnClickListener {
-            viewModel.apply {
-                if (totalCount.value!! > 1) {
-                    totalCount.value = totalCount.value!! - 1
-                }
-            }
-        }
-
-        binding.btnOrder.setOnClickListener { viewModel.insertCart(viewModel.title.value!!) }
-    }
 }

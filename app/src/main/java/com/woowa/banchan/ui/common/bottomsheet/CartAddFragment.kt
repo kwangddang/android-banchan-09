@@ -13,6 +13,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentCartAddBinding
 import com.woowa.banchan.domain.model.FoodItem
+import com.woowa.banchan.ui.common.event.EventObserver
 import com.woowa.banchan.ui.common.popup.CartCompleteFragment
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.utils.showToast
@@ -41,19 +42,19 @@ class CartAddFragment(private val foodItem: FoodItem) : BottomSheetDialogFragmen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initBinding()
-        initObserve()
-        initButtonSetting()
+        initObserver()
     }
 
     private fun initBinding() {
         binding.apply {
+            vm = viewModel
             food = foodItem
             price = totalPrice
             count = totalCount
         }
     }
 
-    private fun initObserve() {
+    private fun initObserver() {
         viewModel.insertionUiState.flowWithLifecycle(lifecycle)
             .onEach { state ->
                 if (state is UiState.Success) {
@@ -63,25 +64,20 @@ class CartAddFragment(private val foodItem: FoodItem) : BottomSheetDialogFragmen
                     showToast(state.message)
                 }
             }.launchIn(lifecycleScope)
-    }
 
-    private fun initButtonSetting() {
-        binding.tvCancel.setOnClickListener { dismiss() }
-        binding.ivPlus.setOnClickListener {
+        viewModel.cancelClickEvent.observe(viewLifecycleOwner, EventObserver { dismiss() })
+
+        viewModel.plusClickEvent.observe(viewLifecycleOwner, EventObserver {
             totalCount++
             totalPrice = totalCount * foodItem.sPrice
             setCountAndPrice()
-        }
+        })
 
-        binding.ivMinus.setOnClickListener {
-            if (totalCount > 1) {
-                totalCount--
-                totalPrice = totalCount * foodItem.sPrice
-                setCountAndPrice()
-            }
-        }
-
-        binding.btnAdd.setOnClickListener { viewModel.insertCart(foodItem, totalCount) }
+        viewModel.minusClickEvent.observe(viewLifecycleOwner, EventObserver {
+            totalCount--
+            totalPrice = totalCount * foodItem.sPrice
+            setCountAndPrice()
+        })
     }
 
     private fun setCountAndPrice() {
