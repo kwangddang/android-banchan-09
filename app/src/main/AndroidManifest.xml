@@ -25,11 +25,12 @@
             android:exported="false" />
         <activity
             android:name=".ui.cart.CartActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTask" />
         <activity
             android:name=".ui.detail.DetailActivity"
             android:exported="true"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTask" />
         <activity
             android:name=".ui.home.HomeActivity"
             android:exported="true"
