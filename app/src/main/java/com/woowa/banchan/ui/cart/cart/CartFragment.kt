@@ -127,7 +127,6 @@ class CartFragment : Fragment() {
                 putExtra("hash", recent.hash)
             }
             startActivity(intent)
-            this@CartFragment.requireActivity().finish()
         })
     }
 
