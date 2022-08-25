@@ -1,5 +1,7 @@
 <resources>
+    <!-- App Info -->
     <string name="app_name">banchan</string>
+
     <!-- ToolBar title -->
     <string name="toolbar_title_ordering">ORDERING</string>
     <string name="toolbar_title_cart">Cart</string>
@@ -67,4 +69,8 @@
     <string name="order_shipping_price">배송료</string>
     <string name="order_total_price">총 주문 금액</string>
 
+    <!--Price-->
+    <string name="text_view_price_format_lan">원</string>
+    <string name="text_view_notice_free_shipping">을 더 담으면 무료배송!</string>
+    <string name="text_view_order_summary">%s 외 %d개</string>
 </resources>

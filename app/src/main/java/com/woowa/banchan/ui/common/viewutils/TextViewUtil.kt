@@ -4,6 +4,7 @@ import android.graphics.Paint
 import android.view.View
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.woowa.banchan.R
 import com.woowa.banchan.ui.cart.cart.CartFragment.Companion.freeShipping
 import com.woowa.banchan.ui.cart.cart.CartFragment.Companion.minimumPrice
 import com.woowa.banchan.ui.cart.cart.CartFragment.Companion.shipping
@@ -13,7 +14,8 @@ import java.util.*
 
 @BindingAdapter("price")
 fun TextView.setPrice(price: Int) {
-    text = MoneyUtil.getMoneyFormatString(price)
+    text =
+        MoneyUtil.getPriceFormatString(price) + resources.getString(R.string.text_view_price_format_lan)
 }
 
 @BindingAdapter("originPrice")
@@ -22,25 +24,31 @@ fun TextView.setOriginPrice(price: Int?) {
     if (price == null) {
         visibility = View.GONE
     } else {
-        text = MoneyUtil.getMoneyFormatString(price)
+        text =
+            MoneyUtil.getPriceFormatString(price) + resources.getString(R.string.text_view_price_format_lan)
         visibility = View.VISIBLE
     }
 }
 
 @BindingAdapter("cartButtonPrice")
 fun TextView.setCartButton(price: Int) {
+    resources.getString(R.string.cart_preview_recent)
     text = if (price < minimumPrice) "최소주문금액을 확인해주세요"
     else {
         val p = price + if (price >= freeShipping) 0 else shipping
-        val str = MoneyUtil.getMoneyFormatString(p)
-        "$str 주문하기"
+        val str =
+            MoneyUtil.getPriceFormatString(p) + resources.getString(R.string.text_view_price_format_lan)
+        str + "주문하기"
     }
 }
 
 @BindingAdapter("cartFreeShippingPrice")
 fun TextView.setCartFreeShipping(price: Int) {
     text = if (price >= freeShipping) ""
-    else MoneyUtil.getMoneyFormatString(freeShipping - price) + "을 더 담으면 무료배송!"
+    else MoneyUtil.getPriceFormatString(freeShipping - price) +
+            resources.getString(R.string.text_view_price_format_lan) +
+            resources.getString(R.string.text_view_notice_free_shipping)
+
 }
 
 @BindingAdapter("viewedDate")
@@ -63,18 +71,19 @@ fun TextView.setPercent(nPrice: Int?) {
 fun TextView.setOriginPrice(nPrice: Int?, sPrice: Int?) {
     if (nPrice == null) {
         text = if (sPrice != null)
-            MoneyUtil.getMoneyFormatString(sPrice)
+            MoneyUtil.getPriceFormatString(sPrice) + resources.getString(R.string.text_view_price_format_lan)
         else
             ""
     } else if (sPrice == null) {
         paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-        text = MoneyUtil.getMoneyFormatString(nPrice)
+        text =
+            MoneyUtil.getPriceFormatString(nPrice) + resources.getString(R.string.text_view_price_format_lan)
     }
 }
 
 @BindingAdapter("thumbnailTitle", "itemCount")
 fun TextView.setOrderSummaryText(thumbnailTitle: String, itemCount: Int) {
     text = if (itemCount > 1) {
-        thumbnailTitle + " 외 ${itemCount - 1}개"
+        resources.getString(R.string.text_view_order_summary, thumbnailTitle, itemCount)
     } else thumbnailTitle
 }
