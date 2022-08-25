@@ -13,5 +13,7 @@ interface CartDataSource {
 
     suspend fun deleteCart(hash: String)
 
+    suspend fun deleteCart(vararg cartDto: CartDto)
+
     suspend fun insertCart(cartDto: CartDto)
 }

@@ -239,7 +239,7 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
     interface CartButtonCallBackListener {
 
         fun onClickCartUpdate(cart: Cart, message: Int? = null)
-        fun onClickCartRemove(cart: Cart)
+        fun onClickCartRemove(hash: String)
         fun onClickOrderButton()
         fun onClickRecentItem(recent: Recent)
         fun onClickAllRecentlyViewed()

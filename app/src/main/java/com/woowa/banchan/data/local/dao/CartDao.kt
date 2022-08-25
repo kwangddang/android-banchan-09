@@ -1,9 +1,6 @@
 package com.woowa.banchan.data.local.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.woowa.banchan.data.local.BanchanDataBase.Companion.cartTable
 import com.woowa.banchan.data.local.entity.CartDto
 import kotlinx.coroutines.flow.Flow
@@ -16,6 +13,9 @@ interface CartDao {
 
     @Update
     suspend fun updateCart(vararg cartDto: CartDto)
+
+    @Delete
+    suspend fun deleteCart(vararg cartDto: CartDto)
 
     @Query("SELECT * FROM $cartTable")
     fun getCartList(): Flow<List<CartDto>>

@@ -35,8 +35,6 @@ class CartViewModel @Inject constructor(
 
     val fragmentTag = SingleLiveData("cart")
 
-    private val updateCartCache = mutableListOf<Pair<Cart, Boolean>>()
-
     private val _cartUiState = MutableStateFlow<UiState<Map<String, Cart>>>(UiState.Empty)
     val cartUiState: StateFlow<UiState<Map<String, Cart>>> get() = _cartUiState
 
@@ -83,13 +81,7 @@ class CartViewModel @Inject constructor(
     }
 
     private fun doUpdateCart() = CoroutineScope(Dispatchers.IO).launch {
-        updateCartCache.forEach {
-            if (it.second) {
-                launch { deleteCartUseCase(it.first.hash) }
-            } else {
-                launch { updateCartUseCase(it.first) }
-            }
-        }
+
     }
 
     fun updateCart() {
@@ -98,18 +90,6 @@ class CartViewModel @Inject constructor(
 
     fun deleteCart(recent: Recent) {
         CoroutineScope(Dispatchers.IO).launch { deleteCartUseCase(recent.hash) }
-    }
-
-    private fun addUpdateCartCache(cart: Cart, removeFlag: Boolean) {
-        val idx = getCartCacheIdx(cart)
-
-        if (idx == -1) updateCartCache.add(Pair(cart, removeFlag))
-        else updateCartCache[idx] = Pair(cart, removeFlag)
-    }
-
-    private fun getCartCacheIdx(cart: Cart): Int {
-        updateCartCache.forEachIndexed { index, pair -> if (pair.first.hash == cart.hash) return index }
-        return -1
     }
 
     private fun addOrder() = viewModelScope.launch {
@@ -132,12 +112,11 @@ class CartViewModel @Inject constructor(
     }
 
     val cartUpdateListener: (Cart, String?) -> Unit = { cart, message ->
-        addUpdateCartCache(cart, removeFlag = false)
         message?.let { _messageEvent.setEvent(it) }
     }
 
-    val cartRemoveListener: (Cart) -> Unit = { cart ->
-        addUpdateCartCache(cart, removeFlag = true)
+    val cartRemoveListener: (String) -> Unit = { hash ->
+
     }
 
     val orderClickListener: () -> Unit = {

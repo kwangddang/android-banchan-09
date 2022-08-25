@@ -23,6 +23,10 @@ class CartDataSourceImpl @Inject constructor(
         cartDao.deleteCart(hash)
     }
 
+    override suspend fun deleteCart(vararg cartDto: CartDto) {
+        cartDao.deleteCart(*cartDto)
+    }
+
     override suspend fun insertCart(cartDto: CartDto) {
         cartDao.insertCart(cartDto)
     }

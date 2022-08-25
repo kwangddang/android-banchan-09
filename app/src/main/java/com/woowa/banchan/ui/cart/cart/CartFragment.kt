@@ -71,8 +71,8 @@ class CartFragment : Fragment() {
                 )
             }
 
-            override fun onClickCartRemove(cart: Cart) {
-                viewModel.cartRemoveListener(cart)
+            override fun onClickCartRemove(hash: String) {
+                viewModel.cartRemoveListener(hash)
             }
 
             override fun onClickOrderButton() {

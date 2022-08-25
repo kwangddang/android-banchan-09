@@ -13,5 +13,7 @@ interface CartRepository {
 
     suspend fun deleteCart(hash: String): Result<Unit>
 
+    suspend fun deleteCart(vararg cart: Cart): Result<Unit>
+
     suspend fun insertCart(cart: Cart): Result<Unit>
 }
