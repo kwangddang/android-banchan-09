@@ -125,9 +125,9 @@ class CartViewModel @Inject constructor(
                 _insertionUiState.emit(UiState.Success(id))
                 checkedList.forEach { launch { deleteCartUseCase(it.hash) } }
             }
-                .onFailure { _orderUiState.emit(UiState.Error(getErrorState(it))) }
+                .onFailure { _insertionUiState.emit(UiState.Error(getErrorState(it))) }
         } else {
-            _orderUiState.emit(UiState.Error(getErrorState(Exception())))
+            _insertionUiState.emit(UiState.Error(getErrorState(Exception())))
         }
     }
 

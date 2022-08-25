@@ -20,11 +20,11 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentCartBinding
 import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.domain.model.Recent
-import com.woowa.banchan.ui.common.receiver.OrderReceiver
 import com.woowa.banchan.ui.cart.CartViewModel
 import com.woowa.banchan.ui.cart.cart.adapter.CartRVAdapter
 import com.woowa.banchan.ui.common.event.EventObserver
 import com.woowa.banchan.ui.common.key.ORDER_ID
+import com.woowa.banchan.ui.common.receiver.OrderReceiver
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.detail.DetailActivity
 import com.woowa.banchan.ui.order.detail.OrderDetailActivity
@@ -107,16 +107,16 @@ class CartFragment : Fragment() {
             }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.insertionUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
-            .onEach { order ->
-                when (order) {
+            .onEach { state ->
+                when (state) {
                     is UiState.Success -> {
                         val intent = Intent(requireActivity(), OrderDetailActivity::class.java)
-                        setAlarm(order.data, viewModel.orderTitle)
-                        intent.putExtra(ORDER_ID, order.data)
+                        setAlarm(state.data, viewModel.orderTitle)
+                        intent.putExtra(ORDER_ID, state.data)
                         startActivity(intent)
                         requireActivity().finish()
                     }
-                    is UiState.Error -> showToast(it.error.message)
+                    is UiState.Error -> showToast(state.error.message)
                     else -> {}
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
