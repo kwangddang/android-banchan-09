@@ -104,6 +104,7 @@ class CartViewModel @Inject constructor(
     private fun insertOrder() = viewModelScope.launch {
         _insertionUiState.emit(UiState.Loading)
         val checkedList = cartCache.values.filter { it.checkState }
+        orderTitle = checkedList.first().title
         insertCartToOrderUseCase(checkedList).onSuccess { id ->
             _insertionUiState.emit(UiState.Success(id))
             checkedList.forEach { launch { deleteCartUseCase(it.hash) } }

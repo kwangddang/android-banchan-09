@@ -1,5 +1,6 @@
 package com.woowa.banchan.ui.common.viewutils
 
+import android.content.res.Resources
 import android.graphics.Paint
 import android.view.View
 import android.widget.TextView
@@ -83,13 +84,16 @@ fun TextView.setOriginPrice(nPrice: Int?, sPrice: Int?) {
 
 @BindingAdapter("thumbnailTitle", "itemCount")
 fun TextView.setOrderSummaryText(thumbnailTitle: String, itemCount: Int) {
-    text = if (itemCount > 1) {
-        resources.getString(R.string.text_view_order_summary, thumbnailTitle, itemCount)
-    } else thumbnailTitle
+    text = setOrderTitle(thumbnailTitle, itemCount, resources)
 }
 
 @BindingAdapter("time")
 fun TextView.setTime(time: Date) {
     val leftTime = (System.currentTimeMillis() - time.time) / 60000
-    text = "${(1 - leftTime.toInt())}분"
+    text = "${(1 - leftTime.toInt())}${resources.getString(R.string.order_minute)}"
 }
+
+fun setOrderTitle(thumbnailTitle: String, itemCount: Int, resources: Resources): String =
+    if (itemCount > 1) {
+        resources.getString(R.string.text_view_order_summary, thumbnailTitle, itemCount - 1)
+    } else thumbnailTitle

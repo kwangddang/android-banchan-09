@@ -10,9 +10,9 @@ import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
 import com.woowa.banchan.databinding.ItemSoupSideHeaderBinding
 import com.woowa.banchan.domain.model.FoodItem
+import com.woowa.banchan.ui.common.recyclerview.RVItem
 import com.woowa.banchan.ui.home.HOME_HEADER
 import com.woowa.banchan.ui.home.HOME_ITEM
-import com.woowa.banchan.ui.common.recyclerview.RVItem
 import com.woowa.banchan.ui.home.SUB_HEADER
 import com.woowa.banchan.ui.home.adapter.HomeRVAdapter
 import com.woowa.banchan.ui.home.adapter.soupside.viewholder.SoupSideHeaderViewHolder

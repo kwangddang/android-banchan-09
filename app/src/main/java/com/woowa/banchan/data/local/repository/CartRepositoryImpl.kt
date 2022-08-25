@@ -40,7 +40,7 @@ class CartRepositoryImpl @Inject constructor(
 
     override suspend fun deleteCart(vararg cart: Cart): Result<Unit> =
         withContext(Dispatchers.IO) {
-            kotlin.runCatching { cartDataSource.deleteCart(*cart.map { it.toCartDto() }.toTypedArray()) }
+            runCatching { cartDataSource.deleteCart(*cart.map { it.toCartDto() }.toTypedArray()) }
         }
 
     override suspend fun insertCart(cart: Cart): Result<Unit> =

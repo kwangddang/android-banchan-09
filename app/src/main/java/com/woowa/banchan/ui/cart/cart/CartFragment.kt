@@ -26,6 +26,7 @@ import com.woowa.banchan.ui.common.event.EventObserver
 import com.woowa.banchan.ui.common.key.ORDER_ID
 import com.woowa.banchan.ui.common.receiver.OrderReceiver
 import com.woowa.banchan.ui.common.uistate.UiState
+import com.woowa.banchan.ui.common.viewutils.setOrderTitle
 import com.woowa.banchan.ui.detail.DetailActivity
 import com.woowa.banchan.ui.order.detail.OrderDetailActivity
 import com.woowa.banchan.utils.showToast
@@ -133,7 +134,15 @@ class CartFragment : Fragment() {
                 when (state) {
                     is UiState.Success -> {
                         val intent = Intent(requireActivity(), OrderDetailActivity::class.java)
-                        setAlarm(state.data, viewModel.orderTitle)
+
+                        setAlarm(
+                            state.data, setOrderTitle(
+                                viewModel.orderTitle,
+                                viewModel.cartCache.values.filter { it.checkState }.size,
+                                resources
+                            )
+                        )
+
                         intent.putExtra(ORDER_ID, state.data)
                         startActivity(intent)
                         requireActivity().finish()
