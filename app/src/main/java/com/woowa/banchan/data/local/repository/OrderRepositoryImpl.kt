@@ -45,7 +45,6 @@ class OrderRepositoryImpl @Inject constructor(
                 cart.map { it.toCartDto().toOrderItemDto(-1) }
             )
         }
-    }
 
     override suspend fun updateOrder(id: Long, deliverState: Boolean) =
         withContext(Dispatchers.IO) {
