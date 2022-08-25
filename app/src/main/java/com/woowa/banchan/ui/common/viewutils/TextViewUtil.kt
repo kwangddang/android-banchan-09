@@ -32,13 +32,13 @@ fun TextView.setOriginPrice(price: Int?) {
 
 @BindingAdapter("cartButtonPrice")
 fun TextView.setCartButton(price: Int) {
-    resources.getString(R.string.cart_preview_recent)
-    text = if (price < minimumPrice) "최소주문금액을 확인해주세요"
+
+    text = if (price < minimumPrice) resources.getString(R.string.error_minimum_price)
     else {
         val p = price + if (price >= freeShipping) 0 else shipping
         val str =
             MoneyUtil.getPriceFormatString(p) + resources.getString(R.string.text_view_price_format_lan)
-        str + "주문하기"
+        str + resources.getString(R.string.text_view_order)
     }
 }
 

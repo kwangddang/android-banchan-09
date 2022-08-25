@@ -57,6 +57,7 @@
     <string name="error_refresh">다시 불러오기</string>
     <string name="empty_notice">상품이 비어있습니다!</string>
     <string name="error_item_count_overflow">1~100 까지의 숫자를 입력하세요</string>
+    <string name="error_minimum_price">최소주문금액을 확인해주세요</string>
 
     <!--String Formatting-->
     <string name="total_count">총 %d개 상품</string>
@@ -79,6 +80,7 @@
     <string name="text_view_price_format_lan">원</string>
     <string name="text_view_notice_free_shipping">을 더 담으면 무료배송!</string>
     <string name="text_view_order_summary">%s 외 %d개</string>
+    <string name="text_view_order">주문하기</string>
 
     <!--Home Tab List-->
     <string name="home_tab_best">기획전</string>
