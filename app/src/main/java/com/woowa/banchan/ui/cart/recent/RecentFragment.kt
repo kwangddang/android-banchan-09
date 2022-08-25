@@ -86,7 +86,6 @@ class RecentFragment : Fragment() {
                 putExtra("hash", recent.hash)
             }
             startActivity(intent)
-            this@RecentFragment.requireActivity().finish()
         })
 
         viewModel.bottomsheetEvent.observe(viewLifecycleOwner, EventObserver { recent ->
