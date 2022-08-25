@@ -13,8 +13,8 @@ object NetworkError {
 
     fun getNetworkErrorState(t: Throwable): ErrorState =
         when (t) {
-            is HttpException -> ErrorState(errorType, HTTP_EXCEPTION, t)
-            is SocketTimeoutException -> ErrorState(errorType, TIMEOUT, t)
-            else -> ErrorState(errorType, UNDEFINED, t)
+            is HttpException -> ErrorState(errorType, HTTP_EXCEPTION, t.message)
+            is SocketTimeoutException -> ErrorState(errorType, TIMEOUT, t.message)
+            else -> ErrorState(errorType, UNDEFINED, t.message)
         }
 }

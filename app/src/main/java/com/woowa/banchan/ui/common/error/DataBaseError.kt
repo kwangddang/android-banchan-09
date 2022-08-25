@@ -11,7 +11,7 @@ object DataBaseError {
 
     fun getDataBaseErrorState(t: Throwable): ErrorState =
         when (t) {
-            is SQLiteConstraintException -> ErrorState(errorType, UNIQUE_KEY_DUPLICATE, t)
-            else -> ErrorState(errorType, UNDEFINED, t)
+            is SQLiteConstraintException -> ErrorState(errorType, UNIQUE_KEY_DUPLICATE, t.message)
+            else -> ErrorState(errorType, UNDEFINED, t.message)
         }
 }

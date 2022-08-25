@@ -13,7 +13,7 @@ enum class ErrorType {
 data class ErrorState(
     val errorType: ErrorType,
     val errorStatsCode: Int,
-    val throwable: Throwable,
+    val message: String?,
 )
 
 fun getErrorState(t: Throwable): ErrorState =
@@ -21,5 +21,5 @@ fun getErrorState(t: Throwable): ErrorState =
         is SQLiteException -> DataBaseError.getDataBaseErrorState(t)
         is SocketTimeoutException -> NetworkError.getNetworkErrorState(t)
         is HttpException -> NetworkError.getNetworkErrorState(t)
-        else -> ErrorState(ErrorType.NONE, -1, t)
+        else -> ErrorState(ErrorType.NONE, -1, null)
     }

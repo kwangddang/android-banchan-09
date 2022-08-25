@@ -69,7 +69,7 @@ class CartUpdateFragment : DialogFragment() {
                         getString(R.string.fragment_cart_update)
                     )
                 } else if (state is UiState.Error) {
-                    showToast(state.error.throwable.message)
+                    showToast(state.error.message)
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
 

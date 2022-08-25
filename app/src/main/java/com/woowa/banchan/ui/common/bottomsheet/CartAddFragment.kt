@@ -64,7 +64,7 @@ class CartAddFragment(private val foodItem: FoodItem) : BottomSheetDialogFragmen
                         getString(R.string.fragment_cart_complete)
                     )
                 } else if (state is UiState.Error) {
-                    showToast(state.error.throwable.message)
+                    showToast(state.error.message)
                 }
             }.launchIn(lifecycleScope)
 

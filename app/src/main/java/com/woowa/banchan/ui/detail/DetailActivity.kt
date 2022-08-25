@@ -82,7 +82,7 @@ class DetailActivity : AppCompatActivity() {
                     }
                     is UiState.Error -> {
                         showError(binding.nsvDetail, binding.pbLoading, binding.evNetwork)
-                        showToast(state.error.throwable.message)
+                        showToast(state.error.message)
                     }
                     is UiState.Loading -> showLoading(
                         binding.nsvDetail,
@@ -109,7 +109,7 @@ class DetailActivity : AppCompatActivity() {
                             getString(R.string.fragment_cart_update)
                         )
                     } else {
-                        showToast(state.error.throwable.message)
+                        showToast(state.error.message)
                     }
                 }
             }.launchIn(lifecycleScope)
@@ -119,7 +119,7 @@ class DetailActivity : AppCompatActivity() {
                 if (state is UiState.Success)
                     binding.ctbToolbar.setCartCountIcon(state.data)
                 else if (state is UiState.Error)
-                    showToast(state.error.throwable.message)
+                    showToast(state.error.message)
 
             }.launchIn(lifecycleScope)
 
@@ -131,7 +131,7 @@ class DetailActivity : AppCompatActivity() {
                     else
                         binding.ctbToolbar.unSetUserNotifierIcon()
                 } else if (state is UiState.Error)
-                    showToast(state.error.throwable.message)
+                    showToast(state.error.message)
 
             }.launchIn(lifecycleScope)
 
