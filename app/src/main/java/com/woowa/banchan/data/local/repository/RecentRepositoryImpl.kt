@@ -5,6 +5,8 @@ import com.woowa.banchan.data.local.entity.RecentDto
 import com.woowa.banchan.data.local.entity.toRecentDto
 import com.woowa.banchan.domain.model.Recent
 import com.woowa.banchan.domain.repository.RecentRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 
@@ -12,7 +14,7 @@ class RecentRepositoryImpl @Inject constructor(
     private val recentDataSource: RecentDataSource
 ) : RecentRepository {
 
-    override suspend fun getRecentList(): List<Recent> {
+    override suspend fun getRecentList(): List<Recent> = withContext(Dispatchers.IO) {
         val list = recentDataSource.getRecentList()
         val curCalendar = Calendar.getInstance().apply { time = Date() }
         val calendar = Calendar.getInstance()
@@ -24,10 +26,10 @@ class RecentRepositoryImpl @Inject constructor(
                 recentDataSource.deleteRecent(it)
             else retList.add(it)
         }
-        return retList.map { it.toRecent() }
+        retList.map { it.toRecent() }
     }
 
-    override suspend fun insertRecent(recent: Recent) {
+    override suspend fun insertRecent(recent: Recent) = withContext(Dispatchers.IO) {
         recentDataSource.insertRecent(recent.toRecentDto())
     }
 }

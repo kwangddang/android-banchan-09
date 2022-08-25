@@ -37,7 +37,7 @@ class OrderActivity : AppCompatActivity() {
     }
 
     private fun initToolBar() {
-        binding.ctbSubToolbar.setAppBarTitle("Order List")
+        binding.ctbSubToolbar.setAppBarTitle(getString(R.string.toolbar_title_recent))
     }
 
     private fun initBinding() {

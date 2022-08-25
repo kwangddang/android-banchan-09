@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
 
     <data>
 
@@ -40,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:text="상품 주문 금액" />
+                    android:text="@string/order_ordered_items_price" />
 
                 <TextView
                     style="@style/normal_grey_14"
@@ -48,8 +49,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="18,640원"
-                    app:price="@{totalPrice}" />
+                    app:price="@{totalPrice}"
+                    tool:text="18,640원" />
             </LinearLayout>
 
             <LinearLayout
@@ -62,7 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:text="배송료" />
+                    android:text="@string/order_shipping_price" />
 
                 <TextView
                     style="@style/normal_grey_14"
@@ -70,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="2,500원"
+                    tool:text="2,500원"
                     app:price="@{shipping}" />
             </LinearLayout>
 
@@ -89,7 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:text="총 주문 금액" />
+                    android:text="@string/order_total_price" />
 
                 <TextView
                     android:id="@+id/tv_total_price"
@@ -98,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="21,140원"
+                    tool:text="21,140원"
                     app:price="@{shipping+totalPrice}" />
             </LinearLayout>
         </LinearLayout>

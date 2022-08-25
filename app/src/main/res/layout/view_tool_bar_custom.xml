@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
 
     <data>
 
@@ -35,7 +36,7 @@
                 style="@style/appbarTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/toolbar_title" />
+                android:text="@string/toolbar_title_ordering" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_main_icons"
@@ -63,9 +64,9 @@
                     android:layout_height="14dp"
                     android:background="@drawable/ic_dark_dot"
                     android:gravity="center"
-                    android:text="1"
                     app:layout_constraintEnd_toEndOf="@id/iv_cart"
-                    app:layout_constraintTop_toTopOf="@id/iv_cart" />
+                    app:layout_constraintTop_toTopOf="@id/iv_cart"
+                    tool:text="1" />
 
                 <ImageView
                     android:id="@+id/iv_user"

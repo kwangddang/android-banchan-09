@@ -64,8 +64,11 @@ class CartFragment : Fragment() {
 
     private fun initListener() {
         val listener = object : CartRVAdapter.CartButtonCallBackListener {
-            override fun onClickCartUpdate(cart: Cart, message: String?) {
-                viewModel.cartUpdateListener(cart, message)
+            override fun onClickCartUpdate(cart: Cart, message: Int?) {
+                viewModel.cartUpdateListener(
+                    cart,
+                    if (message == null) null else getString(message)
+                )
             }
 
             override fun onClickCartRemove(cart: Cart) {
