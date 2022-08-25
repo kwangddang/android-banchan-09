@@ -77,7 +77,12 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun initTabLayoutMediator() {
-        val tabList = listOf("기획전", "든든한 메인요리", "뜨끈한 국물요리", "정갈한 밑반찬")
+        val tabList = listOf(
+            getString(R.string.home_tab_best),
+            getString(R.string.home_tab_main),
+            getString(R.string.home_tab_soup),
+            getString(R.string.home_tab_side)
+        )
 
         TabLayoutMediator(binding.layoutTab, binding.vpHome) { tab, position ->
             tab.text = tabList[position]

@@ -5,6 +5,8 @@
     <!-- ToolBar title -->
     <string name="toolbar_title_ordering">ORDERING</string>
     <string name="toolbar_title_cart">Cart</string>
+    <string name="toolbar_title_recent">Recently viewed products</string>
+    <string name="toolbar_title_order">Order List</string>
 
     <!--fragment tag-->
     <string name="fragment_best">best</string>
@@ -19,7 +21,10 @@
 
     <!--Home Header Title-->
     <string name="badge">기획전</string>
-    <string name="best_title">한 번 주문하면\n두 번 반하는 반찬들</string>
+    <string name="home_header_best_title">한 번 주문하면\n두 번 반하는 반찬들</string>
+    <string name="home_header_main_title">모두가 좋아하는\n든든한 메인 요리</string>
+    <string name="home_header_soup_title">정성이 담긴\n뜨끈뜨끈 국물 요리</string>
+    <string name="home_header_side_title">식탁을 풍성하게 하는\n정갈한 밑반찬</string>
 
     <!--Products Detail Screen-->
     <string name="detail_point_label">적립금</string>
@@ -51,6 +56,7 @@
     <string name="error_text">네트워크에 문제가 발생했습니다!</string>
     <string name="error_refresh">다시 불러오기</string>
     <string name="empty_notice">상품이 비어있습니다!</string>
+    <string name="error_item_count_overflow">1~100 까지의 숫자를 입력하세요</string>
 
     <!--String Formatting-->
     <string name="total_count">총 %d개 상품</string>
@@ -69,8 +75,20 @@
     <string name="order_shipping_price">배송료</string>
     <string name="order_total_price">총 주문 금액</string>
 
-    <!--Price-->
+    <!--text view extension-->
     <string name="text_view_price_format_lan">원</string>
     <string name="text_view_notice_free_shipping">을 더 담으면 무료배송!</string>
     <string name="text_view_order_summary">%s 외 %d개</string>
+
+    <!--Home Tab List-->
+    <string name="home_tab_best">기획전</string>
+    <string name="home_tab_main">든든한 메인요리</string>
+    <string name="home_tab_soup">뜨끈한 국물요리</string>
+    <string name="home_tab_side">정갈한 밑반찬</string>
+
+    <!--Sorting criteria List-->
+    <string name="spinner_criterion_default">기본 정렬순</string>
+    <string name="spinner_criterion_price_high">금액 높은순</string>
+    <string name="spinner_criterion_price_low">금액 낮은순</string>
+    <string name="spinner_criterion_discount">할인율순</string>
 </resources>

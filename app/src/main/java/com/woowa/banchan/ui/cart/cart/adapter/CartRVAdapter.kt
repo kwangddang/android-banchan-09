@@ -196,7 +196,7 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
         listener?.onClickCartUpdate(cart)
     }
 
-    private fun onClickCartUpdateCount(cart: Cart, message: String? = null) {
+    private fun onClickCartUpdateCount(cart: Cart, message: Int? = null) {
         cartList.map { if (it.hash == cart.hash) it.count = cart.count }
         updateTotalPrice()
         listener?.onClickCartUpdate(cart, message)
@@ -238,7 +238,7 @@ class CartRVAdapter : ListAdapter<Cart, RecyclerView.ViewHolder>(diffUtil) {
 
     interface CartButtonCallBackListener {
 
-        fun onClickCartUpdate(cart: Cart, message: String? = null)
+        fun onClickCartUpdate(cart: Cart, message: Int? = null)
         fun onClickCartRemove(cart: Cart)
         fun onClickOrderButton()
         fun onClickRecentItem(recent: Recent)

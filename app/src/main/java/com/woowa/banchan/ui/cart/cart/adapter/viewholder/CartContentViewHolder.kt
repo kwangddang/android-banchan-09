@@ -4,6 +4,7 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
+import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ItemCartBinding
 import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.domain.model.emptyCart
@@ -13,7 +14,7 @@ import com.woowa.banchan.ui.cart.cart.CartFragment.Companion.minimumCount
 class CartContentViewHolder(
     private val binding: ItemCartBinding,
     private val onClickCartCheckState: (cart: Cart) -> Unit,
-    private val onClickCartUpdateCount: (cart: Cart, message: String?) -> Unit,
+    private val onClickCartUpdateCount: (cart: Cart, message: Int?) -> Unit,
     private val onClickCartRemove: (cart: Cart) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -51,7 +52,7 @@ class CartContentViewHolder(
     }
 
     private fun updateCount(c: Int) {
-        val msg: String? = if (c < minimumCount || c > maximumCount) overflowMessage else null
+        val msg: Int? = if (c < minimumCount || c > maximumCount) overflowMessage else null
         cart.count =
             if (c < minimumCount) minimumCount else if (c > maximumCount) maximumCount else c
 
@@ -64,7 +65,7 @@ class CartContentViewHolder(
         binding.itemCount = c
         val count = if (c.isEmpty()) 0 else c.toInt()
 
-        val msg: String? =
+        val msg: Int? =
             if (count < minimumCount || count > maximumCount) overflowMessage else null
         cart.count =
             if (count < minimumCount) minimumCount else if (count > maximumCount) maximumCount else count
@@ -72,5 +73,5 @@ class CartContentViewHolder(
         onClickCartUpdateCount(cart, msg)
     }
 
-    private val overflowMessage = "1~100 까지의 숫자를 입력하세요"
+    private val overflowMessage = R.string.error_item_count_overflow
 }

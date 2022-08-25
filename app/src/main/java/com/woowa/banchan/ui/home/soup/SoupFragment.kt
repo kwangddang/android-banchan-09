@@ -23,7 +23,7 @@ class SoupFragment : HomeBaseFragment<FragmentSoupBinding>(R.layout.fragment_sou
 
     private val soupSideAdapter: SoupSideRVAdapter by lazy {
         SoupSideRVAdapter(
-            false,
+            true,
             viewModel.spinnerPosition,
             viewModel.spinnerCallback,
             homeRVAdapter
