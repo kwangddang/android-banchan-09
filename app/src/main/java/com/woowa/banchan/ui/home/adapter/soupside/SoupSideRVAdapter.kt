@@ -54,8 +54,15 @@ class SoupSideRVAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is HomeHeaderViewHolder -> holder.bind(if (isSoup) "정성이 담긴\n뜨끈뜨끈 국물 요리" else "식탁을 풍성하게 하는\n정갈한 밑반찬", false)
-            is SoupSideHeaderViewHolder -> holder.bind(homeRVAdapter.itemCount, spinnerPosition, spinnerCallback)
+            is HomeHeaderViewHolder -> holder.bind(
+                if (isSoup) "정성이 담긴\n뜨끈뜨끈 국물 요리" else "식탁을 풍성하게 하는\n정갈한 밑반찬",
+                false
+            )
+            is SoupSideHeaderViewHolder -> holder.bind(
+                homeRVAdapter.itemCount,
+                spinnerPosition,
+                spinnerCallback
+            )
             is HomeRecyclerViewViewHolder -> holder.bind(homeRVAdapter)
         }
     }

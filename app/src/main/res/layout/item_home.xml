@@ -27,8 +27,8 @@
             android:id="@+id/iv_thumbnail"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="1:1"
             app:image="@{food.image}"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

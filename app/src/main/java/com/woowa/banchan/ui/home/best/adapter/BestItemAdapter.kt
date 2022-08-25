@@ -28,7 +28,11 @@ class BestItemAdapter(
         holder.bind(getItem(position), itemClickListener, cartClickListener)
     }
 
-    override fun onBindViewHolder(holder: BestItemViewHolder, position: Int, payloads: MutableList<Any>) {
+    override fun onBindViewHolder(
+        holder: BestItemViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
         if (payloads.isEmpty()) {
             super.onBindViewHolder(holder, position, payloads)
         } else {

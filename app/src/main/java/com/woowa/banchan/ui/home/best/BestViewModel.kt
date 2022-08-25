@@ -23,10 +23,9 @@ class BestViewModel @Inject constructor(
     fun getBestFoods() {
         viewModelScope.launch {
             _bestUiState.emit(UiState.Loading)
-            getBestFoodsUseCase().onSuccess { uiState ->
-                uiState.collect { _bestUiState.emit(UiState.Success(it)) }
+            getBestFoodsUseCase().onSuccess { flow ->
+                flow.collect { _bestUiState.emit(UiState.Success(it)) }
             }.onFailure { _bestUiState.emit(UiState.Error(it.message)) }
         }
     }
-
 }

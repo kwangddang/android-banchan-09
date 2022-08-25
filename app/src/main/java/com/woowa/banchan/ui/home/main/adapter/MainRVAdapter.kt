@@ -54,7 +54,11 @@ class MainRVAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is HomeHeaderViewHolder -> holder.bind("모두가 좋아하는\n든든한 메인 요리", false)
-            is MainHeaderViewHolder -> holder.bind(spinnerPosition, checkedChangeListener, spinnerCallback)
+            is MainHeaderViewHolder -> holder.bind(
+                spinnerPosition,
+                checkedChangeListener,
+                spinnerCallback
+            )
             is HomeRecyclerViewViewHolder -> holder.bind(homeRVAdapter)
         }
     }

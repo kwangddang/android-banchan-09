@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
             type="com.woowa.banchan.ui.order.detail.OrderDetailViewModel" />
@@ -18,11 +19,11 @@
             android:id="@+id/ctb_sub_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:onClickBackIcon="@{vm::setBackClickEvent}"
-            app:onClickRefreshIcon="@{vm::setRefreshClickEvent}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:onClickBackIcon="@{vm::setBackClickEvent}"
+            app:onClickRefreshIcon="@{vm::setRefreshClickEvent}"
             app:toolBarType="sub|sub_refresh"
             app:toolbarTitle="" />
 

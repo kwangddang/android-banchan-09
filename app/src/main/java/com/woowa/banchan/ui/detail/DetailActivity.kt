@@ -11,6 +11,8 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ActivityDetailBinding
 import com.woowa.banchan.ui.cart.CartActivity
 import com.woowa.banchan.ui.common.event.EventObserver
+import com.woowa.banchan.ui.common.key.foodDetailHash
+import com.woowa.banchan.ui.common.key.foodDetailTitle
 import com.woowa.banchan.ui.common.popup.CartCompleteFragment
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.common.viewutils.showContent
@@ -41,8 +43,8 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun getIntentValues() {
-        viewModel.title.value = intent.getStringExtra("title")!!
-        viewModel.hash = intent.getStringExtra("hash")!!
+        viewModel.title.value = intent.getStringExtra(foodDetailTitle)!!
+        viewModel.hash = intent.getStringExtra(foodDetailHash)!!
         if (viewModel.title.value == null || viewModel.hash == null) finish()
     }
 

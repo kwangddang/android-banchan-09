@@ -10,6 +10,7 @@ data class FoodItem(
     val title: String,
     var checkState: Boolean = false
 ) {
+
     fun toCart(totalCount: Int, checkState: Boolean): Cart =
         Cart(
             hash = detailHash,

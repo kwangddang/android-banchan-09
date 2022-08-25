@@ -30,7 +30,11 @@ class RecentRVAdapter : ListAdapter<Recent, RecentGridItemViewHolder>(diffUtil) 
         )
     }
 
-    override fun onBindViewHolder(holder: RecentGridItemViewHolder, position: Int, payloads: MutableList<Any>) {
+    override fun onBindViewHolder(
+        holder: RecentGridItemViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
         if (payloads.isEmpty())
             super.onBindViewHolder(holder, position, payloads)
         else

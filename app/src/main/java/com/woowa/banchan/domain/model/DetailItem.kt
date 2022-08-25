@@ -15,6 +15,7 @@ data class DetailItem(
     val thumbImages: List<String>,
     val topImage: String
 ) {
+
     fun toCart(title: String, totalCount: Int, checkState: Boolean): Cart =
         Cart(
             hash = hash,

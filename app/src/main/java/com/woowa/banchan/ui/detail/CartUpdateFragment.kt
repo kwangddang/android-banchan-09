@@ -30,7 +30,11 @@ class CartUpdateFragment : DialogFragment() {
 
     private val viewModel: DetailViewModel by activityViewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_cart_update, container, false)
         initDialog()
         return binding.root
@@ -60,15 +64,16 @@ class CartUpdateFragment : DialogFragment() {
                 val state = it.getContentIfNotHandled()
                 if (state is UiState.Success) {
                     parentFragmentManager.commit { remove(this@CartUpdateFragment) }
-                    CartCompleteFragment().show(parentFragmentManager, getString(R.string.fragment_cart_update))
+                    CartCompleteFragment().show(
+                        parentFragmentManager,
+                        getString(R.string.fragment_cart_update)
+                    )
                 } else if (state is UiState.Error) {
                     showToast(state.message)
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-        viewModel.cancelClickEvent.observe(viewLifecycleOwner, EventObserver {
-            dismiss()
-        })
+        viewModel.cancelClickEvent.observe(viewLifecycleOwner, EventObserver { dismiss() })
     }
 
 }

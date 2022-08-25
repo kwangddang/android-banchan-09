@@ -2,7 +2,6 @@ package com.woowa.banchan.data.local.repository
 
 import com.woowa.banchan.data.local.datasource.recent.RecentDataSource
 import com.woowa.banchan.data.local.entity.RecentDto
-import com.woowa.banchan.data.local.entity.toRecent
 import com.woowa.banchan.data.local.entity.toRecentDto
 import com.woowa.banchan.domain.model.Recent
 import com.woowa.banchan.domain.repository.RecentRepository

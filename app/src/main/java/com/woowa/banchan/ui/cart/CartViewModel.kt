@@ -17,6 +17,7 @@ import com.woowa.banchan.domain.usecase.order.inter.InsertCartToOrderUseCase
 import com.woowa.banchan.domain.usecase.recent.inter.GetRecentlyViewedFoodsUseCase
 import com.woowa.banchan.ui.common.event.SingleEvent
 import com.woowa.banchan.ui.common.event.setEvent
+import com.woowa.banchan.ui.common.key.orderWorkerId
 import com.woowa.banchan.ui.common.livedata.SingleLiveData
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.worker.OrderWorker
@@ -60,11 +61,89 @@ class CartViewModel @Inject constructor(
     private val _recentClickEvent = MutableLiveData<SingleEvent<Recent>>()
     val recentClickEvent: LiveData<SingleEvent<Recent>> get() = _recentClickEvent
 
-    private val _checkClickEvent = MutableLiveData<SingleEvent<Unit>>()
-    val checkClickEvent: LiveData<SingleEvent<Unit>> get() = _checkClickEvent
-
     private val _bottomsheetEvent = MutableLiveData<SingleEvent<Recent>>()
     val bottomsheetEvent: LiveData<SingleEvent<Recent>> get() = _bottomsheetEvent
+
+    init {
+        viewModelScope.launch {
+            launch {
+                _cartUiState.emit(UiState.Loading)
+                getCartListUseCase()
+                    .onSuccess { flow -> flow.collect { _cartUiState.emit(UiState.Success(it)) } }
+                    .onFailure { _cartUiState.emit(UiState.Error(it.message)) }
+            }
+
+            launch {
+                _recentUiState.emit(UiState.Loading)
+                getRecentlyViewedFoodsUseCase()
+                    .onSuccess { flow -> flow.collect { _recentUiState.emit(UiState.Success(it)) } }
+                    .onFailure { _recentUiState.emit(UiState.Error(it.message)) }
+            }
+        }
+    }
+
+    fun setFragmentTag(tag: String) {
+        fragmentTag.setValue(tag)
+    }
+
+    private fun doUpdateCart() = CoroutineScope(Dispatchers.IO).launch {
+        updateCartCache.forEach {
+            if (it.second) {
+                launch { deleteCartUseCase(it.first.hash) }
+            } else {
+                launch { updateCartUseCase(it.first) }
+            }
+        }
+    }
+
+    fun updateCart() {
+        doUpdateCart()
+    }
+
+    fun deleteCart(recent: Recent) {
+        CoroutineScope(Dispatchers.IO).launch { deleteCartUseCase(recent.hash) }
+    }
+
+    private fun addUpdateCartCache(cart: Cart, removeFlag: Boolean) {
+        val idx = getCartCacheIdx(cart)
+
+        if (idx == -1) updateCartCache.add(Pair(cart, removeFlag))
+        else updateCartCache[idx] = Pair(cart, removeFlag)
+    }
+
+    private fun getCartCacheIdx(cart: Cart): Int {
+        updateCartCache.forEachIndexed { index, pair -> if (pair.first.hash == cart.hash) return index }
+        return -1
+    }
+
+    private fun addOrder() = viewModelScope.launch {
+        doUpdateCart().join()
+        _orderUiState.emit(UiState.Loading)
+        val checkedList = mutableListOf<Cart>()
+        val uiState = _cartUiState.value
+
+        if (uiState is UiState.Success) {
+            uiState.data.values.forEach { cart -> if (cart.checkState) checkedList.add(cart) }
+            insertCartToOrderUseCase(checkedList).onSuccess { order ->
+                _orderUiState.emit(UiState.Success(order))
+                checkedList.forEach { launch { deleteCartUseCase(it.hash) } }
+            }
+                .onFailure { _orderUiState.emit(UiState.Error(it.message)) }
+        } else {
+            _orderUiState.emit(UiState.Error(null))
+        }
+    }
+
+    fun reserveUpdateOrder(order: Order, workManager: WorkManager) {
+        workManager.enqueue(
+            OneTimeWorkRequestBuilder<OrderWorker>()
+                .setInputData(
+                    Data.Builder().putLong(orderWorkerId, order.id).build()
+                )
+                .setInitialDelay(20, TimeUnit.MINUTES)
+                .build()
+        )
+    }
 
     val cartUpdateListener: (Cart, String?) -> Unit = { cart, message ->
         addUpdateCartCache(cart, removeFlag = false)
@@ -93,88 +172,6 @@ class CartViewModel @Inject constructor(
 
     val cartAddListener: (Recent) -> Unit = { recent ->
         _bottomsheetEvent.setEvent(recent)
-    }
-
-    init {
-        viewModelScope.launch {
-            launch {
-                _cartUiState.emit(UiState.Loading)
-                getCartListUseCase()
-                    .onSuccess { it.collect { item -> _cartUiState.emit(UiState.Success(item)) } }
-                    .onFailure { _cartUiState.emit(UiState.Error(it.message)) }
-            }
-
-            launch {
-                _recentUiState.emit(UiState.Loading)
-                getRecentlyViewedFoodsUseCase()
-                    .onSuccess { it.collect { item -> _recentUiState.emit(UiState.Success(item)) } }
-                    .onFailure { _recentUiState.emit(UiState.Error(it.message)) }
-            }
-        }
-    }
-
-    fun setFragmentTag(tag: String) {
-        fragmentTag.setValue(tag)
-    }
-
-    private fun doUpdateCart() = CoroutineScope(Dispatchers.IO).launch {
-        updateCartCache.forEach {
-            if (it.second) {
-                launch { deleteCartUseCase(it.first.hash) }
-            } else {
-                launch { updateCartUseCase(it.first) }
-            }
-        }
-    }
-
-
-    fun updateCart() {
-        doUpdateCart()
-    }
-
-    fun deleteCart(recent: Recent) {
-        CoroutineScope(Dispatchers.IO).launch { deleteCartUseCase(recent.hash) }
-    }
-
-    fun addUpdateCartCache(cart: Cart, removeFlag: Boolean) {
-        val idx = getCartCacheIdx(cart)
-
-        if (idx == -1) updateCartCache.add(Pair(cart, removeFlag))
-        else updateCartCache[idx] = Pair(cart, removeFlag)
-    }
-
-    private fun getCartCacheIdx(cart: Cart): Int {
-        updateCartCache.forEachIndexed { index, pair -> if (pair.first.hash == cart.hash) return index }
-        return -1
-    }
-
-    fun addOrder() = viewModelScope.launch {
-        doUpdateCart().join()
-        _orderUiState.emit(UiState.Loading)
-        val checkedList = mutableListOf<Cart>()
-        val uiState = _cartUiState.value
-
-        if (uiState is UiState.Success) {
-            uiState.data.values.forEach { cart -> if (cart.checkState) checkedList.add(cart) }
-            insertCartToOrderUseCase(checkedList).onSuccess { order ->
-                _orderUiState.emit(UiState.Success(order))
-                checkedList.forEach { launch { deleteCartUseCase(it.hash) } }
-            }
-                .onFailure { _orderUiState.emit(UiState.Error(it.message)) }
-        } else {
-            _orderUiState.emit(UiState.Error(null))
-        }
-    }
-
-    fun reserveUpdateOrder(order: Order, workManager: WorkManager) {
-        workManager.enqueue(
-            OneTimeWorkRequestBuilder<OrderWorker>()
-                .setInputData(
-                    Data.Builder().putLong("id", order.id).build()
-                )
-                .setInitialDelay(20, TimeUnit.MINUTES)
-                .build()
-        )
     }
 
     fun setBackClickEvent() {

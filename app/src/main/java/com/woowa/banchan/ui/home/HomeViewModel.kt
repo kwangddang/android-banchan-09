@@ -39,27 +39,13 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             launch {
                 getCartCountUseCase()
-                    .onSuccess { item ->
-                        item.collect {
-                            _cartCountUiState.emit(
-                                UiState.Success(it)
-                            )
-                        }
-                    }
+                    .onSuccess { flow -> flow.collect { _cartCountUiState.emit(UiState.Success(it)) } }
                     .onFailure { _cartCountUiState.emit(UiState.Error(it.message)) }
             }
 
             launch {
                 getOrderStateUseCase()
-                    .onSuccess { uiState ->
-                        uiState.collect {
-                            _orderStateUiState.emit(
-                                UiState.Success(
-                                    it
-                                )
-                            )
-                        }
-                    }
+                    .onSuccess { flow -> flow.collect { _orderStateUiState.emit(UiState.Success(it)) } }
                     .onFailure { _orderStateUiState.emit(UiState.Error(it.message)) }
             }
         }
