@@ -21,7 +21,7 @@
                 style="@style/label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="최근 본 상품"
+                android:text="@string/cart_preview_recent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +31,7 @@
                 style="@style/spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="전체보기"
+                android:text="@string/cart_view_recent_all"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

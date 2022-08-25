@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:onClickBackIcon="@{vm::setBackClickEvent}"
             app:toolBarType="sub"
-            app:toolbarTitle="Cart" />
+            app:toolbarTitle="@string/toolbar_title_cart" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fcv_main"

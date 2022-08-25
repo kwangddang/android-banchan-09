@@ -25,7 +25,7 @@
             app:onClickCartIcon="@{vm::setCartClickEvent}"
             app:onClickUserIcon="@{vm::setUserClickEvent}"
             app:toolBarType="main"
-            app:toolbarTitle="@string/toolbar_title" />
+            app:toolbarTitle="@string/toolbar_title_ordering" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/layout_tab"

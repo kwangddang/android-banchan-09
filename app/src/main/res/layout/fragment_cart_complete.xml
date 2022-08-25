@@ -20,7 +20,7 @@
             style="@style/normal_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dlg_title"
+            android:text="@string/dialog_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:onClick="@{() -> vm.setContinueClickEvent()}"
-            android:text="@string/continue_shopping"
+            android:text="@string/dialog_continue_shopping"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_popup_title" />
 
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:onClick="@{() -> vm.setConfirmClickEvent()}"
             android:paddingEnd="24dp"
-            android:text="@string/cart_confirm"
+            android:text="@string/dialog_cart_confirm"
             app:layout_constraintEnd_toStartOf="@id/tv_continue_shopping"
             app:layout_constraintTop_toTopOf="@id/tv_continue_shopping" />
 
