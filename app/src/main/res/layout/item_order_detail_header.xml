@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="8dp"
-                android:text="@string/delivery_complete_long"
+                android:text="@string/order_delivery_complete_long"
                 android:visibility="@{deliveryState ? View.VISIBLE : View.GONE}" />
 
             <LinearLayout
@@ -56,7 +56,7 @@
                     style="@style/normal_grey_14"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/delivery_time" />
+                    android:text="@string/order_delivery_time" />
 
                 <TextView
                     android:id="@+id/tv_left_time"
@@ -77,7 +77,7 @@
                     style="@style/normal_grey_14"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="주문한 상품 " />
+                    android:text="@string/order_ordered_item" />
 
                 <TextView
                     android:id="@+id/tv_item_count"

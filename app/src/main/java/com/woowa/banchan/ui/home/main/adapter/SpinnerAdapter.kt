@@ -15,8 +15,12 @@ class SpinnerAdapter(context: Context) : BaseAdapter() {
     private val inflater: LayoutInflater =
         context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-    private val list = listOf("기본 정렬순", "금액 높은순", "금액 낮은순", "할인율순")
-
+    private val list = listOf(
+        context.getString(R.string.spinner_criterion_default),
+        context.getString(R.string.spinner_criterion_price_high),
+        context.getString(R.string.spinner_criterion_price_low),
+        context.getString(R.string.spinner_criterion_discount),
+    )
     var selectedPosition = 0
 
     override fun getCount(): Int = list.size

@@ -6,6 +6,7 @@ import android.widget.RadioGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 import com.woowa.banchan.databinding.ItemMainHeaderBinding
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
@@ -24,16 +25,21 @@ class MainRVAdapter(
     ListAdapter<RVItem, RecyclerView.ViewHolder>(diffUtil) {
 
     var managerType = GRID
+    private var bannerTitle = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            HOME_HEADER -> HomeHeaderViewHolder(
-                ItemHomeHeaderBinding.inflate(
-                    LayoutInflater.from(
-                        parent.context
-                    ), parent, false
+            HOME_HEADER -> {
+                bannerTitle = parent.context.getString(R.string.home_header_main_title)
+
+                HomeHeaderViewHolder(
+                    ItemHomeHeaderBinding.inflate(
+                        LayoutInflater.from(
+                            parent.context
+                        ), parent, false
+                    )
                 )
-            )
+            }
             SUB_HEADER -> MainHeaderViewHolder(
                 ItemMainHeaderBinding.inflate(
                     LayoutInflater.from(
@@ -53,7 +59,7 @@ class MainRVAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is HomeHeaderViewHolder -> holder.bind("모두가 좋아하는\n든든한 메인 요리", false)
+            is HomeHeaderViewHolder -> holder.bind(bannerTitle, false)
             is MainHeaderViewHolder -> holder.bind(
                 spinnerPosition,
                 checkedChangeListener,

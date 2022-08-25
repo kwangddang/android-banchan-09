@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
 
     <data>
 
@@ -34,7 +35,7 @@
             android:focusable="@{(totalPrice &gt; minimumPrice) ? true : false}"
             android:gravity="center"
             android:padding="16dp"
-            android:text="21,140원 주문하기"
+            tool:text="21,140원 주문하기"
             app:cartButtonPrice="@{totalPrice}" />
 
         <TextView
@@ -43,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="18,860원을 더 담으면 무료배송!"
+            tool:text="18,860원을 더 담으면 무료배송!"
             app:cartFreeShippingPrice="@{totalPrice}" />
     </LinearLayout>
 </layout>

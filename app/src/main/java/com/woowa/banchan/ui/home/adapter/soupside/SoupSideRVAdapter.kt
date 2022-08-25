@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
 import com.woowa.banchan.databinding.ItemSoupSideHeaderBinding
@@ -26,15 +27,24 @@ class SoupSideRVAdapter(
 ) :
     ListAdapter<RVItem, RecyclerView.ViewHolder>(diffUtil) {
 
+    private var bannerTitle = ""
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            HOME_HEADER -> HomeHeaderViewHolder(
-                ItemHomeHeaderBinding.inflate(
-                    LayoutInflater.from(
-                        parent.context
-                    ), parent, false
+            HOME_HEADER -> {
+                with(parent.context) {
+                    bannerTitle =
+                        if (isSoup) getString(R.string.home_header_soup_title)
+                        else getString(R.string.home_header_side_title)
+                }
+                HomeHeaderViewHolder(
+                    ItemHomeHeaderBinding.inflate(
+                        LayoutInflater.from(
+                            parent.context
+                        ), parent, false
+                    )
                 )
-            )
+            }
             SUB_HEADER -> SoupSideHeaderViewHolder(
                 ItemSoupSideHeaderBinding.inflate(
                     LayoutInflater.from(
@@ -54,10 +64,7 @@ class SoupSideRVAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is HomeHeaderViewHolder -> holder.bind(
-                if (isSoup) "정성이 담긴\n뜨끈뜨끈 국물 요리" else "식탁을 풍성하게 하는\n정갈한 밑반찬",
-                false
-            )
+            is HomeHeaderViewHolder -> holder.bind(bannerTitle, false)
             is SoupSideHeaderViewHolder -> holder.bind(
                 homeRVAdapter.itemCount,
                 spinnerPosition,
