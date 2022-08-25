@@ -11,7 +11,7 @@ import com.woowa.banchan.databinding.ActivityOrderDetailBinding
 import com.woowa.banchan.domain.model.Order
 import com.woowa.banchan.domain.model.OrderItem
 import com.woowa.banchan.ui.common.event.EventObserver
-import com.woowa.banchan.ui.common.key.orderId
+import com.woowa.banchan.ui.common.key.ORDER_ID
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.order.detail.adapter.OrderDetailRVAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,7 +43,7 @@ class OrderDetailActivity : AppCompatActivity() {
     }
 
     private fun checkOrderIsNull() {
-        viewModel.orderId = intent.getLongExtra(orderId, 0L)
+        viewModel.orderId = intent.getLongExtra(ORDER_ID, 0L)
         if (viewModel.orderId == 0L) finish()
     }
 

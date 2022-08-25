@@ -20,7 +20,7 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.FragmentCartBinding
 import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.domain.model.Recent
-import com.woowa.banchan.service.OrderReceiver
+import com.woowa.banchan.ui.common.receiver.OrderReceiver
 import com.woowa.banchan.ui.cart.CartViewModel
 import com.woowa.banchan.ui.cart.cart.adapter.CartRVAdapter
 import com.woowa.banchan.ui.common.event.EventObserver
@@ -112,7 +112,7 @@ class CartFragment : Fragment() {
                     is UiState.Success -> {
                         val intent = Intent(requireActivity(), OrderDetailActivity::class.java)
                         setAlarm(order.data, viewModel.orderTitle)
-                        intent.putExtra("order", order.data)
+                        intent.putExtra(ORDER_ID, order.data)
                         startActivity(intent)
                         requireActivity().finish()
                     }
@@ -153,7 +153,7 @@ class CartFragment : Fragment() {
                 )
             }
 
-        val deliveryTime = 60 * 1000
+        val deliveryTime = 5 * 1000
         alarmManager.setExact(
             AlarmManager.ELAPSED_REALTIME_WAKEUP,
             SystemClock.elapsedRealtime() + deliveryTime,

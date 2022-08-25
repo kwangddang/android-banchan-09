@@ -1,4 +1,4 @@
-package com.woowa.banchan.service
+package com.woowa.banchan.ui.common.receiver
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -15,6 +15,9 @@ import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.woowa.banchan.R
+import com.woowa.banchan.ui.common.key.ORDER_ID
+import com.woowa.banchan.ui.common.key.ORDER_WORKER_ID
+import com.woowa.banchan.ui.common.worker.OrderWorker
 import com.woowa.banchan.ui.order.detail.OrderDetailActivity
 
 class OrderReceiver : BroadcastReceiver() {
@@ -27,7 +30,7 @@ class OrderReceiver : BroadcastReceiver() {
         val orderContent = context.getString(R.string.order_content)
 
         val newIntent = Intent(context, OrderDetailActivity::class.java).apply {
-            putExtra("order", orderId)
+            putExtra(ORDER_ID, orderId)
         }
         val pendingIntent = PendingIntent.getActivity(context, 0, newIntent, FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE)
 
@@ -74,7 +77,7 @@ class OrderReceiver : BroadcastReceiver() {
 
         workManager.enqueue(
             OneTimeWorkRequestBuilder<OrderWorker>()
-                .setInputData(Data.Builder().putLong("id", orderId).build())
+                .setInputData(Data.Builder().putLong(ORDER_WORKER_ID, orderId).build())
                 .build()
         )
     }

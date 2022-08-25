@@ -14,7 +14,6 @@ import com.woowa.banchan.domain.usecase.recent.inter.GetRecentlyViewedFoodsUseCa
 import com.woowa.banchan.ui.common.error.getErrorState
 import com.woowa.banchan.ui.common.event.SingleEvent
 import com.woowa.banchan.ui.common.event.setEvent
-import com.woowa.banchan.ui.common.key.orderWorkerId
 import com.woowa.banchan.ui.common.livedata.SingleLiveData
 import com.woowa.banchan.ui.common.uistate.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -58,6 +57,8 @@ class CartViewModel @Inject constructor(
 
     private val _bottomsheetEvent = MutableLiveData<SingleEvent<Recent>>()
     val bottomsheetEvent: LiveData<SingleEvent<Recent>> get() = _bottomsheetEvent
+
+    var orderTitle: String = ""
 
     init {
         viewModelScope.launch {
