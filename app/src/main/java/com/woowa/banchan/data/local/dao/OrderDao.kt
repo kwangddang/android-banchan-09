@@ -24,7 +24,7 @@ interface OrderDao {
     fun getTotalOrderList(): Flow<List<OrderDto>>
 
     @Query("SELECT * FROM $orderTable WHERE id = :orderId")
-    fun getOrder(orderId: Long): OrderDto
+    fun getOrder(orderId: Long): Flow<OrderDto>
 
     @Query("SELECT EXISTS (SELECT * FROM $orderTable WHERE delivery_state = 0)")
     fun getOrderState(): Flow<Boolean>

@@ -19,8 +19,12 @@ sealed class RVItem {
         override val id = 1
     }
 
-    data class Item<T>(val item: T) : RVItem() { // 아이템 항목
+    object Footer : RVItem() {
         override val id = 2
+    }
+
+    data class Item<T>(val item: T) : RVItem() { // 아이템 항목
+        override val id = 3
     }
 
     object Empty : RVItem() {

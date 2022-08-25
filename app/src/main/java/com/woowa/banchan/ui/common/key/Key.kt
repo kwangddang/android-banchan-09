@@ -1,7 +1,7 @@
 package com.woowa.banchan.ui.common.key
 
-const val foodDetailTitle = "title"
-const val foodDetailHash = "hash"
+const val FOOD_DETAIL_TITLE = "title"
+const val FOOD_DETAIL_HASH = "hash"
 
-const val orderWorkerId = "id"
-const val orderId = "order"
+const val ORDER_WORKER_ID = "id"
+const val ORDER_ID = "order"

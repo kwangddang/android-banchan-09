@@ -24,26 +24,27 @@ class OrderRepositoryImpl @Inject constructor(
             orderDataSource.getTotalOrderList().map { list -> list.map { it.toOrder() } }
         }
 
-    override suspend fun getEachOrder(orderId: Long): Order =
+    override suspend fun getEachOrder(orderId: Long): Flow<Order> =
         withContext(Dispatchers.IO) {
-            orderDataSource.getOrder(orderId).toOrder()
+            orderDataSource.getOrder(orderId).map { it.toOrder() }
         }
 
-    override suspend fun getOrderDetail(orderId: Long): List<OrderItem> =
+    override suspend fun getOrderDetail(orderId: Long): Flow<List<OrderItem>> =
         withContext(Dispatchers.IO) {
-            orderDataSource.getOrderDetail(orderId).map { it.toOrderItem() }
+            orderDataSource.getOrderDetail(orderId).map { list -> list.map { it.toOrderItem() } }
         }
 
-    override suspend fun insertCartToOrder(cart: List<Cart>): Order = withContext(Dispatchers.IO) {
-        var totPrice = 0
-        cart.forEach { totPrice += (it.price * it.count) }
-        totPrice += (if (totPrice >= freeShipping) 0 else shipping)
+    override suspend fun insertCartToOrder(cart: List<Cart>): Long =
+        withContext(Dispatchers.IO) {
+            var totPrice = 0
+            cart.forEach { totPrice += (it.price * it.count) }
+            totPrice += (if (totPrice >= freeShipping) 0 else shipping)
 
-        val orderDto = orderDataSource.insertNewOrderAndItem(
-            newOrderDto(cart.size, totPrice, cart.first()),
-            cart.map { it.toCartDto().toOrderItemDto(-1) }
-        )
-        orderDto.toOrder()
+            orderDataSource.insertNewOrderAndItem(
+                newOrderDto(cart.size, totPrice, cart.first()),
+                cart.map { it.toCartDto().toOrderItemDto(-1) }
+            )
+        }
     }
 
     override suspend fun updateOrder(id: Long, deliverState: Boolean) =

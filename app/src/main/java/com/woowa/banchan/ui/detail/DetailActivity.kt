@@ -13,8 +13,8 @@ import com.woowa.banchan.ui.cart.CartActivity
 import com.woowa.banchan.ui.common.error.DataBaseError.UNIQUE_KEY_DUPLICATE
 import com.woowa.banchan.ui.common.error.ErrorType
 import com.woowa.banchan.ui.common.event.EventObserver
-import com.woowa.banchan.ui.common.key.foodDetailHash
-import com.woowa.banchan.ui.common.key.foodDetailTitle
+import com.woowa.banchan.ui.common.key.FOOD_DETAIL_HASH
+import com.woowa.banchan.ui.common.key.FOOD_DETAIL_TITLE
 import com.woowa.banchan.ui.common.popup.CartCompleteFragment
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.common.viewutils.showContent
@@ -45,8 +45,8 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun getIntentValues() {
-        viewModel.title.value = intent.getStringExtra(foodDetailTitle)!!
-        viewModel.hash = intent.getStringExtra(foodDetailHash)!!
+        viewModel.title.value = intent.getStringExtra(FOOD_DETAIL_TITLE)!!
+        viewModel.hash = intent.getStringExtra(FOOD_DETAIL_HASH)!!
         if (viewModel.title.value == null || viewModel.hash == null) finish()
     }
 

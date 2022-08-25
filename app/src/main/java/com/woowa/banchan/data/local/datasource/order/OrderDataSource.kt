@@ -8,9 +8,9 @@ interface OrderDataSource {
 
     suspend fun getTotalOrderList(): Flow<List<OrderDto>>
 
-    suspend fun getOrderDetail(orderId: Long): List<OrderItemDto>
+    suspend fun getOrderDetail(orderId: Long): Flow<List<OrderItemDto>>
 
-    suspend fun getOrder(orderId: Long): OrderDto
+    suspend fun getOrder(orderId: Long): Flow<OrderDto>
 
     suspend fun insertNewOrder(orderDto: OrderDto): Long
 
@@ -19,7 +19,7 @@ interface OrderDataSource {
     suspend fun insertNewOrderAndItem(
         newOrder: OrderDto,
         orderItemList: List<OrderItemDto>
-    ): OrderDto
+    ): Long
 
     suspend fun updateOrder(id: Long, deliverState: Boolean)
 
