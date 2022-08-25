@@ -43,7 +43,7 @@ class BestFragment : HomeBaseFragment<FragmentBestBinding>(R.layout.fragment_bes
                     }
                     is UiState.Error -> {
                         showError(binding.rvBest, binding.pbLoading, binding.evNetwork)
-                        showToast(state.message)
+                        showToast(state.error.message)
                     }
                     is UiState.Loading -> showLoading(
                         binding.rvBest,
@@ -59,7 +59,7 @@ class BestFragment : HomeBaseFragment<FragmentBestBinding>(R.layout.fragment_bes
                 if (state is UiState.Success) {
 
                 } else if (state is UiState.Error) {
-                    showToast(state.message)
+                    showToast(state.error.message)
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
     }

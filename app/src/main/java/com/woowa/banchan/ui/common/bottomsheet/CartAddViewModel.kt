@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.woowa.banchan.domain.model.FoodItem
 import com.woowa.banchan.domain.usecase.cart.inter.InsertCartUseCase
+import com.woowa.banchan.ui.common.error.getErrorState
 import com.woowa.banchan.ui.common.event.SingleEvent
 import com.woowa.banchan.ui.common.event.setEvent
 import com.woowa.banchan.ui.common.uistate.UiState
@@ -37,7 +38,7 @@ class CartAddViewModel @Inject constructor(
         viewModelScope.launch {
             insertCartUseCase.insertCart(foodItem, totalCount)
                 .onSuccess { _insertionUiState.emit(UiState.Success(Unit)) }
-                .onFailure { _insertionUiState.emit(UiState.Error(it.message)) }
+                .onFailure { _insertionUiState.emit(UiState.Error(getErrorState(it))) }
         }
     }
 

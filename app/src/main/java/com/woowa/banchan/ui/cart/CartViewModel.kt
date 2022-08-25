@@ -15,6 +15,7 @@ import com.woowa.banchan.domain.usecase.cart.inter.GetCartListUseCase
 import com.woowa.banchan.domain.usecase.cart.inter.UpdateCartUseCase
 import com.woowa.banchan.domain.usecase.order.inter.InsertCartToOrderUseCase
 import com.woowa.banchan.domain.usecase.recent.inter.GetRecentlyViewedFoodsUseCase
+import com.woowa.banchan.ui.common.error.getErrorState
 import com.woowa.banchan.ui.common.event.SingleEvent
 import com.woowa.banchan.ui.common.event.setEvent
 import com.woowa.banchan.ui.common.key.orderWorkerId
@@ -70,14 +71,14 @@ class CartViewModel @Inject constructor(
                 _cartUiState.emit(UiState.Loading)
                 getCartListUseCase()
                     .onSuccess { flow -> flow.collect { _cartUiState.emit(UiState.Success(it)) } }
-                    .onFailure { _cartUiState.emit(UiState.Error(it.message)) }
+                    .onFailure { _cartUiState.emit(UiState.Error(getErrorState(it))) }
             }
 
             launch {
                 _recentUiState.emit(UiState.Loading)
                 getRecentlyViewedFoodsUseCase()
                     .onSuccess { flow -> flow.collect { _recentUiState.emit(UiState.Success(it)) } }
-                    .onFailure { _recentUiState.emit(UiState.Error(it.message)) }
+                    .onFailure { _recentUiState.emit(UiState.Error(getErrorState(it))) }
             }
         }
     }
@@ -128,9 +129,9 @@ class CartViewModel @Inject constructor(
                 _orderUiState.emit(UiState.Success(order))
                 checkedList.forEach { launch { deleteCartUseCase(it.hash) } }
             }
-                .onFailure { _orderUiState.emit(UiState.Error(it.message)) }
+                .onFailure { _orderUiState.emit(UiState.Error(getErrorState(it))) }
         } else {
-            _orderUiState.emit(UiState.Error(null))
+            _orderUiState.emit(UiState.Error(getErrorState(Exception())))
         }
     }
 

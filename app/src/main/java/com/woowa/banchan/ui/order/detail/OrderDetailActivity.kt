@@ -51,7 +51,7 @@ class OrderDetailActivity : AppCompatActivity() {
             .onEach {
                 when (it) {
                     is UiState.Success -> orderDetailRVAdapter.submitOrderItemList(it.data)
-                    is UiState.Error -> showToast(it.message)
+                    is UiState.Error -> showToast(it.error.message)
                     else -> {}
                 }
             }.launchIn(lifecycleScope)
@@ -63,7 +63,7 @@ class OrderDetailActivity : AppCompatActivity() {
                         viewModel.order = it.data
                         orderDetailRVAdapter.submitOrderItem(it.data)
                     }
-                    is UiState.Error -> showToast(it.message)
+                    is UiState.Error -> showToast(it.error.message)
                     else -> {}
                 }
             }.launchIn(lifecycleScope)

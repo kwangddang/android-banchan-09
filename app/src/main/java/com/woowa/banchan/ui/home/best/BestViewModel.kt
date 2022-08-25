@@ -3,6 +3,7 @@ package com.woowa.banchan.ui.home.best
 import androidx.lifecycle.viewModelScope
 import com.woowa.banchan.domain.model.BestFoodCategory
 import com.woowa.banchan.domain.usecase.food.inter.GetBestFoodsUseCase
+import com.woowa.banchan.ui.common.error.getErrorState
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.home.HomeBaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +26,7 @@ class BestViewModel @Inject constructor(
             _bestUiState.emit(UiState.Loading)
             getBestFoodsUseCase().onSuccess { flow ->
                 flow.collect { _bestUiState.emit(UiState.Success(it)) }
-            }.onFailure { _bestUiState.emit(UiState.Error(it.message)) }
+            }.onFailure { _bestUiState.emit(UiState.Error(getErrorState(it))) }
         }
     }
 }

@@ -51,7 +51,7 @@ class SoupFragment : HomeBaseFragment<FragmentSoupBinding>(R.layout.fragment_sou
                     }
                     is UiState.Error -> {
                         showError(binding.rvSoup, binding.pbLoading, binding.evNetwork)
-                        showToast(state.message)
+                        showToast(state.error.message)
                     }
                     is UiState.Loading -> showLoading(
                         binding.rvSoup,

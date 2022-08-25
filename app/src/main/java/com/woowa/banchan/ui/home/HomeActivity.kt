@@ -51,7 +51,7 @@ class HomeActivity : AppCompatActivity() {
                 if (state is UiState.Success)
                     binding.tbHome.setCartCountIcon(state.data)
                 else if (state is UiState.Error)
-                    showToast(state.message)
+                    showToast(state.error.message)
 
             }.launchIn(lifecycleScope)
 
@@ -63,7 +63,7 @@ class HomeActivity : AppCompatActivity() {
                     else
                         binding.tbHome.unSetUserNotifierIcon()
                 } else if (state is UiState.Error)
-                    showToast(state.message)
+                    showToast(state.error.message)
 
             }.launchIn(lifecycleScope)
 
