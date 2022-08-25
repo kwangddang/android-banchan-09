@@ -28,9 +28,9 @@ class CartRepositoryImpl @Inject constructor(
             runCatching { cartDataSource.getCartCount() }
         }
 
-    override suspend fun updateCart(cart: Cart): Result<Unit> =
+    override suspend fun updateCart(vararg cart: Cart): Result<Unit> =
         withContext(Dispatchers.IO) {
-            runCatching { cartDataSource.updateCart(cart.toCartDto()) }
+            runCatching { cartDataSource.updateCart(*cart.map { it.toCartDto() }.toTypedArray()) }
         }
 
     override suspend fun deleteCart(hash: String): Result<Unit> =

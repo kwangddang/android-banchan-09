@@ -15,7 +15,7 @@ interface CartDao {
     suspend fun insertCart(cartDto: CartDto)
 
     @Update
-    suspend fun updateCart(cartDto: CartDto)
+    suspend fun updateCart(vararg cartDto: CartDto)
 
     @Query("SELECT * FROM $cartTable")
     fun getCartList(): Flow<List<CartDto>>

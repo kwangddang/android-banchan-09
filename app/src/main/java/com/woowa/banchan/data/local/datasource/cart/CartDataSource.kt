@@ -9,7 +9,7 @@ interface CartDataSource {
 
     suspend fun getCartCount(): Flow<Int>
 
-    suspend fun updateCart(cartDto: CartDto)
+    suspend fun updateCart(vararg cartDto: CartDto)
 
     suspend fun deleteCart(hash: String)
 

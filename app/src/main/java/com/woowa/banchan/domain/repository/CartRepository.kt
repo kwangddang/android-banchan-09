@@ -9,7 +9,7 @@ interface CartRepository {
 
     suspend fun getCartCount(): Result<Flow<Int>>
 
-    suspend fun updateCart(cart: Cart): Result<Unit>
+    suspend fun updateCart(vararg cart: Cart): Result<Unit>
 
     suspend fun deleteCart(hash: String): Result<Unit>
 

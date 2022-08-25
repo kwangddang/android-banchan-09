@@ -15,8 +15,8 @@ class CartDataSourceImpl @Inject constructor(
 
     override suspend fun getCartCount(): Flow<Int> = cartDao.getCartCount()
 
-    override suspend fun updateCart(cartDto: CartDto) {
-        cartDao.updateCart(cartDto)
+    override suspend fun updateCart(vararg cartDto: CartDto) {
+        cartDao.updateCart(*cartDto)
     }
 
     override suspend fun deleteCart(hash: String) {
