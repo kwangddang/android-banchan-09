@@ -4,7 +4,6 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
-import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ItemCartBinding
 import com.woowa.banchan.domain.model.Cart
 import com.woowa.banchan.domain.model.emptyCart
@@ -13,9 +12,9 @@ import com.woowa.banchan.ui.cart.cart.CartFragment.Companion.minimumCount
 
 class CartContentViewHolder(
     private val binding: ItemCartBinding,
-    private val onClickCartCheckState: (cart: Cart) -> Unit,
-    private val onClickCartUpdateCount: (cart: Cart, message: Int?) -> Unit,
-    private val onClickCartRemove: (cart: Cart) -> Unit
+    private val onClickCartStateChange: (cart: Cart) -> Unit,
+    private val onClickCartCountChange: (cart: Cart) -> Unit,
+    private val onClickCartRemove: (cart: Cart) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private var cart = emptyCart()
@@ -44,34 +43,28 @@ class CartContentViewHolder(
         binding.layoutCheckBtn.setOnClickListener {
             cart.checkState = cart.checkState.not()
             binding.cart = cart
-            onClickCartCheckState(cart)
+            onClickCartStateChange(cart)
         }
         binding.ivMinusCount.setOnClickListener { updateCount(cart.count - 1) }
         binding.ivPlusCount.setOnClickListener { updateCount(cart.count + 1) }
         binding.ivRemove.setOnClickListener { onClickCartRemove(cart) }
     }
 
-    private fun updateCount(c: Int) {
-        val msg: Int? = if (c < minimumCount || c > maximumCount) overflowMessage else null
-        cart.count =
-            if (c < minimumCount) minimumCount else if (c > maximumCount) maximumCount else c
+    private fun updateCount(count: Int) {
+        cart.count = if (count < minimumCount) minimumCount else if (count > maximumCount) maximumCount else count
 
         binding.itemCount = cart.count.toString()
         binding.cart = cart
-        onClickCartUpdateCount(cart, msg)
+        onClickCartCountChange(cart)
     }
 
-    private fun updateCount(c: String) {
-        binding.itemCount = c
-        val count = if (c.isEmpty()) 0 else c.toInt()
+    private fun updateCount(count: String) {
+        binding.itemCount = count
+        val count = if (count.isEmpty()) 0 else count.toInt()
 
-        val msg: Int? =
-            if (count < minimumCount || count > maximumCount) overflowMessage else null
-        cart.count =
-            if (count < minimumCount) minimumCount else if (count > maximumCount) maximumCount else count
+        cart.count = if (count < minimumCount) minimumCount else if (count > maximumCount) maximumCount else count
         binding.cart = cart
-        onClickCartUpdateCount(cart, msg)
+        onClickCartCountChange(cart)
     }
 
-    private val overflowMessage = R.string.error_item_count_overflow
 }

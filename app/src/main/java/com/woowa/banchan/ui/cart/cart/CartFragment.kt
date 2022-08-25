@@ -64,15 +64,9 @@ class CartFragment : Fragment() {
 
     private fun initListener() {
         val listener = object : CartRVAdapter.CartButtonCallBackListener {
-            override fun onClickCartUpdate(cart: Cart, message: Int?) {
-                viewModel.cartUpdateListener(
-                    cart,
-                    if (message == null) null else getString(message)
-                )
-            }
 
-            override fun onClickCartRemove(hash: String) {
-                viewModel.cartRemoveListener(hash)
+            override fun onClickCartRemove(vararg cart: Cart) {
+                viewModel.cartRemoveListener(cart)
             }
 
             override fun onClickOrderButton() {
@@ -86,6 +80,18 @@ class CartFragment : Fragment() {
             override fun onClickAllRecentlyViewed() {
                 viewModel.recentAllClickListener()
             }
+
+            override fun onClickCartCountChange(hash: String, count: Int) {
+                viewModel.cartCountChangeListener(hash, count)
+            }
+
+            override fun onClickCartStateChange(hash: String, checkState: Boolean) {
+                viewModel.cartStateChangeListener(hash, checkState)
+            }
+
+            override fun onClickCartStateAllChange(cartList: List<Cart>) {
+                viewModel.cartStateAllChangeListener(cartList)
+            }
         }
         cartRVAdapter.setCartButtonCallBackListener(listener)
     }
@@ -94,10 +100,23 @@ class CartFragment : Fragment() {
         viewModel.cartUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
                 when (it) {
-                    is UiState.Success -> cartRVAdapter.submitCartList(it.data.values.toList())
+                    is UiState.Success -> {
+                        if (viewModel.cartCache.isEmpty()) {
+                            viewModel.cartCache = it.data.toMutableMap()
+                            cartRVAdapter.submitCartList(it.data.values.toList())
+                        } else {
+                            cartRVAdapter.submitCartList(viewModel.cartCache.values.toList())
+                        }
+                    }
                     is UiState.Error -> showToast(it.error.message)
                     else -> {}
                 }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.deletionUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach { state ->
+                if (state is UiState.Error)
+                    showToast(state.error.message)
             }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.recentUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
@@ -134,6 +153,7 @@ class CartFragment : Fragment() {
             }
             startActivity(intent)
         })
+
     }
 
     private fun initAdapter() {
