@@ -87,6 +87,7 @@ class HomeActivity : AppCompatActivity() {
         TabLayoutMediator(binding.layoutTab, binding.vpHome) { tab, position ->
             tab.text = tabList[position]
         }.attach()
+        binding.vpHome.offscreenPageLimit = 4
     }
 
 }
