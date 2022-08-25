@@ -11,7 +11,7 @@ import com.woowa.banchan.databinding.ItemTotalPriceBinding
 import com.woowa.banchan.domain.model.Order
 import com.woowa.banchan.domain.model.OrderItem
 import com.woowa.banchan.ui.cart.cart.adapter.viewholder.TotalPriceViewHolder
-import com.woowa.banchan.ui.home.RVItem
+import com.woowa.banchan.ui.common.recyclerview.RVItem
 import com.woowa.banchan.ui.order.detail.ORDER_CONTENT
 import com.woowa.banchan.ui.order.detail.ORDER_HEADER
 import com.woowa.banchan.ui.order.detail.ORDER_TOTAL_PRICE
