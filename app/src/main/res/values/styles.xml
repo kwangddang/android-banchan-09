@@ -97,8 +97,8 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="normal_white_8">
-        <item name="android:textSize">8sp</item>
+    <style name="normal_white_7">
+        <item name="android:textSize">7sp</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
