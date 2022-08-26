@@ -59,11 +59,12 @@ class CartContentViewHolder(
     }
 
     private fun updateCount(count: String) {
-        binding.itemCount = count
         val count = if (count.isEmpty()) 0 else count.toInt()
 
         cart.count = if (count < minimumCount) minimumCount else if (count > maximumCount) maximumCount else count
         binding.cart = cart
+        binding.itemCount = cart.count.toString()
+
         onClickCartCountChange(cart)
     }
 

@@ -102,12 +102,9 @@ class CartFragment : Fragment() {
             .onEach {
                 when (it) {
                     is UiState.Success -> {
-                        if (viewModel.cartCache.isEmpty()) {
+                        if (viewModel.cartCache.isEmpty())
                             viewModel.cartCache = it.data.toMutableMap()
-                            cartRVAdapter.submitCartList(it.data.values.toList())
-                        } else {
-                            cartRVAdapter.submitCartList(viewModel.cartCache.values.toList())
-                        }
+                        cartRVAdapter.submitCartList(viewModel.cartCache.values.toList())
                     }
                     is UiState.Error -> showToast(it.error.message)
                     else -> {}
