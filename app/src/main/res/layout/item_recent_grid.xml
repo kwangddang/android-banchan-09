@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="recent"
+            type="com.woowa.banchan.domain.model.Recent" />
+
+        <variable
+            name="checkState"
+            type="Boolean" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/iv_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/main"
+            app:image="@{recent.imageUrl}"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_cart"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/background_circle_white"
+            android:clickable="true"
+            android:elevation="8dp"
+            android:focusable="true"
+            android:padding="8dp"
+            android:src="@drawable/ic_cart"
+            android:visibility="@{checkState ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
+            app:layout_constraintEnd_toEndOf="@id/iv_thumbnail" />
+
+        <ImageView
+            android:id="@+id/iv_check"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/background_circle_accent"
+            android:elevation="8dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_check_white"
+            android:visibility="@{checkState ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
+            app:layout_constraintEnd_toEndOf="@id/iv_thumbnail" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/bold_14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingTop="8dp"
+            android:text="@{recent.title}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_thumbnail"
+            tools:text="오리 주물럭_반조리" />
+
+        <TextView
+            android:id="@+id/tv_s_price"
+            style="@style/normal_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:price="@{recent.sPrice}"
+            tools:text="12,640원" />
+
+        <TextView
+            android:id="@+id/tv_n_price"
+            style="@style/caption_grey"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_s_price"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_s_price"
+            app:layout_constraintTop_toTopOf="@id/tv_s_price"
+            app:originPrice="@{recent.nPrice}"
+            tools:text="15,800원" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            style="@style/caption_grey"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_s_price"
+            app:viewedDate="@{recent.time}"
+            tools:text="1분 전" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.woowa.banchan.ui.common.popup.CartCompleteViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_dialog"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/tv_popup_title"
+            style="@style/normal_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_continue_shopping"
+            style="@style/bold_accent_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:onClick="@{() -> vm.setContinueClickEvent()}"
+            android:text="@string/dialog_continue_shopping"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_popup_title" />
+
+        <TextView
+            android:id="@+id/tv_cart_confirm"
+            style="@style/bold_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> vm.setConfirmClickEvent()}"
+            android:paddingEnd="24dp"
+            android:text="@string/dialog_cart_confirm"
+            app:layout_constraintEnd_toStartOf="@id/tv_continue_shopping"
+            app:layout_constraintTop_toTopOf="@id/tv_continue_shopping" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

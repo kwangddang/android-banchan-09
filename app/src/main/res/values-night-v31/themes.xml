@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Banchan" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/main</item>
+        <item name="colorPrimaryVariant">@color/main</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/white</item>
+        <item name="colorSecondaryVariant">@color/white</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+        <item name="bottomSheetDialogTheme">@style/BottomSheetDialog</item>
+    </style>
+
+    <style name="LaunchTheme" parent="@android:style/Theme.Black.NoTitleBar">
+
+        <item name="android:windowSplashScreenBackground">@color/ic_app_logo_background</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/ic_app_logo_background</item>
+        <item name="android:windowSplashscreenContent">@mipmap/ic_app_logo_round</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_app_logo_round</item>
+    </style>
+</resources>

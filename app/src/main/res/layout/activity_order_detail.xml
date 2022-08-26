@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.woowa.banchan.ui.order.detail.OrderDetailViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.order.detail.OrderDetailActivity">
+
+        <com.woowa.banchan.ui.common.custom.CustomToolbar
+            android:id="@+id/ctb_sub_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:onClickBackIcon="@{vm::setBackClickEvent}"
+            app:onClickRefreshIcon="@{vm::setRefreshClickEvent}"
+            app:toolBarType="sub|sub_refresh"
+            app:toolbarTitle="" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_order_detail"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/greyscale_background"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ctb_sub_toolbar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
