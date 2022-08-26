@@ -136,13 +136,13 @@ class DetailViewModel @Inject constructor(
     }
 
     fun setPlusClickEvent() {
-        totalCount.value = totalCount.value!! + 1
+        if(totalCount.value!! < 100)
+            totalCount.value = totalCount.value!! + 1
     }
 
     fun setMinusClickEvent() {
-        if (totalCount.value!! > 1) {
+        if (totalCount.value!! > 1)
             totalCount.value = totalCount.value!! - 1
-        }
     }
 
     fun setOrderClickEvent() {

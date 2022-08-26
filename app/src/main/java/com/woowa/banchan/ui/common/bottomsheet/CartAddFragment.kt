@@ -71,13 +71,15 @@ class CartAddFragment(private val foodItem: FoodItem) : BottomSheetDialogFragmen
         viewModel.cancelClickEvent.observe(viewLifecycleOwner, EventObserver { dismiss() })
 
         viewModel.plusClickEvent.observe(viewLifecycleOwner, EventObserver {
-            totalCount++
+            if(totalCount < 100)
+                totalCount++
             totalPrice = totalCount * foodItem.sPrice
             setCountAndPrice()
         })
 
         viewModel.minusClickEvent.observe(viewLifecycleOwner, EventObserver {
-            totalCount--
+            if(totalCount > 1)
+                totalCount--
             totalPrice = totalCount * foodItem.sPrice
             setCountAndPrice()
         })
