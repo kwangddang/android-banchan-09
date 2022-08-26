@@ -45,7 +45,7 @@ class CartActivity : AppCompatActivity() {
             binding.ctbSubToolbar.setAppBarTitle(
                 when (it) {
                     getString(R.string.fragment_cart) -> getString(R.string.toolbar_title_cart)
-                    else -> getString(R.string.toolbar_title_cart)
+                    else -> getString(R.string.toolbar_title_recent)
                 }
             )
         }
