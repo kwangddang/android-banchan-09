@@ -33,6 +33,10 @@ class MainFragment : HomeBaseFragment<FragmentMainBinding>(R.layout.fragment_mai
         )
     }
 
+    override fun initBindng() {
+        binding.vm = viewModel
+    }
+
     override fun initAdapter() {
         binding.rvMain.adapter = mainAdapter
     }

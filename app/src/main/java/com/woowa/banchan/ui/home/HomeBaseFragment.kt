@@ -42,6 +42,7 @@ abstract class HomeBaseFragment<T : ViewDataBinding>(@LayoutRes val layoutRes: I
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
+        initBindng()
         initViews()
         initObserver()
         initClickObserver()
@@ -71,5 +72,6 @@ abstract class HomeBaseFragment<T : ViewDataBinding>(@LayoutRes val layoutRes: I
     abstract fun initAdapter()
     abstract fun initViews()
     abstract fun initObserver()
+    abstract fun initBindng()
 
 }
