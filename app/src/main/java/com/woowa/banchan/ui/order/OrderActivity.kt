@@ -37,7 +37,7 @@ class OrderActivity : AppCompatActivity() {
     }
 
     private fun initToolBar() {
-        binding.ctbSubToolbar.setAppBarTitle(getString(R.string.toolbar_title_recent))
+        binding.ctbSubToolbar.setAppBarTitle(getString(R.string.toolbar_title_order))
     }
 
     private fun initBinding() {
@@ -58,7 +58,7 @@ class OrderActivity : AppCompatActivity() {
 
         viewModel.orderItemClickEvent.observe(this, EventObserver {
             val intent = Intent(this, OrderDetailActivity::class.java)
-            intent.putExtra(ORDER_ID, it)
+            intent.putExtra(ORDER_ID, it.id)
             startActivity(intent)
         })
     }
