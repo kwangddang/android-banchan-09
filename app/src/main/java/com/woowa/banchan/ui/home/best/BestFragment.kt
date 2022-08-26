@@ -25,6 +25,10 @@ class BestFragment : HomeBaseFragment<FragmentBestBinding>(R.layout.fragment_bes
         BestRVAdapter(viewModel.itemClickListener, viewModel.cartClickListener)
     }
 
+    override fun initBindng() {
+        binding.vm = viewModel
+    }
+
     override fun initAdapter() {
         binding.rvBest.adapter = bestAdapter
     }
