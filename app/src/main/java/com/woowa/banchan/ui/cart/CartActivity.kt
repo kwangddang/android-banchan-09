@@ -59,4 +59,11 @@ class CartActivity : AppCompatActivity() {
         })
     }
 
+    override fun onBackPressed() {
+        val currentFragment = viewModel.fragmentTag.getValue()
+        currentFragment?.apply {
+            if (this == getString(R.string.fragment_cart)) finish()
+            else viewModel.setFragmentTag(getString(R.string.fragment_cart))
+        }
+    }
 }
