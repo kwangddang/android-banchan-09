@@ -87,6 +87,7 @@ class CartViewModel @Inject constructor(
 
     fun updateCart() = CoroutineScope(Dispatchers.IO).launch {
         updateCartUseCase(*cartCache.values.toTypedArray())
+        cartCache = mutableMapOf()
     }
 
     fun deleteCart(recent: Recent) {
