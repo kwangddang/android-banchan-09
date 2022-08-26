@@ -59,13 +59,16 @@
 
                 <TextView
                     android:id="@+id/tv_cart_count"
-                    style="@style/normal_white_8"
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
+                    style="@style/normal_white_7"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:background="@drawable/ic_dark_dot"
                     android:gravity="center"
+                    app:layout_constraintVertical_bias="0.0"
+                    android:layout_marginBottom="4dp"
                     app:layout_constraintEnd_toEndOf="@id/iv_cart"
                     app:layout_constraintTop_toTopOf="@id/iv_cart"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_cart"
                     tool:text="1" />
 
                 <ImageView

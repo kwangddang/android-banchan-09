@@ -3,6 +3,7 @@ package com.woowa.banchan.ui.common.custom
 import android.content.Context
 import android.util.AttributeSet
 import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isGone
@@ -10,6 +11,7 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ViewToolBarCustomBinding
+import com.woowa.banchan.ui.common.uistate.UiState
 import java.io.ByteArrayInputStream
 import java.io.ObjectInputStream
 

@@ -1,6 +1,5 @@
 package com.woowa.banchan.ui.order.detail
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -31,7 +30,6 @@ class OrderDetailViewModel @Inject constructor(
         getEachOrderUseCase(orderId!!)
             .onSuccess { flow ->
                 flow.collect {
-                    Log.d("Test", it.toString())
                     emit(UiState.Success(it))
                 }
             }
