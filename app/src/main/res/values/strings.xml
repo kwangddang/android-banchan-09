@@ -71,6 +71,7 @@
     <string name="order_total_count">총 %d개</string>
     <string name="order_item_count">%d개</string>
     <string name="order_left_minute">%d분</string>
+    <string name="order_minute">분</string>
 
     <!--Cart Screen-->
     <string name="cart_selection_release">선택 해제</string>

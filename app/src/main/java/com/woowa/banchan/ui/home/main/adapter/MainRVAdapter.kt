@@ -10,7 +10,11 @@ import com.woowa.banchan.R
 import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 import com.woowa.banchan.databinding.ItemMainHeaderBinding
 import com.woowa.banchan.databinding.ItemRecyclerviewBinding
-import com.woowa.banchan.ui.home.*
+import com.woowa.banchan.ui.common.recyclerview.RVItem
+import com.woowa.banchan.ui.home.GRID
+import com.woowa.banchan.ui.home.HOME_HEADER
+import com.woowa.banchan.ui.home.HOME_ITEM
+import com.woowa.banchan.ui.home.SUB_HEADER
 import com.woowa.banchan.ui.home.adapter.HomeRVAdapter
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeRecyclerViewViewHolder

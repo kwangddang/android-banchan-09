@@ -5,7 +5,7 @@ import com.woowa.banchan.domain.model.DetailItem
 
 interface UpdateCartUseCase {
 
-    suspend operator fun invoke(cart: Cart): Result<Unit>
+    suspend operator fun invoke(vararg cart: Cart): Result<Unit>
 
     suspend operator fun invoke(
         detailItem: DetailItem,

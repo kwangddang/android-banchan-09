@@ -26,6 +26,7 @@ import com.woowa.banchan.ui.common.event.EventObserver
 import com.woowa.banchan.ui.common.key.ORDER_ID
 import com.woowa.banchan.ui.common.receiver.OrderReceiver
 import com.woowa.banchan.ui.common.uistate.UiState
+import com.woowa.banchan.ui.common.viewutils.setOrderTitle
 import com.woowa.banchan.ui.detail.DetailActivity
 import com.woowa.banchan.ui.order.detail.OrderDetailActivity
 import com.woowa.banchan.utils.showToast
@@ -64,14 +65,8 @@ class CartFragment : Fragment() {
 
     private fun initListener() {
         val listener = object : CartRVAdapter.CartButtonCallBackListener {
-            override fun onClickCartUpdate(cart: Cart, message: Int?) {
-                viewModel.cartUpdateListener(
-                    cart,
-                    if (message == null) null else getString(message)
-                )
-            }
 
-            override fun onClickCartRemove(cart: Cart) {
+            override fun onClickCartRemove(vararg cart: Cart) {
                 viewModel.cartRemoveListener(cart)
             }
 
@@ -86,6 +81,18 @@ class CartFragment : Fragment() {
             override fun onClickAllRecentlyViewed() {
                 viewModel.recentAllClickListener()
             }
+
+            override fun onClickCartCountChange(hash: String, count: Int) {
+                viewModel.cartCountChangeListener(hash, count)
+            }
+
+            override fun onClickCartStateChange(hash: String, checkState: Boolean) {
+                viewModel.cartStateChangeListener(hash, checkState)
+            }
+
+            override fun onClickCartStateAllChange(cartList: List<Cart>) {
+                viewModel.cartStateAllChangeListener(cartList)
+            }
         }
         cartRVAdapter.setCartButtonCallBackListener(listener)
     }
@@ -94,10 +101,20 @@ class CartFragment : Fragment() {
         viewModel.cartUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
                 when (it) {
-                    is UiState.Success -> cartRVAdapter.submitCartList(it.data.values.toList())
+                    is UiState.Success -> {
+                        if (viewModel.cartCache.isEmpty())
+                            viewModel.cartCache = it.data.toMutableMap()
+                        cartRVAdapter.submitCartList(viewModel.cartCache.values.toList())
+                    }
                     is UiState.Error -> showToast(it.error.message)
                     else -> {}
                 }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.deletionUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach { state ->
+                if (state is UiState.Error)
+                    showToast(state.error.message)
             }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         viewModel.recentUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
@@ -114,7 +131,15 @@ class CartFragment : Fragment() {
                 when (state) {
                     is UiState.Success -> {
                         val intent = Intent(requireActivity(), OrderDetailActivity::class.java)
-                        setAlarm(state.data, viewModel.orderTitle)
+
+                        setAlarm(
+                            state.data, setOrderTitle(
+                                viewModel.orderTitle,
+                                viewModel.cartCache.values.filter { it.checkState }.size,
+                                resources
+                            )
+                        )
+
                         intent.putExtra(ORDER_ID, state.data)
                         startActivity(intent)
                         requireActivity().finish()
@@ -134,6 +159,7 @@ class CartFragment : Fragment() {
             }
             startActivity(intent)
         })
+
     }
 
     private fun initAdapter() {

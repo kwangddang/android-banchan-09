@@ -9,9 +9,9 @@ import com.woowa.banchan.databinding.ItemBestRecyclerviewBinding
 import com.woowa.banchan.databinding.ItemHomeHeaderBinding
 import com.woowa.banchan.domain.model.BestFoodCategory
 import com.woowa.banchan.domain.model.FoodItem
+import com.woowa.banchan.ui.common.recyclerview.RVItem
 import com.woowa.banchan.ui.home.HOME_HEADER
 import com.woowa.banchan.ui.home.HOME_ITEM
-import com.woowa.banchan.ui.home.RVItem
 import com.woowa.banchan.ui.home.adapter.viewholder.HomeHeaderViewHolder
 import com.woowa.banchan.ui.home.best.adapter.viewholder.BestViewHolder
 

@@ -10,7 +10,7 @@ class UpdateCartUseCaseImpl @Inject constructor(
     private val cartRepository: CartRepository
 ) : UpdateCartUseCase {
 
-    override suspend operator fun invoke(cart: Cart): Result<Unit> = cartRepository.updateCart(cart)
+    override suspend operator fun invoke(vararg cart: Cart): Result<Unit> = cartRepository.updateCart(*cart)
 
     override suspend fun invoke(
         detailItem: DetailItem,

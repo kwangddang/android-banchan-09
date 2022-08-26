@@ -1,6 +1,5 @@
 package com.woowa.banchan.ui.cart
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -36,8 +35,6 @@ class CartViewModel @Inject constructor(
 
     val fragmentTag = SingleLiveData("cart")
 
-    private val updateCartCache = mutableListOf<Pair<Cart, Boolean>>()
-
     private val _cartUiState = MutableStateFlow<UiState<Map<String, Cart>>>(UiState.Empty)
     val cartUiState: StateFlow<UiState<Map<String, Cart>>> get() = _cartUiState
 
@@ -46,6 +43,9 @@ class CartViewModel @Inject constructor(
 
     private val _insertionUiState = MutableStateFlow<UiState<Long>>(UiState.Empty)
     val insertionUiState: StateFlow<UiState<Long>> get() = _insertionUiState
+
+    private val _deletionUiState = MutableStateFlow<UiState<Unit>>(UiState.Empty)
+    val deletionUiState: StateFlow<UiState<Unit>> get() = _deletionUiState
 
     private val _backClickEvent = MutableLiveData<SingleEvent<Unit>>()
     val backClickEvent: LiveData<SingleEvent<Unit>> get() = _backClickEvent
@@ -60,6 +60,8 @@ class CartViewModel @Inject constructor(
     val bottomsheetEvent: LiveData<SingleEvent<Recent>> get() = _bottomsheetEvent
 
     var orderTitle: String = ""
+
+    var cartCache = mutableMapOf<String, Cart>()
 
     init {
         viewModelScope.launch {
@@ -83,66 +85,53 @@ class CartViewModel @Inject constructor(
         fragmentTag.setValue(tag)
     }
 
-    private fun doUpdateCart() = CoroutineScope(Dispatchers.IO).launch {
-        updateCartCache.forEach {
-            if (it.second) {
-                launch { deleteCartUseCase(it.first.hash) }
-            } else {
-                launch { updateCartUseCase(it.first) }
-            }
-        }
-    }
-
-    fun updateCart() {
-        doUpdateCart()
+    fun updateCart() = CoroutineScope(Dispatchers.IO).launch {
+        updateCartUseCase(*cartCache.values.toTypedArray())
     }
 
     fun deleteCart(recent: Recent) {
         CoroutineScope(Dispatchers.IO).launch { deleteCartUseCase(recent.hash) }
     }
 
-    private fun addUpdateCartCache(cart: Cart, removeFlag: Boolean) {
-        val idx = getCartCacheIdx(cart)
-
-        if (idx == -1) updateCartCache.add(Pair(cart, removeFlag))
-        else updateCartCache[idx] = Pair(cart, removeFlag)
-    }
-
-    private fun getCartCacheIdx(cart: Cart): Int {
-        updateCartCache.forEachIndexed { index, pair -> if (pair.first.hash == cart.hash) return index }
-        return -1
-    }
-
-    private fun addOrder() = viewModelScope.launch {
-        doUpdateCart().join()
-        _insertionUiState.emit(UiState.Loading)
-        val checkedList = mutableListOf<Cart>()
-        val uiState = _cartUiState.value
-
-        if (uiState is UiState.Success) {
-            uiState.data.values.forEach { cart -> if (cart.checkState) checkedList.add(cart) }
-            orderTitle = checkedList.first().title
-            insertCartToOrderUseCase(checkedList).onSuccess { id ->
-                _insertionUiState.emit(UiState.Success(id))
-                checkedList.forEach { launch { deleteCartUseCase(it.hash) } }
-            }
-                .onFailure { _insertionUiState.emit(UiState.Error(getErrorState(it))) }
-        } else {
-            _insertionUiState.emit(UiState.Error(getErrorState(Exception())))
+    fun deleteCart(vararg cart: Cart) {
+        viewModelScope.launch {
+            deleteCartUseCase(*cart)
+                .onSuccess { _deletionUiState.emit(UiState.Success(Unit)) }
+                .onFailure { _deletionUiState.emit(UiState.Error(getErrorState(it))) }
         }
     }
 
-    val cartUpdateListener: (Cart, String?) -> Unit = { cart, message ->
-        addUpdateCartCache(cart, removeFlag = false)
-        message?.let { _messageEvent.setEvent(it) }
+    private fun insertOrder() = viewModelScope.launch {
+        _insertionUiState.emit(UiState.Loading)
+        val checkedList = cartCache.values.filter { it.checkState }
+        orderTitle = checkedList.first().title
+        insertCartToOrderUseCase(checkedList).onSuccess { id ->
+            _insertionUiState.emit(UiState.Success(id))
+            checkedList.forEach { launch { deleteCartUseCase(it.hash) } }
+        }
+            .onFailure { _insertionUiState.emit(UiState.Error(getErrorState(it))) }
+
     }
 
-    val cartRemoveListener: (Cart) -> Unit = { cart ->
-        addUpdateCartCache(cart, removeFlag = true)
+    val cartRemoveListener: (Array<out Cart>) -> Unit = { cart ->
+        cart.forEach { cartCache.remove(it.hash) }
+        deleteCart(*cart)
     }
 
     val orderClickListener: () -> Unit = {
-        addOrder()
+        insertOrder()
+    }
+
+    val cartCountChangeListener: (String, Int) -> Unit = { hash, count ->
+        cartCache[hash] = cartCache[hash]!!.copy(count = count)
+    }
+
+    val cartStateChangeListener: (String, Boolean) -> Unit = { hash, checkState ->
+        cartCache[hash] = cartCache[hash]!!.copy(checkState = checkState)
+    }
+
+    val cartStateAllChangeListener: (List<Cart>) -> Unit = { list ->
+        cartCache = list.associateBy { cart -> cart.hash }.toMutableMap()
     }
 
     val recentClickListener: (Recent) -> Unit = { recent ->
