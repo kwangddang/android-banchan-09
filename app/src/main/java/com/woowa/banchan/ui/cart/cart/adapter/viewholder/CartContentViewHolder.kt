@@ -51,7 +51,8 @@ class CartContentViewHolder(
     }
 
     private fun updateCount(count: Int) {
-        cart.count = if (count < minimumCount) minimumCount else if (count > maximumCount) maximumCount else count
+        cart.count =
+            if (count < minimumCount) minimumCount else if (count > maximumCount) maximumCount else count
 
         binding.itemCount = cart.count.toString()
         binding.cart = cart
@@ -59,9 +60,14 @@ class CartContentViewHolder(
     }
 
     private fun updateCount(count: String) {
-        val count = if (count.isEmpty()) 0 else count.toInt()
 
-        cart.count = if (count < minimumCount) minimumCount else if (count > maximumCount) maximumCount else count
+        val countStr = count.replace(".", "")
+        if (countStr.length == 3) binding.etCount.setSelection(3)
+
+        val countInt = if (count.isEmpty()) 0 else countStr.toInt()
+
+        cart.count =
+            if (countInt < minimumCount) minimumCount else if (countInt > maximumCount) maximumCount else countInt
         binding.cart = cart
         binding.itemCount = cart.count.toString()
 
