@@ -22,7 +22,7 @@ object DateUtil {
         else if (days > 0) "${days}일 전"
         else if (hours > 0) "${hours}시간 전"
         else if (minutes > 0) "${minutes}분 전"
-        else "${seconds}초 전"
+        else "방금 전"
     }
 
     fun getUpdateDate(date: String): String =
