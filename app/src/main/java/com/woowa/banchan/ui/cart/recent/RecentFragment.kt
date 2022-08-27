@@ -70,7 +70,7 @@ class RecentFragment : Fragment() {
     }
 
     private fun initObserver() {
-        viewModel.recentUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+        viewModel.recentWithCartState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
                 when (it) {
                     is UiState.Success -> adapter.submitList(it.data)

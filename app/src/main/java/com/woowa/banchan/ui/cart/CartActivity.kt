@@ -1,5 +1,6 @@
 package com.woowa.banchan.ui.cart
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +25,11 @@ class CartActivity : AppCompatActivity() {
 
         initBinding()
         initObserver()
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        viewModel.setFragmentTag(getString(R.string.fragment_cart))
     }
 
     private fun initBinding() {
@@ -59,4 +65,11 @@ class CartActivity : AppCompatActivity() {
         })
     }
 
+    override fun onBackPressed() {
+        val currentFragment = viewModel.fragmentTag.getValue()
+        currentFragment?.apply {
+            if (this == getString(R.string.fragment_cart)) finish()
+            else viewModel.setFragmentTag(getString(R.string.fragment_cart))
+        }
+    }
 }
