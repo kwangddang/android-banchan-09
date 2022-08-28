@@ -24,6 +24,8 @@ class CartContentViewHolder(
             binding.tvEmptyNotice.isVisible = true
             binding.layoutCartContent.isGone = true
         } else {
+            binding.tvEmptyNotice.isGone = true
+            binding.layoutCartContent.isVisible = true
             binding.cart = cart
             binding.itemCount = cart.count.toString()
         }
