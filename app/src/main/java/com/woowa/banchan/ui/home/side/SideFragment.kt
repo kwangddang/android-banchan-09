@@ -30,7 +30,7 @@ class SideFragment : HomeBaseFragment<FragmentSideBinding>(R.layout.fragment_sid
         )
     }
 
-    override fun initBindng() {
+    override fun initBinding() {
         binding.vm = viewModel
     }
 

@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.woowa.banchan.R
 import com.woowa.banchan.ui.common.bottomsheet.CartAddFragment
 import com.woowa.banchan.ui.common.event.EventObserver
+import com.woowa.banchan.ui.common.key.FOOD
 import com.woowa.banchan.ui.common.key.FOOD_DETAIL_HASH
 import com.woowa.banchan.ui.common.key.FOOD_DETAIL_TITLE
 import com.woowa.banchan.ui.detail.DetailActivity
@@ -42,7 +43,7 @@ abstract class HomeBaseFragment<T : ViewDataBinding>(@LayoutRes val layoutRes: I
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
-        initBindng()
+        initBinding()
         initViews()
         initObserver()
         initClickObserver()
@@ -52,11 +53,16 @@ abstract class HomeBaseFragment<T : ViewDataBinding>(@LayoutRes val layoutRes: I
         viewModel.cartClickEvent.observe(viewLifecycleOwner, EventObserver { food ->
             if (food.checkState)
                 viewModel.deleteCart(food.detailHash)
-            else
-                CartAddFragment(food).show(
+            else {
+                val fragment = CartAddFragment()
+                val bundle = Bundle()
+                bundle.putSerializable(FOOD, food)
+                fragment.arguments = bundle
+                fragment.show(
                     childFragmentManager,
                     getString(R.string.fragment_cart_add)
                 )
+            }
         })
 
         viewModel.itemClickEvent.observe(viewLifecycleOwner, EventObserver {
@@ -72,6 +78,6 @@ abstract class HomeBaseFragment<T : ViewDataBinding>(@LayoutRes val layoutRes: I
     abstract fun initAdapter()
     abstract fun initViews()
     abstract fun initObserver()
-    abstract fun initBindng()
+    abstract fun initBinding()
 
 }
