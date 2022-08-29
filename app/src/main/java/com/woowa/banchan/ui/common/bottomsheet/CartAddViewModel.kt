@@ -34,6 +34,8 @@ class CartAddViewModel @Inject constructor(
     private val _minusClickEvent = MutableLiveData<SingleEvent<Unit>>()
     val minusClickEvent: LiveData<SingleEvent<Unit>> get() = _minusClickEvent
 
+    var totalCount = 1
+
     fun insertCart(foodItem: FoodItem, totalCount: Int) {
         viewModelScope.launch {
             insertCartUseCase.insertCart(foodItem, totalCount)

@@ -30,7 +30,7 @@ class SoupFragment : HomeBaseFragment<FragmentSoupBinding>(R.layout.fragment_sou
         )
     }
 
-    override fun initBindng() {
+    override fun initBinding() {
         binding.vm = viewModel
     }
 

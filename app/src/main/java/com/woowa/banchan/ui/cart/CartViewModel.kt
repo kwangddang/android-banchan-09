@@ -21,6 +21,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,11 +37,41 @@ class CartViewModel @Inject constructor(
 
     val fragmentTag = SingleLiveData("cart")
 
-    private val _cartUiState = MutableStateFlow<UiState<Map<String, Cart>>>(UiState.Empty)
-    val cartUiState: StateFlow<UiState<Map<String, Cart>>> get() = _cartUiState
+    val cartUiState = flow {
+        getCartListUseCase()
+            .onSuccess { flow ->
+                flow.collect {
+                    emit(UiState.Success(it))
+                }
+            }
+            .onFailure { emit(UiState.Error(getErrorState(it))) }
+    }
 
-    private val _recentUiState = MutableStateFlow<UiState<List<Recent>>>(UiState.Empty)
-    val recentUiState: StateFlow<UiState<List<Recent>>> get() = _recentUiState
+    val recentUiState = flow {
+        getRecentlyViewedFoodsUseCase()
+            .onSuccess { flow ->
+                flow.collect {
+                    emit(UiState.Success(it))
+                }
+            }
+            .onFailure { emit(UiState.Error(getErrorState(it))) }
+    }
+
+    val recentWithCartState = recentUiState.combine(cartUiState) { recent, cart ->
+        if (recent is UiState.Success && cart is UiState.Success) {
+            UiState.Success(recent.data.map {
+                it.copy(
+                    checkState = cart.data.containsKey(it.hash)
+                )
+            })
+        } else if (recent is UiState.Error) {
+            UiState.Error(recent.error)
+        } else if (cart is UiState.Error) {
+            UiState.Error(cart.error)
+        } else {
+            UiState.Empty
+        }
+    }
 
     private val _insertionUiState = MutableStateFlow<UiState<Long>>(UiState.Empty)
     val insertionUiState: StateFlow<UiState<Long>> get() = _insertionUiState
@@ -62,24 +94,6 @@ class CartViewModel @Inject constructor(
     var orderTitle: String = ""
 
     var cartCache = mutableMapOf<String, Cart>()
-
-    init {
-        viewModelScope.launch {
-            launch {
-                _cartUiState.emit(UiState.Loading)
-                getCartListUseCase()
-                    .onSuccess { flow -> flow.collect { _cartUiState.emit(UiState.Success(it)) } }
-                    .onFailure { _cartUiState.emit(UiState.Error(getErrorState(it))) }
-            }
-
-            launch {
-                _recentUiState.emit(UiState.Loading)
-                getRecentlyViewedFoodsUseCase()
-                    .onSuccess { flow -> flow.collect { _recentUiState.emit(UiState.Success(it)) } }
-                    .onFailure { _recentUiState.emit(UiState.Error(getErrorState(it))) }
-            }
-        }
-    }
 
     fun setFragmentTag(tag: String) {
         fragmentTag.setValue(tag)
