@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "258192424799",
+    "project_id": "banchan-6ba5b",
+    "storage_bucket": "banchan-6ba5b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:258192424799:android:d162858b6edc672d3f80ea",
+        "android_client_info": {
+          "package_name": "com.woowa.banchan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "258192424799-7717uem1kt9pd97seak42rfolspul3nb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4dN8e78HgG7AaglQzOsPrOE6Vf7wJpjg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "258192424799-7717uem1kt9pd97seak42rfolspul3nb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
