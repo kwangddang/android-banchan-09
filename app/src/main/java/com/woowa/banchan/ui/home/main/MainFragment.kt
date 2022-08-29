@@ -33,7 +33,7 @@ class MainFragment : HomeBaseFragment<FragmentMainBinding>(R.layout.fragment_mai
         )
     }
 
-    override fun initBindng() {
+    override fun initBinding() {
         binding.vm = viewModel
     }
 

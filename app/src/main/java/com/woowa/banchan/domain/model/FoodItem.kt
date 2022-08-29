@@ -1,5 +1,7 @@
 package com.woowa.banchan.domain.model
 
+import java.io.Serializable
+
 data class FoodItem(
     val description: String,
     val detailHash: String,
@@ -9,7 +11,7 @@ data class FoodItem(
     val percent: Int?,
     val title: String,
     var checkState: Boolean = false
-) {
+) : Serializable {
 
     fun toCart(totalCount: Int, checkState: Boolean): Cart =
         Cart(

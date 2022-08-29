@@ -17,6 +17,7 @@ import com.woowa.banchan.ui.cart.CartViewModel
 import com.woowa.banchan.ui.cart.recent.adapter.RecentRVAdapter
 import com.woowa.banchan.ui.common.bottomsheet.CartAddFragment
 import com.woowa.banchan.ui.common.event.EventObserver
+import com.woowa.banchan.ui.common.key.FOOD
 import com.woowa.banchan.ui.common.uistate.UiState
 import com.woowa.banchan.ui.detail.DetailActivity
 import com.woowa.banchan.utils.showToast
@@ -70,7 +71,7 @@ class RecentFragment : Fragment() {
     }
 
     private fun initObserver() {
-        viewModel.recentUiState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
+        viewModel.recentWithCartState.flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
                 when (it) {
                     is UiState.Success -> adapter.submitList(it.data)
@@ -89,7 +90,11 @@ class RecentFragment : Fragment() {
         })
 
         viewModel.bottomsheetEvent.observe(viewLifecycleOwner, EventObserver { recent ->
-            CartAddFragment(recent.toFoodItem()).show(
+            val fragment = CartAddFragment()
+            val bundle = Bundle()
+            bundle.putSerializable(FOOD, recent.toFoodItem())
+            fragment.arguments = bundle
+            fragment.show(
                 childFragmentManager,
                 getString(R.string.fragment_cart_add)
             )
